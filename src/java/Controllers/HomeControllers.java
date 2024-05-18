@@ -56,6 +56,7 @@ public class HomeControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("Views/Blog.jsp").forward(request, response);
+        System.out.println("Haiphamprovcl");
 
     }
 
