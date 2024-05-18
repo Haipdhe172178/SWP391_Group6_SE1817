@@ -53,7 +53,7 @@ public class AboutControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("Blog.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/About.jsp").forward(request, response);
     
     
     } 

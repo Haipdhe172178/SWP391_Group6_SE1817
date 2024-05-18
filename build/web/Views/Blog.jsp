@@ -237,7 +237,7 @@
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="chec" class="dropdown-item fw-light">Checkout <span class="badge bg-primary"></span></a>
+                                        <a href="check" class="dropdown-item fw-light">Checkout <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
                                         <a href="blog" class="dropdown-item active fw-light">Blog <span class="badge bg-primary"></span></a>
