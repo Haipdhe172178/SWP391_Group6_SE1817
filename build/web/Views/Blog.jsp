@@ -427,7 +427,7 @@
                         <h1>Blog</h1>
                         <div class="breadcrumbs">
                             <span class="item">
-                <a href="index.html">Home > </a>
+                <a href="home">Home > </a>
               </span>
                             <span class="item text-decoration-underline">Blog</span>
                         </div>
@@ -460,65 +460,65 @@
                     <div class="row post-contents">
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item1.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item1.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item2.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item3.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item4.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item5.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item6.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item7.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-6 posts mb-5">
                             <img src="${pageContext.request.contextPath}/images/post-item8.jpg" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog.html" class="fs-6 text-primary">Books</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="single-post.html">The Fascinating Realm of Science Fiction</a></h4>
-                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="single-post.html">Read More</a></span>
+                            <a href="blog" class="fs-6 text-primary">Books</a>
+                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
+                            <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
                             </p>
                         </div>
 
