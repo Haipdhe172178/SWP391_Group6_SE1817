@@ -213,10 +213,10 @@
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link me-4 active" href="home">Home</a>
+                                <a class="nav-link me-4 " href="home">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="about">About</a>
+                                <a class="nav-link me-4 active" href="about">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="shop">Shop</a>
