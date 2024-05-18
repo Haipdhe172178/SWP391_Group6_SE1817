@@ -235,7 +235,7 @@
 
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="home">
             <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
           </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -245,7 +245,7 @@
           </button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
                     <div class="offcanvas-header px-4 pb-0">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="home">
                 <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
               </a>
                         <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
@@ -253,59 +253,59 @@
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="index.html">Home</a>
+                                <a class="nav-link me-4" href="index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="about.html">About</a>
+                                <a class="nav-link me-4" href="about">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="shop.html">Shop</a>
+                                <a class="nav-link me-4" href="shop">Shop</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="blog.html">Blogs</a>
+                                <a class="nav-link me-4" href="blog">Blogs</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages</a>
                                 <ul class="dropdown-menu animate slide border">
                                     <li>
-                                        <a href="about.html" class="dropdown-item fw-light">About <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="about" class="dropdown-item fw-light">About <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="shop.html" class="dropdown-item fw-light">Shop <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="shop" class="dropdown-item fw-light">Shop <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="single-product.html" class="dropdown-item fw-light">Single Product <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="single" class="dropdown-item fw-light">Single Product <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="cart.html" class="dropdown-item fw-light">Cart <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="cart" class="dropdown-item fw-light">Cart <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="checkout.html" class="dropdown-item active fw-light">Checkout <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="chec" class="dropdown-item active fw-light">Checkout <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="blog.html" class="dropdown-item fw-light">Blog <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="blog" class="dropdown-item fw-light">Blog <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="single-post.html" class="dropdown-item fw-light">Single Post <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="single" class="dropdown-item fw-light">Single Post <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="contact.html" class="dropdown-item fw-light">Contact <span
-                          class="badge bg-primary">Pro</span></a>
+                                        <a href="contact" class="dropdown-item fw-light">Contact <span
+                          class="badge bg-primary"></span></a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="contact.html">Contact</a>
+                                <a class="nav-link me-4" href="contact">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank">Get Pro</a>
+                                <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank"></a>
                             </li>
                         </ul>
                         <div class="user-items d-flex">
@@ -393,7 +393,7 @@
                                             <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
                                                 <div>
                                                     <h5>
-                                                        <a href="single-product.html">The Emerald Crown</a>
+                                                        <a href="single">The Emerald Crown</a>
                                                     </h5>
                                                     <small>Special discounted price.</small>
                                                     <a href="#" class="d-block fw-medium text-capitalize mt-2">Add to cart</a>
@@ -403,7 +403,7 @@
                                             <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
                                                 <div>
                                                     <h5>
-                                                        <a href="single-product.html">The Last Enchantment</a>
+                                                        <a href="single">The Last Enchantment</a>
                                                     </h5>
                                                     <small>Perfect for enlightened people.</small>
                                                     <a href="#" class="d-block fw-medium text-capitalize mt-2">Add to cart</a>
@@ -417,12 +417,12 @@
                                         </ul>
                                         <div class="d-flex flex-wrap justify-content-center">
                                             <a href="#" class="w-100 btn btn-dark mb-1" type="submit">Add all to cart</a>
-                                            <a href="cart.html" class="w-100 btn btn-primary" type="submit">View cart</a>
+                                            <a href="cart" class="w-100 btn btn-primary" type="submit">View cart</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="cart-dropdown dropdown">
-                                    <a href="cart.html" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                    <a href="cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                       <svg class="cart">
                         <use xlink:href="#cart"></use>
                       </svg><span class="fs-6 fw-light">(02)</span>
@@ -436,7 +436,7 @@
                                             <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
                                                 <div>
                                                     <h5>
-                                                        <a href="single-product.html">Secrets of the Alchemist</a>
+                                                        <a href="single">Secrets of the Alchemist</a>
                                                     </h5>
                                                     <small>High quality in good price.</small>
                                                 </div>
@@ -445,7 +445,7 @@
                                             <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
                                                 <div>
                                                     <h5>
-                                                        <a href="single-product.html">Quest for the Lost City</a>
+                                                        <a href="single">Quest for the Lost City</a>
                                                     </h5>
                                                     <small>Professional Quest for the Lost City.</small>
                                                 </div>
@@ -457,8 +457,8 @@
                                             </li>
                                         </ul>
                                         <div class="d-flex flex-wrap justify-content-center">
-                                            <a href="cart.html" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
-                                            <a href="checkout.html" class="w-100 btn btn-primary" type="submit">Go to checkout</a>
+                                            <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
+                                            <a href="checkout" class="w-100 btn btn-primary" type="submit">Go to checkout</a>
                                         </div>
                                     </div>
                                 </li>
@@ -479,7 +479,7 @@
                         <h1>Checkout</h1>
                         <div class="breadcrumbs">
                             <span class="item">
-                  <a href="index.html">Home > </a>
+                  <a href="home">Home > </a>
                 </span>
                             <span class="item text-decoration-underline">Checkout</span>
                         </div>
