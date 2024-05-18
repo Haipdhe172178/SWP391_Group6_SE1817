@@ -55,7 +55,6 @@ public class AboutControllers extends HttpServlet {
     throws ServletException, IOException {
         request.getRequestDispatcher("Views/About.jsp").forward(request, response);
     
-    
     } 
 
     /** 
