@@ -4,12 +4,15 @@
  */
 package Controllers;
 
+import DAL.HomeDAO;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -55,6 +58,15 @@ public class HomeControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ArrayList<Product> data = new ArrayList<>();
+        ArrayList<Product> data1 = new ArrayList<>();
+        HomeDAO dal = new HomeDAO();
+        data = dal.get3radum();
+        data1 = dal.get6sellmany();
+        
+        request.setAttribute("data1", data1);
+        request.setAttribute("data", data);
+        
         request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
         
 
