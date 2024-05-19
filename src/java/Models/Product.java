@@ -95,5 +95,7 @@ public class Product {
     public void setImgProduct(String imgProduct) {
         this.imgProduct = imgProduct;
     }
+
+    
     
 }

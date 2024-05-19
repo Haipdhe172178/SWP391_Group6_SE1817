@@ -62,12 +62,30 @@ public class ShopControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
         List<Author> authors = new AuthorDao().getallAuthors();
         List<Product> products = productDao.getAllProducts();
         List<Category> categorys = categoryDao.getallCategorys();
+        //Đếm số lượng product
+        int count = productDao.getTotalProduct();
+
+        int endPage = count / 8;
+        if (count % 8 != 0) {
+            endPage++;
+        }
+        List<Product> list = productDao.pagingProducts(index);
+
+        request.setAttribute("ListA", list);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tag", index);
         request.setAttribute("author", authors);
         request.setAttribute("product", products);
         request.setAttribute("category", categorys);

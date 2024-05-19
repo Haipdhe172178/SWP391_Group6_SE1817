@@ -462,7 +462,7 @@
                         </div>
                     </div>
                     <div class="row product-content product-store">
-                        <c:forEach items="${product}" var="pro">
+                        <c:forEach items="${ListA}" var="pro">
                             <div class="col-lg-3 col-md-4 mb-4">
                                 <a href="single?productID=${pro.productId}">
                                     <div class="card position-relative p-4 border rounded-3">
@@ -524,20 +524,36 @@
                     </div>
 
                     <nav class="py-5" aria-label="Page navigation">
+
                         <ul class="pagination justify-content-center gap-4">
-                            <li class="page-item disabled">
-                                <a class="page-link">Prev</a>
-                            </li>
+                            <c:choose>
+                                <c:when test="${tag > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="shop?index=${tag - 1}">Prev</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item" style="display: none;">
+                                        <a class="page-link" href="shop?index=${tag - 1}">Prev</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+
                             <li class="page-item active" aria-current="page">
-                                <span class="page-link">1</span>
+                                <span class="page-link"></span>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <c:forEach begin="1" end="${endP}" var="e">
+                                <li class="page-item ${tag == e ? 'active' : ''}">
+                                    <a class="page-link" href="shop?index=${e}">${e}</a>
+                                </li>
+                            </c:forEach>
                             <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+
+                                <a class="page-link" href="shop?index=${tag + 1}">Next</a>
                             </li>
                         </ul>
                     </nav>
+
 
                 </main>
                 <aside class="col-md-3">
