@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>SingleProdcutControllers</servlet-name>
-        <servlet-class>Controllers.SingleProdcutControllers</servlet-class>
+        <servlet-class>Controllers.SingleProductControllers</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CartControllers</servlet-name>

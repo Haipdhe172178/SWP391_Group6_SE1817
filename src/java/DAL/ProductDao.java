@@ -40,14 +40,42 @@ public class ProductDao extends DBContext{
         return products;
     }
     
+    //Get a product by productID
+    public Product getProductById(int id) {
+        String query = " Select * From Product WHERE ProductID=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));               
+                return product;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
      public static void main(String[] args) {
-         ProductDao productDao = new ProductDao();
+        ProductDao productDao = new ProductDao();
         List<Product> allProducts = productDao.getAllProducts();
          for (Product products : allProducts) {
              System.out.println("Product ID: " + products.getProductId());
             System.out.println("Product Name: " + products.getName());
          }
-        
+
+         //Test getProductById()
+        Product pro = productDao.getProductById(1);
+         System.out.println(pro.getName());
     }
    
 }

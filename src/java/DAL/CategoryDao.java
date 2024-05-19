@@ -33,6 +33,26 @@ public class CategoryDao extends DBContext{
           }
           return categorys;
       }
+    
+    //Get category by categoryID
+    public Category getCategoryByID(int id){
+          String query ="Select * From Category WHERE CategoryID = ?";
+          try {
+               PreparedStatement ps = connection.prepareStatement(query);
+               ps.setInt(1, id);
+               ResultSet rs = ps.executeQuery();
+               if (rs.next()) {                  
+                  Category category = new Category();
+                  category.setCategoryId(rs.getInt("categoryId"));
+                  category.setCategoryName(rs.getString("categoryName"));
+                  return category;
+              }
+          } catch (Exception ex) {
+              ex.printStackTrace();
+          }
+          return null;
+      }
+    
     public static void main(String[] args) {
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
@@ -40,5 +60,8 @@ public class CategoryDao extends DBContext{
             System.out.println("CategoryId: " + category.getCategoryId());
             System.out.println("CategoryName: " + category.getCategoryName());
         }
+        
+        Category c = categoryDao.getCategoryByID(1);
+        System.out.println(c.getCategoryName());
     }
 }

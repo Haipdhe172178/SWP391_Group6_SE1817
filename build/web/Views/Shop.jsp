@@ -464,59 +464,61 @@
                     <div class="row product-content product-store">
                         <c:forEach items="${product}" var="pro">
                             <div class="col-lg-3 col-md-4 mb-4">
-                                <div class="card position-relative p-4 border rounded-3">
-                                    <div class="position-absolute">
-                                        <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"></p>
-                                    </div>
-                                    <img src="${pro.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                    <h6 class="mt-4 mb-0 fw-bold">
-                                        <a href="single">${pro.name}</a>
-                                    </h6>
-                                    <div class="review-content d-flex">
-                                        <c:forEach items="${author}" var="au">
-                                            <c:if test="${au.authorID eq pro.authorId}">
-                                                <p class="my-2 me-2 fs-6 text-black-50">
-                                                    ${au.authorName}
-                                                </p>
+                                <a href="single?productID=${pro.productId}">
+                                    <div class="card position-relative p-4 border rounded-3">
+                                        <div class="position-absolute">
+                                            <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"></p>
+                                        </div>
+                                        <img src="${pro.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                                        <h6 class="mt-4 mb-0 fw-bold">
+                                            <a href="single?productID=${pro.productId}">${pro.name}</a>
+                                        </h6>
+                                        <div class="review-content d-flex">
+                                            <c:forEach items="${author}" var="au">
+                                                <c:if test="${au.authorID eq pro.authorId}">
+                                                    <p class="my-2 me-2 fs-6 text-black-50">
+                                                        ${au.authorName}
+                                                    </p>
 
-                                            </c:if>
-                                        </c:forEach>  
+                                                </c:if>
+                                            </c:forEach>  
 
 
-                                        <div class="rating text-warning d-flex align-items-center">
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
+                                            <div class="rating text-warning d-flex align-items-center">
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span class="price text-primary fw-bold mb-2 fs-5">${pro.price}</span>
+                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                                            <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                                <svg class="cart">
+                                                <use xlink:href="#cart"></use>
+                                                </svg>
+                                            </button>   
+                                            <a href="#" class="btn btn-dark">
+                                                <span>
+                                                    <svg class="wishlist">
+                                                    <use xlink:href="#heart"></use>
+                                                    </svg>
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
-                                    <span class="price text-primary fw-bold mb-2 fs-5">${pro.price}</span>
-                                    <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                        <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                                            <svg class="cart">
-                                            <use xlink:href="#cart"></use>
-                                            </svg>
-                                        </button>   
-                                        <a href="#" class="btn btn-dark">
-                                            <span>
-                                                <svg class="wishlist">
-                                                <use xlink:href="#heart"></use>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </c:forEach>
                     </div>
