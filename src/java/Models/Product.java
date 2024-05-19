@@ -15,20 +15,20 @@ public class Product {
     private int quantity;
     private String description;
     private int categoryId;
-    private int authorID;
+    private int authorId;
     private String imgProduct;
 
     public Product() {
     }
 
-    public Product(int productId, String name, float price, int quantity, String description, int categoryId, int authorID, String imgProduct) {
+    public Product(int productId, String name, float price, int quantity, String description, int categoryId, int authorId, String imgProduct) {
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
         this.categoryId = categoryId;
-        this.authorID = authorID;
+        this.authorId = authorId;
         this.imgProduct = imgProduct;
     }
 
@@ -80,12 +80,12 @@ public class Product {
         this.categoryId = categoryId;
     }
 
-    public int getAuthorID() {
-        return authorID;
+    public int getAuthorId() {
+        return authorId;
     }
 
     public void setAuthorID(int authorID) {
-        this.authorID = authorID;
+        this.authorId = authorID;
     }
 
     public String getImgProduct() {
