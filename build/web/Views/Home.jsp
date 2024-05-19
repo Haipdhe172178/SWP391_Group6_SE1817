@@ -481,7 +481,7 @@
                                     <div class="banner-content">
                                         <h3>${d.name}</h3>
                                         <p>${d.price}</p>
-                                        <a href="shop" class="btn mt-3">Shop Collection</a>
+                                        <a href="shop" class="btn mt-3">Xem sách</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-center">
@@ -601,7 +601,7 @@
                             <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
                             <h6 class="mt-4 mb-0 fw-bold"><a href="single">${d.name}</a></h6>
                             <div class="review-content d-flex">
-                                <p class="my-2 me-2 fs-6 text-black-50">${price}</p>
+                                <p class="my-2 me-2 fs-6 text-black-50"></p>
 
                                 <div class="rating text-warning d-flex align-items-center">
                                     <svg class="star star-fill">
@@ -621,7 +621,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <span class="price text-primary fw-bold mb-2 fs-5">$870</span>
+                            <span class="price text-primary fw-bold mb-2 fs-5">${d.price}</span>
                             <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                 <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
                                     <svg class="cart">
