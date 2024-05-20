@@ -225,7 +225,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                    <img  src="images/anh456.png" class="logo"> 
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -235,7 +235,7 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
                     <div class="offcanvas-header px-4 pb-0">
                         <a class="navbar-brand" href="home">
-                            <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                            <img src="height="250px" width="250px" src="images/logo1.png" class="logo">
                         </a>
                         <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
@@ -454,8 +454,8 @@
 
 
 
-    <section id="billboard" class="position-relative d-flex align-items-center py-5 bg-light-gray" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
-        <div class="position-absolute end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next main-slider-button-next">
+    <section  id="billboard" class="position-relative d-flex align-items-center py-5 bg-light-gray" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
+        <div style="margin-top: 20px" class="position-absolute end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next main-slider-button-next">
             <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
             <use xlink:href="#alt-arrow-right-outline"></use>
             </svg>
@@ -1382,7 +1382,7 @@
                 <div class="row d-flex flex-wrap justify-content-between">
                     <div class="col-lg-3 col-sm-6 pb-3">
                         <div class="footer-menu">
-                            <img src="${pageContext.request.contextPath}/images/main-logo.png" alt="logo" class="img-fluid mb-2">
+                            <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                             <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa volutpat aenean odio erat nullam fringilla.</p>
                             <div class="social-links">
                                 <ul class="d-flex list-unstyled">

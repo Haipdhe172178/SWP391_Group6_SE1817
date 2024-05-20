@@ -246,7 +246,7 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
                     <div class="offcanvas-header px-4 pb-0">
                         <a class="navbar-brand" href="home">
-                <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                <img src="images/anh456.png" class="logo">
               </a>
                         <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
@@ -929,7 +929,7 @@
                     <div class="row d-flex flex-wrap justify-content-between">
                         <div class="col-lg-3 col-sm-6 pb-3">
                             <div class="footer-menu">
-                                <img src="${pageContext.request.contextPath}/images/main-logo.png" alt="logo" class="img-fluid mb-2">
+                                <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                                 <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa volutpat aenean odio erat nullam fringilla.</p>
                                 <div class="social-links">
                                     <ul class="d-flex list-unstyled">
