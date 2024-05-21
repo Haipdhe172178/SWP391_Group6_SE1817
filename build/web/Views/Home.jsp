@@ -26,8 +26,52 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+     <style>
+        .custom-time {
+            display: inline-block;
+        }
+        .custom-fs-1 {
+            font-size: 2rem;
+        }
+        .custom-fw-normal {
+            font-weight: normal;
+        }
+    </style>
     </head>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set the date we're counting down to
+            var countDownDate = new Date("May 22, 2024 23:59:59").getTime();
 
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the elements with class "custom-days", "custom-hours", "custom-minutes", "custom-seconds"
+                document.querySelector('.custom-days').innerText = days;
+                document.querySelector('.custom-hours').innerText = hours;
+                document.querySelector('.custom-minutes').innerText = minutes;
+                document.querySelector('.custom-seconds').innerText = seconds;
+
+                // If the count down is over, write some text and hide the promo code
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown-clocd").innerHTML = "Hết thời gian sử dụng";
+                    document.getElementById("promo-code").style.display = "none";
+                }
+            }, 1000);
+        });
+    </script>
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -591,18 +635,14 @@
                 </svg>
             </div>
             <div class="swiper product-swiper">
-                <div class="swiper-wrapper">
-                   
-                    
+                <div class="swiper-wrapper">                 
                     <c:forEach items="${data1}" var="d">
                         <div class="swiper-slide">
                         <div class="card position-relative p-4 border rounded-3">
                            
                             <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
                             <h6 class="mt-4 mb-0 fw-bold"><a href="single">${d.name}</a></h6>
-                            <div class="review-content d-flex">
-                                <p class="my-2 me-2 fs-6 text-black-50"></p>
-
+                            <div class="review-content d-flex">                        
                                 <div class="rating text-warning d-flex align-items-center">
                                     <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
@@ -631,26 +671,11 @@
                                
                             </div>
                         </div>
-                            
-                            
-                            
+                          
                     </div>
-                        
-                        
+                  
                     </c:forEach>
                     
-                   
-                        
-
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                 </div>
             </div>
                             
@@ -670,29 +695,34 @@
                     </div>
                 </div>
                 <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                    <h2>30% Discount on all items. Hurry Up !!!</h2>
-                    <div id="countdown-clock" class="text-dark d-flex align-items-center my-3">
-                        <div class="time d-grid pe-3">
-                            <span class="days fs-1 fw-normal"></span>
-                            <small>Days</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid pe-3 ps-3">
-                            <span class="hours fs-1 fw-normal"></span>
-                            <small>Hrs</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid pe-3 ps-3">
-                            <span class="minutes fs-1 fw-normal"></span>
-                            <small>Min</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid ps-3">
-                            <span class="seconds fs-1 fw-normal"></span>
-                            <small>Sec</small>
-                        </div>
+                     <h2>Dũng ơi mua sách đi. Hurry Up !!!</h2>
+                <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
+                    <div class="custom-time d-grid pe-3">
+                        <span class="custom-days custom-fs-1 custom-fw-normal"></span>
+                        <small>Days</small>
                     </div>
-                    <a href="shop" class="btn mt-3">Shop Collection</a>
+                    <span class="custom-fs-1 text-primary">:</span>
+                    <div class="custom-time d-grid pe-3 ps-3">
+                        <span class="custom-hours custom-fs-1 custom-fw-normal"></span>
+                        <small>Hrs</small>
+                    </div>
+                    <span class="custom-fs-1 text-primary">:</span>
+                    <div class="custom-time d-grid pe-3 ps-3">
+                        <span class="custom-minutes custom-fs-1 custom-fw-normal"></span>
+                        <small>Min</small>
+                    </div>
+                    <span class="custom-fs-1 text-primary">:</span>
+                    <div class="custom-time d-grid ps-3">
+                        <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
+                        <small>Sec</small>
+                    </div>
+                </div>
+                <div id="promo-code">
+                    code: 123dungbansach
+                </div>
+                <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
+                    
+                    
                 </div>
             </div>
         </div>
