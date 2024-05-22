@@ -69,9 +69,15 @@ public class ProductDao extends DBContext {
     }
 
     //lấy prodcut bằng categoryId
-    public List<Product> getProductsByCategoryId(int categoryId) {
+    public List<Product> getProductsByCategoryId(int categoryId, String option) {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE CategoryID = ?";
+        String query;
+        if (option.equalsIgnoreCase("fourRandom")) {
+            query = "SELECT TOP 4 * FROM Product WHERE CategoryID = ? Order by NEWID()";
+        } else {
+            query = "SELECT T* FROM Product WHERE CategoryID = ? " ;
+        }
+        
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, categoryId);
@@ -95,6 +101,15 @@ public class ProductDao extends DBContext {
         return products;
     }
 
+    public static void main(String[] args) {
+        //test function
+        ProductDao pd = new ProductDao();
+        List<Product> p = pd.getProductsByCategoryId(1, "fourRandom");
+        for (Product product : p) {
+            System.out.println(product.getProductId());
+        }
+    }
+    
     //Đếm số lượng product trong data
     public int getTotalProduct() {
         String query = "Select count (*) from Product";
@@ -254,5 +269,5 @@ public class ProductDao extends DBContext {
         }
         return total;
     }
-     
+
 }

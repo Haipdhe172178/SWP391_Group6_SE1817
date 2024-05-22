@@ -33,4 +33,31 @@ public class ObjectAgeDao extends DBContext{
         }
         return objectAges;
     }
+     
+     //Lấy object age theo ageID
+     public ObjectAge getObjectAgesByID(int id) {
+        List<ObjectAge> objectAges = new ArrayList<>();
+        String query = "Select * From ObjectAge WHERE AgeID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ObjectAge objectAge = new ObjectAge();
+                objectAge.setAgeId(rs.getInt("ageId"));
+                objectAge.setAge(rs.getString("age"));
+                return objectAge;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+     
+     public static void main(String[] args) {
+        //test Lấy object age theo ageID
+        ObjectAgeDao od = new ObjectAgeDao();
+        ObjectAge o = od.getObjectAgesByID(1);
+         System.out.println(o.getAge());
+    }
 }

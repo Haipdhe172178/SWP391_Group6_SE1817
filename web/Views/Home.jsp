@@ -26,19 +26,19 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-     <style>
-        .custom-time {
-            display: inline-block;
-        }
-        .custom-fs-1 {
-            font-size: 2rem;
-        }
-        .custom-fw-normal {
-            font-weight: normal;
-        }
-    </style>
+        <style>
+            .custom-time {
+                display: inline-block;
+            }
+            .custom-fs-1 {
+                font-size: 2rem;
+            }
+            .custom-fw-normal {
+                font-weight: normal;
+            }
+        </style>
     </head>
-      <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Set the date we're counting down to
             var countDownDate = new Date("May 22, 2024 23:59:59").getTime();
@@ -215,8 +215,8 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                        <a href="shop"  title="">Tất cả</a>
-                    </li>
+                    <a href="shop"  title="">Tất cả</a>
+                </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
                         <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
@@ -286,7 +286,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -296,7 +296,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
@@ -501,14 +501,12 @@
                                     <div class="banner-content">
                                         <h3>${d.name}</h3>
                                         <p>${d.price}</p>
-                                        <a href="shop" class="btn mt-3">Xem sách</a>
+                                        <a href="single?productID=${d.productId}" class="btn mt-3"> Xem sách</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-center">
                                     <div class="image-holder">
                                         <img  src="${d.imgProduct}" class="img-fluid" alt="banner" height="50%" width="50%">
-                                        
-                           
                                     </div>
                                 </div>
                             </div>
@@ -598,7 +596,7 @@
             <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
                 <h3 class="d-flex align-items-center">Được mua nhiều nhất</h3>
                 <a href="shop" class="btn">Hiển thi tất cả sách</a>
-                
+
             </div>
             <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
                 <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
@@ -614,51 +612,43 @@
                 <div class="swiper-wrapper">                 
                     <c:forEach items="${data1}" var="d">
                         <div class="swiper-slide">
-                        <div class="card position-relative p-4 border rounded-3">
-                           
-                            <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                            <h6 class="mt-4 mb-0 fw-bold"><a href="single">${d.name}</a></h6>
-                            <div class="review-content d-flex">                        
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
+                            <a href="single?productID=${d.productId}">
+
+                                <div class="card position-relative p-4 border rounded-3">
+
+                                    <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                                    <h6 class="mt-4 mb-0 fw-bold"><a href="single">${d.name}</a></h6>
+                                    <div class="review-content d-flex">                        
+                                        <div class="rating text-warning d-flex align-items-center">
+                                            <c:forEach begin="1" end="5">
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    <span class="price text-primary fw-bold mb-2 fs-5">${d.price}</span>
+                                    <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                                        <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                            <svg class="cart">
+                                            <use xlink:href="#cart"></use>
+                                            </svg>
+                                        </button>
+
+                                    </div>
                                 </div>
-                            </div>
-                            <span class="price text-primary fw-bold mb-2 fs-5">${d.price}</span>
-                            <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                                    <svg class="cart">
-                                    <use xlink:href="#cart"></use>
-                                    </svg>
-                                </button>
-                               
-                            </div>
+                            </a>
                         </div>
-                          
-                    </div>
-                  
+
                     </c:forEach>
-                    
+
                 </div>
             </div>
-                            
-                            
-                            
-                            
-                            
+
+
+
+
+
         </div>
     </section>
 
@@ -671,34 +661,34 @@
                     </div>
                 </div>
                 <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                     <h2>Dũng ơi mua sách đi. Hurry Up !!!</h2>
-                <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
-                    <div class="custom-time d-grid pe-3">
-                        <span class="custom-days custom-fs-1 custom-fw-normal"></span>
-                        <small>Days</small>
+                    <h2>Dũng ơi mua sách đi. Hurry Up !!!</h2>
+                    <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
+                        <div class="custom-time d-grid pe-3">
+                            <span class="custom-days custom-fs-1 custom-fw-normal"></span>
+                            <small>Days</small>
+                        </div>
+                        <span class="custom-fs-1 text-primary">:</span>
+                        <div class="custom-time d-grid pe-3 ps-3">
+                            <span class="custom-hours custom-fs-1 custom-fw-normal"></span>
+                            <small>Hrs</small>
+                        </div>
+                        <span class="custom-fs-1 text-primary">:</span>
+                        <div class="custom-time d-grid pe-3 ps-3">
+                            <span class="custom-minutes custom-fs-1 custom-fw-normal"></span>
+                            <small>Min</small>
+                        </div>
+                        <span class="custom-fs-1 text-primary">:</span>
+                        <div class="custom-time d-grid ps-3">
+                            <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
+                            <small>Sec</small>
+                        </div>
                     </div>
-                    <span class="custom-fs-1 text-primary">:</span>
-                    <div class="custom-time d-grid pe-3 ps-3">
-                        <span class="custom-hours custom-fs-1 custom-fw-normal"></span>
-                        <small>Hrs</small>
+                    <div id="promo-code">
+                        code: 123dungbansach
                     </div>
-                    <span class="custom-fs-1 text-primary">:</span>
-                    <div class="custom-time d-grid pe-3 ps-3">
-                        <span class="custom-minutes custom-fs-1 custom-fw-normal"></span>
-                        <small>Min</small>
-                    </div>
-                    <span class="custom-fs-1 text-primary">:</span>
-                    <div class="custom-time d-grid ps-3">
-                        <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
-                        <small>Sec</small>
-                    </div>
-                </div>
-                <div id="promo-code">
-                    code: 123dungbansach
-                </div>
-                <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
-                    
-                    
+                    <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
+
+
                 </div>
             </div>
         </div>
@@ -1268,33 +1258,16 @@
             <a href="shop" class="btn">View All</a>
         </div>
         <div class="row">
-            <div class="col-md-3 posts mb-4">
-                <img src="${pageContext.request.contextPath}/images/post-item1.jpg" alt="post image" class="img-fluid rounded-3">
-                <a href="blog" class="fs-6 text-primary">Books</a>
-                <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">10 Must-Read Books of the Year: Our Top Picks!</a></h4>
-                <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadge. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                </p>
-            </div>
-            <div class="col-md-3 posts mb-4">
-                <img src="${pageContext.request.contextPath}/images/post-item2.jpg" alt="post image" class="img-fluid rounded-3">
-                <a href="blog" class="fs-6 text-primary">Books</a>
-                <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
-                <p class="mb-2">Explore the intersection of technology and sustainability in our latest blog post. Learn about the innovative <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> </p>
-            </div>
-            <div class="col-md-3 posts mb-4">
-                <img src="${pageContext.request.contextPath}/images/post-item3.jpg" alt="post image" class="img-fluid rounded-3">
-                <a href="blog" class="fs-6 text-primary">Books</a>
-                <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">Finding Love in the Pages of a Book</a></h4>
-                <p class="mb-2">Stay ahead of the curve with our insightful look into the rapidly evolving landscape of wearable technology. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                </p>
-            </div>
-            <div class="col-md-3 posts mb-4">
-                <img src="${pageContext.request.contextPath}/images/post-item4.jpg" alt="post image" class="img-fluid rounded-3">
-                <a href="blog" class="fs-6 text-primary">Books</a>
-                <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">Reading for Mental Health: How Books Can Heal and Inspire</a></h4>
-                <p class="mb-2">In today's remote work environment, productivity is key. Discover the top apps and tools that can help you stay <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                </p>
-            </div>
+            <!-- NEWS -->
+            <c:forEach var="n" items="${requestScope.news}">
+                <div class="col-md-3 posts mb-4">
+                    <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
+                    <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
+                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
+                    <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 
+                    </p>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </section>

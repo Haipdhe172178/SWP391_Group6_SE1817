@@ -4,11 +4,7 @@
  */
 package Controllers;
 
-import DAL.CategoryDao;
-import DAL.HomeDAO;
-import DAL.NewsDao;
-import Models.Category;
-import Models.News;
+import DAL.ProductDao;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,14 +12,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author huyca
+ * @author Hai Pham
  */
-public class HomeControllers extends HttpServlet {
+public class CategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +37,10 @@ public class HomeControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeControllers</title>");
+            out.println("<title>Servlet CategoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,25 +58,19 @@ public class HomeControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Product> data = new ArrayList<>();
-        ArrayList<Product> data1 = new ArrayList<>();
-        CategoryDao categoryDao = new CategoryDao();
-        List<Category> categorys = categoryDao.getallCategorys();
-        request.setAttribute("category", categorys);
-        HomeDAO dal = new HomeDAO();
-        data = dal.get3radum();
-        data1 = dal.get6sellmany();
+        String cid_raw = request.getParameter("cid");
+        List<Product> listP;
+        ProductDao productDao = new ProductDao();
 
-        //News to homepage
-        NewsDao nd = new NewsDao();
-        List<News> listNews = nd.getFourNewsLated();
+        if (cid_raw != null && !cid_raw.isEmpty()) {
+            int cid = Integer.parseInt(cid_raw);
+            listP = productDao.getProductsByCategoryId(cid, "all");
+        } else {
+            listP = productDao.getAllProducts();
+        }
 
-        request.setAttribute("news", listNews);
-        request.setAttribute("data1", data1);
-        request.setAttribute("data", data);
-
-        request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
-
+        request.setAttribute("product", listP);
+        request.getRequestDispatcher("Views/Shop.jsp").forward(request, response);
     }
 
     /**
