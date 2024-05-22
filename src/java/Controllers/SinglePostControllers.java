@@ -6,12 +6,15 @@ package Controllers;
  */
 
 
+import DAL.CategoryDao;
+import Models.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -54,6 +57,9 @@ public class SinglePostControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        CategoryDao categoryDao = new CategoryDao();
+        List<Category> categorys = categoryDao.getallCategorys();
+         request.setAttribute("category", categorys);
         request.getRequestDispatcher("Views/SinglePost.jsp").forward(request, response);
     } 
 

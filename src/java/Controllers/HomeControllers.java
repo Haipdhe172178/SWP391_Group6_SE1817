@@ -4,7 +4,9 @@
  */
 package Controllers;
 
+import DAL.CategoryDao;
 import DAL.HomeDAO;
+import Models.Category;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -60,6 +63,9 @@ public class HomeControllers extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<Product> data = new ArrayList<>();
         ArrayList<Product> data1 = new ArrayList<>();
+        CategoryDao categoryDao = new CategoryDao();
+        List<Category> categorys = categoryDao.getallCategorys();
+         request.setAttribute("category", categorys);
         HomeDAO dal = new HomeDAO();
         data = dal.get3radum();
         data1 = dal.get6sellmany();

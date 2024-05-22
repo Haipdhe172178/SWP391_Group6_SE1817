@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Shop.jsp
-    Created on : May 15, 2024, 10:48:10 PM
+    Document   : Search.jsp
+    Created on : May 22, 2024, 3:49:20 PM
     Author     : huyca
 --%>
 
@@ -213,7 +213,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                   
+                                    
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -423,7 +423,7 @@
                 <main class="col-md-9">
                     <div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
                         <div class="showing-product">
-                            <h6>Tìm thấy <span>${product.size()}</span></h6>
+                           <h6>Tìm thấy <span>${productCount}</span> sản phẩm</h6>
                         </div>
                         <div class="sort-by">
                             <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
@@ -499,32 +499,34 @@
                     </div>
 
                     <nav class="py-5" aria-label="Page navigation">
-
                         <ul class="pagination justify-content-center gap-4">
+                            <!-- Xác định trang trước -->
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag - 1}">Prev</a>
+                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}">Prev</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item" style="display: none;">
-                                        <a class="page-link" href="shop?index=${tag - 1}">Prev</a>
+                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}">Prev</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
 
+                            <!-- Liên kết đến các trang -->
                             <li class="page-item active" aria-current="page">
                                 <span class="page-link"></span>
                             </li>
                             <c:forEach begin="1" end="${endP}" var="e">
                                 <li class="page-item ${tag == e ? 'active' : ''}">
-                                    <a class="page-link" href="shop?index=${e}">${e}</a>
+                                    <a class="page-link" href="search?index=${e}&amp;categoryId=${currentCategoryId}">${e}</a>
                                 </li>
                             </c:forEach>
-                            <li class="page-item">
 
-                                <a class="page-link" href="shop?index=${tag + 1}">Next</a>
+                            <!-- Xác định trang kế tiếp -->
+                            <li class="page-item">
+                                <a class="page-link" href="search?index=${tag + 1}&amp;categoryId=${currentCategoryId}">Next</a>
                             </li>
                         </ul>
                     </nav>
@@ -548,13 +550,12 @@
                         </div>
                         <div class="widget-product-categories pt-5">
                             <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Thể loại</h3>
+                                <h3 class="d-flex flex-column mb-0">Categories</h3>
                             </div>
                             <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                <label>
-                                    <input type="checkbox" name="category" value="all">
-                                    Tất cả
-                                </label>
+                                <li class="cat-item">
+                                    <a href="/collections/categories">All</a>
+                                </li>
                                 <c:forEach items="${category}" var="c">
                                     <li class="cat-item">
                                         <label>
@@ -594,45 +595,22 @@
                             </div>
                             <ul class="product-tags mb-0 sidebar-list list-unstyled">
                                 <li class="tags-item">
-                                    <label>
-                                        <input type="checkbox" name="price_filter" value="lessthan10">
-                                        Nhỏ hơn 100,000₫
-                                    </label>
+                                    <a href="#">Less than $10</a>
                                 </li>
                                 <li class="tags-item">
-                                    <label>
-                                        <input type="checkbox" name="price_filter" value="10to20">
-                                       Từ 100,000₫ - 200,000₫
-                                    </label>
+                                    <a href="#">$10- $20</a>
                                 </li>
                                 <li class="tags-item">
-                                    <label>
-                                        <input type="checkbox" name="price_filter" value="20to30">
-                                        Từ 200,000₫ - 300,000₫
-                                    </label>
+                                    <a href="#">$20- $30</a>
                                 </li>
                                 <li class="tags-item">
-                                    <label>
-                                        <input type="checkbox" name="price_filter" value="30to40">
-                                        Từ 300,000₫ - 400,000₫
-                                    </label>
+                                    <a href="#">$30- $40</a>
                                 </li>
                                 <li class="tags-item">
-                                    <label>
-                                        <input type="checkbox" name="price_filter" value="40to50">
-                                       Từ 400,000₫ - 500,000₫
-                                    </label>
-                                </li>
-                                <li class="tags-item">
-                                    <label>
-                                        <input type="checkbox" name="price_filter" value="morethan50">
-                                       Lớn hơn 500,000₫
-                                    </label>
+                                    <a href="#">$40- $50</a>
                                 </li>
                             </ul>
                         </div>
-
-
                     </div>
                 </aside>
             </div>
@@ -1041,3 +1019,4 @@
 </body>
 
 </html>
+

@@ -142,32 +142,14 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                    <a href="#" title="truyentranh">Truyện tranh</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocnuocngoai">Văn học nước ngoài</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="lichsutruyenthong">Lịch sử, truyền thống</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="kienthuckhoahoc">Kiến thức, khoa học</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="mangaconmic">Manga-Conmic</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="wingsbooks">Wings Books</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="giaimabanthan">Giải mã bản thân</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
-                </li>
+                        <a href="shop"  title="">Tất cả</a>
+                    </li>
+                <c:forEach items="${category}" var="cate">
+                    <li class="cat-list-item">
+                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    </li>
+                </c:forEach>
+
             </ul>
 
         </div>
@@ -194,7 +176,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                    <img src="images/anh456.png" class="logo">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -231,9 +213,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                    <li>
-                                        <a href="single" class="dropdown-item fw-light">Single Product <span class="badge bg-primary"></span></a>
-                                    </li>
+                                   
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -243,9 +223,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    <li>
-                                        <a href="post" class="dropdown-item fw-light">Single Post <span class="badge bg-primary"></span></a>
-                                    </li>
+                                    
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
@@ -479,11 +457,8 @@
                                                     <p class="my-2 me-2 fs-6 text-black-50">
                                                         ${au.authorName}
                                                     </p>
-
                                                 </c:if>
                                             </c:forEach>  
-
-
                                             <div class="rating text-warning d-flex align-items-center">
                                                 <svg class="star star-fill">
                                                 <use xlink:href="#star-fill"></use>
@@ -555,6 +530,7 @@
                     </nav>
 
 
+
                 </main>
                 <aside class="col-md-3">
                     <div class="sidebar ps-lg-5">
@@ -572,83 +548,91 @@
                         </div>
                         <div class="widget-product-categories pt-5">
                             <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Categories</h3>
+                                <h3 class="d-flex flex-column mb-0">Thể loại</h3>
                             </div>
                             <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                <li class="cat-item">
-                                    <a href="/collections/categories">All</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">Romance</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">Recipie</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">Sci-Fi</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">Lifestyle</a>
-                                </li>
+                                <label>
+                                    <input type="checkbox" name="category" value="all">
+                                    Tất cả
+                                </label>
+                                <c:forEach items="${category}" var="c">
+                                    <li class="cat-item">
+                                        <label>
+                                            <input type="checkbox" name="category[]" value="${c.categoryId}">
+                                            ${c.categoryName}
+                                        </label>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                         <div class="widget-product-tags pt-5">
                             <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Tags</h3>
+                                <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
                             </div>
                             <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                <li class="tags-item">
-                                    <a href="#">Sci-Fi</a>
+                                <li class="cat-item">
+                                    <label>
+                                        <input type="checkbox" name="abjage" value="all">
+                                        Tất cả
+                                    </label>
                                 </li>
-                                <li class="tags-item">
-                                    <a href="#">Revenge</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="#">Zombie</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="#">Vampire</a>
-                                </li>
+                                <c:forEach items="${objage}" var="ob">
+                                    <li class="cat-item">
+                                        <label>
+                                            <input type="checkbox" name="age_group" value="${ob.ageId}">
+                                            ${ob.age}
+                                        </label>
+                                    </li>
+
+                                </c:forEach>
                             </ul>
                         </div>
-                        <div class="widget-product-authur pt-5">
-                            <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">authur</h3>
-                            </div>
-                            <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                <li class="tags-item">
-                                    <a href="#">Hanna Clark</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="#">Albert E. Beth</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="#">D.K John</a>
-                                </li>
-                            </ul>
-                        </div>
+
                         <div class="widget-price-filter pt-5">
                             <div class="section-title overflow-hidden mb-2">
                                 <h3 class="d-flex flex-column mb-0">Filter by price</h3>
                             </div>
                             <ul class="product-tags mb-0 sidebar-list list-unstyled">
                                 <li class="tags-item">
-                                    <a href="#">Less than $10</a>
+                                    <label>
+                                        <input type="checkbox" name="price_filter" value="lessthan10">
+                                        Nhỏ hơn 100,000₫
+                                    </label>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="#">$10- $20</a>
+                                    <label>
+                                        <input type="checkbox" name="price_filter" value="10to20">
+                                       Từ 100,000₫ - 200,000₫
+                                    </label>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="#">$20- $30</a>
+                                    <label>
+                                        <input type="checkbox" name="price_filter" value="20to30">
+                                        Từ 200,000₫ - 300,000₫
+                                    </label>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="#">$30- $40</a>
+                                    <label>
+                                        <input type="checkbox" name="price_filter" value="30to40">
+                                        Từ 300,000₫ - 400,000₫
+                                    </label>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="#">$40- $50</a>
+                                    <label>
+                                        <input type="checkbox" name="price_filter" value="40to50">
+                                       Từ 400,000₫ - 500,000₫
+                                    </label>
+                                </li>
+                                <li class="tags-item">
+                                    <label>
+                                        <input type="checkbox" name="price_filter" value="morethan50">
+                                       Lớn hơn 500,000₫
+                                    </label>
                                 </li>
                             </ul>
                         </div>
+
+
                     </div>
                 </aside>
             </div>
@@ -921,7 +905,7 @@
                     <div class="row d-flex flex-wrap justify-content-between">
                         <div class="col-lg-3 col-sm-6 pb-3">
                             <div class="footer-menu">
-                                <img src="${pageContext.request.contextPath}/images/main-logo.png" alt="logo" class="img-fluid mb-2">
+                                <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                                 <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa volutpat aenean odio erat nullam fringilla.</p>
                                 <div class="social-links">
                                     <ul class="d-flex list-unstyled">

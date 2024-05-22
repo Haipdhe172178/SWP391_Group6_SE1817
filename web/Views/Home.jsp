@@ -4,7 +4,7 @@
     Author     : huyca
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,8 +26,52 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+     <style>
+        .custom-time {
+            display: inline-block;
+        }
+        .custom-fs-1 {
+            font-size: 2rem;
+        }
+        .custom-fw-normal {
+            font-weight: normal;
+        }
+    </style>
     </head>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set the date we're counting down to
+            var countDownDate = new Date("May 22, 2024 23:59:59").getTime();
 
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the elements with class "custom-days", "custom-hours", "custom-minutes", "custom-seconds"
+                document.querySelector('.custom-days').innerText = days;
+                document.querySelector('.custom-hours').innerText = hours;
+                document.querySelector('.custom-minutes').innerText = minutes;
+                document.querySelector('.custom-seconds').innerText = seconds;
+
+                // If the count down is over, write some text and hide the promo code
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown-clocd").innerHTML = "Hết thời gian sử dụng";
+                    document.getElementById("promo-code").style.display = "none";
+                }
+            }, 1000);
+        });
+    </script>
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -164,41 +208,21 @@
 
             <form role="search" method="get" class="search-form" action="">
                 <input type="search" id="search-form" class="search-field" placeholder="Nhập thể loại sách" value="" name="s" />
-                <button type="submit" class="search-submit"><svg class="search">
-                    <use xlink:href="#search"></use>
-                    </svg></button>
+                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
             <h5 class="cat-list-title">Thể loại sách</h5>
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                    <a href="#" title="truyentranh">Truyện tranh</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocnuocngoai">Văn học nước ngoài</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="lichsutruyenthong">Lịch sử, truyền thống</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="kienthuckhoahoc">Kiến thức, khoa học</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="mangaconmic">Manga-Conmic</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="wingsbooks">Wings Books</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="giaimabanthan">Giải mã bản thân</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
-                </li>
+                        <a href="shop"  title="">Tất cả</a>
+                    </li>
+                <c:forEach items="${category}" var="cate">
+                    <li class="cat-list-item">
+                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    </li>
+                </c:forEach>
+
             </ul>
 
         </div>
@@ -225,7 +249,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                    <img  src="images/anh456.png" class="logo"> 
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -235,7 +259,7 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
                     <div class="offcanvas-header px-4 pb-0">
                         <a class="navbar-brand" href="home">
-                            <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                            <img src="height="250px" width="250px" src="images/logo1.png" class="logo">
                         </a>
                         <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
@@ -262,9 +286,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                    <li>
-                                        <a href="single" class="dropdown-item fw-light">Single Product <span class="badge bg-primary"></span></a>
-                                    </li>
+                                    
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -274,9 +296,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    <li>
-                                        <a href="post" class="dropdown-item fw-light">Single Post <span class="badge bg-primary"></span></a>
-                                    </li>
+                                    
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
@@ -454,8 +474,8 @@
 
 
 
-    <section id="billboard" class="position-relative d-flex align-items-center py-5 bg-light-gray" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
-        <div class="position-absolute end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next main-slider-button-next">
+    <section  id="billboard" class="position-relative d-flex align-items-center py-5 bg-light-gray" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
+        <div style="margin-top: 20px" class="position-absolute end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next main-slider-button-next">
             <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
             <use xlink:href="#alt-arrow-right-outline"></use>
             </svg>
@@ -591,18 +611,14 @@
                 </svg>
             </div>
             <div class="swiper product-swiper">
-                <div class="swiper-wrapper">
-                   
-                    
+                <div class="swiper-wrapper">                 
                     <c:forEach items="${data1}" var="d">
                         <div class="swiper-slide">
                         <div class="card position-relative p-4 border rounded-3">
                            
                             <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
                             <h6 class="mt-4 mb-0 fw-bold"><a href="single">${d.name}</a></h6>
-                            <div class="review-content d-flex">
-                                <p class="my-2 me-2 fs-6 text-black-50"></p>
-
+                            <div class="review-content d-flex">                        
                                 <div class="rating text-warning d-flex align-items-center">
                                     <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
@@ -631,26 +647,11 @@
                                
                             </div>
                         </div>
-                            
-                            
-                            
+                          
                     </div>
-                        
-                        
+                  
                     </c:forEach>
                     
-                   
-                        
-
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                 </div>
             </div>
                             
@@ -670,29 +671,34 @@
                     </div>
                 </div>
                 <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                    <h2>30% Discount on all items. Hurry Up !!!</h2>
-                    <div id="countdown-clock" class="text-dark d-flex align-items-center my-3">
-                        <div class="time d-grid pe-3">
-                            <span class="days fs-1 fw-normal"></span>
-                            <small>Days</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid pe-3 ps-3">
-                            <span class="hours fs-1 fw-normal"></span>
-                            <small>Hrs</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid pe-3 ps-3">
-                            <span class="minutes fs-1 fw-normal"></span>
-                            <small>Min</small>
-                        </div>
-                        <span class="fs-1 text-primary">:</span>
-                        <div class="time d-grid ps-3">
-                            <span class="seconds fs-1 fw-normal"></span>
-                            <small>Sec</small>
-                        </div>
+                     <h2>Dũng ơi mua sách đi. Hurry Up !!!</h2>
+                <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
+                    <div class="custom-time d-grid pe-3">
+                        <span class="custom-days custom-fs-1 custom-fw-normal"></span>
+                        <small>Days</small>
                     </div>
-                    <a href="shop" class="btn mt-3">Shop Collection</a>
+                    <span class="custom-fs-1 text-primary">:</span>
+                    <div class="custom-time d-grid pe-3 ps-3">
+                        <span class="custom-hours custom-fs-1 custom-fw-normal"></span>
+                        <small>Hrs</small>
+                    </div>
+                    <span class="custom-fs-1 text-primary">:</span>
+                    <div class="custom-time d-grid pe-3 ps-3">
+                        <span class="custom-minutes custom-fs-1 custom-fw-normal"></span>
+                        <small>Min</small>
+                    </div>
+                    <span class="custom-fs-1 text-primary">:</span>
+                    <div class="custom-time d-grid ps-3">
+                        <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
+                        <small>Sec</small>
+                    </div>
+                </div>
+                <div id="promo-code">
+                    code: 123dungbansach
+                </div>
+                <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -1382,7 +1388,7 @@
                 <div class="row d-flex flex-wrap justify-content-between">
                     <div class="col-lg-3 col-sm-6 pb-3">
                         <div class="footer-menu">
-                            <img src="${pageContext.request.contextPath}/images/main-logo.png" alt="logo" class="img-fluid mb-2">
+                            <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                             <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa volutpat aenean odio erat nullam fringilla.</p>
                             <div class="social-links">
                                 <ul class="d-flex list-unstyled">

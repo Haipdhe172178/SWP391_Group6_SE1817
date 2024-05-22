@@ -33,6 +33,7 @@ public class ProductDao extends DBContext {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setAuthorID(rs.getInt("authorId"));
                 product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -58,12 +59,40 @@ public class ProductDao extends DBContext {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setAuthorID(rs.getInt("authorId"));
                 product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
                 return product;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    //lấy prodcut bằng categoryId
+    public List<Product> getProductsByCategoryId(int categoryId) {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE CategoryID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
     }
 
     //Đếm số lượng product trong data
@@ -101,6 +130,7 @@ public class ProductDao extends DBContext {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setAuthorID(rs.getInt("authorId"));
                 product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
                 list.add(product);
             }
         } catch (Exception ex) {
@@ -109,13 +139,93 @@ public class ProductDao extends DBContext {
         return list;
     }
 
+    //Phân trang khi search bằng category
+    public List<Product> pagingProductsByCategory(int index, int categoryId) {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE CategoryID = ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+
+    //Tìm kiếm theo tên
+    public List<Product> searchProductsByName(String nameKeyword) {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE Name LIKE ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + nameKeyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+
+    //Lấy tổng sản phầm của product theo categoryId
+    public int getTotalProductsByCategory(int categoryId) {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Product WHERE CategoryID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return total;
+    }
+
     public static void main(String[] args) {
         ProductDao productDao = new ProductDao();
-        List<Product> allProducts = productDao.pagingProducts(1);
-        for (Product allProduct : allProducts) {
-            System.out.println(allProduct);
-        }
 
+        int index = 2; 
+        int categoryId = 1; 
+        List<Product> products = productDao.pagingProductsByCategory(index, categoryId);
+
+        for (Product product : products) {
+            System.out.println("Product ID: " + product.getProductId());
+            System.out.println("Name: " + product.getName());
+            System.out.println("Price: " + product.getPrice());
+            System.out.println("------------------------------------");
+        }
+        
     }
 
 }

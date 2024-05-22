@@ -6,9 +6,11 @@ package Controllers;
 
 import DAL.AuthorDao;
 import DAL.CategoryDao;
+import DAL.ObjectAgeDao;
 import DAL.ProductDao;
 import Models.Author;
 import Models.Category;
+import Models.ObjectAge;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,9 +73,11 @@ public class ShopControllers extends HttpServlet {
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
+        ObjectAgeDao objectAgeDao = new ObjectAgeDao();
         List<Author> authors = new AuthorDao().getallAuthors();
         List<Product> products = productDao.getAllProducts();
         List<Category> categorys = categoryDao.getallCategorys();
+        List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
         //Đếm số lượng product
         int count = productDao.getTotalProduct();
 
@@ -89,6 +93,7 @@ public class ShopControllers extends HttpServlet {
         request.setAttribute("author", authors);
         request.setAttribute("product", products);
         request.setAttribute("category", categorys);
+        request.setAttribute("objage", objectAges);
         request.getRequestDispatcher("Views/Shop.jsp").forward(request, response);
     }
 

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -141,7 +142,7 @@
         </div>
     </div>-->
 
-    <div class="search-popup">
+     <div class="search-popup">
         <div class="search-popup-container">
 
             <form role="search" method="get" class="search-form" action="">
@@ -153,33 +154,16 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                    <a href="#" title="truyentranh">Truyện tranh</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocnuocngoai">Văn học nước ngoài</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="lichsutruyenthong">Lịch sử, truyền thống</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="kienthuckhoahoc">Kiến thức, khoa học</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="mangaconmic">Manga-Conmic</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="wingsbooks">Wings Books</a>
-                </li>
-                 <li class="cat-list-item">
-                    <a href="#" title="giaimabanthan">Giải mã bản thân</a>
-                </li>
-                 <li class="cat-list-item">
-                    <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
-                </li>
+                        <a href="shop"  title="">Tất cả</a>
+                    </li>
+                <c:forEach items="${category}" var="cate">
+                    <li class="cat-list-item">
+                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    </li>
+                </c:forEach>
+
             </ul>
+
         </div>
     </div>
 
@@ -204,7 +188,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-            <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+            <img src="images/anh456.png" class="logo">
           </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="navbar-icon">
@@ -811,7 +795,7 @@
                     <div class="row d-flex flex-wrap justify-content-between">
                         <div class="col-lg-3 col-sm-6 pb-3">
                             <div class="footer-menu">
-                                <img src="${pageContext.request.contextPath}/images/main-logo.png" alt="logo" class="img-fluid mb-2">
+                                <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                                 <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa volutpat aenean odio erat nullam fringilla.</p>
                                 <div class="social-links">
                                     <ul class="d-flex list-unstyled">

@@ -36,6 +36,10 @@
         <servlet-name>ContactControllers</servlet-name>
         <servlet-class>Controllers.Contact</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchControllers</servlet-name>
+        <servlet-class>Controllers.SearchControllers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>ContactControllers</servlet-name>
         <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchControllers</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

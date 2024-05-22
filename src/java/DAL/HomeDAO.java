@@ -36,7 +36,8 @@ public class HomeDAO extends DBContext{
                 int CategoryID = (rs.getInt(6));
                 int AuthorID = (rs.getInt(7));              
                 String img = rs.getString(8);
-                data.add(new Product(id, name, Price, Quantity, Description, CategoryID, AuthorID, img) );
+                int ageId = rs.getInt(9);
+                data.add(new Product(id, name, Price, Quantity, Description, CategoryID, AuthorID, img, ageId) );
 
             }
         } catch (SQLException ex) {
@@ -68,7 +69,8 @@ public class HomeDAO extends DBContext{
                 int CategoryID = (rs.getInt(8));
                 int AuthorID = (rs.getInt(9));              
                 String img = rs.getString(10);
-                data.add(new Product(id, name, Price, Quantity, Description, CategoryID, AuthorID, img) );
+                int ageId = rs.getInt(9);
+                data.add(new Product(id, name, Price, Quantity, Description, CategoryID, AuthorID, img, ageId) );
 
             }
         } catch (SQLException ex) {
