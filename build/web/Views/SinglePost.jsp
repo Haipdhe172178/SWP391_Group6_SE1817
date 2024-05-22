@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -141,7 +142,7 @@
         </div>
     </div>-->
 
-    <div class="search-popup">
+     <div class="search-popup">
         <div class="search-popup-container">
 
             <form role="search" method="get" class="search-form" action="">
@@ -153,33 +154,16 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                    <a href="#" title="truyentranh">Truyện tranh</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocnuocngoai">Văn học nước ngoài</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="lichsutruyenthong">Lịch sử, truyền thống</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="kienthuckhoahoc">Kiến thức, khoa học</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="mangaconmic">Manga-Conmic</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="wingsbooks">Wings Books</a>
-                </li>
-                 <li class="cat-list-item">
-                    <a href="#" title="giaimabanthan">Giải mã bản thân</a>
-                </li>
-                 <li class="cat-list-item">
-                    <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
-                </li>
+                        <a href="shop"  title="">Tất cả</a>
+                    </li>
+                <c:forEach items="${category}" var="cate">
+                    <li class="cat-list-item">
+                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    </li>
+                </c:forEach>
+
             </ul>
+
         </div>
     </div>
 

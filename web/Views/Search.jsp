@@ -134,16 +134,16 @@
         <div class="search-popup-container">
 
             <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Nhập thể loại sách" value="" name="s" />
-                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
+                <input type="search" id="search-form" class="search-field" placeholder="Vui lòng nhập" value="" name="s" />
+                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="search"></use></svg></button>
             </form>
 
             <h5 class="cat-list-title">Thể loại sách</h5>
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                        <a href="shop"  title="">Tất cả</a>
-                    </li>
+                    <a href="shop"  title="">Tất cả</a>
+                </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
                         <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
@@ -213,7 +213,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -223,7 +223,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
@@ -423,7 +423,7 @@
                 <main class="col-md-9">
                     <div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
                         <div class="showing-product">
-                           <h6>Tìm thấy <span>${productCount}</span> sản phẩm</h6>
+                            <h6>Tìm thấy <span>${productCount}</span> sản phẩm</h6>
                         </div>
                         <div class="sort-by">
                             <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
@@ -504,34 +504,36 @@
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}">Prev</a>
+                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}">Prev</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item" style="display: none;">
-                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}">Prev</a>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Prev</span>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
 
-                            <!-- Liên kết đến các trang -->
-                            <li class="page-item active" aria-current="page">
-                                <span class="page-link"></span>
-                            </li>
                             <c:forEach begin="1" end="${endP}" var="e">
                                 <li class="page-item ${tag == e ? 'active' : ''}">
-                                    <a class="page-link" href="search?index=${e}&amp;categoryId=${currentCategoryId}">${e}</a>
+                                    <a class="page-link" href="search?index=${e}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}">${e}</a>
                                 </li>
                             </c:forEach>
 
-                            <!-- Xác định trang kế tiếp -->
-                            <li class="page-item">
-                                <a class="page-link" href="search?index=${tag + 1}&amp;categoryId=${currentCategoryId}">Next</a>
-                            </li>
+                            <c:choose>
+                                <c:when test="${tag < endP}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="search?index=${tag + 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Next</span>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
                     </nav>
-
-
 
                 </main>
                 <aside class="col-md-3">

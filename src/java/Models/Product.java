@@ -108,6 +108,11 @@ public class Product {
         this.ageId = ageId;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" + "productId=" + productId + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", description=" + description + ", categoryId=" + categoryId + ", authorId=" + authorId + ", imgProduct=" + imgProduct + ", ageId=" + ageId + '}';
+    }
+
     
     
 }

@@ -4,7 +4,7 @@
     Author     : huyca
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -208,41 +208,21 @@
 
             <form role="search" method="get" class="search-form" action="">
                 <input type="search" id="search-form" class="search-field" placeholder="Nhập thể loại sách" value="" name="s" />
-                <button type="submit" class="search-submit"><svg class="search">
-                    <use xlink:href="#search"></use>
-                    </svg></button>
+                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
             <h5 class="cat-list-title">Thể loại sách</h5>
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                    <a href="#" title="truyentranh">Truyện tranh</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocnuocngoai">Văn học nước ngoài</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="lichsutruyenthong">Lịch sử, truyền thống</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="kienthuckhoahoc">Kiến thức, khoa học</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="mangaconmic">Manga-Conmic</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="wingsbooks">Wings Books</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="giaimabanthan">Giải mã bản thân</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
-                </li>
+                        <a href="shop"  title="">Tất cả</a>
+                    </li>
+                <c:forEach items="${category}" var="cate">
+                    <li class="cat-list-item">
+                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    </li>
+                </c:forEach>
+
             </ul>
 
         </div>
@@ -306,9 +286,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                    <li>
-                                        <a href="single" class="dropdown-item fw-light">Single Product <span class="badge bg-primary"></span></a>
-                                    </li>
+                                    
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -318,9 +296,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    <li>
-                                        <a href="post" class="dropdown-item fw-light">Single Post <span class="badge bg-primary"></span></a>
-                                    </li>
+                                    
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
