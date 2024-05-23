@@ -84,7 +84,7 @@ public class HomeDAO extends DBContext{
     public static void main(String[] args) {
         HomeDAO dal = new HomeDAO();
         ArrayList<Product> data = new ArrayList<>();
-        data = dal.get6sellmany();
+        data = dal.get3radum();
         
         
         System.out.println(data);

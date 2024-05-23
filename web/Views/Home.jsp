@@ -41,7 +41,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Set the date we're counting down to
-            var countDownDate = new Date("May 22, 2024 23:59:59").getTime();
+            var countDownDate = new Date("May 23, 2024 23:59:59").getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function () {
@@ -485,19 +485,19 @@
             <use xlink:href="#alt-arrow-left-outline"></use>
             </svg>
         </div>
+        
+        
         <div class="swiper main-swiper">
             <div class="swiper-wrapper d-flex align-items-center">
-
-
+               
+                
+                
+                
                 <c:forEach items="${data}" var="d" >
                     <div class="swiper-slide">
                         <div class="container">
-
-
                             <div class="row d-flex flex-column-reverse flex-md-row align-items-center">
                                 <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-
-
                                     <div class="banner-content">
                                         <h3>${d.name}</h3>
                                         <p>${d.price}</p>
@@ -510,10 +510,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </c:forEach>      
@@ -1362,8 +1358,9 @@
                     <div class="col-lg-3 col-sm-6 pb-3">
                         <div class="footer-menu">
                             <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
-                            <p>Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit. Gravida massa volutpat aenean odio erat nullam fringilla.</p>
-                            <div class="social-links">
+                            <p>
+                                "Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
+<!--                            <div class="social-links">
                                 <ul class="d-flex list-unstyled">
                                     <li>
                                         <a href="#">
@@ -1401,12 +1398,12 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="col-lg-2 col-sm-6 pb-3">
                         <div class="footer-menu text-capitalize">
-                            <h5 class="widget-title pb-2">Quick Links</h5>
+                            <h5 class="widget-title pb-2">Trang chính</h5>
                             <ul class="menu-list list-unstyled text-capitalize">
                                 <li class="menu-item mb-1">
                                     <a href="#">Home</a>
@@ -1428,32 +1425,32 @@
                     </div>
                     <div class="col-lg-3 col-sm-6 pb-3">
                         <div class="footer-menu text-capitalize">
-                            <h5 class="widget-title pb-2">Help & Info Help</h5>
+                            <h5 class="widget-title pb-2">Trợ giúp & Thông tin Trợ giúp</h5>
                             <ul class="menu-list list-unstyled">
                                 <li class="menu-item mb-1">
-                                    <a href="#">Track Your Order</a>
+                                    <a href="#">Theo dõi đơn hàng của bạn</a>
                                 </li>
                                 <li class="menu-item mb-1">
-                                    <a href="#">Returns Policies</a>
+                                    <a href="#">Chính sách hoàn trả</a>
                                 </li>
                                 <li class="menu-item mb-1">
-                                    <a href="#">Shipping + Delivery</a>
+                                    <a href="#">Vận chuyển + Giao hàng</a>
                                 </li>
                                 <li class="menu-item mb-1">
-                                    <a href="#">Contact Us</a>
+                                    <a href="#">Liên hệ chúng tôi</a>
                                 </li>
                                 <li class="menu-item mb-1">
-                                    <a href="#">Faqs</a>
+                                    <a href="#">Câu hỏi thường gặp</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 pb-3">
                         <div class="footer-menu contact-item">
-                            <h5 class="widget-title text-capitalize pb-2">Contact Us</h5>
-                            <p>Do you have any queries or suggestions? <a href="mailto:" class="text-decoration-underline">yourinfo@gmail.com</a></p>
-                            <p>If you need support? Just give us a call. <a href="#" class="text-decoration-underline">+55 111 222
-                                    333 44</a></p>
+                            <h5 class="widget-title text-capitalize pb-2">Liên hệ chúng tôi</h5>
+                            <p>Bạn có bất kỳ thắc mắc hoặc gợi ý nào không? <a href="mailto:" class="text-decoration-underline">shopbook88@gmail.com</a></p>
+                            <p>Nếu bạn cần hỗ trợ? Chỉ cần gọi cho chúng tôi. <a href="#" class="text-decoration-underline">+84 38 272
+                                    0127</a></p>
                         </div>
                     </div>
                 </div>
@@ -1467,14 +1464,16 @@
         <div class="d-flex flex-wrap justify-content-between">
             <div class="ship-and-payment d-flex gap-md-5 flex-wrap">
                 <div class="shipping d-flex">
-                    <p>We ship with:</p>
+                    <p>Giao hàng nhanh</p>
                     <div class="card-wrap ps-2">
-                        <img src="${pageContext.request.contextPath}/images/dhl.png" alt="visa">
-                        <img src="${pageContext.request.contextPath}/images/shippingcard.png" alt="mastercard">
+<!--                        <img src="${pageContext.request.contextPath}/images/dhl.png" alt="visa">
+                        <img src="${pageContext.request.contextPath}/images/shippingcard.png" alt="mastercard">-->
                     </div>
                 </div>
                 <div class="payment-method d-flex">
-                    <p>Payment options:</p>
+                   
+                     <p>Thanh toán trước tiếp hoặc qua các thẻ</p>
+                    
                     <div class="card-wrap ps-2">
                         <img src="${pageContext.request.contextPath}/images/visa.jpg" alt="visa">
                         <img src="${pageContext.request.contextPath}/images/mastercard.jpg" alt="mastercard">
@@ -1483,7 +1482,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>© Copyright 2024 Bookly. HTML Template by <a href="https://templatesjungle.com/" target="_blank">TemplatesJungle</a>
+                <p>ShopBook88 <a href="home" target="_blank">mang lại thế giới cho bạn</a>
                 </p>
             </div>
         </div>

@@ -3,13 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Blog.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Search.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Controllers/SearchControllers.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/About.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Controllers/ShopControllers.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/About.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Checkout.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SinglePost.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/images/main-logo.png</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SingleProduct.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Contact.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/css/style.css</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Blog.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/img_account/default.jpg</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailCustomer.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Cart.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/images/insta-item5.jpg</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/HomeDAO.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Home.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DBContext.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/img_product/105.jpg</file>
         </group>
     </open-files>
 </project-private>
