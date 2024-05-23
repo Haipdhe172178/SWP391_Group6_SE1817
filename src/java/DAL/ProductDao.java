@@ -271,6 +271,7 @@ public class ProductDao extends DBContext {
     }
 
 
+
     // phân trang khi sort bằng tên
     public List<Product> pagingProductsSortedByName(int index, boolean ascending) {
         List<Product> products = new ArrayList<>();
@@ -451,8 +452,5 @@ public class ProductDao extends DBContext {
         }
         return products;
     }
-
-
-
 
 }
