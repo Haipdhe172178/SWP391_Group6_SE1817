@@ -6,9 +6,13 @@ package Controllers;
 
 import DAL.AuthorDao;
 import DAL.CategoryDao;
+import DAL.NewsDao;
+import DAL.ObjectAgeDao;
 import DAL.ProductDao;
 import Models.Author;
 import Models.Category;
+import Models.News;
+import Models.ObjectAge;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -66,15 +71,22 @@ public class SingleProductControllers extends HttpServlet {
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
         CategoryDao cateDao = new CategoryDao();
+        ObjectAgeDao ageDao = new ObjectAgeDao();
+        NewsDao nd = new NewsDao();
         
         Product product = productDao.getProductById(id);
         Author author = authorDao.getAuthorById(product.getAuthorId());
         Category category = cateDao.getCategoryByID(product.getCategoryId());
+        ObjectAge objectAge = ageDao.getObjectAgesByID(product.getAgeId());
+        List<Product> listP = productDao.getProductsByCategoryId(product.getCategoryId(),"fourRandom");
+        List<News> listNews = nd.getFourNewsLated();
         
-        
+        request.setAttribute("relatedProduct", listP);
         request.setAttribute("product", product);
+        request.setAttribute("objectAge", objectAge);
         request.setAttribute("category", category);
         request.setAttribute("author", author);
+        request.setAttribute("news", listNews);
 
         request.getRequestDispatcher("Views/SingleProduct.jsp").forward(request, response);
     }

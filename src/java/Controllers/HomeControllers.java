@@ -6,7 +6,9 @@ package Controllers;
 
 import DAL.CategoryDao;
 import DAL.HomeDAO;
+import DAL.NewsDao;
 import Models.Category;
+import Models.News;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,16 +67,20 @@ public class HomeControllers extends HttpServlet {
         ArrayList<Product> data1 = new ArrayList<>();
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
-         request.setAttribute("category", categorys);
+        request.setAttribute("category", categorys);
         HomeDAO dal = new HomeDAO();
         data = dal.get3radum();
         data1 = dal.get6sellmany();
-        
+
+        //News to homepage
+        NewsDao nd = new NewsDao();
+        List<News> listNews = nd.getFourNewsLated();
+
+        request.setAttribute("news", listNews);
         request.setAttribute("data1", data1);
         request.setAttribute("data", data);
-        
+
         request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
-        
 
     }
 

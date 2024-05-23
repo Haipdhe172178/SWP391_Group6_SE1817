@@ -142,8 +142,8 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                        <a href="shop"  title="">Tất cả</a>
-                    </li>
+                    <a href="shop"  title="">Tất cả</a>
+                </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
                         <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
@@ -213,7 +213,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                   
+
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -223,7 +223,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
@@ -423,21 +423,20 @@
                 <main class="col-md-9">
                     <div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
                         <div class="showing-product">
-                            <h6>Tìm thấy <span>${product.size()}</span></h6>
+                          <h6>Tìm thấy <span>${count}</span> Sản Phẩm</h6>
                         </div>
-                        <div class="sort-by">
-                            <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
-                                <option value="">Default sorting</option>
-                                <option value="">Name (A - Z)</option>
-                                <option value="">Name (Z - A)</option>
-                                <option value="">Price (Low-High)</option>
-                                <option value="">Price (High-Low)</option>
-                                <option value="">Rating (Highest)</option>
-                                <option value="">Rating (Lowest)</option>
-                                <option value="">Model (A - Z)</option>
-                                <option value="">Model (Z - A)</option>   
-                            </select>
-                        </div>
+                        <form id="sort-form" action="shop" method="get">
+                            <div class="sort-by">
+                                <select id="sorting" class="form-select" name="sortBy" onchange="this.form.submit()">
+                                    <option value="">Mặc Định</option>
+                                    <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
+                                     <option value="name-desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
+                                    <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Low-High)</option>
+                                    <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (High-Low)</option>
+                                </select>
+                            </div>
+                        </form>
+
                     </div>
                     <div class="row product-content product-store">
                         <c:forEach items="${ListA}" var="pro">
@@ -499,35 +498,40 @@
                     </div>
 
                     <nav class="py-5" aria-label="Page navigation">
-
                         <ul class="pagination justify-content-center gap-4">
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag - 1}">Prev</a>
+                                        <a class="page-link" href="shop?index=${tag - 1}&sortBy=${sortBy}">Prev</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item" style="display: none;">
-                                        <a class="page-link" href="shop?index=${tag - 1}">Prev</a>
+                                        <a class="page-link" href="shop?index=${tag - 1}&sortBy=${sortBy}">Prev</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
 
-                            <li class="page-item active" aria-current="page">
-                                <span class="page-link"></span>
-                            </li>
                             <c:forEach begin="1" end="${endP}" var="e">
                                 <li class="page-item ${tag == e ? 'active' : ''}">
-                                    <a class="page-link" href="shop?index=${e}">${e}</a>
+                                    <a class="page-link" href="shop?index=${e}&sortBy=${sortBy}">${e}</a>
                                 </li>
                             </c:forEach>
-                            <li class="page-item">
-
-                                <a class="page-link" href="shop?index=${tag + 1}">Next</a>
-                            </li>
+                            <c:choose>
+                                <c:when test="${tag < endP}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="shop?index=${tag + 1}&sortBy=${sortBy}">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item" style="display: none;">
+                                        <a class="page-link" href="shop?index=${tag + 1}&sortBy=${sortBy}">Next</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
                     </nav>
+
 
 
 
@@ -602,7 +606,7 @@
                                 <li class="tags-item">
                                     <label>
                                         <input type="checkbox" name="price_filter" value="10to20">
-                                       Từ 100,000₫ - 200,000₫
+                                        Từ 100,000₫ - 200,000₫
                                     </label>
                                 </li>
                                 <li class="tags-item">
@@ -620,13 +624,13 @@
                                 <li class="tags-item">
                                     <label>
                                         <input type="checkbox" name="price_filter" value="40to50">
-                                       Từ 400,000₫ - 500,000₫
+                                        Từ 400,000₫ - 500,000₫
                                     </label>
                                 </li>
                                 <li class="tags-item">
                                     <label>
                                         <input type="checkbox" name="price_filter" value="morethan50">
-                                       Lớn hơn 500,000₫
+                                        Lớn hơn 500,000₫
                                     </label>
                                 </li>
                             </ul>

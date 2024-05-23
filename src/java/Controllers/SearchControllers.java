@@ -66,7 +66,12 @@ public class SearchControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String indexPage = request.getParameter("index");
-        int index = (indexPage != null) ? Integer.parseInt(indexPage) : 1;
+        int index;
+        if (indexPage != null) {
+            index = Integer.parseInt(indexPage);
+        } else {
+            index = 1;
+        }
 
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
@@ -79,6 +84,7 @@ public class SearchControllers extends HttpServlet {
 
         String keyword = request.getParameter("s");
         String categoryIdParam = request.getParameter("categoryId");
+        String sortBy = request.getParameter("sortBy");
         Integer categoryId = null;
 
         if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
@@ -90,10 +96,50 @@ public class SearchControllers extends HttpServlet {
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             count = productDao.getTotalProductsByKeyword(keyword);
-            list = productDao.pagingProductsByKeyword(index, keyword);
+            if (sortBy != null && !sortBy.isEmpty()) {
+                switch (sortBy) {
+                    case "name_asc":
+                        list = productDao.pagingProductsSortedByName(index, true, keyword);
+                        break;
+                    case "name_desc":
+                        list = productDao.pagingProductsSortedByName(index, false, keyword);
+                        break;
+                    case "price_asc":
+                        list = productDao.pagingProductsSortedByPrice(index, true, keyword);
+                        break;
+                    case "price_desc":
+                        list = productDao.pagingProductsSortedByPrice(index, false, keyword);
+                        break;
+                    default:
+                        list = productDao.pagingProductsByKeyword(index, keyword);
+                        break;
+                }
+            } else {
+                list = productDao.pagingProductsByKeyword(index, keyword);
+            }
         } else if (categoryId != null) {
             count = productDao.getTotalProductsByCategory(categoryId);
-            list = productDao.pagingProductsByCategory(index, categoryId);
+            if (sortBy != null && !sortBy.isEmpty()) {
+                switch (sortBy) {
+                    case "name_asc":
+                        list = productDao.pagingProductsSortedByName(index, true, categoryId);
+                        break;
+                    case "name_desc":
+                        list = productDao.pagingProductsSortedByName(index, false, categoryId);
+                        break;
+                    case "price_asc":
+                        list = productDao.pagingProductsSortedByPrice(index, true, categoryId);
+                        break;
+                    case "price_desc":
+                        list = productDao.pagingProductsSortedByPrice(index, false, categoryId);
+                        break;
+                    default:
+                        list = productDao.pagingProductsByCategory(index, categoryId);
+                        break;
+                }
+            } else {
+                list = productDao.pagingProductsByCategory(index, categoryId);
+            }
         }
 
         int endPage = count / 8;
@@ -116,6 +162,9 @@ public class SearchControllers extends HttpServlet {
         if (keyword != null) {
             request.setAttribute("currentKeyword", keyword);
         }
+        if (sortBy != null) {
+            request.setAttribute("sortBy", sortBy);
+        }
 
         request.getRequestDispatcher("Views/Search.jsp").forward(request, response);
     }
@@ -131,20 +180,7 @@ public class SearchControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//         String keyword = request.getParameter("s");
-//         if (keyword != null && !keyword.isEmpty()) {
-//
-//        ProductDao productDao = new ProductDao();
-//
-//        List<Product> products = productDao.searchProductsByName(keyword);
-//
-//        request.setAttribute("product", products);
-//        request.getRequestDispatcher("Views/Search.jsp").forward(request, response);
-//    } else {
-//         List<Product> emptyList = new ArrayList<>();
-//        request.setAttribute("product", emptyList);
-//        request.getRequestDispatcher("Views/Search.jsp").forward(request, response);
-//    }
+
     }
 
     /**

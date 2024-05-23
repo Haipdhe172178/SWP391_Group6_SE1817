@@ -425,19 +425,20 @@
                         <div class="showing-product">
                             <h6>Tìm thấy <span>${productCount}</span> sản phẩm</h6>
                         </div>
-                        <div class="sort-by">
-                            <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
-                                <option value="">Default sorting</option>
-                                <option value="">Name (A - Z)</option>
-                                <option value="">Name (Z - A)</option>
-                                <option value="">Price (Low-High)</option>
-                                <option value="">Price (High-Low)</option>
-                                <option value="">Rating (Highest)</option>
-                                <option value="">Rating (Lowest)</option>
-                                <option value="">Model (A - Z)</option>
-                                <option value="">Model (Z - A)</option>   
-                            </select>
-                        </div>
+                        <form id="sort-form" action="search" method="get">
+                            <input type="hidden" name="s" value="${currentKeyword}">
+                            <input type="hidden" name="categoryId" value="${currentCategoryId}">
+                            <div class="sort-by">
+                                <select id="sorting" class="form-select" name="sortBy" onchange="this.form.submit()">
+                                    <option value="">Mặc Định</option>
+                                    <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
+                                    <option value="name_desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
+                                    <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Low-High)</option>
+                                    <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (High-Low)</option>
+                                </select>
+                            </div>
+                        </form>
+
                     </div>
                     <div class="row product-content product-store">
                         <c:forEach items="${ListA}" var="pro">
@@ -504,7 +505,7 @@
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}">Prev</a>
+                                        <a class="page-link" href="search?index=${tag - 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}&amp;sortBy=${sortBy}">Prev</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
@@ -516,14 +517,14 @@
 
                             <c:forEach begin="1" end="${endP}" var="e">
                                 <li class="page-item ${tag == e ? 'active' : ''}">
-                                    <a class="page-link" href="search?index=${e}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}">${e}</a>
+                                    <a class="page-link" href="search?index=${e}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}&amp;sortBy=${sortBy}">${e}</a>
                                 </li>
                             </c:forEach>
 
                             <c:choose>
                                 <c:when test="${tag < endP}">
                                     <li class="page-item">
-                                        <a class="page-link" href="search?index=${tag + 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}">Next</a>
+                                        <a class="page-link" href="search?index=${tag + 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}&amp;sortBy=${sortBy}">Next</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
@@ -534,6 +535,8 @@
                             </c:choose>
                         </ul>
                     </nav>
+
+
 
                 </main>
                 <aside class="col-md-3">
@@ -552,12 +555,13 @@
                         </div>
                         <div class="widget-product-categories pt-5">
                             <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Categories</h3>
+                                <h3 class="d-flex flex-column mb-0">Thể loại</h3>
                             </div>
                             <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                <li class="cat-item">
-                                    <a href="/collections/categories">All</a>
-                                </li>
+                                <label>
+                                    <input type="checkbox" name="category" value="all">
+                                    Tất cả
+                                </label>
                                 <c:forEach items="${category}" var="c">
                                     <li class="cat-item">
                                         <label>

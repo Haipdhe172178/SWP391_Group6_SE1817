@@ -69,9 +69,15 @@ public class ProductDao extends DBContext {
     }
 
     //lấy prodcut bằng categoryId
-    public List<Product> getProductsByCategoryId(int categoryId) {
+    public List<Product> getProductsByCategoryId(int categoryId, String option) {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE CategoryID = ?";
+        String query;
+        if (option.equalsIgnoreCase("fourRandom")) {
+            query = "SELECT TOP 4 * FROM Product WHERE CategoryID = ? Order by NEWID()";
+        } else {
+            query = "SELECT T* FROM Product WHERE CategoryID = ? " ;
+        }
+        
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, categoryId);
@@ -95,6 +101,15 @@ public class ProductDao extends DBContext {
         return products;
     }
 
+    public static void main(String[] args) {
+        //test function
+        ProductDao pd = new ProductDao();
+        List<Product> p = pd.getProductsByCategoryId(1, "fourRandom");
+        for (Product product : p) {
+            System.out.println(product.getProductId());
+        }
+    }
+    
     //Đếm số lượng product trong data
     public int getTotalProduct() {
         String query = "Select count (*) from Product";
@@ -166,7 +181,7 @@ public class ProductDao extends DBContext {
         }
         return products;
     }
-
+    // phân trang khi tìm kiếm bằng key word
     public List<Product> pagingProductsByKeyword(int index, String keyword) {
         List<Product> products = new ArrayList<>();
         String query = "SELECT * FROM Product WHERE name LIKE ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
@@ -254,5 +269,190 @@ public class ProductDao extends DBContext {
         }
         return total;
     }
-     
+
+
+    // phân trang khi sort bằng tên
+    public List<Product> pagingProductsSortedByName(int index, boolean ascending) {
+        List<Product> products = new ArrayList<>();
+        String sortOrder = ascending ? "ASC" : "DESC";
+        String query = "SELECT * FROM Product ORDER BY Name " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    // phân trang khi sort theo giá
+    public List<Product> pagingProductsSortedByPrice(int index, boolean ascending) {
+        List<Product> products = new ArrayList<>();
+        String sortOrder = ascending ? "ASC" : "DESC";
+        String query = "SELECT * FROM Product ORDER BY Price " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    // lấy tổng số sản phẩm khi sort
+    public int getTotalProductBySort(String sortBy) {
+        String query = "SELECT COUNT(*) FROM Product";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+    // phân trang khi sort bằng tên (String)
+    public List<Product> pagingProductsSortedByName(int index, boolean ascending, String keyword) {
+        List<Product> products = new ArrayList<>();
+        String sortOrder = ascending ? "ASC" : "DESC";
+        String query = "SELECT * FROM Product WHERE name LIKE ? ORDER BY name " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    // phân trang khi sort bằng giá (String)
+    public List<Product> pagingProductsSortedByPrice(int index, boolean ascending, String keyword) {
+        List<Product> products = new ArrayList<>();
+        String sortOrder = ascending ? "ASC" : "DESC";
+        String query = "SELECT * FROM Product WHERE name LIKE ? ORDER BY price " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    // phân trang khi sort bằng tên (int)
+    public List<Product> pagingProductsSortedByName(int index, boolean ascending, int categoryId) {
+        List<Product> products = new ArrayList<>();
+        String sortOrder = ascending ? "ASC" : "DESC";
+        String query = "SELECT * FROM Product WHERE categoryId = ? ORDER BY name " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    // phân trang khi sort bằng giá (int)
+    public List<Product> pagingProductsSortedByPrice(int index, boolean ascending, int categoryId) {
+        List<Product> products = new ArrayList<>();
+        String sortOrder = ascending ? "ASC" : "DESC";
+        String query = "SELECT * FROM Product WHERE categoryId = ? ORDER BY price " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+
+
+
+
 }

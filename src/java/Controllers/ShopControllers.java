@@ -64,6 +64,7 @@ public class ShopControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String sortBy = request.getParameter("sortBy");
         String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
@@ -74,26 +75,56 @@ public class ShopControllers extends HttpServlet {
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
         ObjectAgeDao objectAgeDao = new ObjectAgeDao();
-        List<Author> authors = new AuthorDao().getallAuthors();
-        List<Product> products = productDao.getAllProducts();
-        List<Category> categorys = categoryDao.getallCategorys();
+
+        List<Author> authors = authorDao.getallAuthors();
+        List<Category> categories = categoryDao.getallCategorys();
         List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
-        //Đếm số lượng product
-        int count = productDao.getTotalProduct();
+
+        List<Product> products;
+        int count;
+
+        if (sortBy == null || sortBy.isEmpty()) {
+            products = productDao.pagingProducts(index);
+            count = productDao.getTotalProduct();
+        } else {
+            switch (sortBy) {
+                case "name_asc":
+                    products = productDao.pagingProductsSortedByName(index, true);
+                    count = productDao.getTotalProduct();  
+                    break;
+                case "name-desc":
+                    products = productDao.pagingProductsSortedByName(index, false);
+                    count = productDao.getTotalProduct();  
+                    break;
+                case "price_asc":
+                    products = productDao.pagingProductsSortedByPrice(index, true);
+                    count = productDao.getTotalProduct();  
+                    break;
+                case "price_desc":
+                    products = productDao.pagingProductsSortedByPrice(index, false);
+                    count = productDao.getTotalProduct(); 
+                    break;
+                default:
+                    products = productDao.pagingProducts(index);
+                    count = productDao.getTotalProduct();
+                    break;
+            }
+        }
 
         int endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;
         }
-        List<Product> list = productDao.pagingProducts(index);
 
-        request.setAttribute("ListA", list);
+        request.setAttribute("ListA", products);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.setAttribute("author", authors);
         request.setAttribute("product", products);
-        request.setAttribute("category", categorys);
+        request.setAttribute("category", categories);
         request.setAttribute("objage", objectAges);
+        request.setAttribute("sortBy", sortBy);
+        request.setAttribute("count", count);
         request.getRequestDispatcher("Views/Shop.jsp").forward(request, response);
     }
 

@@ -12,27 +12,28 @@ import java.util.Date;
  */
 public class News {
     private int newId;
-    private int topicId;
+    private Topic topic;
     private String title;
-    private String desctiption;
+    private String content;
     private String imgNews1;
     private String imgNews2;
-    private String imgNews3;
     private Date dateUpload;
+    private String source;
 
     public News() {
     }
 
-    public News(int newId, int topicId, String title, String desctiption, String imgNews1, String imgNews2, String imgNews3, Date dateUpload) {
+    public News(int newId, Topic topic, String title, String content, String imgNews1, String imgNews2, Date dateUpload, String source) {
         this.newId = newId;
-        this.topicId = topicId;
+        this.topic = topic;
         this.title = title;
-        this.desctiption = desctiption;
+        this.content = content;
         this.imgNews1 = imgNews1;
         this.imgNews2 = imgNews2;
-        this.imgNews3 = imgNews3;
         this.dateUpload = dateUpload;
+        this.source = source;
     }
+
 
     public int getNewId() {
         return newId;
@@ -42,12 +43,12 @@ public class News {
         this.newId = newId;
     }
 
-    public int getTopicId() {
-        return topicId;
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setTopicId(int topicId) {
-        this.topicId = topicId;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public String getTitle() {
@@ -58,12 +59,12 @@ public class News {
         this.title = title;
     }
 
-    public String getDesctiption() {
-        return desctiption;
+    public String getContent() {
+        return content;
     }
 
-    public void setDesctiption(String desctiption) {
-        this.desctiption = desctiption;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getImgNews1() {
@@ -82,20 +83,20 @@ public class News {
         this.imgNews2 = imgNews2;
     }
 
-    public String getImgNews3() {
-        return imgNews3;
-    }
-
-    public void setImgNews3(String imgNews3) {
-        this.imgNews3 = imgNews3;
-    }
-
     public Date getDateUpload() {
         return dateUpload;
     }
 
     public void setDateUpload(Date dateUpload) {
         this.dateUpload = dateUpload;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
     
 }

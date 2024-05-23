@@ -141,10 +141,10 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-<<<<<<< HEAD
+                    <<<<<<< HEAD
 
-                        <a href="shop"  title="">Tất cả</a>
-                    </li>
+                    <a href="shop"  title="">Tất cả</a>
+                </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
                         <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
@@ -152,9 +152,9 @@
                 </c:forEach>
 
 
-                   
-=======
-                    <a href="#" title="truyentranh">Truyện tranh</a>
+
+                =======
+                <a href="#" title="truyentranh">Truyện tranh</a>
                 </li>
                 <li class="cat-list-item">
                     <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
@@ -180,7 +180,7 @@
                 <li class="cat-list-item">
                     <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
                 </li>
->>>>>>> 3cdb581705c7986b16430e371ae26db05054514a
+                >>>>>>> 3cdb581705c7986b16430e371ae26db05054514a
             </ul>
 
         </div>
@@ -244,7 +244,7 @@
                                     <li>
                                         <a href="shop" class="dropdown-item fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
@@ -254,7 +254,7 @@
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="contact" class="dropdown-item active fw-light">Contact <span class="badge bg-primary"></span></a>
                                     </li>
@@ -452,7 +452,7 @@
             <div class="row">
                 <div class="contact-info col-lg-6 pb-3">
                     <h3>THÔNG TIN LIÊN LẠC</h3>
-                    
+
                     <div class="page-content d-flex flex-wrap">
                         <div class="col-lg-6 col-sm-12">
                             <div class="content-box text-dark pe-4 mb-5">
@@ -464,7 +464,7 @@
                                     <p>
                                         <a href="#">0339638903</a>
                                     </p>
-                                 
+
                                 </div>
                                 <div class="email-address">
                                     <p>
@@ -483,7 +483,7 @@
                                     <p>
                                         <a href="#">0339638903</a>
                                     </p>
-                                   
+
                                 </div>
                                 <div class="email-address">
                                     <p>
@@ -499,26 +499,32 @@
                     <p class="mb-5">Vui lòng liên hệ theo biểu mẫu dưới. 
                         ShopBook88 sẽ hồi âm trong thời gian nhanh nhất.</p>
 
-                    <form id="form" class="d-flex gap-3 flex-wrap">
+                    <form id="form" class="d-flex gap-3 flex-wrap" method="post" action="${pageContext.request.contextPath}/contact">
                         <div class="w-100 d-flex gap-3">
                             <div class="w-50">
-                                <input type="text" name="name" placeholder="Họ và tên *" class="form-control w-100">
+                                <input type="text" name="name" placeholder="Họ và tên *" class="form-control w-100" required>
                             </div>
                             <div class="w-50">
-                                <input type="text" name="email" placeholder="Email *" class="form-control w-100">
+                                <input type="email" name="email" placeholder="Email *" class="form-control w-100" required>
                             </div>
                         </div>
                         <div class="w-100">
-                            <input type="text" name="phone" placeholder="Số điện thoại" class="form-control w-100">
+                            <input type="text" name="phoneNumber" placeholder="Số điện thoại" class="form-control w-100">
                         </div>
                         <div class="w-100">
-                            <input type="text" name="subject" placeholder="Chủ đề" class="form-control w-100">
+                            <input type="text" name="topic" placeholder="Chủ đề" class="form-control w-100">
                         </div>
                         <div class="w-100">
-                            <textarea placeholder="Nội dung *" class="form-control w-100"></textarea>
+                            <textarea name="message" placeholder="Nội dung *" class="form-control w-100" required></textarea>
                         </div>
-                        <button type="submit" name="submit" class="btn my-3">Submit</button>
+                        <button type="submit" name="submit" class="btn my-3">Gửi liên hệ của bạn</button>
                     </form>
+
+                    <!-- Display message from servlet if any -->
+                    <div>
+                        ${requestScope.message}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -529,11 +535,11 @@
             <div class="row d-flex flex-wrap align-items-center">
                 <div class="col-lg-6">
                     <h3>Đường đến cửa hàng</h2>
-                    <div class="image-holder mb-5">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.20034887179!2d105.84517807387608!3d21.02466808792173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab03ca410b3d%3A0xc71c904043064efc!2sShop%20Book%2088!5e0!3m2!1svi!2s!4v1716220140248!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                </div>
-                
+                        <div class="image-holder mb-5">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.20034887179!2d105.84517807387608!3d21.02466808792173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab03ca410b3d%3A0xc71c904043064efc!2sShop%20Book%2088!5e0!3m2!1svi!2s!4v1716220140248!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                </div>
+
+                </div>
             </div>
-        </div>
     </section>
 
     <section id="customers-reviews" class="position-relative padding-large" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 600px;">
