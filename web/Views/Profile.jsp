@@ -4,6 +4,7 @@
     Author     : Hai Pham
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
@@ -42,70 +43,112 @@
                 box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3),
                     -3px -3px 6px rgba(255, 255, 255, 0.5);
             }
+            .nav-user-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropbtn {
+                color: #131814;
+                background-color: white;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover, .dropbtn:focus {
+                color: #F86D72/* Change this to your desired hover color */
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #ffffff;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+            .nav-user-dropdown:hover .dropdown-content {
+                display: block;
+            }
 
         </style>
     </head>
     <jsp:include page="../common/header.jsp"></jsp:include>
         <body className='snippet-body'>
-            <div class="container rounded bg-white mt-5 mb-5" style="width: 60%">
-                <div class="row profile">
-                    <div class="col-md-4 border-right">
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+        <c:set var="acc" value="${sessionScope.account}"/>
+        <div class="container rounded bg-white mt-5 mb-5" style="width: 60%">
+            <div class="row profile">
+                <div class="col-md-4 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}"><span class="font-weight-bold">${acc.fullName}</span><span class="text-black-50">${acc.email}</span><span> </span></div>
+                    <input type="file" style="margin-left: 5px"></input>
+                </div>
+                <div class="col-md-8" >
+
+                    <!-- Profile -->
+                    <div class="p-3 py-5" id="profile">
+                        <form action="profile" method="post">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Profile Settings</h4>
+                                <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Edit Profile</span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 inputprofile"><label class="labels">Full Name</label><input type="text" class="form-control" placeholder="full name" value="${acc.fullName}" disabled></div>
+                                <div class="col-md-6 inputprofile"><label class="labels">User Name</label><input type="text" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6 inputprofile"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="gender" value="${acc.gender}" disabled></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12 inputprofile"><label class="labels">Phone Number</label><input type="text" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" disabled></div>
+                                <div class="col-md-12 inputprofile"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address" value="${acc.address}" disabled></div>
+                                <div class="col-md-12 "><label class="labels">Email</label><input type="text" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
+                            </div>
+                            <div class="mt-5 text-center">
+                                <button class="btn btn-primary profile-button buttonprofile" type="submit" style="display: none">Save Profile</button>
+                                <button class="btn btn-secondary profile-button buttonprofile" type="button" style="display: none">Change Password</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-8" >
 
-                        <!-- Profile -->
-                        <div class="p-3 py-5" id="profile">
-                            <form action="profile" method="post">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h4 class="text-right">Profile Settings</h4>
-                                    <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Edit Profile</span>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-6 inputprofile"><label class="labels">Full Name</label><input type="text" class="form-control" placeholder="full name" value="" disabled></div>
-                                    <div class="col-md-6 inputprofile"><label class="labels">User Name</label><input type="text" class="form-control" value="" placeholder="username" disabled></div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6 inputprofile"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="gender" value="" disabled></div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12 inputprofile"><label class="labels">Phone Number</label><input type="text" class="form-control" placeholder="enter phone number" value="" disabled></div>
-                                    <div class="col-md-12 inputprofile"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address" value="" disabled></div>
-                                    <div class="col-md-12 "><label class="labels">Email</label><input type="text" class="form-control" placeholder="enter email" value="" disabled></div>
-                                </div>
-                                <div class="mt-5 text-center">
-                                    <button class="btn btn-primary profile-button buttonprofile" type="submit" style="display: none">Save Profile</button>
-                                    <button class="btn btn-secondary profile-button buttonprofile" type="button" style="display: none">Change Password</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Change Password -->
-                        <div class="p-3 py-5" id="changepass"style="display: none">
-                            <form action="changePassword" method="post">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h4 class="text-right">Change Password</h4>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-12"><label class="labels">Current Password</label><input type="text" class="form-control" placeholder="enter current password" value="" ></div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12"><label class="labels">New Password</label><input type="text" class="form-control" placeholder="enter new password" value="" ></div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12"><label class="labels">Confirm New Password</label><input type="text" class="form-control" placeholder="confirm enter new password" value="" ></div>
-                                </div>
-                                <div class="mt-5 text-center">
-                                    <button class="btn btn-primary profile-button" type="submit">Submit</button>
-                                    <button class="btn btn-secondary profile-button" type="button">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
+                    <!-- Change Password -->
+                    <div class="p-3 py-5" id="changepass"style="display: none">
+                        <form action="changePassword" method="post">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Change Password</h4>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12"><label class="labels">Current Password</label><input type="text" class="form-control" placeholder="enter current password" value="" ></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label class="labels">New Password</label><input type="text" class="form-control" placeholder="enter new password" value="" ></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label class="labels">Confirm New Password</label><input type="text" class="form-control" placeholder="confirm enter new password" value="" ></div>
+                            </div>
+                            <div class="mt-5 text-center">
+                                <button class="btn btn-primary profile-button" type="submit">Submit</button>
+                                <button class="btn btn-secondary profile-button" type="button">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
 <script type='text/javascript' src='#'></script>

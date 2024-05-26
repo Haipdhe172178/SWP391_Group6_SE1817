@@ -188,9 +188,6 @@
                                         <a href="shop" class="dropdown-item fw-light">Shop <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="single" class="dropdown-item active fw-light">Single Product <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
                                         <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
@@ -198,9 +195,6 @@
                                     </li>
                                     <li>
                                         <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="post" class="dropdown-item fw-light">Single Post <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
                                         <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
@@ -345,7 +339,7 @@
                                             <div class="nav-user-dropdown">
                                                 <button class="dropbtn">${sessionScope.account.getUserName()}</button>
                                                 <div class="dropdown-content">
-                                                    <a href="#">Tài khoản của tôi</a>
+                                                    <a href="profile">Tài khoản của tôi</a>
                                                     <a href="#">Đơn mua</a>
                                                     <a href="logout">Đăng xuất</a>
                                                 </div>

@@ -27,6 +27,49 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <style>
+            .nav-user-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropbtn {
+                color: #131814;
+                background-color: white;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover, .dropbtn:focus {
+                color: #F86D72/* Change this to your desired hover color */
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #ffffff;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+            .nav-user-dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+        </style>
     </head>
 
     <body>
