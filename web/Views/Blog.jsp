@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </section>
-
+        
             <div id="blog" class="padding-large">
                 <div class="container">
                     <div class="row flex-row-reverse g-md-5">
