@@ -505,7 +505,7 @@
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag - 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}&amp;price_filter=${priceFilter}&amp;objage=${currentAgeId}&amp;sortBy=${sortBy}">Prev</a>
+                                        <a class="page-link" href="shop?index=${tag - 1}${query}">Prev</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
@@ -524,7 +524,7 @@
                             <c:choose>
                                 <c:when test="${tag < endP}">
                                     <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag + 1}&amp;categoryId=${currentCategoryId}&amp;s=${currentKeyword}&amp;price_filter=${priceFilter}&amp;objage=${currentAgeId}&amp;sortBy=${sortBy}">Next</a>
+                                        <a class="page-link" href="shop?index=${tag + 1}${query}">Next</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
