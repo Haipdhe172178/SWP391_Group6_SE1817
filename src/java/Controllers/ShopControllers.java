@@ -79,6 +79,8 @@ public class ShopControllers extends HttpServlet {
             index = 1;
         }
 
+        String sortBy = request.getParameter("sortBy");
+
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
@@ -88,148 +90,106 @@ public class ShopControllers extends HttpServlet {
         List<Category> categories = categoryDao.getallCategorys();
         List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
 
-        String keyword = request.getParameter("s");
-        String categoryIdParam = request.getParameter("categoryId");
-        String sortBy = request.getParameter("sortBy");
-        String priceFilter = request.getParameter("price_filter");
-        String objageParam = request.getParameter("objage");
+        List<Product> list;
+        int count;
+        int endPage;
 
-        Integer categoryId = null;
-        Integer ageId = null;
-
-        if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
-            categoryId = Integer.parseInt(categoryIdParam);
-        }
-
-        if (objageParam != null && !objageParam.isEmpty()) {
-            ageId = Integer.parseInt(objageParam);
-        }
-
-        int count = 0;
-        List<Product> list = new ArrayList<>();
-
-        if ((keyword != null && !keyword.trim().isEmpty()) || categoryId != null || ageId != null) {
-            if (keyword != null && !keyword.trim().isEmpty()) {
-                count = productDao.getTotalProductsByKeyword(keyword);
-                if (sortBy != null && !sortBy.isEmpty()) {
-                    switch (sortBy) {
-                        case "name_asc":
-                            list = productDao.pagingProductsSortedByName(index, true, keyword);
-                            break;
-                        case "name_desc":
-                            list = productDao.pagingProductsSortedByName(index, false, keyword);
-                            break;
-                        case "price_asc":
-                            list = productDao.pagingProductsSortedByPrice(index, true, keyword);
-                            break;
-                        case "price_desc":
-                            list = productDao.pagingProductsSortedByPrice(index, false, keyword);
-                            break;
-
-                    }
-                } else {
-                    list = productDao.pagingProductsByKeyword(index, keyword);
-                }
-            } else if (categoryId != null) {
-                count = productDao.getTotalProductsByCategory(categoryId);
-                if (sortBy != null && !sortBy.isEmpty()) {
-                    switch (sortBy) {
-                        case "name_asc":
-                            list = productDao.pagingProductsSortedByName(index, true, categoryId);
-                            break;
-                        case "name_desc":
-                            list = productDao.pagingProductsSortedByName(index, false, categoryId);
-                            break;
-                        case "price_asc":
-                            list = productDao.pagingProductsSortedByPrice(index, true, categoryId);
-                            break;
-                        case "price_desc":
-                            list = productDao.pagingProductsSortedByPrice(index, false, categoryId);
-                            break;
-
-                    }
-                } else {
-                    list = productDao.pagingProductsByCategory(index, categoryId);
-                }
-            } else if (ageId != null) {
-                count = productDao.countProductsByAgeId(ageId);
-                if (sortBy != null && !sortBy.isEmpty()) {
-                    switch (sortBy) {
-                        case "name_asc":
-                            list = productDao.pagingObjectAgeSortedByName(index, true, ageId);
-                            break;
-                        case "name_desc":
-                            list = productDao.pagingObjectAgeSortedByName(index, false, ageId);
-                            break;
-                        case "price_asc":
-                            list = productDao.pagingObjectAgeSortedByPrice(index, true, ageId);
-                            break;
-                        case "price_desc":
-                            list = productDao.pagingObjectAgeSortedByPrice(index, false, ageId);
-                            break;
-
-                    }
-                } else {
-                    list = productDao.pagingProductsByAgeId(index, ageId);
-                }
+        if (sortBy != null) {
+            if (sortBy.equals("name_asc")) {
+                list = productDao.pagingProductsSortedByName(index, true);
+            } else if (sortBy.equals("name_desc")) {
+                list = productDao.pagingProductsSortedByName(index, false);
+            } else if (sortBy.equals("price_asc")) {
+                list = productDao.pagingProductsSortedByPrice(index, true);
+            } else if (sortBy.equals("price_desc")) {
+                list = productDao.pagingProductsSortedByPrice(index, false);
+            } else {
+                list = productDao.pagingProducts(index);
             }
         } else {
-            float minPrice = 0;
-            float maxPrice = 0;
-            if (priceFilter != null && !priceFilter.isEmpty()) {
-                switch (priceFilter) {
-                    case "lessthan10":
-                        maxPrice = 100000;
-                        break;
-                    case "10to20":
-                        minPrice = 100000;
-                        maxPrice = 200000;
-                        break;
-                    case "20to30":
-                        minPrice = 200000;
-                        maxPrice = 300000;
-                        break;
-                    case "30to40":
-                        minPrice = 300000;
-                        maxPrice = 400000;
-                        break;
-                    case "morethan50":
-                        minPrice = 500000;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            count = productDao.countPriceRange(minPrice, maxPrice);
-            list = productDao.pagingProductsByPriceRange(index, minPrice, maxPrice);
+            list = productDao.pagingProducts(index);
         }
 
-        int endPage = count / 8;
+        count = productDao.getTotalProduct();
+
+        String categoryIdStr = request.getParameter("categoryId");
+        int categoryId = 0;
+        if (categoryIdStr != null) {
+            categoryId = Integer.parseInt(categoryIdStr);
+        }
+
+        if (categoryId != 0) {
+            list = productDao.pagingProductsByCategory(index, categoryId);
+            count = productDao.getTotalProductsByCategory(categoryId);
+        }
+
+        String objectAge = request.getParameter("objage");
+        int obAge = 0;
+        if (objectAge != null) {
+            obAge = Integer.parseInt(objectAge);
+        }
+        if (obAge != 0) {
+            list = productDao.pagingProductsByAgeId(index, obAge);
+            count = productDao.countProductsByAgeId(obAge);
+
+        }
+        String priceFilter = request.getParameter("price_filter");
+        float minPrice = 0;
+        float maxPrice = 0;
+        if (priceFilter != null) {
+            switch (priceFilter) {
+                case "lessthan10":
+                    maxPrice = 100000;
+                    break;
+                case "10to20":
+                    minPrice = 100000;
+                    maxPrice = 200000;
+                    break;
+                case "20to30":
+                    minPrice = 200000;
+                    maxPrice = 300000;
+                    break;
+                case "30to40":
+                    minPrice = 300000;
+                    maxPrice = 400000;
+                    break;
+                case "morethan50":
+                    minPrice = 500000;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (minPrice > 0 || maxPrice > 0) {
+            list = productDao.pagingProductsByPriceRange(index, minPrice, maxPrice);
+            count = productDao.countPriceRange(minPrice, maxPrice);
+
+        }
+
+        String searchKeyword = request.getParameter("s");
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            list = productDao.pagingProductsByKeyword(index, searchKeyword);
+            count = productDao.getTotalProductsByKeyword(searchKeyword);
+        }
+        endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;
         }
-        request.setAttribute("author", authors);
-        request.setAttribute("category", categories);
-        request.setAttribute("objage", objectAges);
-        request.setAttribute("productCount", count);
         String query = "";
-        if (keyword != null) {
-            query += "&&keyword=" + keyword;
+        if (categoryIdStr != null) {
+            query += "&&categoryId=" + categoryIdStr;
         }
-        if (sortBy != null) {
-            query += "&&sortBy=" + sortBy;
-        }
-        if (categoryId != null) {
-            query += "&&categoryId=" + categoryId;
+        if (objectAge != null) {
+            query += "&&objage=" + objectAge;
         }
         if (priceFilter != null) {
             query += "&&price_filter=" + priceFilter;
         }
-        if (ageId != null) {
-            query += "&&objage=" + ageId;
+        if (searchKeyword != null) {
+            query += "&&s=" + searchKeyword;
         }
-        
+
         //Thêm list news và feedback
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
@@ -240,8 +200,11 @@ public class ShopControllers extends HttpServlet {
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
-        
         request.setAttribute("query", query);
+        request.setAttribute("author", authors);
+        request.setAttribute("category", categories);
+        request.setAttribute("objage", objectAges);
+        request.setAttribute("count", count);
         request.setAttribute("ListA", list);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);

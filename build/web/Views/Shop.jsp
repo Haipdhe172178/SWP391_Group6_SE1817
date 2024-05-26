@@ -496,20 +496,28 @@
                         <div class="showing-product">
                             <h6>Tìm thấy <span>${count}</span> Sản Phẩm</h6>
                         </div>
-                        <form id="sort-form" action="shop" method="get">
-                            <input type="hidden" name="s" value="${currentKeyword}">
-                            <input type="hidden" name="categoryId" value="${currentCategoryId}">
-                            <input type="hidden" name="objage" value="${currentAgeId}">
-                            <div class="sort-by">
-                                <select id="sorting" class="form-select" name="sortBy" onchange="this.form.submit()">
-                                    <option value="">Mặc Định</option>
-                                    <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
-                                    <option value="name_desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
-                                    <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Low-High)</option>
-                                    <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (High-Low)</option>
-                                </select>
-                            </div>
-                        </form>
+                        <div class="sort-by dropdown">
+                            <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Sắp xếp</a>
+                            <ul class="dropdown-menu animate slide border">
+                                <li>
+                                    <a href="shop" class="dropdown-item fw-light">Mặc Định<span class="badge bg-primary"></span></a>
+                                </li>
+                                <li>
+                                    <a href="shop?sortBy=name_asc" class="dropdown-item fw-light">Tên (A - Z)<span class="badge bg-primary"></span></a>
+                                </li>
+                                <li>
+                                    <a href="shop?sortBy=name_desc" class="dropdown-item  fw-light">Tên (Z - A)<span class="badge bg-primary"></span></a>
+                                </li>
+
+                                <li>
+                                    <a href="shop?sortBy=price_asc" class="dropdown-item fw-light">Giá (Thấp - Cao)<span class="badge bg-primary"></span></a>
+                                </li>
+                                <li>
+                                    <a href="shop?sortBy=price_desc" class="dropdown-item fw-light">Giá (Cao - Thấp)<span class="badge bg-primary"></span></a>
+                                </li>
+
+                            </ul>
+                        </div>
 
                     </div>
                     <div class="row product-content product-store">
