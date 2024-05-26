@@ -470,7 +470,7 @@
             <div class="container">
                 <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
                     <h3 class="d-flex align-items-center">Latest posts</h3>
-                    <a href="shop" class="btn">View All</a>
+                    <a href="blog" class="btn">View All</a>
                 </div>
                 <div class="row">
                     <!-- NEWS -->
