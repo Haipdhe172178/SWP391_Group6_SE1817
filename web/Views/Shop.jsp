@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -442,6 +444,7 @@
 
                     </div>
                     <div class="row product-content product-store">
+                         <fmt:setLocale value="vi_VN" />
                         <c:forEach items="${ListA}" var="pro">
                             <div class="col-lg-3 col-md-4 mb-4">
                                 <a href="single?productID=${pro.productId}">
@@ -479,7 +482,12 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <span class="price text-primary fw-bold mb-2 fs-5">${pro.price}</span>
+                                        <span class="price text-primary fw-bold mb-2 fs-5">
+                                           
+                                     <fmt:formatNumber value=" ${pro.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                           
+                                        
+                                        </span>
                                         <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                             <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
                                                 <svg class="cart">

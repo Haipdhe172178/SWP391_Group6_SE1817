@@ -7,6 +7,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -492,27 +495,29 @@
                
                 
                 
-                
-                <c:forEach items="${data}" var="d" >
-                    <div class="swiper-slide">
-                        <div class="container">
-                            <div class="row d-flex flex-column-reverse flex-md-row align-items-center">
-                                <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                                    <div class="banner-content">
-                                        <h3>${d.name}</h3>
-                                        <p>${d.price}</p>
-                                        <a href="single?productID=${d.productId}" class="btn mt-3"> Xem sách</a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <div class="image-holder">
-                                        <img  src="${d.imgProduct}" class="img-fluid" alt="banner" height="50%" width="50%">
-                                    </div>
-                                </div>
-                            </div>
+                  <fmt:setLocale value="vi_VN" />
+               <c:forEach items="${data}" var="d">
+        <div class="swiper-slide">
+            <div class="container">
+                <div class="row d-flex flex-column-reverse flex-md-row align-items-center">
+                    <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
+                        <div class="banner-content">
+                            <h3>${d.name}</h3>
+                            <p>
+                                <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                            </p>
+                            <a href="single?productID=${d.productId}" class="btn mt-3"> Xem sách</a>
                         </div>
                     </div>
-                </c:forEach>      
+                    <div class="col-md-6 text-center">
+                        <div class="image-holder">
+                            <img src="${d.imgProduct}" class="img-fluid" alt="banner" height="50%" width="50%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:forEach>
 
 
             </div>
@@ -605,7 +610,8 @@
                 </svg>
             </div>
             <div class="swiper product-swiper">
-                <div class="swiper-wrapper">                 
+                <div class="swiper-wrapper"> 
+                      <fmt:setLocale value="vi_VN" />
                     <c:forEach items="${data1}" var="d">
                         <div class="swiper-slide">
                             <a href="single?productID=${d.productId}">
@@ -623,7 +629,12 @@
                                             </c:forEach>
                                         </div>
                                     </div>
-                                    <span class="price text-primary fw-bold mb-2 fs-5">${d.price}</span>
+                         
+                          <span class="price text-primary fw-bold mb-2 fs-5">
+                             <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                          
+                          </span>
+                                    
                                     <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                         <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
                                             <svg class="cart">
@@ -1448,7 +1459,7 @@
                     <div class="col-lg-3 col-sm-6 pb-3">
                         <div class="footer-menu contact-item">
                             <h5 class="widget-title text-capitalize pb-2">Liên hệ chúng tôi</h5>
-                            <p>Bạn có bất kỳ thắc mắc hoặc gợi ý nào không? <a href="mailto:" class="text-decoration-underline">shopbook88@gmail.com</a></p>
+                            <p>Bạn có bất kỳ thắc mắc hoặc gợi ý nào không? <a href="mailto:" class="text-decoration-underline">sshopbook88@gmail.com</a></p>
                             <p>Nếu bạn cần hỗ trợ? Chỉ cần gọi cho chúng tôi. <a href="#" class="text-decoration-underline">+84 38 272
                                     0127</a></p>
                         </div>
@@ -1472,7 +1483,7 @@
                 </div>
                 <div class="payment-method d-flex">
                    
-                     <p>Thanh toán trước tiếp hoặc qua các thẻ</p>
+                     <p>Thanh toán trực tiếp hoặc qua các thẻ</p>
                     
                     <div class="card-wrap ps-2">
                         <img src="${pageContext.request.contextPath}/images/visa.jpg" alt="visa">
