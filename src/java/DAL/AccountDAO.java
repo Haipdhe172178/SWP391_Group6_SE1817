@@ -5,9 +5,12 @@
 package DAL;
 
 import Models.Account;
+import Models.Author;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -83,5 +86,39 @@ public class AccountDAO extends DBContext {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<Account> getAllAccount() {
+        List<Account> listAcc = new ArrayList<>();
+        String query = "Select * From Account";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc= new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+                
+                listAcc.add(acc);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return listAcc;
+    }
+    public static void main(String[] args) {
+        AccountDAO  acc =  new AccountDAO();
+        List<Account> list = acc.getAllAccount();
+        for (Account account : list) {
+            System.out.println(account.getAccountId());
+        }
     }
 }

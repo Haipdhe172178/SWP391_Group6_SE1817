@@ -513,7 +513,7 @@
 
                     </div>
                     <div class="row product-content product-store">
-                         <fmt:setLocale value="vi_VN" />
+                        <fmt:setLocale value="vi_VN" />
                         <c:forEach items="${ListA}" var="pro">
                             <div class="col-lg-3 col-md-4 mb-4">
                                 <a href="single?productID=${pro.productId}">
@@ -552,10 +552,10 @@
                                             </div>
                                         </div>
                                         <span class="price text-primary fw-bold mb-2 fs-5">
-                                           
-                                     <fmt:formatNumber value=" ${pro.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                           
-                                        
+
+                                            <fmt:formatNumber value=" ${pro.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+
+
                                         </span>
                                         <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                             <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
@@ -707,127 +707,39 @@
                 </svg>
             </div>
             <div class="section-title mb-4 text-center">
-                <h3 class="mb-4">Customers reviews</h3>
+                <h3 class="mb-4">Đánh giá từ khách hàng</h3>
             </div>
             <div class="swiper testimonial-swiper ">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"I stumbled upon this bookstore while visiting the city, and it instantly became my favorite spot. The cozy atmosphere, friendly staff, and wide selection of books make every visit a delight!"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
+                    <c:forEach var="feedback" items="${requestScope.listMostRating}">
+                        <div class="swiper-slide">
+                            <div class="card position-relative text-left p-5 border rounded-3">
+                                <blockquote>"${feedback.comments}"</blockquote>
+                                <div class="rating text-warning d-flex align-items-center">
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                </div>
+                                <c:forEach var="acc" items="${requestScope.listAccount}">
+                                    <c:if test="${feedback.accountId == acc.accountId}">
+                                        <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
+                                    </c:if> 
+                                </c:forEach>
                             </div>
-                            <h5 class="mt-1 fw-normal">Emma Chamberlin</h5>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"As an avid reader, I'm always on the lookout for new releases, and this bookstore never disappoints. They always have the latest titles, and their recommendations have introduced me to some incredible reads!"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Thomas John</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"I ordered a few books online from this store, and I was impressed by the quick delivery and careful packaging. It's clear that they prioritize customer satisfaction, and I'll definitely be shopping here again!"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Kevin Bryan</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>“I stumbled upon this tech store while searching for a new laptop, and I couldn't be happier with my experience! The staff was incredibly knowledgeable and guided me through the process of choosing the perfect device for my
-                                needs. Highly recommended!”</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Stevin</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>“I stumbled upon this tech store while searching for a new laptop, and I couldn't be happier with my experience! The staff was incredibly knowledgeable and guided me through the process of choosing the perfect device for my
-                                needs. Highly recommended!”</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Roman</h5>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -836,37 +748,20 @@
     <section id="latest-posts" class="padding-large">
         <div class="container">
             <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                <h3 class="d-flex align-items-center">Latest posts</h3>
-                <a href="shop" class="btn">View All</a>
+                <h3 class="d-flex align-items-center">Tin tức</h3>
+                <a href="blog" class="btn">Xem tất cả</a>
             </div>
             <div class="row">
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item1.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">10 Must-Read Books of the Year: Our Top Picks!</a></h4>
-                    <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadg <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                    </p>
-                </div>
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item2.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
-                    <p class="mb-2">Explore the intersection of technology and sustainability in our latest blog post. Learn about the innovative <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> </p>
-                </div>
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item3.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">Finding Love in the Pages of a Book</a></h4>
-                    <p class="mb-2">Stay ahead of the curve with our insightful look into the rapidly evolving landscape of wearable technology. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                    </p>
-                </div>
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item4.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">Reading for Mental Health: How Books Can Heal and Inspire</a></h4>
-                    <p class="mb-2">In today's remote work environment, productivity is key. Discover the top apps and tools that can help you stay <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                    </p>
-                </div>
+                <!-- NEWS -->
+                <c:forEach var="n" items="${requestScope.news}">
+                    <div class="col-md-3 posts mb-4">
+                        <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
+                        <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
+                        <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
+                        <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 
+                        </p>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </section>

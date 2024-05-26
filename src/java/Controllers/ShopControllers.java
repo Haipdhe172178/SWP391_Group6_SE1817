@@ -4,12 +4,18 @@
  */
 package Controllers;
 
+import DAL.AccountDAO;
 import DAL.AuthorDao;
 import DAL.CategoryDao;
+import DAL.FeedbackDAO;
+import DAL.NewsDao;
 import DAL.ObjectAgeDao;
 import DAL.ProductDao;
+import Models.Account;
 import Models.Author;
 import Models.Category;
+import Models.Feedback;
+import Models.News;
 import Models.ObjectAge;
 import Models.Product;
 import java.io.IOException;
@@ -223,6 +229,17 @@ public class ShopControllers extends HttpServlet {
         if (ageId != null) {
             query += "&&objage=" + ageId;
         }
+        
+        //Thêm list news và feedback
+        NewsDao nd = new NewsDao();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        AccountDAO accDAO = new AccountDAO();
+        List<News> listNews = nd.getFourNewsLated();
+        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
+        List<Account> listAcc = accDAO.getAllAccount();
+        request.setAttribute("listMostRating", listMostRating);
+        request.setAttribute("listAccount", listAcc);
+        request.setAttribute("news", listNews);
         
         request.setAttribute("query", query);
         request.setAttribute("ListA", list);

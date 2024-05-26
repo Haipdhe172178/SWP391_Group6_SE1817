@@ -4,10 +4,14 @@
  */
 package Controllers;
 
+import DAL.AccountDAO;
 import DAL.CategoryDao;
+import DAL.FeedbackDAO;
 import DAL.HomeDAO;
 import DAL.NewsDao;
+import Models.Account;
 import Models.Category;
+import Models.Feedback;
 import Models.News;
 import Models.Product;
 import java.io.IOException;
@@ -65,6 +69,7 @@ public class HomeControllers extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<Product> data = new ArrayList<>();
         ArrayList<Product> data1 = new ArrayList<>();
+
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
@@ -72,10 +77,16 @@ public class HomeControllers extends HttpServlet {
         data = dal.get3radum();
         data1 = dal.get6sellmany();
 
-        //News to homepage
+        //Them list, news, feedback cho homepage
         NewsDao nd = new NewsDao();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        AccountDAO accDAO = new AccountDAO();
         List<News> listNews = nd.getFourNewsLated();
+        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
+        List<Account> listAcc = accDAO.getAllAccount();
 
+        request.setAttribute("listMostRating", listMostRating);
+        request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
         request.setAttribute("data1", data1);
         request.setAttribute("data", data);

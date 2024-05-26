@@ -4,13 +4,17 @@
  */
 package Controllers;
 
+import DAL.AccountDAO;
 import DAL.AuthorDao;
 import DAL.CategoryDao;
+import DAL.FeedbackDAO;
 import DAL.NewsDao;
 import DAL.ObjectAgeDao;
 import DAL.ProductDao;
+import Models.Account;
 import Models.Author;
 import Models.Category;
+import Models.Feedback;
 import Models.News;
 import Models.ObjectAge;
 import Models.Product;
@@ -20,6 +24,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,20 +72,39 @@ public class SingleProductControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("productID"));
-        
+        //DAO
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
         CategoryDao cateDao = new CategoryDao();
         ObjectAgeDao ageDao = new ObjectAgeDao();
         NewsDao nd = new NewsDao();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        AccountDAO accDAO = new AccountDAO();
         
         Product product = productDao.getProductById(id);
         Author author = authorDao.getAuthorById(product.getAuthorId());
         Category category = cateDao.getCategoryByID(product.getCategoryId());
         ObjectAge objectAge = ageDao.getObjectAgesByID(product.getAgeId());
-        List<Product> listP = productDao.getProductsByCategoryId(product.getCategoryId(),"fourRandom");
+
+        //LIST
+        List<Product> listP = productDao.getProductsByCategoryId(product.getCategoryId(), "fourRandom");
         List<News> listNews = nd.getFourNewsLated();
+        List<Feedback> listFeedback = feedbackDAO.getFeedbackByProductId(id);
+        List<Author> listAuthor = authorDao.getallAuthors();
+        List<Account> listAcc= accDAO.getAllAccount();
+        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
         
+        
+        //QUANTITY
+        int quantitySold = productDao.getQuantitySoldByProductId(id);
+        int avgRating = feedbackDAO.avgRating(id);
+        
+        request.setAttribute("avgRating", avgRating);
+        request.setAttribute("listMostRating", listMostRating);
+        request.setAttribute("listAccount", listAcc);
+        request.setAttribute("listAuthor", listAuthor);
+        request.setAttribute("listFeedback", listFeedback);
+        request.setAttribute("quantitySold", quantitySold);
         request.setAttribute("relatedProduct", listP);
         request.setAttribute("product", product);
         request.setAttribute("objectAge", objectAge);

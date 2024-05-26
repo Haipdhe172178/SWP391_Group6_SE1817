@@ -5,6 +5,8 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +35,7 @@
                 <div class="row">
                     <div class="breadcrumbs" style="padding-top: 2em">
                         <span class="item"><a href="shop">Cửa hàng / </a></span>
-                        <span class="item"><a href="category?cid=${requestScope.category.categoryId}">${requestScope.category.categoryName} / </a></span>
+                        <span class="item"><a href="shop?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName} / </a></span>
                     <span class="item"><a href="single?productID=${requestScope.product.productId}">${requestScope.product.name} </a></span>
                 </div>
             </div>
@@ -64,27 +66,28 @@
                         <div class="product-info ps-lg-5 pt-3 pt-lg-0">
                             <div class="element-header">
                                 <h1 class="product-title" style="font-size: 20px">${requestScope.product.name}</h1>
-                                <script>
-                                    function formatPrice(price) {
-                                        return price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ';
-                                    }
-
-                                    // Giả sử giá tiền lấy từ requestScope.product.price
-                                    const productPrice = 36000.0;
-                                    document.getElementById('price').textContent = formatPrice(${requestScope.product.price});
-                                </script>
+                                <fmt:setLocale value="vi_VN" />
                                 <div class="product-price d-flex align-items-center mt-2">
-                                    <span class="fs-2 fw-light text-primary me-2" id="price">${requestScope.product.price} đ</span>
-                                    <del>$260</del>
+                                    <span class="fs-2 fw-light text-primary me-2" id="price">
+                                        <fmt:formatNumber value="${requestScope.product.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                    </span>
+
+                                    <!-- Khi nào giảm giá thì dùng -->
+                                    <del></del>
                                 </div>
                                 <div class="rating text-warning d-flex align-items-center mb-2">
-                                    <c:forEach var="rate" begin="1" end="5"> 
+                                    <c:forEach var="rate" begin="1" end="${requestScope.avgRating}"> 
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                    </c:forEach>
+                                    <c:forEach var="rate" begin="1" end="${5-requestScope.avgRating}"> 
                                         <svg class="star star-empty" style="stroke: gold">
                                         <use xlink:href="#star-empty"></use>
                                         </svg>
                                     </c:forEach>
                                 </div>
-                                <div class="product-quantity">Đã bán: 0</div>
+                                <div class="product-quantity">Đã bán: ${requestScope.quantitySold}</div>
                             </div>
 
                             <hr>
@@ -99,7 +102,7 @@
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Thể loại: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
-                                        <a href="#">${requestScope.category.categoryName}</a>
+                                        <a href="shop?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName}</a>
                                     </ul>
                                 </div>
                                 <div class="meta-item d-flex mb-1">
@@ -151,79 +154,58 @@
                         <nav>
                             <div class="nav nav-tabs d-flex justify-content-center py-3" id="nav-tab" role="tablist">
                                 <button class="nav-link text-capitalize active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Mô tả</button>
-                                <button class="nav-link text-capitalize" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Đánh giá (02)</button>
+                                <button class="nav-link text-capitalize" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Đánh giá (${requestScope.listFeedback.size()})</button>
                             </div>
                         </nav>
                         <div class="tab-content border-bottom py-4" id="nav-tabContent">
+
+                            <!-- DESCRIPTION -->
                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                 <p>${requestScope.product.description}</p>
                             </div>
 
-
+                            <!-- FEEDBACK -->
                             <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                                 <div class="review-box review-style d-flex gap-3 flex-column">
-                                    <div class="review-item d-flex">
-                                        <div class="image-holder me-2">
-                                            <img src="${pageContext.request.contextPath}/images/review-image1.jpg" alt="review" class="img-fluid rounded-3">
-                                        </div>
-                                        <div class="review-content">
-                                            <div class="rating text-primary">
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
+                                    <c:forEach var="feedback" items="${requestScope.listFeedback}">
+                                        <div class="review-item d-flex">
+                                            <div class="image-holder me-2">
+                                                <c:forEach var="acc" items="${requestScope.listAccount}">
+                                                    <c:if test="${feedback.accountId == acc.accountId}"> 
+                                                        <img src="${acc.imgAccount}" alt="review" class="img-fluid rounded-3" style="width: 5em">
+                                                    </c:if>
+                                                </c:forEach>
                                             </div>
-                                            <div class="review-header">
-                                                <span class="author-name fw-medium">Tom Johnson</span>
-                                                <span class="review-date">- 07/05/2022</span>
+                                            <div class="review-content">
+                                                <div class="rating text-primary">
+                                                    <c:forEach begin="1" end="${feedback.rating}">
+                                                        <svg class="star star-fill">
+                                                        <use xlink:href="#star-fill" style="color: gold"></use>
+                                                        </svg>
+                                                    </c:forEach > 
+                                                    <c:forEach begin="1" end="${5-feedback.rating}">
+                                                        <svg class="star star-empty">
+                                                        <use xlink:href="#star-empty" style="stroke: gold"></use>
+                                                        </svg>
+                                                    </c:forEach> 
+                                                </div>
+                                                <div class="review-header">
+                                                    <c:forEach var="acc" items="${requestScope.listAccount}">
+                                                        <c:if test="${feedback.accountId == acc.accountId}">
+                                                            <span class="author-name fw-medium">${acc.fullName}</span>
+                                                        </c:if> 
+                                                    </c:forEach>
+                                                    <span class="review-date"> / ${feedback.feedbackDate}</span>
+                                                </div>
+                                                <p>${feedback.comments}</p>
                                             </div>
-                                            <p>Vitae tortor condimentum lacinia quis vel eros donec ac. Nam at lectus urna duis convallis convallis</p>
                                         </div>
-                                    </div>
-                                    <div class="review-item d-flex">
-                                        <div class="image-holder me-2">
-                                            <img src="${pageContext.request.contextPath}/images/review-image2.jpg" alt="review" class="img-fluid rounded-3">
-                                        </div>
-                                        <div class="review-content">
-                                            <div class="rating text-primary">
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="review-header">
-                                                <span class="author-name fw-medium">Jenny Willis</span>
-                                                <span class="review-date">- 07/05/2022</span>
-                                            </div>
-                                            <p>Vitae tortor condimentum lacinia quis vel eros donec ac. Nam at lectus urna duis convallis convallis</p>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                                 <div class="add-review margin-small">
-                                    <h3>Add a review</h3>
-                                    <p>Your email address will not be published. Required fields are marked *</p>
+                                    <h3>Đánh giá</h3>
+                                    <p>Bạn cần đăng nhập để có thể đánh giá <a href=""> </a></p>
+                                    <!-- comment
                                     <div class="review-rating py-2">
                                         <span class="my-2">Your rating *</span>
                                         <div class="rating text-secondary">
@@ -263,6 +245,7 @@
                                         </label>
                                         <button type="submit" name="submit" class="btn my-3">Submit</button>
                                     </form>
+                                    -->
                                 </div>
                             </div>
                         </div>
@@ -274,8 +257,8 @@
         <section id="related-items" class="position-relative padding-large ">
             <div class="container">
                 <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                    <h3 class="d-flex align-items-center">Related Items</h3>
-                    <a href="#" class="btn">View All</a>
+                    <h3 class="d-flex align-items-center">Sách liên quan</h3>
+                    <a href="#" class="btn">Xem tất cả</a>
                 </div>
                 <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
                     <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
@@ -300,7 +283,7 @@
                                         <img src="${p.imgProduct}" class="img-fluid shadow-sm" alt="product item">
                                         <h6 class="mt-4 mb-0 fw-bold"><a href="single">${p.name}</a></h6>
                                         <div class="review-content d-flex">
-                                            <p class="my-2 me-2 fs-6 text-black-50">Lauren Asher</p>
+                                            <p class="my-2 me-2 fs-6 text-black-50">${requestScope.author.authorName}</p>
 
                                             <div class="rating text-warning d-flex align-items-center">
                                                 <c:forEach begin="1" end="5"> 
@@ -340,127 +323,39 @@
                     </svg>
                 </div>
                 <div class="section-title mb-4 text-center">
-                    <h3 class="mb-4">Customers reviews</h3>
+                    <h3 class="mb-4">Đánh giá từ khách hàng</h3>
                 </div>
                 <div class="swiper testimonial-swiper ">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="card position-relative text-left p-5 border rounded-3">
-                                <blockquote>"I stumbled upon this bookstore while visiting the city, and it instantly became my favorite spot. The cozy atmosphere, friendly staff, and wide selection of books make every visit a delight!"</blockquote>
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
+                        <c:forEach var="feedback" items="${requestScope.listMostRating}">
+                            <div class="swiper-slide">
+                                <div class="card position-relative text-left p-5 border rounded-3">
+                                    <blockquote>"${feedback.comments}"</blockquote>
+                                    <div class="rating text-warning d-flex align-items-center">
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                    </div>
+                                    <c:forEach var="acc" items="${requestScope.listAccount}">
+                                        <c:if test="${feedback.accountId == acc.accountId}">
+                                            <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
+                                        </c:if> 
+                                    </c:forEach>
                                 </div>
-                                <h5 class="mt-1 fw-normal">Emma Chamberlin</h5>
                             </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card position-relative text-left p-5 border rounded-3">
-                                <blockquote>"As an avid reader, I'm always on the lookout for new releases, and this bookstore never disappoints. They always have the latest titles, and their recommendations have introduced me to some incredible reads!"</blockquote>
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                </div>
-                                <h5 class="mt-1 fw-normal">Thomas John</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card position-relative text-left p-5 border rounded-3">
-                                <blockquote>"I ordered a few books online from this store, and I was impressed by the quick delivery and careful packaging. It's clear that they prioritize customer satisfaction, and I'll definitely be shopping here again!"</blockquote>
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                </div>
-                                <h5 class="mt-1 fw-normal">Kevin Bryan</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card position-relative text-left p-5 border rounded-3">
-                                <blockquote>“I stumbled upon this tech store while searching for a new laptop, and I couldn't be happier with my experience! The staff was incredibly knowledgeable and guided me through the process of choosing the perfect device for my
-                                    needs. Highly recommended!”</blockquote>
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                </div>
-                                <h5 class="mt-1 fw-normal">Stevin</h5>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card position-relative text-left p-5 border rounded-3">
-                                <blockquote>“I stumbled upon this tech store while searching for a new laptop, and I couldn't be happier with my experience! The staff was incredibly knowledgeable and guided me through the process of choosing the perfect device for my
-                                    needs. Highly recommended!”</blockquote>
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                </div>
-                                <h5 class="mt-1 fw-normal">Roman</h5>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -469,8 +364,8 @@
         <section id="latest-posts" class="padding-large">
             <div class="container">
                 <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                    <h3 class="d-flex align-items-center">Latest posts</h3>
-                    <a href="blog" class="btn">View All</a>
+                    <h3 class="d-flex align-items-center">Tin tức</h3>
+                    <a href="blog" class="btn">Xem tất cả</a>
                 </div>
                 <div class="row">
                     <!-- NEWS -->
@@ -568,7 +463,7 @@
                 </div>
             </div>
         </section>
-                            
+
         <jsp:include page="../common/footer.jsp"></jsp:include>
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

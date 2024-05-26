@@ -643,4 +643,20 @@ public class ProductDao extends DBContext {
         }
         return list;
     }
+
+    public int getQuantitySoldByProductId(int id) {
+        String query = " Select * From QualityofProductsell WHERE ProducID=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(2);
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
 }
