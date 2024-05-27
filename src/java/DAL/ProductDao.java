@@ -659,4 +659,21 @@ public class ProductDao extends DBContext {
         }
         return 0;
     }
+    public void addProduct(Product product) {
+        String query = "INSERT INTO Product (name, price, quantity, description, categoryId, authorId, imgProduct, ageId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, product.getName());
+            ps.setFloat(2, product.getPrice());
+            ps.setInt(3, product.getQuantity());
+            ps.setString(4, product.getDescription());
+            ps.setInt(5, product.getCategoryId());
+            ps.setInt(6, product.getAuthorId());
+            ps.setString(7, product.getImgProduct());
+            ps.setInt(8, product.getAgeId());
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }
