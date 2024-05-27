@@ -1161,28 +1161,28 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card mb-4 border-0 rounded-3 position-relative">
-                    <a href="shop">
-                        <img src="${pageContext.request.contextPath}/images/category1.jpg" class="img-fluid rounded-3" alt="cart item">
-                        <h6 class=" position-absolute bottom-0 bg-primary m-4 py-2 px-3 rounded-3"><a href="shop"
-                                                                                                      class="text-white">Romance</a></h6>
+                    <a href="shop?categoryId=1">
+                        <img src="https://th.bing.com/th/id/R.d0ff0068b9ac6780b042d124858333b6?rik=snO0WmgWevkfuw&pid=ImgRaw&r=0" class="img-fluid rounded-3" alt="cart item">
+                        <h6 class=" position-absolute bottom-0 bg-primary m-4 py-2 px-3 rounded-3"><a href="shop?categoryId=1"
+                                                                                                      class="text-white">Truyện tranh</a></h6>
                     </a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card text-center mb-4 border-0 rounded-3">
-                    <a href="shop">
-                        <img src="${pageContext.request.contextPath}/images/category2.jpg" class="img-fluid rounded-3" alt="cart item">
-                        <h6 class=" position-absolute bottom-0 bg-primary m-4 py-2 px-3 rounded-3"><a href="shop"
-                                                                                                      class="text-white">Lifestyle</a></h6>
+                    <a href="shop?categoryId=4">
+                        <img src="https://th.bing.com/th/id/OIP.lBn9hgk_oIGHmOPOKPbdJAHaEo?rs=1&pid=ImgDetMain" class="img-fluid rounded-3" alt="cart item">
+                        <h6 class=" position-absolute bottom-0 bg-primary m-4 py-2 px-3 rounded-3"><a href="shop?categoryId=4"
+                                                                                                      class="text-white">Lịch sử Việt Nam</a></h6>
                     </a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card text-center mb-4 border-0 rounded-3">
-                    <a href="shop">
-                        <img src="${pageContext.request.contextPath}/images/category3.jpg" class="img-fluid rounded-3" alt="cart item">
-                        <h6 class=" position-absolute bottom-0 bg-primary m-4 py-2 px-3 rounded-3"><a href="shop"
-                                                                                                      class="text-white">Recipe</a></h6>
+                    <a href="shop?categoryId=8">
+                        <img src="https://th.bing.com/th/id/R.83bb7e61183ff0fb90cf6ba00e1d000e?rik=Q%2fE2L%2bsaF24JFA&riu=http%3a%2f%2fstatic.kites.vn%2farticle%2f2021%2f02%2f26%2f1614305426_547a3603d7cf.jpg&ehk=UOJiQtm%2beL4uiPvyILOkGo52i%2bEnp9cal5ff0Mm3DU8%3d&risl=&pid=ImgRaw&r=0" class="img-fluid rounded-3" alt="cart item">
+                        <h6 class=" position-absolute bottom-0 bg-primary m-4 py-2 px-3 rounded-3"><a href="shop?categoryId=8"
+                                                                                                      class="text-white">Giải mã bản thân</a></h6>
                     </a>
                 </div>
             </div>
@@ -1270,7 +1270,7 @@
         <div class="row">
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
-                    <a href="https://templatesjungle.com/" class="image-link position-relative">
+                    <a href="https://www.instagram.com/p/C7d6aa0vQ4P/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
@@ -1282,7 +1282,7 @@
             </div>
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
-                    <a href="https://templatesjungle.com/" class="image-link position-relative">
+                    <a href="https://www.instagram.com/p/C7d6rGdv9lN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
@@ -1294,7 +1294,7 @@
             </div>
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
-                    <a href="https://templatesjungle.com/" class="image-link position-relative">
+                    <a href="https://www.instagram.com/p/C7d62jNv9Ps/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
@@ -1306,7 +1306,8 @@
             </div>
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
-                    <a href="https://templatesjungle.com/" class="image-link position-relative">
+                    <a href=" https://www.instagram.com/p/C7d7AipPB9i/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
+                     
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
@@ -1318,7 +1319,8 @@
             </div>
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
-                    <a href="https://templatesjungle.com/" class="image-link position-relative">
+                    <a href="https://www.instagram.com/p/C7d7NzpvVPC/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
+                  
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
@@ -1330,7 +1332,7 @@
             </div>
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
-                    <a href="https://templatesjungle.com/" class="image-link position-relative">
+                    <a href="https://www.instagram.com/p/C7d7Thrv6zW/?utm_source=ig_web_copy_link_" class="image-link position-relative">
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
