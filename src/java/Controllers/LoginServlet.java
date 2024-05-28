@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
     }
 
     /**
@@ -86,7 +86,6 @@ public class LoginServlet extends HttpServlet {
         } else {
             session.setAttribute("account", a);
             response.sendRedirect("home");
-
         }
     }
 

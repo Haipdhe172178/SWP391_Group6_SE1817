@@ -324,7 +324,7 @@
                                             <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2">10% off</p>
                                         </div>
                                         <img src="${p.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                        <h6 class="mt-4 mb-0 fw-bold"><a href="single">${p.name}</a></h6>
+                                        <h6 class="mt-4 mb-0 fw-bold"><a href="single?productID=${p.productId}">${p.name}</a></h6>
                                         <div class="review-content d-flex">
                                             <p class="my-2 me-2 fs-6 text-black-50">${requestScope.author.authorName}</p>
 
