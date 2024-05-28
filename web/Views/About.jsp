@@ -250,7 +250,7 @@
                                 <c:choose>
                                     <c:when test="${sessionScope.account eq null}">
                                         <li class="pe-3">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <a href="login">
                                                 <svg class="user">
                                                 <use xlink:href="#user"></use>
                                                 </svg>

@@ -324,9 +324,9 @@
                                 <c:choose>
                                     <c:when test="${sessionScope.account eq null}">
                                         <li class="pe-3">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <a href="login">
                                                 <svg class="user">
-                                                <use xlink:href="#user"></use>
+                                                <use xlink:href="#user"><a href="login"></a></use>
                                                 </svg>
                                             </a>
                                             <!-- Modal -->
@@ -690,7 +690,7 @@
                                 <div class="card position-relative p-4 border rounded-3">
 
                                     <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                    <h6 class="mt-4 mb-0 fw-bold"><a href="single">${d.name}</a></h6>
+                                    <h6 class="mt-4 mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
                                     <div class="review-content d-flex">                        
                                         <div class="rating text-warning d-flex align-items-center">
                                             <c:forEach begin="1" end="5">

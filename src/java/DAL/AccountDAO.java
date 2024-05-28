@@ -17,7 +17,7 @@ import java.util.List;
  * @author ASUS TUF
  */
 public class AccountDAO extends DBContext {
- 
+
     public Account check(String username, String password) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Username=? AND Password=?";
         try {
@@ -46,7 +46,8 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-   public boolean checkUserNameExists(String username) {
+
+    public boolean checkUserNameExists(String username) {
         String sql = "SELECT 1 FROM [dbo].[Account] WHERE Username=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -58,7 +59,8 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
-     public boolean checkEmailExists(String email) {
+
+    public boolean checkEmailExists(String email) {
         String sql = "SELECT 1 FROM [dbo].[Account] WHERE Email=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -70,6 +72,7 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
+
     public boolean createUser(String fullName, String username, String password, String email, String phoneNumber, String address) {
         String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address) VALUES (?, ?, ?, ?, ?, ?)";
         try {
@@ -95,7 +98,7 @@ public class AccountDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Account acc= new Account();
+                Account acc = new Account();
                 acc.setAccountId(rs.getInt(1));
                 acc.setFullName(rs.getString(2));
                 acc.setUserName(rs.getString(3));
@@ -106,7 +109,7 @@ public class AccountDAO extends DBContext {
                 acc.setAddress(rs.getString(8));
                 acc.setRoleId(rs.getInt(9));
                 acc.setImgAccount(rs.getString(10));
-                
+
                 listAcc.add(acc);
             }
         } catch (Exception ex) {
@@ -114,8 +117,25 @@ public class AccountDAO extends DBContext {
         }
         return listAcc;
     }
+
+    public boolean updateAvatar(Account a, String img) {
+        String sql = "UPDATE Account\n"
+                + "SET ImgAccount = ?\n"
+                + "WHERE AccountID = ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, img);  
+            ps.setInt(2, a.getAccountId());
+            int rowsInserted = ps.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
-        AccountDAO  acc =  new AccountDAO();
+        AccountDAO acc = new AccountDAO();
         List<Account> list = acc.getAllAccount();
         for (Account account : list) {
             System.out.println(account.getAccountId());

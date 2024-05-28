@@ -93,10 +93,14 @@
             <div class="row profile">
                 <div class="col-md-4 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}"><span class="font-weight-bold">${acc.fullName}</span><span class="text-black-50">${acc.email}</span><span> </span></div>
-                    <input type="file" style="margin-left: 5px"></input>
+                    <h5 style="color: red">${requestScope.message}</h5>
+                    <form action="profile" method="post" enctype="multipart/form-data">
+                        <input type="file" name="avatar" style="margin-left: 5px">
+                        <input type="submit" value="Submit">
+                    </form>
+
                 </div>
                 <div class="col-md-8" >
-
                     <!-- Profile -->
                     <div class="p-3 py-5" id="profile">
                         <form action="profile" method="post">
@@ -105,16 +109,16 @@
                                 <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Edit Profile</span>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6 inputprofile"><label class="labels">Full Name</label><input type="text" class="form-control" placeholder="full name" value="${acc.fullName}" disabled></div>
-                                <div class="col-md-6 inputprofile"><label class="labels">User Name</label><input type="text" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
+                                <div class="col-md-6 inputprofile"><label class="labels">Full Name</label><input type="text" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" disabled></div>
+                                <div class="col-md-6 inputprofile"><label class="labels">User Name</label><input type="text" name="username" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-6 inputprofile"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="gender" value="${acc.gender}" disabled></div>
+                                <div class="col-md-6 inputprofile"><label class="labels">Gender</label><input type="text" name="gender"class="form-control" placeholder="gender" value="${acc.gender}" disabled></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12 inputprofile"><label class="labels">Phone Number</label><input type="text" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" disabled></div>
-                                <div class="col-md-12 inputprofile"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address" value="${acc.address}" disabled></div>
-                                <div class="col-md-12 "><label class="labels">Email</label><input type="text" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
+                                <div class="col-md-12 inputprofile"><label class="labels">Phone Number</label><input type="text" name="phonenumber" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" disabled></div>
+                                <div class="col-md-12 inputprofile"><label class="labels">Address</label><input type="text" name="address" class="form-control" placeholder="enter address" value="${acc.address}" disabled></div>
+                                <div class="col-md-12 "><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
                             </div>
                             <div class="mt-5 text-center">
                                 <button class="btn btn-primary profile-button buttonprofile" type="submit" style="display: none">Save Profile</button>
@@ -127,20 +131,20 @@
                     <div class="p-3 py-5" id="changepass"style="display: none">
                         <form action="changePassword" method="post">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Change Password</h4>
+                                <h4 class="text-right">Đổi mật khẩu</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12"><label class="labels">Current Password</label><input type="text" class="form-control" placeholder="enter current password" value="" ></div>
+                                <div class="col-md-12"><label class="labels">Mật khẩu hiện tại</label><input type="text" class="form-control" placeholder="nhập mật khẩu hiện tại" value="" ></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">New Password</label><input type="text" class="form-control" placeholder="enter new password" value="" ></div>
+                                <div class="col-md-12"><label class="labels">Mật khẩu mới</label><input type="text" class="form-control" placeholder="nhập mật khẩu mới" value="" ></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Confirm New Password</label><input type="text" class="form-control" placeholder="confirm enter new password" value="" ></div>
+                                <div class="col-md-12"><label class="labels">Xác nhận mật khẩu mới</label><input type="text" class="form-control" placeholder="xác nhận mật khẩu mới" value="" ></div>
                             </div>
                             <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button" type="submit">Submit</button>
-                                <button class="btn btn-secondary profile-button" type="button">Cancel</button>
+                                <button class="btn btn-primary profile-button" type="submit">Đổi mật khẩu</button>
+                                <button class="btn btn-secondary profile-button" type="button">Thoát</button>
                             </div>
                         </form>
                     </div>
