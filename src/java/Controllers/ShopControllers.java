@@ -95,16 +95,22 @@ public class ShopControllers extends HttpServlet {
         int endPage;
 
         if (sortBy != null) {
-            if (sortBy.equals("name_asc")) {
-                list = productDao.pagingProductsSortedByName(index, true);
-            } else if (sortBy.equals("name_desc")) {
-                list = productDao.pagingProductsSortedByName(index, false);
-            } else if (sortBy.equals("price_asc")) {
-                list = productDao.pagingProductsSortedByPrice(index, true);
-            } else if (sortBy.equals("price_desc")) {
-                list = productDao.pagingProductsSortedByPrice(index, false);
-            } else {
-                list = productDao.pagingProducts(index);
+            switch (sortBy) {
+                case "nameasc":
+                    list = productDao.pagingProductsSortedByName(index, true);
+                    break;
+                case "namedesc":
+                    list = productDao.pagingProductsSortedByName(index, false);
+                    break;
+                case "pricasc":
+                    list = productDao.pagingProductsSortedByPrice(index, true);
+                    break;
+                case "pricedesc":
+                    list = productDao.pagingProductsSortedByPrice(index, false);
+                    break;
+                default:
+                    list = productDao.pagingProducts(index);
+                    break;
             }
         } else {
             list = productDao.pagingProducts(index);
@@ -176,21 +182,23 @@ public class ShopControllers extends HttpServlet {
         if (count % 8 != 0) {
             endPage++;
         }
-        String query = "";
+        StringBuilder query = new StringBuilder();
+        if (sortBy != null) {
+            query.append("&sortBy=").append(sortBy);
+        }
         if (categoryIdStr != null) {
-            query += "&&categoryId=" + categoryIdStr;
+            query.append("&categoryId=").append(categoryIdStr);
         }
         if (objectAge != null) {
-            query += "&&objage=" + objectAge;
+            query.append("&objage=").append(objectAge);
         }
         if (priceFilter != null) {
-            query += "&&price_filter=" + priceFilter;
+            query.append("&price_filter=").append(priceFilter);
         }
-        if (searchKeyword != null) {
-            query += "&&s=" + searchKeyword;
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            query.append("&s=").append(searchKeyword);
         }
 
-        //Thêm list news và feedback
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         AccountDAO accDAO = new AccountDAO();
