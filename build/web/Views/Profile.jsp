@@ -127,20 +127,20 @@
                     <div class="p-3 py-5" id="changepass"style="display: none">
                         <form action="changePassword" method="post">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Change Password</h4>
+                                <h4 class="text-right">Đổi mật khẩu</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12"><label class="labels">Current Password</label><input type="text" class="form-control" placeholder="enter current password" value="" ></div>
+                                <div class="col-md-12"><label class="labels">Mật khẩu hiện tại</label><input type="text" class="form-control" placeholder="nhập mật khẩu hiện tại" value="" ></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">New Password</label><input type="text" class="form-control" placeholder="enter new password" value="" ></div>
+                                <div class="col-md-12"><label class="labels">Mật khẩu mới</label><input type="text" class="form-control" placeholder="nhập mật khẩu mới" value="" ></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Confirm New Password</label><input type="text" class="form-control" placeholder="confirm enter new password" value="" ></div>
+                                <div class="col-md-12"><label class="labels">Xác nhận mật khẩu mới</label><input type="text" class="form-control" placeholder="xác nhận mật khẩu mới" value="" ></div>
                             </div>
                             <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button" type="submit">Submit</button>
-                                <button class="btn btn-secondary profile-button" type="button">Cancel</button>
+                                <button class="btn btn-primary profile-button" type="submit">Đổi mật khẩu</button>
+                                <button class="btn btn-secondary profile-button" type="button">Thoát</button>
                             </div>
                         </form>
                     </div>
