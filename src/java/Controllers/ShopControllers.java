@@ -96,16 +96,16 @@ public class ShopControllers extends HttpServlet {
 
         if (sortBy != null) {
             switch (sortBy) {
-                case "nameasc":
+                case "name_asc":
                     list = productDao.pagingProductsSortedByName(index, true);
                     break;
-                case "namedesc":
+                case "name_desc":
                     list = productDao.pagingProductsSortedByName(index, false);
                     break;
-                case "pricasc":
+                case "price_asc":
                     list = productDao.pagingProductsSortedByPrice(index, true);
                     break;
-                case "pricedesc":
+                case "price_desc":
                     list = productDao.pagingProductsSortedByPrice(index, false);
                     break;
                 default:
