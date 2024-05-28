@@ -93,6 +93,7 @@
                     </a>
                     <ul>
                         <li><a href="Products.html">Products</a></li>
+                         <li><a href="discount">Discount</a></li>
                     </ul>
                 </li>        
                 <li class>

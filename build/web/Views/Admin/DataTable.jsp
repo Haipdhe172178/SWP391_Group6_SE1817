@@ -77,6 +77,8 @@
                     </a>
                     <ul>
                         <li><a href="Products.html">Products</a></li>
+                         <li><a href="discount">Discount</a></li>
+
                     </ul>
                 </li>        
                 <li class>
@@ -302,7 +304,9 @@
                                                                     <td>${o.age}</td>
                                                                 </c:if>
                                                             </c:forEach>                                                        
+                                                                    <td><a href="delete?id=${p.productId}">DELETE</td>
                                                         </tr>
+                                                        
                                                     </c:forEach>
                                                 </tbody>
                                             </table>

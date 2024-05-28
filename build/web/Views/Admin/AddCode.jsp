@@ -1,9 +1,9 @@
 <%-- 
-    Document   : DataTable
+    Document   : Datacode
     Created on : May 27, 2024, 10:09:46 AM
     Author     : huyca
 --%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,8 +77,7 @@
                     </a>
                     <ul>
                         <li><a href="Products.html">Products</a></li>
-                         <li><a href="discount">Discount</a></li>
-
+                        <li><a href="discount">Discount</a></li>
                     </ul>
                 </li>        
                 <li class>
@@ -239,93 +238,41 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Data table</h3>
+                                            <h3 class="m-0">Data code</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
-                                    <div class="QA_section">
-                                        <div class="white_box_tittle list_header">
-                                            <h4>Table</h4>
-                                            <div class="box_right d-flex lms_block">
-                                                <div class="serach_field_2">
-                                                    <div class="search_inner">
-                                                        <form action="data" method="GET">
-                                                            <div class="search_field">
-                                                                <input name="s" type="text" placeholder="Search here...">
-                                                            </div>
-                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="add_button ms-2">
-                                                    <a href="add" class="btn_1">Add Product</a>
-                                                </div>
-                                            </div>
+                                   
+                                    
+                                    <form action="addcode" method="get" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="productName">Mã Code</label>
+                                            <input type="text" class="form-control"  name="meomeo" required>
                                         </div>
-                                        <div class="QA_table mb_30">
-
-                                            <table class="table lms_table_active ">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">ProductId</th>
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Quantity</th>
-                                                        <th scope="col">Description</th>
-                                                        <th scope="col">Category</th>
-                                                        <th scope="col">Author</th>
-                                                        <th scope="col">Img</th>
-                                                        <th scope="col">Age</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${product}" var="p">
-                                                        <tr>
-                                                            <td>${p.productId}</td>
-                                                            <td>${p.name}</td>
-                                                            <td>${p.price}</td>
-                                                            <td>${p.quantity}</td>
-                                                            <td>${fn:substring(p.description, 0, 50)}...</td>
-                                                            <c:forEach items="${category}" var="c">
-                                                                <c:if test="${c.categoryId eq p.categoryId}">
-                                                                    <td>${c.categoryName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:forEach items="${author}" var="au">
-                                                                <c:if test="${au.authorID eq p.authorId}">
-                                                                    <td>${au.authorName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
-                                                                <c:forEach items="${obage}" var="o">
-                                                                    <c:if test="${o.ageId eq p.ageId}">
-                                                                    <td>${o.age}</td>
-                                                                </c:if>
-                                                            </c:forEach>                                                        
-                                                                    <td><a href="delete?id=${p.productId}">DELETE</td>
-                                                        </tr>
-                                                        
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                        <div class="mb-3">
+                                            <label for="productPrice">Giảm giá bao nhiêu phần trăm</label>
+                                            <input type="text" class="form-control"  name="discount1" required>
                                         </div>
-                                        <nav class="py-5" aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center">
-                                                <c:forEach var="i" begin="1" end="${endP}">
-                                                    <li class="page-item ${tag == i ? 'active' : ''}">
-                                                        <a class="page-link" href="data?index=${i}${query}">${i}</a>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </nav>
-                                    </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="productQuantity">Giảm giá nhân dịp</label>
+                                            <input type="text" class="form-control"  name="theloai" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productName">Số lượng mã phát ra</label>
+                                            <input type="text" class="form-control"  name="soluong" required>
+                                        </div>
+                                        <div>
+                                            
+                                            <button type="submit" class="btn btn-primary" name="submit">Add</button>
+                                        </div>
+                                    </form>
                                 </div>
+
                             </div>
                         </div>
-                        <div class="col-12">
-                        </div>
+
                     </div>
                 </div>
             </div>
