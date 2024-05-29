@@ -128,23 +128,40 @@
                     </div>
 
                     <!-- Change Password -->
-                    <div class="p-3 py-5" id="changepass"style="display: none">
-                        <form action="changePassword" method="post">
+                    <div class="p-3 py-5" id="changepass" style="display: none;">
+
+                        <form action="changepassword" method="post">
+                            <input type="hidden" name="username" value="${sessionScope.account.userName}">
+
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Đổi mật khẩu</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12"><label class="labels">Mật khẩu hiện tại</label><input type="text" class="form-control" placeholder="nhập mật khẩu hiện tại" value="" ></div>
+                                <div class="col-md-12">
+
+                                    <label class="labels">Mật khẩu hiện tại</label>
+                                    <input type="password" class="form-control" placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
+
+                                    <h4 style="color: red">${requestScope.ms}</h4>
+                                </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Mật khẩu mới</label><input type="text" class="form-control" placeholder="nhập mật khẩu mới" value="" ></div>
+                                <div class="col-md-12">
+                                    <label class="labels">Mật khẩu mới</label>
+                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới" name="newpassword" required>
+                                </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Xác nhận mật khẩu mới</label><input type="text" class="form-control" placeholder="xác nhận mật khẩu mới" value="" ></div>
+                                <div class="col-md-12">
+                                    <label class="labels">Xác nhận mật khẩu mới</label>
+                                    <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" name="confirmpassword" required>
+                                    <h4 style="color: red">${requestScope.m}</h4>
+                                </div>
                             </div>
+                            <h4 style="color: red">${requestScope.mess}</h4>
                             <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button" type="submit">Đổi mật khẩu</button>
-                                <button class="btn btn-secondary profile-button" type="button">Thoát</button>
+                                <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
+                                <button class="btn btn-secondary profile-button" type="button" onclick="document.getElementById('changepass').style.display = 'none'">Thoát</button>
                             </div>
                         </form>
                     </div>
@@ -201,7 +218,7 @@
             element.disabled = false;
         });
 
-        // Hiển thị nút "Save Profile" và "Change Password"
+        // Hiển thị nút " Profile" và "Change Password"
         document.querySelectorAll('.buttonprofile').forEach(function (button) {
             button.style.display = '';
         });

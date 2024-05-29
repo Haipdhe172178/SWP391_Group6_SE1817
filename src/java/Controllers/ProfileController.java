@@ -140,7 +140,6 @@ public class ProfileController extends HttpServlet {
                 request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
                 break;
         }
-
     }
 
     /**
