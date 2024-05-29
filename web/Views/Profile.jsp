@@ -95,8 +95,8 @@
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}"><span class="font-weight-bold">${acc.fullName}</span><span class="text-black-50">${acc.email}</span><span> </span></div>
                     <h5 style="color: red">${requestScope.message}</h5>
                     <form action="profile" method="post" enctype="multipart/form-data">
-                        <input type="file" name="avatar" style="margin-left: 5px">
-                        <input type="submit" value="Submit">
+                        <input type="file" name="avatar" style="margin-left: 5px" required oninvalid="this.setCustomValidity('Vui lòng chọn một tệp hình ảnh để tải lên')">
+                        <button type="submit" value="changeAvt" name="action">Submit</button>
                     </form>
 
                 </div>
@@ -121,7 +121,7 @@
                                 <div class="col-md-12 "><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
                             </div>
                             <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button buttonprofile" type="submit" style="display: none">Save Profile</button>
+                                <button class="btn btn-primary profile-button buttonprofile" type="submit" value="changeInfo" name="action" style="display: none">Save Profile</button>
                                 <button class="btn btn-secondary profile-button buttonprofile" type="button" style="display: none">Change Password</button>
                             </div>
                         </form>

@@ -25,6 +25,8 @@ import java.nio.file.Path;
 @MultipartConfig
 public class ProfileController extends HttpServlet {
 
+    public static final String PROFILE_PAGE = "Views/Profile.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -64,7 +66,7 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getSession().getAttribute("account") != null) {
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+            request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
         } else {
             response.sendRedirect("home");
         }
@@ -81,31 +83,62 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            Part part = request.getPart("avatar");
-            String realPath = request.getServletContext().getRealPath("/img_account");
-            String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
 
-            if (!Files.exists(Path.of(realPath))) {
-                Files.createDirectories(Path.of(realPath));
-            }
-            part.write(realPath + "/" + filename);
+        String action = request.getParameter("action");
+        AccountDAO accDAO = new AccountDAO();
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("account");
+        boolean isCompleted;
+        switch (action) {
+            //Xử lí ảnh avt
+            case "changeAvt":
+                try {
+                Part part = request.getPart("avatar");
+                String imgURL = null;
+                if (part != null && part.getSize() > 0) {
+                    String realPath = request.getServletContext().getRealPath("/img_account");
+                    String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
 
-            AccountDAO accDAO = new AccountDAO();
-            HttpSession session = request.getSession();
-            Account a = (Account) session.getAttribute("account");
-            boolean isCompleted = accDAO.updateAvatar(a, "img_account/" + filename);
-            if (isCompleted) {
-                a = accDAO.check(a.getUserName(), a.getPassWord());
-                session.setAttribute("account", a);
-                request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
-            } else {
+                    if (!Files.exists(Path.of(realPath))) {
+                        Files.createDirectories(Path.of(realPath));
+                    }
+                    part.write(realPath + "/" + filename);
+                    imgURL = "img_account/" + filename;
+                }
+                isCompleted = accDAO.updateAvatar(a, imgURL);
+                if (isCompleted) {
+                    a = accDAO.check(a.getUserName(), a.getPassWord());
+                    session.setAttribute("account", a);
+                } else {
+                    request.setAttribute("message", "Failed to update avatar");
+                }
+            } catch (Exception e) {
                 request.setAttribute("message", "Failed to update avatar");
-                request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
             }
-        } catch (Exception e) {
-            request.setAttribute("message", "Failed to update avatar");
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+            request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
+            break;
+            
+            //Xử lí thông tin account
+            case "changeInfo":
+                String fullname = request.getParameter("fullname");
+                String username = request.getParameter("username");
+                String gender = request.getParameter("gender");
+                String phone = request.getParameter("phonenumber");
+                String address = request.getParameter("address");
+                
+                a.setFullName(fullname);
+                a.setUserName(username);
+                a.setGender(gender);
+                a.setPhoneNumber(phone);
+                a.setAddress(address);
+                isCompleted = accDAO.updateAccountInfo(a);
+                if (isCompleted) {
+                    session.setAttribute("account", a);
+                } else {
+                    request.setAttribute("message", "Fail to update infomation");
+                }
+                request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
+                break;
         }
 
     }

@@ -124,7 +124,7 @@ public class AccountDAO extends DBContext {
                 + "WHERE AccountID = ?;";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, img);  
+            ps.setString(1, img);
             ps.setInt(2, a.getAccountId());
             int rowsInserted = ps.executeUpdate();
             return rowsInserted > 0;
@@ -134,11 +134,27 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        AccountDAO acc = new AccountDAO();
-        List<Account> list = acc.getAllAccount();
-        for (Account account : list) {
-            System.out.println(account.getAccountId());
+    public boolean updateAccountInfo(Account a) {
+        String sql = "UPDATE Account\n"
+                + "SET FullName = ?, Username = ?, Gender = ?, PhoneNumber = ?, Address = ?\n"
+                + "WHERE AccountID  = ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, a.getFullName());
+            ps.setString(2, a.getUserName());
+            ps.setString(3, a.getGender());
+            ps.setString(4, a.getPhoneNumber());
+            ps.setString(5, a.getAddress());
+            ps.setInt(6, a.getAccountId());
+            int rowUpdate = ps.executeUpdate();
+            return rowUpdate > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
+    }
+
+    public static void main(String[] args) {
+        //Test function        
     }
 }
