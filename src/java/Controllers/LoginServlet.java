@@ -74,14 +74,14 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("your_name");
+        String password = request.getParameter("your_pass");
         AccountDAO d = new AccountDAO();
         Account a = d.check(username, password);
         HttpSession session = request.getSession();
         if (a == null) {
             request.setAttribute("error", "username or password invalid!!!");
-            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
 
         } else {
             session.setAttribute("account", a);
