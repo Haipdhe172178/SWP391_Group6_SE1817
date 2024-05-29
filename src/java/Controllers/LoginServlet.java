@@ -60,6 +60,14 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        
+        if(session.getAttribute("success") != null) {
+            request.setAttribute("success", session.getAttribute("success"));
+            session.removeAttribute("success");
+        }
+        
         request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
     }
 

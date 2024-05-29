@@ -589,6 +589,11 @@ label.valid {
   .social-label {
     margin-right: 0px;
     margin-bottom: 10px; } }
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
 
 
 /*# sourceMappingURL=style.css.map */

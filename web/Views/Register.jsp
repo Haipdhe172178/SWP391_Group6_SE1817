@@ -4,6 +4,7 @@
     Author     : Hai Pham
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +34,12 @@
                     <div class="signup-content">
                         <div class="signup-form">
                             <h2 class="form-title">Đăng ký</h2>
+                            
+                            <c:if test="${not empty notification}">
+                                <div class="notification">
+                                    <p>${notification}</p>
+                                </div>
+                            </c:if>
                             <form action="register" method="post" class="register-form" id="register-form">
                                 <div class="form-group">
                                     <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
@@ -62,9 +69,11 @@
                                     <label for="email"><i class="zmdi zmdi-directions"></i></label>
                                     <input type="text" name="address" placeholder="Địa chỉ" required/>
                                 </div>
-                                <div class="form-group">
-                                    <input type="checkbox" name="agree-term" class="agree-term" required/>
-                                    <label for="agree-term" class="label-agree-term" ><span><span></span></span>Tôi đồng ý với tất cả   <a href="#" class="term-service" >Điều khoản dịch vụ</a></label>
+                                <div class="form-check">
+                                    <input type="checkbox" name="agree-term" class="agree-term" id="agree-term-checkbox" required/>
+                                    <label for="agree-term-checkbox" class="label-agree-term">
+                                        <span></span> Tôi đồng ý với tất cả <a href="#" class="term-service">Điều khoản dịch vụ</a>
+                                    </label>
                                 </div>
                                 <div class="form-group form-button">
                                     <input type="submit" name="signup" id="signup" class="form-submit" value="Đăng ký"/>

@@ -70,41 +70,41 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String fullName = request.getParameter("FullName");
-        String userName = request.getParameter("UserName");
-        String password = request.getParameter("Password");
-        String rePassword = request.getParameter("rePassword");
-        String email = request.getParameter("Email");
-        String phoneNumber = request.getParameter("PhoneNumber");
-        String address = request.getParameter("Address");
+        String fullName = request.getParameter("name");
+        String userName = request.getParameter("username");
+        String password = request.getParameter("pass");
+        String rePassword = request.getParameter("re_pass");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String address = request.getParameter("address");
         AccountDAO accountDAO = new AccountDAO();
 
         if (accountDAO.checkUserNameExists(userName)) {
-            request.setAttribute("errorMessage", "Username is already taken. Please choose another one.");
-            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
+            request.setAttribute("notification", "Tài khoản đã tồn tại. Làm ơn nhập tài khoản khác.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
             return;
         }
 
         if (accountDAO.checkEmailExists(email)) {
-            request.setAttribute("errorMessage", "Email is already in use. Please choose another one.");
-            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
+            request.setAttribute("notification", "Email đã tồn tại. Làm ơn nhập email khác.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
             return;
         }
 
         if (!password.equals(rePassword)) {
-            request.setAttribute("errorMessage", "Passwords do not match. Please re-enter your password.");
-            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
+            request.setAttribute("notification", "Mật khẩu không đúng. Làm ơn thử lại.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
             return;
         }
 
         boolean userCreated = accountDAO.createUser(fullName, userName, password, email, phoneNumber, address);
 
         if (userCreated) {
-            request.setAttribute("success","register successfully");
-            response.sendRedirect("Views/Home.jsp");
+            request.setAttribute("notification","Đăng ký thành công");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
         } else {
-            request.setAttribute("errorMessage", "There was an error creating your account. Please try again.");
-            request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
+            request.setAttribute("notification", "There was an error creating your account. Please try again.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
         }
     }
 
