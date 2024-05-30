@@ -102,36 +102,6 @@
     </symbol>
     </svg>
 
-    <!--    <div id="preloader" class="preloader-container">
-            <div class="book">
-                <div class="inner">
-                    <div class="left"></div>
-                    <div class="middle"></div>
-                    <div class="right"></div>
-                </div>
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </div>-->
-
     <div class="search-popup">
         <div class="search-popup-container">
 
@@ -148,7 +118,7 @@
                 </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                     </li>
                 </c:forEach>
 
@@ -250,7 +220,7 @@
                                 <c:choose>
                                     <c:when test="${sessionScope.account eq null}">
                                         <li class="pe-3">
-                                            <a href="login">
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 <svg class="user">
                                                 <use xlink:href="#user"></use>
                                                 </svg>
@@ -369,7 +339,7 @@
                                             <div class="nav-user-dropdown">
                                                 <button class="dropbtn">${sessionScope.account.getUserName()}</button>
                                                 <div class="dropdown-content">
-                                                    <a href="profile">Tài khoản của tôi</a>
+                                                    <a href="#">Tài khoản của tôi</a>
                                                     <a href="#">Đơn mua</a>
                                                     <a href="logout">Đăng xuất</a>
                                                 </div>
@@ -496,8 +466,11 @@
                         <div class="showing-product">
                             <h6>Tìm thấy <span>${count}</span> Sản Phẩm</h6>
                         </div>
-                        <form method="GET" action="shop">                          
+                        <form method="GET" action="filter">                          
                             <div class="sort-by">
+                                <input type="hidden" name="categoryId" value="${currentId}"/>
+                                <input type="hidden" name="objage" value="${currentAgeId}" />
+                                <input type="hidden" name="s" value="${keyword}" />                                
                                 <select id="sorting" class="form-select" name="sortBy" onchange="this.form.submit()">
                                     <option value="">Mặc Định</option>
                                     <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
@@ -507,6 +480,7 @@
                                 </select>
                             </div>
                         </form>
+
 
                     </div>
                     <div class="row product-content product-store">
@@ -579,7 +553,7 @@
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag - 1}${query}">Prev</a>
+                                        <a class="page-link" href="filter?index=${tag - 1}${query}">Prev</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
@@ -591,14 +565,14 @@
 
                             <c:forEach begin="1" end="${endP}" var="e">
                                 <li class="page-item ${tag == e ? 'active' : ''}">
-                                    <a class="page-link" href="shop?index=${e}${query}">${e}</a>
+                                    <a class="page-link" href="filter?index=${e}${query}">${e}</a>
                                 </li>
                             </c:forEach>
 
                             <c:choose>
                                 <c:when test="${tag < endP}">
                                     <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag + 1}${query}">Next</a>
+                                        <a class="page-link" href="filter?index=${tag + 1}${query}">Next</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
@@ -609,6 +583,8 @@
                             </c:choose>
                         </ul>
                     </nav>
+
+
 
 
 

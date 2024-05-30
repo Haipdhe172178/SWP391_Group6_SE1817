@@ -135,7 +135,7 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="GET" class="search-form" action="search">
+            <form role="search" method="GET" class="search-form" action="filter">
                 <input type="search" id="search-form" class="search-field" placeholder="Vui lòng nhập" value="" name="s" />
                 <button type="submit" class="search-submit"><svg class="search"><use xlink:href="search"></use></svg></button>
             </form>
@@ -496,28 +496,17 @@
                         <div class="showing-product">
                             <h6>Tìm thấy <span>${count}</span> Sản Phẩm</h6>
                         </div>
-                        <div class="sort-by dropdown">
-                            <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Sắp xếp</a>
-                            <ul class="dropdown-menu animate slide border">
-                                <li>
-                                    <a href="shop" class="dropdown-item fw-light">Mặc Định<span class="badge bg-primary"></span></a>
-                                </li>
-                                <li>
-                                    <a href="shop?sortBy=name_asc" class="dropdown-item fw-light">Tên (A - Z)<span class="badge bg-primary"></span></a>
-                                </li>
-                                <li>
-                                    <a href="shop?sortBy=name_desc" class="dropdown-item  fw-light">Tên (Z - A)<span class="badge bg-primary"></span></a>
-                                </li>
-
-                                <li>
-                                    <a href="shop?sortBy=price_asc" class="dropdown-item fw-light">Giá (Thấp - Cao)<span class="badge bg-primary"></span></a>
-                                </li>
-                                <li>
-                                    <a href="shop?sortBy=price_desc" class="dropdown-item fw-light">Giá (Cao - Thấp)<span class="badge bg-primary"></span></a>
-                                </li>
-
-                            </ul>
-                        </div>
+                        <form method="GET" action="shop">                          
+                            <div class="sort-by">
+                                <select id="sorting" class="form-select" name="sortBy" onchange="this.form.submit()">
+                                    <option value="">Mặc Định</option>
+                                    <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
+                                    <option value="name_desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
+                                    <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Low-High)</option>
+                                    <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (High-Low)</option>
+                                </select>
+                            </div>
+                        </form>
 
                     </div>
                     <div class="row product-content product-store">
@@ -629,7 +618,7 @@
                     <div class="sidebar ps-lg-5">
                         <div class="widget-menu">
                             <div class="widget-search-bar">
-                                <form class="d-flex border rounded-3 p-2" role="search" method="GET" action="search">
+                                <form class="d-flex border rounded-3 p-2" role="search" method="GET" action="filter">
                                     <input class="form-control border-0 me-2 py-2" type="search" name="s" placeholder="Search" aria-label="Search">
                                     <button class="btn rounded-3 p-3 d-flex align-items-center" type="submit">
                                         <svg class="search text-light" width="18" height="18">
@@ -650,7 +639,7 @@
                                 <c:forEach items="${category}" var="c">
                                     <li class="cat-item">
                                         <label>
-                                            <a href="shop?categoryId=${c.categoryId}" title="">${c.categoryName}</a>
+                                            <a href="filter?categoryId=${c.categoryId}" title="">${c.categoryName}</a>
                                         </label>
                                     </li>
                                 </c:forEach>
@@ -667,7 +656,7 @@
                                 </li>
                                 <c:forEach items="${objage}" var="ob">
                                     <li class="cat-item">                                       
-                                        <a href="shop?objage=${ob.ageId}" title="">${ob.age}</a>                                       
+                                        <a href="filter?objage=${ob.ageId}" title="">${ob.age}</a>                                       
                                     </li>
 
                                 </c:forEach>
@@ -680,19 +669,19 @@
                             </div>
                             <ul class="product-tags mb-0 sidebar-list list-unstyled">
                                 <li class="tags-item">
-                                    <a href="shop?price_filter=lessthan10"> Nhỏ hơn 100,000₫</a>
+                                    <a href="filter?price_filter=lessthan10"> Nhỏ hơn 100,000₫</a>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="shop?price_filter=10to20"> Từ 100,000₫ - 200,000₫</a>
+                                    <a href="filter?price_filter=10to20"> Từ 100,000₫ - 200,000₫</a>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="shop?price_filter=20to30"> Từ 200,000₫ - 300,000₫</a>
+                                    <a href="filter?price_filter=20to30"> Từ 200,000₫ - 300,000₫</a>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="shop?price_filter=30to40"> Từ 300,000₫ - 400,000₫</a>
+                                    <a href="filter?price_filter=30to40"> Từ 300,000₫ - 400,000₫</a>
                                 </li>
                                 <li class="tags-item">
-                                    <a href="shop?price_filter=morethan50"> Lớn hơn 500,000₫</a>
+                                    <a href="filter?price_filter=morethan50"> Lớn hơn 500,000₫</a>
                                 </li>
                             </ul>
                         </div>

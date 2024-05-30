@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author huyca
  */
-public class DataControllers extends HttpServlet {
+public class DataProductControllers extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -100,7 +100,7 @@ public class DataControllers extends HttpServlet {
         request.setAttribute("author", au);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
-        request.getRequestDispatcher("Views/Admin/DataTable.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Admin/Product.jsp").forward(request, response);
     }
 
     /** 

@@ -118,66 +118,6 @@ public class ShopControllers extends HttpServlet {
 
         count = productDao.getTotalProduct();
 
-        String categoryIdStr = request.getParameter("categoryId");
-        int categoryId = 0;
-        if (categoryIdStr != null) {
-            categoryId = Integer.parseInt(categoryIdStr);
-        }
-
-        if (categoryId != 0) {
-            list = productDao.pagingProductsByCategory(index, categoryId);
-            count = productDao.getTotalProductsByCategory(categoryId);
-        }
-
-        String objectAge = request.getParameter("objage");
-        int obAge = 0;
-        if (objectAge != null) {
-            obAge = Integer.parseInt(objectAge);
-        }
-        if (obAge != 0) {
-            list = productDao.pagingProductsByAgeId(index, obAge);
-            count = productDao.countProductsByAgeId(obAge);
-
-        }
-        String priceFilter = request.getParameter("price_filter");
-        float minPrice = 0;
-        float maxPrice = 0;
-        if (priceFilter != null) {
-            switch (priceFilter) {
-                case "lessthan10":
-                    maxPrice = 100000;
-                    break;
-                case "10to20":
-                    minPrice = 100000;
-                    maxPrice = 200000;
-                    break;
-                case "20to30":
-                    minPrice = 200000;
-                    maxPrice = 300000;
-                    break;
-                case "30to40":
-                    minPrice = 300000;
-                    maxPrice = 400000;
-                    break;
-                case "morethan50":
-                    minPrice = 500000;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        if (minPrice > 0 || maxPrice > 0) {
-            list = productDao.pagingProductsByPriceRange(index, minPrice, maxPrice);
-            count = productDao.countPriceRange(minPrice, maxPrice);
-
-        }
-
-        String searchKeyword = request.getParameter("s");
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            list = productDao.pagingProductsByKeyword(index, searchKeyword);
-            count = productDao.getTotalProductsByKeyword(searchKeyword);
-        }
         endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;
@@ -185,18 +125,6 @@ public class ShopControllers extends HttpServlet {
         StringBuilder query = new StringBuilder();
         if (sortBy != null) {
             query.append("&sortBy=").append(sortBy);
-        }
-        if (categoryIdStr != null) {
-            query.append("&categoryId=").append(categoryIdStr);
-        }
-        if (objectAge != null) {
-            query.append("&objage=").append(objectAge);
-        }
-        if (priceFilter != null) {
-            query.append("&price_filter=").append(priceFilter);
-        }
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            query.append("&s=").append(searchKeyword);
         }
 
         NewsDao nd = new NewsDao();
