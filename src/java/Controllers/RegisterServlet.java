@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -56,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
     }
 
     /**
@@ -79,6 +80,36 @@ public class RegisterServlet extends HttpServlet {
         String address = request.getParameter("address");
         AccountDAO accountDAO = new AccountDAO();
 
+        if (fullName == null || fullName.isEmpty()
+                || userName == null || userName.isEmpty()
+                || password == null || password.isEmpty()
+                || rePassword == null || rePassword.isEmpty()
+                || email == null || email.isEmpty()
+                || phoneNumber == null || phoneNumber.isEmpty()
+                || address == null || address.isEmpty()) {
+
+            request.setAttribute("notification", "All fields are required. Please fill in all fields.");
+            processRequest(request, response);
+            return;
+        }
+
+        if (!isValidUsername(userName)) {
+            request.setAttribute("notification", "Tên đăng nhập sai định dạng.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            request.setAttribute("notification", "Mật khẩu sai định dạng.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            return;
+        }
+        if (!isValidPhoneNumber(phoneNumber)) {
+            request.setAttribute("notification", "Số điện thoại phải <12.");
+            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            return;
+        }
+
         if (accountDAO.checkUserNameExists(userName)) {
             request.setAttribute("notification", "Tài khoản đã tồn tại. Làm ơn nhập tài khoản khác.");
             request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
@@ -100,12 +131,28 @@ public class RegisterServlet extends HttpServlet {
         boolean userCreated = accountDAO.createUser(fullName, userName, password, email, phoneNumber, address);
 
         if (userCreated) {
-            request.setAttribute("notification","Đăng ký thành công");
+            request.setAttribute("notification", "Đăng ký thành công");
             request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
         } else {
-            request.setAttribute("notification", "There was an error creating your account. Please try again.");
+            request.setAttribute("notification", "Lỗi tạo tài khoản. Làm ơn thử lại.");
             request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
         }
+
+    }
+
+    private boolean isValidUsername(String username) {
+        String usernamePattern = "^(?!.*\\.\\.)(?!.*__)(?!.*\\._)(?!.*_\\.)[a-zA-Z0-9._]{5,20}$";
+        return Pattern.matches(usernamePattern, username);
+    }
+
+    private boolean isValidPassword(String password) {
+        String passwordPattern = "(?=.*\\d.*\\d.*\\d)(?=.*[a-z])[a-zA-Z0-9]{1,8}";
+        return Pattern.matches(passwordPattern, password);
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        String phoneNumberPattern = "^\\d{10}$";
+        return Pattern.matches(phoneNumberPattern, phoneNumber);
     }
 
     @Override
