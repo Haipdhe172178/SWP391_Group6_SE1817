@@ -615,8 +615,9 @@ public class ProductDao extends DBContext {
         }
         return list;
     }
+
     //Phân trang khi sort độ tuổi theo tên
-     public List<Product> pagingObjectAgeSortedByName(int index, boolean asc, int ageId) {
+    public List<Product> pagingObjectAgeSortedByName(int index, boolean asc, int ageId) {
         List<Product> list = new ArrayList<>();
         String order = asc ? "ASC" : "DESC";
         String query = "SELECT * FROM Product WHERE ageId = ? ORDER BY name " + order + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
@@ -659,6 +660,7 @@ public class ProductDao extends DBContext {
         }
         return 0;
     }
+
     public void addProduct(Product product) {
         String query = "INSERT INTO Product (name, price, quantity, description, categoryId, authorId, imgProduct, ageId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -679,9 +681,9 @@ public class ProductDao extends DBContext {
 
     public void delete(String id) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    try {
-            String stSQL = "DELETE FROM [dbo].[Product]\n" +
-"      WHERE ProductID = ?";
+        try {
+            String stSQL = "DELETE FROM [dbo].[Product]\n"
+                    + "      WHERE ProductID = ?";
             PreparedStatement stm = connection.prepareStatement(stSQL);
             stm = connection.prepareStatement(stSQL);
 
@@ -690,7 +692,89 @@ public class ProductDao extends DBContext {
         } catch (Exception e) {
             System.out.println("deleteUSer" + e.getMessage());
         }
-    
-    
+
+    }
+
+    public Product get1Productbyid(String id) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement stm;//thuc hien cau lenh sql
+        ResultSet rs;// lua tru du lieu duoc lay ve tu select
+
+        try {
+            String stSQL = "SELECT [ProductID]\n"
+                    + "      ,[Name]\n"
+                    + "      ,[Price]\n"
+                    + "      ,[Quantity]\n"
+                    + "      ,[Description]\n"
+                    + "      ,[CategoryID]\n"
+                    + "      ,[AuthorID]\n"
+                    + "      ,[ImgProduct]\n"
+                    + "      ,[AgeID]\n"
+                    + "  FROM [dbo].[Product]\n"
+                    + "  where ProductID = ?";
+
+            stm = connection.prepareStatement(stSQL);
+            stm.setString(1, id);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+//                String id = String.valueOf(rs.getInt(1));
+                int productid = rs.getInt(1);
+                String name = rs.getString(2);
+                float price = rs.getFloat(3);
+                int quantity = rs.getInt(4);
+                String description = rs.getString(5);
+                int CategoryID = rs.getInt(6);
+                int authorID = rs.getInt(7);
+                String imgProduct = rs.getString(8);
+                int age = rs.getInt(9);
+                return new Product(productid, name, price, quantity, description, CategoryID, authorID, imgProduct, age);
+                //   student.setId(rs.getInt("sid"));
+
+            }
+        } catch (Exception e) {
+            System.out.println("getUpdate" + e.getMessage());
+        }
+        return null;
+
+    }
+
+    public void updateProduct(Product u) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String stSQL = "UPDATE [dbo].[Product]\n"
+                    + "   SET [Name] = ?\n"
+                    + "      ,[Price] = ?\n"
+                    + "      ,[Quantity] = ?\n"
+                    + "      ,[Description] = ?\n"
+                    + "      ,[CategoryID] = ?\n"
+                    + "      ,[AuthorID] = ?\n"
+                    + "      ,[ImgProduct] = ?\n"
+                    + "      ,[AgeID] = ?\n"
+                    + " WHERE ProductID = ?";
+            PreparedStatement stm = connection.prepareStatement(stSQL);
+            stm = connection.prepareStatement(stSQL);
+            stm.setString(1, u.getName());
+            stm.setFloat(2, u.getPrice());
+            stm.setInt(3, u.getQuantity());
+            stm.setString(4, u.getDescription());
+            stm.setInt(5, u.getCategoryId());
+            stm.setInt(6, u.getAuthorId());
+            stm.setString(7, u.getImgProduct());
+            stm.setInt(8, u.getAgeId());
+            stm.setInt(9, u.getProductId());
+          int d =  stm.executeUpdate();   
+        } catch (Exception e) {
+            System.out.println("updateProduct" + e.getMessage());
+        }
+      
+        
+    }
+    public static void main(String[] args) {
+        ProductDao  dal =  new ProductDao();
+        Product p = dal.get1Productbyid("1");
+        
+        
+        
     }
 }

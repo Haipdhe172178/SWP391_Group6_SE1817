@@ -1,9 +1,9 @@
 <%-- 
-    Document   : DataTable
-    Created on : May 27, 2024, 10:09:46 AM
-    Author     : huyca
+    Document   : UpdateProduct
+    Created on : May 30, 2024, 2:23:39 PM
+    Author     : USER
 --%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -38,7 +38,7 @@
 
         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
-                <a href="dash"><img src="img/logo.png" alt></a>
+                <a href="index.html"><img src="img/logo.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
@@ -78,7 +78,6 @@
                     <ul>
                         <li><a href="Products.html">Products</a></li>
                         <li><a href="discount">Discount</a></li>
-
                     </ul>
                 </li>        
                 <li class>
@@ -89,9 +88,7 @@
                         <span>Table</span>
                     </a>
                     <ul>
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="">Tác Giả</a></li>
+                        <li><a href="data">Sản Phẩm</a></li>
                     </ul>
                 </li>
             </ul>
@@ -246,89 +243,82 @@
                                     </div>
                                 </div>
                                 <div class="white_card_body">
-                                    <div class="QA_section">
-                                        <div class="white_box_tittle list_header">
-                                            <h4>Table</h4>
-                                            <div class="box_right d-flex lms_block">
-                                                <div class="serach_field_2">
-                                                    <div class="search_inner">
-                                                        <form action="data" method="GET">
-                                                            <div class="search_field">
-                                                                <input name="s" type="text" placeholder="Search here...">
-                                                            </div>
-                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="add_button ms-2">
-                                                    <a href="add" class="btn_1">Add Product</a>
-                                                </div>
-                                            </div>
+                                  
+                                    <form action="update" method="post" enctype="multipart/form-data">
+                                        <div hidden="" class="mb-3">
+                                           
+                                            <label for="productName">ID</label>
+                                            <input type="text" class="form-control" id="productName" name="ID" value="${data.productId}" required>
                                         </div>
-                                        <div class="QA_table mb_30">
 
-                                            <table class="table lms_table_active ">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">ProductId</th>
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Quantity</th>
-                                                        <th scope="col">Description</th>
-                                                        <th scope="col">Category</th>
-                                                        <th scope="col">Author</th>
-                                                        <th scope="col">Img</th>
-                                                        <th scope="col">Age</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${product}" var="p">
-                                                        <tr>
-                                                            <td>${p.productId}</td>
-                                                            <td>${p.name}</td>
-                                                            <td>${p.price}</td>
-                                                            <td>${p.quantity}</td>
-                                                            <td>${fn:substring(p.description, 0, 50)}...</td>
-                                                            <c:forEach items="${category}" var="c">
-                                                                <c:if test="${c.categoryId eq p.categoryId}">
-                                                                    <td>${c.categoryName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:forEach items="${author}" var="au">
-                                                                <c:if test="${au.authorID eq p.authorId}">
-                                                                    <td>${au.authorName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
-                                                                <c:forEach items="${obage}" var="o">
-                                                                    <c:if test="${o.ageId eq p.ageId}">
-                                                                    <td>${o.age}</td>
-                                                                </c:if>
-                                                            </c:forEach>                                                        
-                                                            <td><a href="delete?id=${p.productId}">DELETE</td>
-                                                             <td><a href="update?id=${p.productId}">UPDATE</td>
-                                                        </tr>
-
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                        <div class="mb-3">
+                                           
+                                            <label for="productName">Tên</label>
+                                            <input type="text" class="form-control" id="productName" name="name" value="${data.name}" required>
                                         </div>
-                                        <nav class="py-5" aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center">
-                                                <c:forEach var="i" begin="1" end="${endP}">
-                                                    <li class="page-item ${tag == i ? 'active' : ''}">
-                                                        <a class="page-link" href="data?index=${i}${query}">${i}</a>
-                                                    </li>
+                                        <div class="mb-3">
+                                            <label for="productPrice">Giá</label>
+                                            <input type="number" class="form-control" id="productPrice" name="price" value="${data.price}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productQuantity">Số lượng</label>
+                                            <input type="number" class="form-control" id="productQuantity" name="quantity" value="${data.quantity}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productName">Mô tả</label>
+                                            <input type="text" class="form-control" id="productdescription" name="description" value="${data.description}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productCategory" class="form-label">Category</label>
+                                            <select class="form-select" id="productCategory" name="categoryId" required>
+                                                <c:forEach items="${category}" var="c">
+                              
+                                                    <option value="${c.categoryId}" ${c.categoryId == data.categoryId ? 'selected':''} >${c.categoryName}</option>
                                                 </c:forEach>
-                                            </ul>
-                                        </nav>
-                                    </div>
+                             
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productAge" class="form-label">Tác giả</label>
+                                            <select class="form-select" id="productAge" name="author" required>
+                                                <c:forEach items="${author}" var="au">
+                                                    <option value="${au.authorID}" ${au.authorID == data.authorId ? 'selected': '' }>${au.authorName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+
+<!--                                       <div class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control"  name="imgProduct"  >
+                                            <img height="10%" width="10%" src="${data.imgProduct}">
+                                        </div>                                                                             -->                                      
+                                          <div class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control" id="productImage" name="imgProduct" required>
+                                        </div>
+                                        <div hidden="" class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control"  name="imgProduct12"  value="${data.imgProduct}">
+                                        </div>
+                                       
+                                       
+                                        <div class="mb-3">
+                                            <label for="productAge" class="form-label">Age</label>
+                                            <select class="form-select" id="productAge" name="ageId" required>
+                                                <c:forEach items="${obage}" var="o">
+                                                    <option value="${o.ageId}" ${o.ageId == data.ageId ? 'selected':''}>${o.age}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button type="submit" name="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
                                 </div>
+
                             </div>
                         </div>
-                        <div class="col-12">
-                        </div>
+
                     </div>
                 </div>
             </div>
