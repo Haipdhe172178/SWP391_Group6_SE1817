@@ -108,8 +108,11 @@ public class UpdateController extends HttpServlet {
             int ageId = Integer.parseInt(request.getParameter("ageId"));
 
             // Xử lý ảnh
+             String imgProduct = null;
+              imgProduct = request.getParameter("imgProduct12");
             Part part = request.getPart("imgProduct");
-            String imgProduct = null;
+            if(part != null && part.getSize() > 0){
+                 
             if (part != null && part.getSize() > 0) {
                 String path = request.getServletContext().getRealPath("/img");
                 File dir = new File(path);
@@ -120,6 +123,10 @@ public class UpdateController extends HttpServlet {
                 File image = new File(dir, fileName);
                 part.write(image.getAbsolutePath());
                 imgProduct = request.getContextPath() + "/img/" + fileName;
+            }
+          
+            }else{
+                imgProduct = request.getParameter("imgProduct12");
             }
 
             // Tạo đối tượng Product mới

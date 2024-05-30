@@ -294,12 +294,17 @@
                                         </div>                                                                             -->                                      
                                           <div class="mb-3">
                                             <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control" id="productImage" name="imgProduct" required>
+                                            <input type="file" class="form-control" id="prodctimg" name="imgProduct" >
+                                            <img height="10%" width="10%" src="${data.imgProduct}">
                                         </div>
-                                        <div hidden="" class="mb-3">
+                                          <div hidden="" class="mb-3">
+                                            <label for="productName">anh</label>
+                                            <input type="text" class="form-control" id="productdescription" name="imgProduct12" value="${data.imgProduct}" >
+                                        </div>
+<!--                                         <div hidden="" class="mb-3">
                                             <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control"  name="imgProduct12"  value="${data.imgProduct}">
-                                        </div>
+                                            <input type="text" class="form-control"  name="imgProduct12"  value="${data.imgProduct}">
+                                        </div>-->
                                        
                                        
                                         <div class="mb-3">
