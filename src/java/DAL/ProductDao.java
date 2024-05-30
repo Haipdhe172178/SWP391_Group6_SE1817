@@ -763,18 +763,66 @@ public class ProductDao extends DBContext {
             stm.setString(7, u.getImgProduct());
             stm.setInt(8, u.getAgeId());
             stm.setInt(9, u.getProductId());
-          int d =  stm.executeUpdate();   
+            int d = stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("updateProduct" + e.getMessage());
         }
-      
-        
     }
+
+    public void deleteStudent(int studentID) {
+        PreparedStatement pstmt = null;
+        try {
+
+            // Xóa sinh viên từ bảng Students
+            String deleteStudentSql1 = "DELETE FROM [dbo].[Feedback]\n" +
+"      WHERE ProductID = ?";
+            pstmt = connection.prepareStatement(deleteStudentSql1);
+            pstmt.setInt(1, studentID);
+            pstmt.executeUpdate();
+
+            String deleteStudentSql2 = "DELETE FROM [dbo].OrderDetailGuest\n" +
+"      WHERE ProductID = ?";
+            pstmt = connection.prepareStatement(deleteStudentSql2);
+            pstmt.setInt(1, studentID);
+            pstmt.executeUpdate();
+            String deleteStudentSql3 = "DELETE FROM [dbo].OrderDetailCustomer\n" +
+"      WHERE ProductID = ?";
+            pstmt = connection.prepareStatement(deleteStudentSql3);
+            pstmt.setInt(1, studentID);
+            pstmt.executeUpdate();
+            String deleteStudentSql4 = "DELETE FROM [dbo].QualityofProductsell\n" +
+"      WHERE ProducID = ?";
+            pstmt = connection.prepareStatement(deleteStudentSql4);
+            pstmt.setInt(1, studentID);
+            pstmt.executeUpdate();
+
+            String deleteStudentSql5 = "DELETE FROM [dbo].[Product]\n" +
+"      WHERE ProductID = ?";
+            pstmt = connection.prepareStatement(deleteStudentSql5);
+            pstmt.setInt(1, studentID);
+            pstmt.executeUpdate();
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
-        ProductDao  dal =  new ProductDao();
+        ProductDao dal = new ProductDao();
         Product p = dal.get1Productbyid("1");
-        
-        
-        
+
     }
 }

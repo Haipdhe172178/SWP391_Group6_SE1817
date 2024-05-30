@@ -55,9 +55,10 @@ public class DeleteControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         String id = request.getParameter("id");
-       ProductDao dal = new ProductDao();
-        dal.delete(id);    
+         String id1 = request.getParameter("id");
+      
+         ProductDao dal = new ProductDao();
+         dal.deleteStudent(Integer.parseInt(id1));
       
           response.sendRedirect("data");
        

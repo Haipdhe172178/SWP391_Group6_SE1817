@@ -15,11 +15,11 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/UsedCoupon.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DashControllers.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/UpdateController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Dashboard.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DiscountController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Home.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/DataTable.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddcodeController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/img_product/105.jpg</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/About.jsp</file>
@@ -27,6 +27,7 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DeleteCodeController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Product.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/images/main-logo.png</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/LoginServlet.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/css/style.css</file>
@@ -34,6 +35,7 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/css/bootstrap1.min.css</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailCustomer.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Cart.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateProduct.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/images/insta-item5.jpg</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/HomeDAO.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DBContext.java</file>
