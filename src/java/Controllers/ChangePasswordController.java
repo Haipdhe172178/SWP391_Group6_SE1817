@@ -82,11 +82,13 @@ public class ChangePasswordController extends HttpServlet {
         if (!a.getPassWord().equals(oldPassword)) {
             String ms = "Mật khẩu hiện tại không đúng.";
             request.setAttribute("ms", ms);
+            request.setAttribute("showChangePassword", true);
             request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
         }
         else if (!newPassword.equals(confirmPassword)) {
             String m = "Xác nhận mật khẩu không khớp.";
             request.setAttribute("m", m);
+            request.setAttribute("showChangePassword", true);
             request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
         } else {
             a.setPassWord(newPassword);
@@ -94,6 +96,7 @@ public class ChangePasswordController extends HttpServlet {
 
             String mess = "Mật khẩu đã được thay đổi";
             request.setAttribute("mess", mess);
+            request.setAttribute("showChangePassword", true);
             request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
 
         }

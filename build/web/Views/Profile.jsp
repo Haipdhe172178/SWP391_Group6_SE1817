@@ -171,20 +171,28 @@
     </div>
 </div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
-<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
-<script type='text/javascript' src='#'></script>
-<script type='text/javascript' src='#'></script>
-<script type='text/javascript' src='#'></script>
-<script type='text/javascript'>#</script>
-<script type='text/javascript'>
-    var myLink = document.querySelector('a[href="#"]');
-    myLink.addEventListener('click', function (e) {
-        e.preventDefault();
-    });
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript'>#</script>
+    <script type='text/javascript'>
+        var myLink = document.querySelector('a[href="#"]');
+        myLink.addEventListener('click', function (e) {
+            e.preventDefault();
+        });
+    </script>
+<% Boolean showChangePassword = (Boolean) request.getAttribute("showChangePassword"); %>
 
-
-</script>
 <script>
+    window.onload = function () {
+    <% if (showChangePassword != null && showChangePassword) { %>
+        showChangePassword();
+    <% } else { %>
+        showProfile();
+    <% } %>
+    }
+
     // Hàm để ẩn phần tử có id là "profile" và hiển thị phần tử có id là "changepass"
     function showChangePassword() {
         document.getElementById('profile').style.display = 'none';
@@ -206,8 +214,7 @@
     document.querySelector('.p-3.py-5#changepass .btn.btn-secondary.profile-button').addEventListener('click', function () {
         showProfile();
     });
-</script>
-<script>
+
     // Sự kiện click cho nút "Edit Profile"
     document.querySelector('.add-experience').addEventListener('click', function () {
         // Lấy tất cả các phần tử có class là "inputprofile"
@@ -224,7 +231,4 @@
         });
     });
 </script>
-
-
-</body>
 </html>
