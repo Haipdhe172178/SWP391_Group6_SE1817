@@ -89,4 +89,36 @@ public class HomeDAO extends DBContext{
         
         System.out.println(data);
     }
+
+    public ArrayList<Product> get3(int i) {
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      ArrayList<Product> data = new ArrayList<>();
+        try {
+            String sql = "SELECT top 3* \n" +
+"          FROM [Product] where CategoryID = "+ i +"";
+           
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = (rs.getInt(1));
+                String name = rs.getString(2);
+                float Price = (rs.getFloat(3));
+                 int Quantity = (rs.getInt(4));
+                String Description = rs.getString(5);
+                int CategoryID = (rs.getInt(6));
+                int AuthorID = (rs.getInt(7));              
+                String img = rs.getString(8);
+                int ageId = rs.getInt(9);
+                data.add(new Product(id, name, Price, Quantity, Description, CategoryID, AuthorID, img, ageId) );
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+
+    
+    
+    
+    }
 }

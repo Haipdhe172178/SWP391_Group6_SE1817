@@ -69,11 +69,19 @@ public class HomeControllers extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<Product> data = new ArrayList<>();
         ArrayList<Product> data1 = new ArrayList<>();
-
+         ArrayList<Product> data01 = new ArrayList<>();
+          ArrayList<Product> data02 = new ArrayList<>();
+           ArrayList<Product> data03 = new ArrayList<>();
+            ArrayList<Product> data04 = new ArrayList<>();
+         
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
         HomeDAO dal = new HomeDAO();
+        data01 = dal.get3(2);
+         data02 = dal.get3(3);
+          data03 = dal.get3(4);
+           data04 = dal.get3(5);
         data = dal.get3radum();
         data1 = dal.get6sellmany();
 
@@ -90,6 +98,10 @@ public class HomeControllers extends HttpServlet {
         request.setAttribute("news", listNews);
         request.setAttribute("data1", data1);
         request.setAttribute("data", data);
+        request.setAttribute("data01", data01);
+        request.setAttribute("data02", data02);
+        request.setAttribute("data03", data03);
+        request.setAttribute("data04", data04);
 
         request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
 
