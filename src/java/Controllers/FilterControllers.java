@@ -77,8 +77,6 @@ public class FilterControllers extends HttpServlet {
             index = 1;
         }
 
-        String sortBy = request.getParameter("sortBy");
-
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
@@ -88,20 +86,25 @@ public class FilterControllers extends HttpServlet {
         List<Category> categories = categoryDao.getallCategorys();
         List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
 
-        List<Product> list = new ArrayList<>();
+        List<Product> list;
         int count = 0;
         int endPage;
 
-        String categoryIdStr = request.getParameter("categoryId");
-        int categoryId = 0;
-        if (categoryIdStr != null && !categoryIdStr.isEmpty() && !categoryIdStr.equals("0")) {
-            categoryId = Integer.parseInt(categoryIdStr);
+        String[] categoryIdStrArray = request.getParameterValues("categoryId");
+        List<Integer> selectedCategoryIds = new ArrayList<>();
+        if (categoryIdStrArray != null) {
+            for (String categoryIdStr : categoryIdStrArray) {
+                if (categoryIdStr != null && !categoryIdStr.isEmpty() && !categoryIdStr.equals("0")) {
+                    int categoryId = Integer.parseInt(categoryIdStr);
+                    selectedCategoryIds.add(categoryId);
+                }
+            }
         }
 
-        String objectAgeStr = request.getParameter("objage");
-        int obAge = 0;
-        if (objectAgeStr != null && !objectAgeStr.isEmpty() && !objectAgeStr.equals("0")) {
-            obAge = Integer.parseInt(objectAgeStr);
+        String ageIdStr = request.getParameter("objage");
+        int ageId = 0;
+        if (ageIdStr != null && !ageIdStr.isEmpty()) {
+            ageId = Integer.parseInt(ageIdStr);
         }
 
         String priceFilter = request.getParameter("price_filter");
@@ -131,83 +134,39 @@ public class FilterControllers extends HttpServlet {
                     break;
             }
         }
-
         String searchKeyword = request.getParameter("s");
-
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            if (sortBy != null) {
-                switch (sortBy) {
-                    case "name_asc":
-                        list = productDao.pagingProductsSortedByName(index, true, searchKeyword);
-                        break;
-                    case "name_desc":
-                        list = productDao.pagingProductsSortedByName(index, false, searchKeyword);
-                        break;
-                    case "price_asc":
-                        list = productDao.pagingProductsSortedByPrice(index, true, searchKeyword);
-                        break;
-                    case "price_desc":
-                        list = productDao.pagingProductsSortedByPrice(index, false, searchKeyword);
-                        break;
-                    default:
-                        list = productDao.pagingProductsByKeyword(index, searchKeyword);
-                        break;
-                }
-            } else {
-                list = productDao.pagingProductsByKeyword(index, searchKeyword);
-            }
-            count = productDao.getTotalProductsByKeyword(searchKeyword);
-        } else if (categoryId != 0) {
-            if (sortBy != null) {
-                switch (sortBy) {
-                    case "name_asc":
-                        list = productDao.pagingProductsSortedByName(index, true, categoryId);
-                        break;
-                    case "name_desc":
-                        list = productDao.pagingProductsSortedByName(index, false,categoryId);
-                        break;
-                    case "price_asc":
-                        list = productDao.pagingProductsSortedByPrice(index, true,categoryId);
-                        break;
-                    case "price_desc":
-                        list = productDao.pagingProductsSortedByPrice(index, false,categoryId);
-                        break;
-                    default:
-                        list = productDao.pagingProductsByCategory(index, categoryId);
-                        break;
-                }
-                count = productDao.getTotalProductsByCategory(categoryId);
-            } else {
-                list = productDao.pagingProductsByCategory(index, categoryId);
-                count = productDao.getTotalProductsByCategory(categoryId);
-            }
-        } else if (obAge != 0) {
-            if (sortBy != null) {
-                switch (sortBy) {
-                    case "name_asc":
-                        list = productDao.pagingObjectAgeSortedByName(index, true, obAge);
-                        break;
-                    case "name_desc":
-                        list = productDao.pagingObjectAgeSortedByName(index, false, obAge);
-                        break;
-                    case "price_asc":
-                        list = productDao.pagingObjectAgeSortedByPrice(index, true, obAge);
-                        break;
-                    case "price_desc":
-                        list = productDao.pagingObjectAgeSortedByPrice(index, false, obAge);
-                        break;
-                    default:
-                        list = productDao.pagingProductsByAgeId(index, obAge);
-                        break;
-                }
-            } else {
-                list = productDao.pagingProductsByAgeId(index, obAge);
-            }
-            count = productDao.countProductsByAgeId(obAge);
+        // Lấy danh sách sản phẩm và số lượng sản phẩm tương ứng với các tiêu chí đã chọn
+        if (!selectedCategoryIds.isEmpty() && ageId != 0 && (minPrice > 0 || maxPrice > 0)) {
+            list = productDao.paginProductByCateIdAgeIdPrice(index, selectedCategoryIds, ageId, minPrice, maxPrice, true, true);
+            count = productDao.countProductsByCategoryIdsAgeIDPrice(selectedCategoryIds, ageId, minPrice, maxPrice);
+        //Lấy danh sách sản phẩm và số lượng sản phẩm tương ứng với categoryId va ageId
+        }else if (!selectedCategoryIds.isEmpty() && ageId != 0) {
+            list = productDao.pagingProductsByCateIdAgeId(index, selectedCategoryIds, ageId);
+            count = productDao.countProductsByCategoryIdsAgeID(selectedCategoryIds, ageId);
+          //Lấy danh sách sản phẩm và số lượng sản phẩm tương ứng với categoryId va price   
+        }else if (!selectedCategoryIds.isEmpty() && (minPrice > 0 || maxPrice > 0)) {
+            list = productDao.pagingProductsByCateIdPrice(index,selectedCategoryIds,minPrice, maxPrice);
+            count = productDao.countProductsByCareIdPrice(selectedCategoryIds, minPrice, maxPrice);
+        }else if (ageId != 0 && (minPrice > 0 || maxPrice > 0)) {
+            list = productDao.pagingProductAgeIdPrice(index,ageId, minPrice, maxPrice);
+            count = productDao.countProductAgeIdPrice(ageId, minPrice, maxPrice);
+        }  else if (!selectedCategoryIds.isEmpty()) {
+            // Nếu người dùng chỉ lọc theo categoryId
+            list = productDao.pagingProductsByCatagoryId(index, selectedCategoryIds);
+            count = productDao.countProductsByCategoryIds(selectedCategoryIds);
+        } else if (ageId != 0) {
+            // Nếu người dùng chỉ lọc theo ageId
+            list = productDao.pagingProductsByAgeId(index, ageId);
+            count = productDao.countProductsByAgeId(ageId);
         } else if (minPrice > 0 || maxPrice > 0) {
+            // Nếu người dùng lọc theo khoảng giá
             list = productDao.pagingProductsByPriceRange(index, minPrice, maxPrice);
             count = productDao.countPriceRange(minPrice, maxPrice);
-        } else {
+        }else if (!searchKeyword.trim().isEmpty()) {
+            list = productDao.pagingProductsByKeyword(index, searchKeyword);
+            count = productDao.getTotalProductsByKeyword(searchKeyword);
+        }  else {
+            // Nếu không có tiêu chí lọc nào được chọn, sử dụng phân trang thông thường
             list = productDao.pagingProducts(index);
             count = productDao.getTotalProduct();
         }
@@ -218,14 +177,13 @@ public class FilterControllers extends HttpServlet {
         }
 
         StringBuilder query = new StringBuilder();
-        if (sortBy != null) {
-            query.append("&sortBy=").append(sortBy);
+        if (!selectedCategoryIds.isEmpty()) {
+            for (int categoryId : selectedCategoryIds) {
+                query.append("&categoryId=").append(categoryId);
+            }
         }
-        if (categoryId != 0) {
-            query.append("&categoryId=").append(categoryIdStr);
-        }
-        if (obAge != 0) {
-            query.append("&objage=").append(objectAgeStr);
+        if (ageId != 0) {
+            query.append("&objage=").append(ageId);
         }
         if (priceFilter != null) {
             query.append("&price_filter=").append(priceFilter);
@@ -244,9 +202,6 @@ public class FilterControllers extends HttpServlet {
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
 
-        request.setAttribute("currentId", categoryId);
-        request.setAttribute("currentAgeId", obAge);
-        request.setAttribute("keyword", searchKeyword);
         request.setAttribute("query", query);
         request.setAttribute("author", authors);
         request.setAttribute("category", categories);

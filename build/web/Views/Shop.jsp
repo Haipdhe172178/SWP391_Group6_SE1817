@@ -27,6 +27,60 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+         <style>
+            .collapsible {
+                cursor: pointer;
+                user-select: none;
+                background-color: #f86d72;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                font-size: 14px;
+                position: relative;
+            }
+            .collapsible::after {
+                content: '\002B';
+                font-size: 14px;
+                position: absolute;
+                right: 20px;
+                color: #777;
+            }
+            .collapsible.active::after {
+                content: '\2212';
+            }
+            .content {
+                display: none;
+                overflow: hidden;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            .section-title h3 {
+                margin: 0;
+                font-size: 16px;
+                color: #fff;
+            }
+            .product-categories, .product-tags {
+                padding-left: 20px;
+            }
+            .cat-item, .tags-item {
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+            button[type="submit"] {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: #f86d72;
+                color: #fff;
+                cursor: pointer;
+            }
+            button[type="submit"]:hover {
+                background-color: #f86d72;
+            }
+        </style>
     </head>
 
     <body>
@@ -628,63 +682,90 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="widget-product-categories pt-5">
-                            <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Thể loại</h3>
+                          <form action="filter" method="get">
+                            <div class="widget-product-categories pt-5">
+                                <div class="section-title overflow-hidden mb-2 collapsible">
+                                    <h3 class="d-flex flex-column mb-0">Thể loại</h3>
+                                </div>
+                                <div class="content">
+                                    <ul class="product-categories mb-0 sidebar-list list-unstyled">
+                                        <li class="cat-item">
+                                            <label>
+                                                <input type="checkbox" name="categoryId" value="all"> Tất cả
+                                            </label>
+                                        </li>
+                                        <c:forEach items="${category}" var="c">
+                                            <li class="cat-item">
+                                                <label>
+                                                    <input type="checkbox" name="categoryId" value="${c.categoryId}"> ${c.categoryName}
+                                                </label>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
                             </div>
-                            <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                <label>
-                                    <a href="shop" title="">Tất cả</a>
-                                </label>
-                                <c:forEach items="${category}" var="c">
-                                    <li class="cat-item">
-                                        <label>
-                                            <a href="filter?categoryId=${c.categoryId}" title="">${c.categoryName}</a>
-                                        </label>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </div>
 
-                        <div class="widget-product-tags pt-5">
-                            <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
+                            <div class="widget-product-tags pt-5">
+                                <div class="section-title overflow-hidden mb-2 collapsible">
+                                    <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
+                                </div>
+                                <div class="content">
+                                    <ul class="product-tags mb-0 sidebar-list list-unstyled">
+                                        <li class="cat-item">
+                                            <label>
+                                                <input type="radio" name="objage" value="all"> Tất cả
+                                            </label>
+                                        </li>
+                                        <c:forEach items="${objage}" var="ob">
+                                            <li class="cat-item">
+                                                <label>
+                                                    <input type="radio" name="objage" value="${ob.ageId}"> ${ob.age}
+                                                </label>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
                             </div>
-                            <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                <li class="cat-item">
-                                    <a href="shop" title="">Tất cả</a>
-                                </li>
-                                <c:forEach items="${objage}" var="ob">
-                                    <li class="cat-item">                                       
-                                        <a href="filter?objage=${ob.ageId}" title="">${ob.age}</a>                                       
-                                    </li>
 
-                                </c:forEach>
-                            </ul>
-                        </div>
-
-                        <div class="widget-price-filter pt-5">
-                            <div class="section-title overflow-hidden mb-2">
-                                <h3 class="d-flex flex-column mb-0">Khoảng giá</h3>
+                            <div class="widget-price-filter pt-5">
+                                <div class="section-title overflow-hidden mb-2 collapsible">
+                                    <h3 class="d-flex flex-column mb-0">Khoảng giá</h3>
+                                </div>
+                                <div class="content">
+                                    <ul class="product-tags mb-0 sidebar-list list-unstyled">
+                                        <li class="tags-item">
+                                            <label>
+                                                <input type="checkbox" name="price_filter" value="lessthan10" onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
+                                            </label>
+                                        </li>
+                                        <li class="tags-item">
+                                            <label>
+                                                <input type="checkbox" name="price_filter" value="10to20" onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
+                                            </label>
+                                        </li>
+                                        <li class="tags-item">
+                                            <label>
+                                                <input type="checkbox" name="price_filter" value="20to30" onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
+                                            </label>
+                                        </li>
+                                        <li class="tags-item">
+                                            <label>
+                                                <input type="checkbox" name="price_filter" value="30to40" onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
+                                            </label>
+                                        </li>
+                                        <li class="tags-item">
+                                            <label>
+                                                <input type="checkbox" name="price_filter" value="morethan50" onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                <li class="tags-item">
-                                    <a href="filter?price_filter=lessthan10"> Nhỏ hơn 100,000₫</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="filter?price_filter=10to20"> Từ 100,000₫ - 200,000₫</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="filter?price_filter=20to30"> Từ 200,000₫ - 300,000₫</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="filter?price_filter=30to40"> Từ 300,000₫ - 400,000₫</a>
-                                </li>
-                                <li class="tags-item">
-                                    <a href="filter?price_filter=morethan50"> Lớn hơn 500,000₫</a>
-                                </li>
-                            </ul>
-                        </div>
+
+                            <div class="pt-5">
+                                <button type="submit">Filter</button>
+                            </div>
+                        </form>
                     </div>
                 </aside>
             </div>
@@ -983,7 +1064,31 @@
             </div>
         </div>
     </div>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        });
+        function limitCheckboxSelection(checkbox) {
+            var checkboxes = document.getElementsByName(checkbox.name);
+            checkboxes.forEach(function (currentCheckbox) {
+                if (currentCheckbox !== checkbox) {
+                    currentCheckbox.checked = false;
+                }
+            });
+        }
 
+    </script>
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
