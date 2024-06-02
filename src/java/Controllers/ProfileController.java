@@ -88,6 +88,10 @@ public class ProfileController extends HttpServlet {
         AccountDAO accDAO = new AccountDAO();
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
+        if (a==null) {
+            response.sendRedirect("home");
+            return;
+        }
         boolean isCompleted;
         switch (action) {
             //Xử lí ảnh avt
@@ -117,25 +121,24 @@ public class ProfileController extends HttpServlet {
             }
             request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
             break;
-            
+
             //Xử lí thông tin account
             case "changeInfo":
                 String fullname = request.getParameter("fullname");
-                String username = request.getParameter("username");
                 String gender = request.getParameter("gender");
                 String phone = request.getParameter("phonenumber");
                 String address = request.getParameter("address");
-                
+
                 a.setFullName(fullname);
-                a.setUserName(username);
                 a.setGender(gender);
                 a.setPhoneNumber(phone);
                 a.setAddress(address);
                 isCompleted = accDAO.updateAccountInfo(a);
                 if (isCompleted) {
                     session.setAttribute("account", a);
+                    request.setAttribute("message", "Cập nhật thành công");
                 } else {
-                    request.setAttribute("message", "Fail to update infomation");
+                    request.setAttribute("message", "Cập nhật thất bại");
                 }
                 request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
                 break;

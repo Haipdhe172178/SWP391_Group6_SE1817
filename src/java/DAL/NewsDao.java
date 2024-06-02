@@ -97,17 +97,7 @@ public class NewsDao extends DBContext {
     //Test newDAO
     public static void main(String[] args) {
         NewsDao nd = new NewsDao();
-//        List<Topic> listT = nd.getTopic();
-//        for (Topic topic : listT) {
-//            System.out.println(topic.getTopicName());
-//        }
-        List<News> listNews = nd.getNewsPagination(1);
-        Collections.sort(listNews, new Comparator<News>() {
-            @Override
-            public int compare(News o1, News o2) {
-                return o1.getDateUpload().compareTo(o2.getDateUpload());
-            }
-        });
+        List<News> listNews = nd.getNewsPagination(1, "increase");
         for (News listNew : listNews) {
             System.out.println(listNew.getDateUpload());
         }
@@ -143,13 +133,24 @@ public class NewsDao extends DBContext {
         return listNews;
     }
 
-    public List<News> getNewsPagination(int index) {
+    public List<News> getNewsPagination(int index, String sort) {
         List<News> listNews = new ArrayList<>();
-        String query = " select n.[NewID], n.TopicID, t.TopicName,\n"
-                + " n.Title, n.Content, n.Img1, n.Img2, n.DateUpload,\n"
-                + " n.Source from News n join Topic t \n"
-                + " on n.TopicID = t.TopicID ORDER BY [NewID] \n"
-                + " OFFSET ?  Rows fetch next ? row only;";
+        String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source "
+                + "FROM News n JOIN Topic t ON n.TopicID = t.TopicID "
+                + "ORDER BY ";
+        switch (sort) {
+            case "decrease":
+                query += "n.DateUpload DESC ";
+                break;
+            case "increase":
+                query += "n.DateUpload ASC ";
+                break;
+            default:
+                // Default sorting or handle invalid sort parameter
+                query += "n.DateUpload DESC ";
+                break;
+        }
+        query += "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try {
             int offset = (index - 1) * ELEMENTS_PER_PAGE;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -176,13 +177,25 @@ public class NewsDao extends DBContext {
         return listNews;
     }
 
-    public List<News> getNewsPaginationByTopic(int index, int tid) {
+    public List<News> getNewsPaginationByTopic(int index, int tid, String sort) {
         List<News> listNews = new ArrayList<>();
-        String query = " select n.[NewID], n.TopicID, t.TopicName,\n"
-                + " n.Title, n.Content, n.Img1, n.Img2, n.DateUpload,\n"
-                + " n.Source from News n join Topic t \n"
-                + " on n.TopicID = t.TopicID  Where t.TopicID = ? ORDER BY [NewID] \n"
-                + " OFFSET ?  Rows fetch next ? row only;";
+        String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source "
+                + "FROM News n JOIN Topic t ON n.TopicID = t.TopicID "
+                + "WHERE t.TopicID = ? "
+                + "ORDER BY ";
+        switch (sort) {
+            case "decrease":
+                query += "n.DateUpload DESC ";
+                break;
+            case "increase":
+                query += "n.DateUpload ASC ";
+                break;
+            default:
+                // Default sorting or handle invalid sort parameter
+                query += "n.DateUpload DESC ";
+                break;
+        }
+        query += "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try {
             int offset = (index - 1) * ELEMENTS_PER_PAGE;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -209,4 +222,5 @@ public class NewsDao extends DBContext {
         }
         return listNews;
     }
+
 }

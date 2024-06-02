@@ -83,7 +83,20 @@
             .nav-user-dropdown:hover .dropdown-content {
                 display: block;
             }
+            #customButton {
+                margin-left: 5px;
+                padding: 10px 20px;
+                background-color: #016dd8;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
 
+            #customButton:hover {
+                background-color: #0056b3;
+            }
         </style>
     </head>
     <jsp:include page="../common/header.jsp"></jsp:include>
@@ -93,36 +106,58 @@
             <div class="row profile">
                 <div class="col-md-4 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}"><span class="font-weight-bold">${acc.fullName}</span><span class="text-black-50">${acc.email}</span><span> </span></div>
-                    <h5 style="color: red">${requestScope.message}</h5>
-                    <form action="profile" method="post" enctype="multipart/form-data">
-                        <input type="file" name="avatar" style="margin-left: 5px" required oninvalid="this.setCustomValidity('Vui lòng chọn một tệp hình ảnh để tải lên')">
-                        <button type="submit" value="changeAvt" name="action">Submit</button>
-                    </form>
-
+                    <center>
+                        <form id="uploadForm" action="profile" method="post" enctype="multipart/form-data">
+                            <input type="file" id="avatarInput" name="avatar" style="display:none" required oninvalid="this.setCustomValidity('Vui lòng chọn một tệp hình ảnh để tải lên')" onchange="document.getElementById('uploadForm').submit()">
+                            <button type="button" id="customButton">Chọn Ảnh</button>
+                            <input type="hidden" value="changeAvt" name="action">
+                        </form>
+                    </center>
+                    <script>
+                        document.getElementById('customButton').addEventListener('click', function () {
+                            document.getElementById('avatarInput').click();
+                        });
+                    </script>
                 </div>
                 <div class="col-md-8" >
                     <!-- Profile -->
                     <div class="p-3 py-5" id="profile">
                         <form action="profile" method="post">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Profile Settings</h4>
-                                <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Edit Profile</span>
+                                <h4 class="text-right">Hồ Sơ Của Tôi</h4>                    <h5 style="color: red">${requestScope.message}</h5>
+
+                                <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Đổi mật khẩu</span>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6 inputprofile"><label class="labels">Full Name</label><input type="text" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" disabled></div>
-                                <div class="col-md-6 inputprofile"><label class="labels">User Name</label><input type="text" name="username" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
+                                <div class="col-md-6 inputprofile"><label class="labels">Họ và tên</label><input type="text" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" ></div>
+                                <div class="col-md-6 "><label class="labels">Tên đăng nhập</label><input type="text" name="username" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
                             </div>
+
                             <div class="row mt-3">
-                                <div class="col-md-6 inputprofile"><label class="labels">Gender</label><input type="text" name="gender"class="form-control" placeholder="gender" value="${acc.gender}" disabled></div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12 inputprofile"><label class="labels">Phone Number</label><input type="text" name="phonenumber" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" disabled></div>
-                                <div class="col-md-12 inputprofile"><label class="labels">Address</label><input type="text" name="address" class="form-control" placeholder="enter address" value="${acc.address}" disabled></div>
+                                <label class="labels">Giới tính</label>
+                                <div class="d-flex align-items-center gender-options">
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="gender" class="form-check-input" value="Male"
+                                               <c:if test="${acc.gender eq 'Male'}">checked</c:if>> Nam
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="gender" class="form-check-input" value="Female"
+                                            <c:if test="${acc.gender eq 'Female'}">checked</c:if>> Nữ
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="gender" class="form-check-input" value="Other"
+                                            <c:if test="${acc.gender eq 'Other'}">checked</c:if>> Khác
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 inputprofile"><label class="labels">Số điện thoại</label><input type="text" name="phonenumber" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" required pattern="^0\d{9}$" oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại đúng định dạng 0xxxxxxxxx')" onchange="this.setCustomValidity('')"></div>
+                                <div class="col-md-12 inputprofile"><label class="labels">Địa chỉ</label><input type="text" name="address" class="form-control" placeholder="enter address" value="${acc.address}" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ')" ></div>
                                 <div class="col-md-12 "><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
                             </div>
                             <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button buttonprofile" type="submit" value="changeInfo" name="action" style="display: none">Save Profile</button>
-                                <button class="btn btn-secondary profile-button buttonprofile" type="button" style="display: none">Change Password</button>
+                                <button class="btn btn-primary profile-button buttonprofile" type="submit" value="changeInfo" name="action">Lưu</button>
                             </div>
                         </form>
                     </div>
@@ -217,18 +252,7 @@
 
     // Sự kiện click cho nút "Edit Profile"
     document.querySelector('.add-experience').addEventListener('click', function () {
-        // Lấy tất cả các phần tử có class là "inputprofile"
-        const profileElements = document.querySelectorAll('.inputprofile input');
-
-        // Duyệt qua từng phần tử và xóa thuộc tính disabled
-        profileElements.forEach(function (element) {
-            element.disabled = false;
-        });
-
-        // Hiển thị nút " Profile" và "Change Password"
-        document.querySelectorAll('.buttonprofile').forEach(function (button) {
-            button.style.display = '';
-        });
+        showChangePassword();
     });
 </script>
 </html>

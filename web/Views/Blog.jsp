@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </section>
-        
+
             <div id="blog" class="padding-large">
                 <div class="container">
                     <div class="row flex-row-reverse g-md-5">
@@ -56,13 +56,13 @@
                                     <p>${requestScope.quantityNews} kết quả</p>
                             </div>
                             <div class="sort-by">
-                                <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="" onchange="location.href='blog?sort='+this.value+'&id=${requestScope.tid}'">
-                                    <option value="decrease" <c:if test="${requestScope.sortNews eq 'decrease'}">selected</c:if>>Gần đây nhất</option>
-                                    <option value="increase" <c:if test="${requestScope.sortNews eq 'increase'}">selected</c:if>>Từ cũ đến mới</option>
-                                </select>
+                                <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="" onchange="location.href = 'blog?sort=' + this.value + '&id=${requestScope.tid}'">
+                                    <option value="decrease" <c:if test="${requestScope.sortNews eq 'decrease'}">selected</c:if>>Mới nhất</option>
+                                    <option value="increase" <c:if test="${requestScope.sortNews eq 'increase'}">selected</c:if>>Cũ nhất</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row post-contents">
+                            <div class="row post-contents">
                             <c:forEach var="news" items="${requestScope.listNews}">
                                 <div class="col-lg-4 col-md-6 posts mb-5" >
                                     <div class="img-container" style="display: flex; justify-content: center; align-items: center;">           
@@ -81,7 +81,9 @@
                         <nav class="pt-5" aria-label="Page navigation">
                             <ul class="pagination justify-content-center gap-4">
                                 <li class="page-item">
-                                    <a class="page-link" href="blog?page=${page-1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Prev</a>
+                                    <c:if test="${requestScope.page > 1}">
+                                        <a class="page-link" href="blog?page=${page-1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Prev</a>
+                                    </c:if>
                                 </li>
                                 <c:forEach begin="${1}" end="${total}" step="${1}" var="pageNum">
                                     <li class="page-item active" aria-current="page">
@@ -91,7 +93,9 @@
                                     </li>
                                 </c:forEach>
                                 <li class="page-item">
-                                    <a class="page-link" href="blog?page=${page+1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Next</a>
+                                    <c:if test="${requestScope.page < 8 }">
+                                        <a class="page-link" href="blog?page=${page+1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Next</a>
+                                    </c:if>  
                                 </li>
                             </ul>
                         </nav>
@@ -111,7 +115,7 @@
                                     </form>
                                 </div>
                             </div>
-                             -->
+                            -->
                             <div class="widget-product-categories pt-5" >
                                 <div class="section-title overflow-hidden mb-2">
                                     <h3 class="d-flex flex-column mb-0">Danh mục</h3>

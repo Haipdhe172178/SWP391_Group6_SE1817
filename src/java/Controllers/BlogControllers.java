@@ -79,38 +79,21 @@ public class BlogControllers extends HttpServlet {
 
         //quantity of news
         int quantity;
-
+        String sort = request.getParameter("sort");
+        if (sort == null) {
+            sort = "decrease";
+        }
         //Get all or get by cateID
         if (tidRaw == null || tidRaw.isEmpty() || tidRaw.equals("0")) {
-            listNews = newsDao.getNewsPagination(page);
-
+            listNews = newsDao.getNewsPagination(page, sort);
             quantity = newsDao.getAllNews().size();
         } else {
             int id = Integer.parseInt(tidRaw);
             request.setAttribute("tid", id);
-
-            listNews = newsDao.getNewsPaginationByTopic(page, id);
+            listNews = newsDao.getNewsPaginationByTopic(page, id, sort);
             quantity = newsDao.getNewsByCateId(id).size();
         }
-
-        //get require sort
-        String sort = request.getParameter("sort");
-        if (sort != null && !sort.isEmpty()) {
-            Collections.sort(listNews, new Comparator<News>() {
-                @Override
-                public int compare(News o1, News o2) {
-                    if (sort.equalsIgnoreCase("increase")) {
-                        return o1.getDateUpload().compareTo(o2.getDateUpload());
-                    } else {
-                        return o2.getDateUpload().compareTo(o1.getDateUpload());
-                    }
-                }
-            });
-            
-            //send type sort
-            request.setAttribute("sortNews", sort);
-        }
-
+        request.setAttribute("sortNews", sort);
         request.setAttribute("page", page);
         request.setAttribute("quantityNews", quantity);
         request.setAttribute("listNews", listNews);

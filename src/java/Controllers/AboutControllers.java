@@ -5,8 +5,14 @@
 
 package Controllers;
 
+import DAL.AccountDAO;
 import DAL.CategoryDao;
+import DAL.FeedbackDAO;
+import DAL.NewsDao;
+import Models.Account;
 import Models.Category;
+import Models.Feedback;
+import Models.News;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -56,6 +62,17 @@ public class AboutControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //Them list, news, feedback cho homepage
+        NewsDao nd = new NewsDao();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        AccountDAO accDAO = new AccountDAO();
+        List<News> listNews = nd.getFourNewsLated();
+        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
+        List<Account> listAcc = accDAO.getAllAccount();
+        request.setAttribute("listMostRating", listMostRating);
+        request.setAttribute("listAccount", listAcc);
+        request.setAttribute("news", listNews);
+        
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
          request.setAttribute("category", categorys);

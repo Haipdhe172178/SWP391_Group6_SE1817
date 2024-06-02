@@ -592,127 +592,39 @@
                 </svg>
             </div>
             <div class="section-title mb-4 text-center">
-                <h3 class="mb-4">Customers reviews</h3>
+                <h3 class="mb-4">Đánh giá từ khách hàng</h3>
             </div>
             <div class="swiper testimonial-swiper ">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"I stumbled upon this bookstore while visiting the city, and it instantly became my favorite spot. The cozy atmosphere, friendly staff, and wide selection of books make every visit a delight!"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
+                    <c:forEach var="feedback" items="${requestScope.listMostRating}">
+                        <div class="swiper-slide">
+                            <div class="card position-relative text-left p-5 border rounded-3">
+                                <blockquote>"${feedback.comments}"</blockquote>
+                                <div class="rating text-warning d-flex align-items-center">
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                    <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                </div>
+                                <c:forEach var="acc" items="${requestScope.listAccount}">
+                                    <c:if test="${feedback.accountId == acc.accountId}">
+                                        <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
+                                    </c:if> 
+                                </c:forEach>
                             </div>
-                            <h5 class="mt-1 fw-normal">Emma Chamberlin</h5>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"As an avid reader, I'm always on the lookout for new releases, and this bookstore never disappoints. They always have the latest titles, and their recommendations have introduced me to some incredible reads!"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Thomas John</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"I ordered a few books online from this store, and I was impressed by the quick delivery and careful packaging. It's clear that they prioritize customer satisfaction, and I'll definitely be shopping here again!"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Kevin Bryan</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>“I stumbled upon this tech store while searching for a new laptop, and I couldn't be happier with my experience! The staff was incredibly knowledgeable and guided me through the process of choosing the perfect device for my
-                                needs. Highly recommended!”</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Stevin</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>“I stumbled upon this tech store while searching for a new laptop, and I couldn't be happier with my experience! The staff was incredibly knowledgeable and guided me through the process of choosing the perfect device for my
-                                needs. Highly recommended!”</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
-                                </svg>
-                            </div>
-                            <h5 class="mt-1 fw-normal">Roman</h5>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -725,33 +637,16 @@
                 <a href="shop" class="btn">View All</a>
             </div>
             <div class="row">
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item1.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">10 Must-Read Books of the Year: Our Top Picks!</a></h4>
-                    <p class="mb-2">Dive into the world of cutting-edge technology with our latest blog post, where we highlight five essential gadg <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                    </p>
-                </div>
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item2.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">The Fascinating Realm of Science Fiction</a></h4>
-                    <p class="mb-2">Explore the intersection of technology and sustainability in our latest blog post. Learn about the innovative <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> </p>
-                </div>
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item3.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">Finding Love in the Pages of a Book</a></h4>
-                    <p class="mb-2">Stay ahead of the curve with our insightful look into the rapidly evolving landscape of wearable technology. <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                    </p>
-                </div>
-                <div class="col-md-3 posts mb-4">
-                    <img src="${pageContext.request.contextPath}/images/post-item4.jpg" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">Books</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">Reading for Mental Health: How Books Can Heal and Inspire</a></h4>
-                    <p class="mb-2">In today's remote work environment, productivity is key. Discover the top apps and tools that can help you stay <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span>
-                    </p>
-                </div>
+                <!-- NEWS -->
+                <c:forEach var="n" items="${requestScope.news}">
+                    <div class="col-md-3 posts mb-4">
+                        <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
+                        <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
+                        <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
+                        <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 
+                        </p>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </section>
@@ -839,148 +734,148 @@
     </section>
 
     <footer id="footer" class="padding-large">
-    <div class="container">
-        <div class="row">
-            <div class="footer-top-area">
-                <div class="row d-flex flex-wrap justify-content-between">
-                    <div class="col-lg-3 col-sm-6 pb-3">
-                        <div class="footer-menu">
-                            <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
-                            <p>
-                                "Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
-<!--                            <div class="social-links">
-                                <ul class="d-flex list-unstyled">
-                                    <li>
-                                        <a href="#">
-                                            <svg class="facebook">
-                                            <use xlink:href="#facebook" />
-                                            </svg>
-                                        </a>
+        <div class="container">
+            <div class="row">
+                <div class="footer-top-area">
+                    <div class="row d-flex flex-wrap justify-content-between">
+                        <div class="col-lg-3 col-sm-6 pb-3">
+                            <div class="footer-menu">
+                                <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
+                                <p>
+                                    "Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
+                                <!--                            <div class="social-links">
+                                                                <ul class="d-flex list-unstyled">
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <svg class="facebook">
+                                                                            <use xlink:href="#facebook" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <svg class="instagram">
+                                                                            <use xlink:href="#instagram" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <svg class="twitter">
+                                                                            <use xlink:href="#twitter" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <svg class="linkedin">
+                                                                            <use xlink:href="#linkedin" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <svg class="youtube">
+                                                                            <use xlink:href="#youtube" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>-->
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6 pb-3">
+                            <div class="footer-menu text-capitalize">
+                                <h5 class="widget-title pb-2">Trang chính</h5>
+                                <ul class="menu-list list-unstyled text-capitalize">
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Home</a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="instagram">
-                                            <use xlink:href="#instagram" />
-                                            </svg>
-                                        </a>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">About</a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="twitter">
-                                            <use xlink:href="#twitter" />
-                                            </svg>
-                                        </a>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Shop</a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="linkedin">
-                                            <use xlink:href="#linkedin" />
-                                            </svg>
-                                        </a>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Blogs</a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg class="youtube">
-                                            <use xlink:href="#youtube" />
-                                            </svg>
-                                        </a>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Contact</a>
                                     </li>
                                 </ul>
-                            </div>-->
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-6 pb-3">
-                        <div class="footer-menu text-capitalize">
-                            <h5 class="widget-title pb-2">Trang chính</h5>
-                            <ul class="menu-list list-unstyled text-capitalize">
-                                <li class="menu-item mb-1">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">About</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Shop</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Blogs</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Contact</a>
-                                </li>
-                            </ul>
+                        <div class="col-lg-3 col-sm-6 pb-3">
+                            <div class="footer-menu text-capitalize">
+                                <h5 class="widget-title pb-2">Trợ giúp & Thông tin Trợ giúp</h5>
+                                <ul class="menu-list list-unstyled">
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Theo dõi đơn hàng của bạn</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Chính sách hoàn trả</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Vận chuyển + Giao hàng</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Liên hệ chúng tôi</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="#">Câu hỏi thường gặp</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 pb-3">
-                        <div class="footer-menu text-capitalize">
-                            <h5 class="widget-title pb-2">Trợ giúp & Thông tin Trợ giúp</h5>
-                            <ul class="menu-list list-unstyled">
-                                <li class="menu-item mb-1">
-                                    <a href="#">Theo dõi đơn hàng của bạn</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Chính sách hoàn trả</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Vận chuyển + Giao hàng</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Liên hệ chúng tôi</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Câu hỏi thường gặp</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 pb-3">
-                        <div class="footer-menu contact-item">
-                            <h5 class="widget-title text-capitalize pb-2">Liên hệ chúng tôi</h5>
-                            <p>Bạn có bất kỳ thắc mắc hoặc gợi ý nào không? <a href="mailto:" class="text-decoration-underline">shopbook88@gmail.com</a></p>
-                            <p>Nếu bạn cần hỗ trợ? Chỉ cần gọi cho chúng tôi. <a href="#" class="text-decoration-underline">+84 38 272
-                                    0127</a></p>
+                        <div class="col-lg-3 col-sm-6 pb-3">
+                            <div class="footer-menu contact-item">
+                                <h5 class="widget-title text-capitalize pb-2">Liên hệ chúng tôi</h5>
+                                <p>Bạn có bất kỳ thắc mắc hoặc gợi ý nào không? <a href="mailto:" class="text-decoration-underline">shopbook88@gmail.com</a></p>
+                                <p>Nếu bạn cần hỗ trợ? Chỉ cần gọi cho chúng tôi. <a href="#" class="text-decoration-underline">+84 38 272
+                                        0127</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</footer>
-<hr>
-<div id="footer-bottom" class="mb-2">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-between">
-            <div class="ship-and-payment d-flex gap-md-5 flex-wrap">
-                <div class="shipping d-flex">
-                    <p>Giao hàng nhanh</p>
-                    <div class="card-wrap ps-2">
-<!--                        <img src="${pageContext.request.contextPath}/images/dhl.png" alt="visa">
-                        <img src="${pageContext.request.contextPath}/images/shippingcard.png" alt="mastercard">-->
+    </footer>
+    <hr>
+    <div id="footer-bottom" class="mb-2">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between">
+                <div class="ship-and-payment d-flex gap-md-5 flex-wrap">
+                    <div class="shipping d-flex">
+                        <p>Giao hàng nhanh</p>
+                        <div class="card-wrap ps-2">
+    <!--                        <img src="${pageContext.request.contextPath}/images/dhl.png" alt="visa">
+                            <img src="${pageContext.request.contextPath}/images/shippingcard.png" alt="mastercard">-->
+                        </div>
                     </div>
-                </div>
-                <div class="payment-method d-flex">
-                   
-                     <p>Thanh toán trực tiếp hoặc qua các thẻ</p>
-                    
-                    <div class="card-wrap ps-2">
-                        <img src="${pageContext.request.contextPath}/images/visa.jpg" alt="visa">
-                        <img src="${pageContext.request.contextPath}/images/mastercard.jpg" alt="mastercard">
-                        <img src="${pageContext.request.contextPath}/images/paypal.jpg" alt="paypal">
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>ShopBook88 <a href="home" target="_blank">mang lại thế giới cho bạn</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="payment-method d-flex">
 
-<script src="js/jquery-1.11.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+                        <p>Thanh toán trực tiếp hoặc qua các thẻ</p>
+
+                        <div class="card-wrap ps-2">
+                            <img src="${pageContext.request.contextPath}/images/visa.jpg" alt="visa">
+                            <img src="${pageContext.request.contextPath}/images/mastercard.jpg" alt="mastercard">
+                            <img src="${pageContext.request.contextPath}/images/paypal.jpg" alt="paypal">
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>ShopBook88 <a href="home" target="_blank">mang lại thế giới cho bạn</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>
