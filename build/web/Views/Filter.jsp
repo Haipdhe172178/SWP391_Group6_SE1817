@@ -27,7 +27,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-         <style>
+        <style>
             .collapsible {
                 cursor: pointer;
                 user-select: none;
@@ -602,8 +602,9 @@
                         </c:forEach>
                     </div>
 
-                    <nav class="py-5" aria-label="Page navigation">                        
+                    <nav class="py-5" aria-label="Page navigation">
                         <ul class="pagination justify-content-center gap-4">
+                            <!-- Nút Prev -->
                             <c:choose>
                                 <c:when test="${tag > 1}">
                                     <li class="page-item">
@@ -617,12 +618,21 @@
                                 </c:otherwise>
                             </c:choose>
 
-                            <c:forEach begin="1" end="${endP}" var="e">
-                                <li class="page-item ${tag == e ? 'active' : ''}">
-                                    <a class="page-link" href="filter?index=${e}${query}">${e}</a>
+                            <!-- Các trang hiển thị -->
+                            <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                            <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                            <c:if test="${end > endP}">
+                                <c:set var="end" value="${endP}" />
+                                <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                            </c:if>
+
+                            <c:forEach begin="${start}" end="${end}" var="i">
+                                <li class="page-item ${tag == i ? 'active' : ''}">
+                                    <a class="page-link" href="filter?index=${i}${query}">${i}</a>
                                 </li>
                             </c:forEach>
 
+                            <!-- Nút Next -->
                             <c:choose>
                                 <c:when test="${tag < endP}">
                                     <li class="page-item">
@@ -637,11 +647,6 @@
                             </c:choose>
                         </ul>
                     </nav>
-
-
-
-
-
 
                 </main>
                 <aside class="col-md-3">
@@ -658,7 +663,7 @@
                                 </form>
                             </div>
                         </div>
-                          <form action="filter" method="get">
+                        <form action="filter" method="get">
                             <div class="widget-product-categories pt-5">
                                 <div class="section-title overflow-hidden mb-2 collapsible">
                                     <h3 class="d-flex flex-column mb-0">Thể loại</h3>
@@ -687,15 +692,11 @@
                                 </div>
                                 <div class="content">
                                     <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                        <li class="cat-item">
-                                            <label>
-                                                <input type="radio" name="objage" value="all"> Tất cả
-                                            </label>
-                                        </li>
+
                                         <c:forEach items="${objage}" var="ob">
                                             <li class="cat-item">
                                                 <label>
-                                                    <input type="radio" name="objage" value="${ob.ageId}"> ${ob.age}
+                                                    <input type="checkbox" name="objage" value="${ob.ageId}" onclick="limitCheckboxSelection(this)"> ${ob.age}
                                                 </label>
                                             </li>
                                         </c:forEach>
@@ -1040,7 +1041,7 @@
             </div>
         </div>
     </div>
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var coll = document.getElementsByClassName("collapsible");
             for (var i = 0; i < coll.length; i++) {

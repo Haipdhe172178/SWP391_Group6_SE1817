@@ -24,6 +24,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,17 @@ public class ShopControllers extends HttpServlet {
             index = 1;
         }
 
+        HttpSession session = request.getSession();
         String sortBy = request.getParameter("sortBy");
+
+        if (sortBy == null) {
+            sortBy = (String) session.getAttribute("sortBy");
+            if (sortBy == null) {
+                sortBy = "default";
+            }
+        } else {
+            session.setAttribute("sortBy", sortBy);
+        }
 
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
@@ -94,26 +105,22 @@ public class ShopControllers extends HttpServlet {
         int count;
         int endPage;
 
-        if (sortBy != null) {
-            switch (sortBy) {
-                case "name_asc":
-                    list = productDao.pagingProductsSortedByName(index, true);
-                    break;
-                case "name_desc":
-                    list = productDao.pagingProductsSortedByName(index, false);
-                    break;
-                case "price_asc":
-                    list = productDao.pagingProductsSortedByPrice(index, true);
-                    break;
-                case "price_desc":
-                    list = productDao.pagingProductsSortedByPrice(index, false);
-                    break;
-                default:
-                    list = productDao.pagingProducts(index);
-                    break;
-            }
-        } else {
-            list = productDao.pagingProducts(index);
+        switch (sortBy) {
+            case "name_asc":
+                list = productDao.pagingProductsSortedByName(index, true);
+                break;
+            case "name_desc":
+                list = productDao.pagingProductsSortedByName(index, false);
+                break;
+            case "price_asc":
+                list = productDao.pagingProductsSortedByPrice(index, true);
+                break;
+            case "price_desc":
+                list = productDao.pagingProductsSortedByPrice(index, false);
+                break;
+            default:
+                list = productDao.pagingProducts(index);
+                break;
         }
 
         count = productDao.getTotalProduct();
@@ -122,8 +129,9 @@ public class ShopControllers extends HttpServlet {
         if (count % 8 != 0) {
             endPage++;
         }
+
         StringBuilder query = new StringBuilder();
-        if (sortBy != null) {
+        if (!sortBy.equals("default")) {
             query.append("&sortBy=").append(sortBy);
         }
 

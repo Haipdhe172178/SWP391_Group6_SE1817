@@ -307,7 +307,7 @@
                                                                 </c:if>
                                                             </c:forEach>                                                        
                                                             <td><a href="delete?id=${p.productId}">DELETE</td>
-                                                             <td><a href="update?id=${p.productId}">UPDATE</td>
+                                                            <td><a href="update?id=${p.productId}">UPDATE</td>
                                                         </tr>
 
                                                     </c:forEach>
@@ -315,14 +315,42 @@
                                             </table>
                                         </div>
                                         <nav class="py-5" aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center">
-                                                <c:forEach var="i" begin="1" end="${endP}">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                                <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                                                <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                                                <c:if test="${end > endP}">
+                                                    <c:set var="end" value="${endP}" />
+                                                    <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                                                </c:if>
+
+                                                <!-- Nút Previous -->
+                                                <c:if test="${tag > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="data?index=${tag - 1}${query}" aria-label="Previous">
+                                                            <span aria-hidden="true">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+
+                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
                                                     <li class="page-item ${tag == i ? 'active' : ''}">
                                                         <a class="page-link" href="data?index=${i}${query}">${i}</a>
                                                     </li>
                                                 </c:forEach>
+
+                                                <!-- Nút Next -->
+                                                <c:if test="${tag < endP}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="data?index=${tag + 1}${query}" aria-label="Next">
+                                                            <span aria-hidden="true">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
                                             </ul>
                                         </nav>
+
                                     </div>
                                 </div>
                             </div>
