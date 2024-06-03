@@ -38,7 +38,7 @@
 
         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
-                <a href="dash"><img src="img/logo.png" alt></a>
+                <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
@@ -52,7 +52,7 @@
                         <span>Dashboard</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Sales</a></li>
+                        <li><a class="active" href="">Sales</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -76,7 +76,7 @@
                         <span>Products</span>
                     </a>
                     <ul>
-                        <li><a href="Products.html">Products</a></li>
+                        <li><a href="">Products</a></li>
                         <li><a href="discount">Discount</a></li>
                     </ul>
                 </li>        
