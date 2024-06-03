@@ -138,21 +138,20 @@
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Tác giả: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
-                                        <a href="#">${requestScope.author.authorName}</a>
-
+                                        ${requestScope.author.authorName}
                                     </ul>
                                 </div>
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Thể loại: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
-                                        <a href="shop?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName}</a>
+                                        <a href="filter?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName}</a>
                                     </ul>
                                 </div>
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Đối tượng: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
                                         <li data-value="S" class="select-item">
-                                            <a href="#">${requestScope.objectAge.age}</a>
+                                            <a href="filter?objage=${requestScope.objectAge.ageId}">${requestScope.objectAge.age}</a>
                                         </li>
                                     </ul>
                                 </div>
