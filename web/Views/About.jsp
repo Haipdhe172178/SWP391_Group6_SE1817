@@ -135,24 +135,24 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Nhập thể loại sách" value="" name="s" />
-                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
-            </form>
+            <form role="search" method="get" class="search-form" action="filter">
+            <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
+            <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
+        </form>
 
-            <h5 class="cat-list-title">Thể loại sách</h5>
+        <h5 class="cat-list-title">Thể loại sách</h5>
 
-            <ul class="cat-list">
+        <ul class="cat-list">
+            <li class="cat-list-item">
+                <a href="shop"  title="">Tất cả</a>
+            </li>
+            <c:forEach items="${category}" var="cate">
                 <li class="cat-list-item">
-                    <a href="shop"  title="">Tất cả</a>
+                    <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                 </li>
-                <c:forEach items="${category}" var="cate">
-                    <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
-                    </li>
-                </c:forEach>
+            </c:forEach>
 
-            </ul>
+        </ul>
 
         </div>
     </div>

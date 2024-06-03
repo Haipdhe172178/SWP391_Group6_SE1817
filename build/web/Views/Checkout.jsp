@@ -174,8 +174,8 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Nhập tên sách bạn muốn tìm" value="" name="s" />
+            <form role="search" method="get" class="search-form" action="filter">
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
                 <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
@@ -187,7 +187,7 @@
                 </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                     </li>
                 </c:forEach>
 
@@ -217,7 +217,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="${pageContext.request.contextPath}/images/main-logo.png" class="logo">
+                    <img src="images/anh456.png" class="logo">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">

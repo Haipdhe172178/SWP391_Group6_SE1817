@@ -132,8 +132,8 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Nhập thể loại sách" value="" name="s" />
+            <form role="search" method="get" class="search-form" action="filter">
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
                 <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
@@ -141,46 +141,14 @@
 
             <ul class="cat-list">
                 <li class="cat-list-item">
-                    <<<<<<< HEAD
-
                     <a href="shop"  title="">Tất cả</a>
                 </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                     </li>
                 </c:forEach>
 
-
-
-                =======
-                <a href="#" title="truyentranh">Truyện tranh</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocvietnam">Văn học Việt Nam</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="vanhocnuocngoai">Văn học nước ngoài</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="lichsutruyenthong">Lịch sử, truyền thống</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="kienthuckhoahoc">Kiến thức, khoa học</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="mangaconmic">Manga-Conmic</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="wingsbooks">Wings Books</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="giaimabanthan">Giải mã bản thân</a>
-                </li>
-                <li class="cat-list-item">
-                    <a href="#" title="Danhchochame">Dành cho cha mẹ</a>
-                </li>
-                >>>>>>> 3cdb581705c7986b16430e371ae26db05054514a
             </ul>
 
         </div>

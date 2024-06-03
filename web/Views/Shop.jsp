@@ -202,7 +202,7 @@
                 </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                     </li>
                 </c:forEach>
 

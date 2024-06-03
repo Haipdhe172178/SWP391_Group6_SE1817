@@ -209,8 +209,8 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Nhập thể loại sách" value="" name="s" />
+            <form role="search" method="get" class="search-form" action="filter">
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
                 <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
@@ -222,7 +222,7 @@
                 </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                     </li>
                 </c:forEach>
 
@@ -776,190 +776,190 @@
 <section id="items-listing" class="padding-large">
     <div class="container">
         <div class="row">
-            
+
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
-                
+
                 <div class="featured border rounded-3 p-4">
-                    
-                    
-                    
+
+
+
                     <div class="section-title overflow-hidden mb-5 mt-2">
                         <h3 class="d-flex flex-column mb-0">Văn Học Việt Nam</h3>
                     </div>
-                    
-                    <c:forEach items="${data01}" var="d">
-                         <hr class="gray-400">
-                         
-                        <div class="items-lists">
-                       
-                            
-                            <div class="item d-flex">
-                            <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                           
-                            
-                            <div class="item-content ms-3">
-                                <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
-                              
-                                
-                                <div class="review-content d-flex">
-                                    <p class="my-2 me-2 fs-6 text-black-50"></p>
 
-                                    <div class="rating text-warning d-flex align-items-center">
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
+                    <c:forEach items="${data01}" var="d">
+                        <hr class="gray-400">
+
+                        <div class="items-lists">
+
+
+                            <div class="item d-flex">
+                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+
+
+                                <div class="item-content ms-3">
+                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+
+
+                                    <div class="review-content d-flex">
+                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+
+                                        <div class="rating text-warning d-flex align-items-center">
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                        </div>
+
+
                                     </div>
-                                    
-                                    
+
+
+                                    <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                    </span>
+
+
                                 </div>
-                                
-                                
-                                <span class="price text-primary fw-bold mb-2 fs-5">
-                                    
-                                     <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                </span>
-                                
-                                
-                            </div>
-                                
-                             </div>   
+
+                            </div>   
                         </div>
-                      <hr>
+                        <hr>
                     </c:forEach>                                        
-                  </div>
-                              </div>
+                </div>
+            </div>
 
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="latest-items border rounded-3 p-4">
                     <div class="section-title overflow-hidden mb-5 mt-2">
                         <h3 class="d-flex flex-column mb-0">Văn Học Nước Ngoài</h3>
                     </div>
-                                                          
-                   <c:forEach items="${data02}" var="d">
-                         <hr class="gray-400">
-                        <div class="items-lists">
-                       
-                            
-                            <div class="item d-flex">
-                            <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                           
-                            
-                            <div class="item-content ms-3">
-                                <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
-                              
-                                
-                                <div class="review-content d-flex">
-                                    <p class="my-2 me-2 fs-6 text-black-50"></p>
 
-                                    <div class="rating text-warning d-flex align-items-center">
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
+                    <c:forEach items="${data02}" var="d">
+                        <hr class="gray-400">
+                        <div class="items-lists">
+
+
+                            <div class="item d-flex">
+                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+
+
+                                <div class="item-content ms-3">
+                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+
+
+                                    <div class="review-content d-flex">
+                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+
+                                        <div class="rating text-warning d-flex align-items-center">
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                        </div>
+
+
                                     </div>
-                                    
-                                    
+
+
+                                    <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                    </span>
+
+
                                 </div>
-                                
-                                
-                                <span class="price text-primary fw-bold mb-2 fs-5">
-                                    
-                                     <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                </span>
-                                
-                                
-                                 </div>
-                                
-                             </div>   
+
+                            </div>   
                         </div>
-                      <hr>
+                        <hr>
                     </c:forEach>                      
                 </div>
             </div>
-                
-                
-                
+
+
+
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="best-reviewed border rounded-3 p-4">
                     <div class="section-title overflow-hidden mb-5 mt-2">
                         <h3 class="d-flex flex-column mb-0">Lịch Sử Truyền Thống</h3>
                     </div>
-                    
-                    
-                                      <c:forEach items="${data03}" var="d">
-                         <hr class="gray-400">
-                        <div class="items-lists">
-                       
-                            
-                            <div class="item d-flex">
-                            <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                           
-                            
-                            <div class="item-content ms-3">
-                                <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
-                              
-                                
-                                <div class="review-content d-flex">
-                                    <p class="my-2 me-2 fs-6 text-black-50"></p>
 
-                                    <div class="rating text-warning d-flex align-items-center">
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
+
+                    <c:forEach items="${data03}" var="d">
+                        <hr class="gray-400">
+                        <div class="items-lists">
+
+
+                            <div class="item d-flex">
+                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+
+
+                                <div class="item-content ms-3">
+                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+
+
+                                    <div class="review-content d-flex">
+                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+
+                                        <div class="rating text-warning d-flex align-items-center">
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                        </div>
+
+
                                     </div>
-                                    
-                                    
+
+
+                                    <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                    </span>
+
+
                                 </div>
-                                
-                                
-                                <span class="price text-primary fw-bold mb-2 fs-5">
-                                    
-                                     <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                </span>
-                                
-                                
-                               </div>
-                                
-                             </div>   
+
+                            </div>   
                         </div>
-                      <hr>
+                        <hr>
                     </c:forEach>  
-                       
+
                 </div>
             </div>
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
@@ -967,66 +967,66 @@
                     <div class="section-title overflow-hidden mb-5 mt-2">
                         <h3 class="d-flex flex-column mb-0">Kiến Thức Khoa học</h3>
                     </div>
-                    
-                    
-                      <c:forEach items="${data04}" var="d">
-                         <hr class="gray-400">
-                        <div class="items-lists">
-                       
-                            
-                            <div class="item d-flex">
-                            <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                           
-                            
-                            <div class="item-content ms-3">
-                                <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
-                              
-                                
-                                <div class="review-content d-flex">
-                                    <p class="my-2 me-2 fs-6 text-black-50"></p>
 
-                                    <div class="rating text-warning d-flex align-items-center">
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
+
+                    <c:forEach items="${data04}" var="d">
+                        <hr class="gray-400">
+                        <div class="items-lists">
+
+
+                            <div class="item d-flex">
+                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+
+
+                                <div class="item-content ms-3">
+                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+
+
+                                    <div class="review-content d-flex">
+                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+
+                                        <div class="rating text-warning d-flex align-items-center">
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                            <svg class="star star-fill">
+                                            <use xlink:href="#star-fill"></use>
+                                            </svg>
+                                        </div>
+
+
                                     </div>
-                                    
-                                    
+
+
+                                    <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                    </span>
+
+
                                 </div>
-                                
-                                
-                                <span class="price text-primary fw-bold mb-2 fs-5">
-                                    
-                                     <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                </span>
-                                
-                                
-                               </div>
-                                
-                             </div>   
+
+                            </div>   
                         </div>
-                      <hr>
+                        <hr>
                     </c:forEach>  
-                       
-                  </div>
-            </div>
-            
+
                 </div>
             </div>
+
         </div>
     </div>
+</div>
+</div>
 </section>
 
 <section id="categories" class="padding-large pt-0">
@@ -1183,7 +1183,7 @@
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
                     <a href=" https://www.instagram.com/p/C7d7AipPB9i/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
-                     
+
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>
@@ -1196,7 +1196,7 @@
             <div class="col-md-2">
                 <figure class="instagram-item position-relative rounded-3">
                     <a href="https://www.instagram.com/p/C7d7NzpvVPC/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="image-link position-relative">
-                  
+
                         <div class="icon-overlay position-absolute d-flex justify-content-center">
                             <svg class="instagram">
                             <use xlink:href="#instagram"></use>

@@ -174,8 +174,8 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="get" class="search-form" action="">
-                <input type="search" id="search-form" class="search-field" placeholder="Nhập tên sách bạn muốn tìm" value="" name="s" />
+            <form role="search" method="get" class="search-form" action="filter">
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
                 <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
@@ -187,7 +187,7 @@
                 </li>
                 <c:forEach items="${category}" var="cate">
                     <li class="cat-list-item">
-                        <a href="search?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                     </li>
                 </c:forEach>
 

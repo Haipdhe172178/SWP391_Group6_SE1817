@@ -118,7 +118,6 @@ public class AddControllers extends HttpServlet {
                 imgProduct = request.getContextPath() + "/img/" + fileName;
             }
 
-            // Tạo đối tượng Product mới
             // Thêm sản phẩm vào cơ sở dữ liệu
             ProductDao productDao = new ProductDao();
             HttpSession session = request.getSession();

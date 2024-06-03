@@ -5,10 +5,12 @@
 package Controllers;
 
 import DAL.AccountDAO;
+import DAL.CategoryDao;
 import DAL.ContactDAO;
 import DAL.FeedbackDAO;
 import DAL.NewsDao;
 import Models.Account;
+import Models.Category;
 import Models.Contact;
 import Models.Feedback;
 import Models.News;
@@ -67,7 +69,10 @@ public class ContactControllers extends HttpServlet {
         ContactDAO contactDAO = new ContactDAO();
         List<Contact> contacts = contactDAO.getAll();
         Contact contact = contacts.isEmpty() ? new Contact() : contacts.get(0);
-
+        //lấy category
+        CategoryDao categoryDao = new CategoryDao();
+        List<Category> categories = categoryDao.getallCategorys();
+        request.setAttribute("category", categories);
         //Lấy news và feedback
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
