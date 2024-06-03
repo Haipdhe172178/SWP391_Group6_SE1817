@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="breadcrumbs" style="padding-top: 2em">
                         <span class="item"><a href="shop">Cửa hàng / </a></span>
-                        <span class="item"><a href="shop?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName} / </a></span>
+                        <span class="item"><a href="filter?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName} / </a></span>
                     <span class="item"><a href="single?productID=${requestScope.product.productId}">${requestScope.product.name} </a></span>
                 </div>
             </div>
@@ -301,7 +301,7 @@
             <div class="container">
                 <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
                     <h3 class="d-flex align-items-center">Sách liên quan</h3>
-                    <a href="#" class="btn">Xem tất cả</a>
+                    <a href="filter?categoryId=${requestScope.category.categoryId}" class="btn">Xem tất cả</a>
                 </div>
                 <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
                     <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
