@@ -68,10 +68,20 @@ public class UpdateController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String id = request.getParameter("id");
+       
+        
+             String meo = request.getParameter("meo") == null ? "" : request.getParameter("meo");
+        String error = "";
+        if(meo.equals("1")){
+             error = "sai du lieu updata";
+        } 
+        
+       
+        
         ProductDao dal = new ProductDao();
         Product p = new Product();
         p = dal.get1Productbyid(id);
-         CategoryDao categoryDao = new CategoryDao();
+             CategoryDao categoryDao = new CategoryDao();
         AuthorDao authorDao = new AuthorDao();
         ObjectAgeDao oad = new ObjectAgeDao();
 
@@ -82,7 +92,7 @@ public class UpdateController extends HttpServlet {
         request.setAttribute("category", categorys);
         request.setAttribute("obage", oas);
         request.setAttribute("author", au);
-        
+        request.setAttribute("error", error);
         request.setAttribute("data", p);
         request.getRequestDispatcher("Views/Admin/UpdateProduct.jsp").forward(request, response);
     } 
@@ -101,6 +111,7 @@ public class UpdateController extends HttpServlet {
              String id = request.getParameter("ID");
             String productName = request.getParameter("name");
             float productPrice = Float.parseFloat(request.getParameter("price"));
+            
             int productQuantity = Integer.parseInt(request.getParameter("quantity"));
             String description = request.getParameter("description");
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -143,8 +154,21 @@ public class UpdateController extends HttpServlet {
 
             // Thêm sản phẩm vào cơ sở dữ liệu
             ProductDao productDao = new ProductDao();
-            productDao.updateProduct(product);
-            response.sendRedirect(request.getContextPath() + "/data");
+            //productDao.updateProduct(product);
+            
+            if(productPrice > 0 && productQuantity > 0){
+                productDao.updateProduct(product);
+                 response.sendRedirect(request.getContextPath() + "/data");
+            }else{
+              String erron = "nhap du lieu không dung";
+              request.setAttribute("erron", erron);
+              
+                response.sendRedirect("update" +"?id="+id+"&meo=1");
+                
+            }
+           
+            
+            
         } catch (NumberFormatException | IOException | ServletException ex) {
             ex.printStackTrace();
         }

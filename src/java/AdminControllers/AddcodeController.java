@@ -64,8 +64,12 @@ public class AddcodeController extends HttpServlet {
             String coupon_type = request.getParameter("theloai");
              String qualityStr = request.getParameter("soluong");          
                  DiscountDAO dal = new DiscountDAO();
+                 PrintWriter out = response.getWriter();
+               
+                 
+                 
              dal.addDiscount(codename, discountStr, coupon_type, qualityStr);
-           response.sendRedirect("discount");
+          response.sendRedirect("discount");
          }else{
              request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
         }

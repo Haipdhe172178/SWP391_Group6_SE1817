@@ -44,7 +44,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Set the date we're counting down to
-            var countDownDate = new Date("May 23, 2024 23:59:59").getTime();
+            var countDownDate = new Date("June 3, 2024 16:15:").getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function () {
@@ -739,7 +739,7 @@
                     </div>
                 </div>
                 <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                    <h2>Dũng ơi mua sách đi. Hurry Up !!!</h2>
+                    <h2>Lấy mã không hết thời gian bạn ơi. Hurry Up !!!</h2>
                     <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
                         <div class="custom-time d-grid pe-3">
                             <span class="custom-days custom-fs-1 custom-fw-normal"></span>

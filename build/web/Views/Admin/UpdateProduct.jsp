@@ -266,7 +266,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="productName">Mô tả</label>
-                                            <input type="text" class="form-control" id="productdescription" name="description" value="${data.description}" required>
+                                            <textarea class="form-control" id="productdescription" name="description" required>${data.description}</textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productCategory" class="form-label">Category</label>
@@ -319,6 +319,7 @@
                                             <button type="submit" name="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </form>
+                                            <h2  style=" color: red">${error}</h2>
                                 </div>
 
                             </div>
