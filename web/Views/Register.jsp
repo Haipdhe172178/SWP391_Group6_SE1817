@@ -37,7 +37,7 @@
                             
                             <c:if test="${not empty notification}">
                                 <div class="notification">
-                                    <p>${notification}</p>
+                                    <p style="color: #28A745;;">${notification}</p>
                                 </div>
                             </c:if>
                             <form action="register" method="post" class="register-form" id="register-form">
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                    <input type="email" name="email" placeholder="Email" required/>
+                                    <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" placeholder="Email" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="email"><i class="zmdi zmdi-account-circle"></i></label>
@@ -55,7 +55,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                    <input type="password" name="pass" placeholder="Mật khẩu" required/>
+                                    <input type="password" name="pass" placeholder="Mật khẩu" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
+
                                 </div>
                                 <div class="form-group">
                                     <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
@@ -63,7 +64,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email"><i class="zmdi zmdi-phone"></i></label>
-                                    <input type="tel" name="phoneNumber" placeholder="Số điện thoại" required/>
+                                    <input type="tel" name="phoneNumber" placeholder="Số điện thoại" pattern="0\d{9}" title="Vui lòng nhập số điện thoại hợp lệ bắt đầu bằng 0 và dài đúng 10 chữ số" required />
                                 </div>
                                 <div class="form-group">
                                     <label for="email"><i class="zmdi zmdi-directions"></i></label>
