@@ -19,6 +19,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
@@ -118,20 +119,30 @@ public class AddControllers extends HttpServlet {
             }
 
             // Tạo đối tượng Product mới
-            Product product = new Product();
-            product.setName(productName);
-            product.setPrice(productPrice);
-            product.setQuantity(productQuantity);
-            product.setDescription(description);
-            product.setCategoryId(categoryId);
-            product.setAuthorID(authorId);
-            product.setImgProduct(imgProduct);
-            product.setAgeId(ageId);
-
             // Thêm sản phẩm vào cơ sở dữ liệu
             ProductDao productDao = new ProductDao();
-            productDao.addProduct(product);
+            HttpSession session = request.getSession();
+            if (productName != null) {
+                Product existingProduct = productDao.getProductByName(productName);
+                if (existingProduct != null) {
+                    session.setAttribute("notification", "Sản phẩm đã tồn tại");
+                } else {
+                    Product product = new Product();
+                    product.setName(productName);
+                    product.setPrice(productPrice);
+                    product.setQuantity(productQuantity);
+                    product.setDescription(description);
+                    product.setCategoryId(categoryId);
+                    product.setAuthorID(authorId);
+                    product.setImgProduct(imgProduct);
+                    product.setAgeId(ageId);
+
+                    productDao.addProduct(product);
+                    session.setAttribute("notification", "Thêm thành công");
+                }
+            }
             response.sendRedirect(request.getContextPath() + "/data");
+
         } catch (NumberFormatException | IOException | ServletException ex) {
             ex.printStackTrace();
         }

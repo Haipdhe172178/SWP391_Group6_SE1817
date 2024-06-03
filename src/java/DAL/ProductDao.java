@@ -1012,6 +1012,29 @@ public void updateProduct(Product u) {
             System.out.println("updateProduct" + e.getMessage());
         }
     }
-
-
+   public Product getProductByName(String name) {
+        String query = " Select * From Product WHERE name = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                return product;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
 }
