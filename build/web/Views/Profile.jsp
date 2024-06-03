@@ -193,7 +193,7 @@
                                     <h4 style="color: red">${requestScope.m}</h4>
                                 </div>
                             </div>
-                            <h4 style="color: red">${requestScope.mess}</h4>
+                            <h4 style="color: green">${requestScope.mess}</h4>
                             <div class="mt-5 text-center">
                                 <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
                                 <button class="btn btn-secondary profile-button" type="button" onclick="document.getElementById('changepass').style.display = 'none'">Thoát</button>
