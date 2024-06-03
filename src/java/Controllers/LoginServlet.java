@@ -87,13 +87,19 @@ public class LoginServlet extends HttpServlet {
         AccountDAO d = new AccountDAO();
         Account a = d.check(username, password);
         HttpSession session = request.getSession();
-        if (a == null) {
-            request.setAttribute("error", "username or password invalid!!!");
-            request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
-
-        } else {
+         if (a != null) {
+  
+            if (a.getRoleId() == 1) {
+                session.setAttribute("role", "admin");
+                response.sendRedirect("dash");
+            } else {
+                session.setAttribute("role", "user");
+                response.sendRedirect("home");
+            }
             session.setAttribute("account", a);
-            response.sendRedirect("home");
+        } else {
+            request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu");
+            request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
         }
     }
 
