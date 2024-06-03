@@ -37,7 +37,7 @@
                             
                             <c:if test="${not empty notification}">
                                 <div class="notification">
-                                    <p>${notification}</p>
+                                    <p style="color: #28A745;;">${notification}</p>
                                 </div>
                             </c:if>
                             <form action="register" method="post" class="register-form" id="register-form">
