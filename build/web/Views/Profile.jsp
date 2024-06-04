@@ -179,7 +179,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <label class="labels">Mật khẩu mới</label>
-                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới" name="newpassword" required>
+                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
                                     <p class="labels">Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.</p>
                                 </div>
                             </div>

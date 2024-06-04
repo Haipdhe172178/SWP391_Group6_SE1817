@@ -79,9 +79,6 @@ public class ChangePasswordController extends HttpServlet {
         String oldPassword = request.getParameter("oldpassword");
         String newPassword = request.getParameter("newpassword");
         String confirmPassword = request.getParameter("confirmpassword");
-
-        String passwordPattern = "[a-zA-Z0-9]{8,}";
-
         if (!a.getPassWord().equals(oldPassword)) {
             String ms = "Mật khẩu hiện tại không đúng.";
             request.setAttribute("ms", ms);
@@ -89,11 +86,6 @@ public class ChangePasswordController extends HttpServlet {
             request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
         } else if (!newPassword.equals(confirmPassword)) {
             String m = "Xác nhận mật khẩu không khớp.";
-            request.setAttribute("m", m);
-            request.setAttribute("showChangePassword", true);
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
-        } else if (!Pattern.matches(passwordPattern, newPassword)) {
-            String m = "Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.";
             request.setAttribute("m", m);
             request.setAttribute("showChangePassword", true);
             request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
