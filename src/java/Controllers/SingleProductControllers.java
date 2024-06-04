@@ -85,7 +85,7 @@ public class SingleProductControllers extends HttpServlet {
         Author author = authorDao.getAuthorById(product.getAuthorId());
         Category category = cateDao.getCategoryByID(product.getCategoryId());
         ObjectAge objectAge = ageDao.getObjectAgesByID(product.getAgeId());
-
+        List<Category> categorys = cateDao.getallCategorys();
         //LIST
         List<Product> listP = productDao.getProductsByCategoryId(product.getCategoryId(), "fourRandom");
         List<News> listNews = nd.getFourNewsLated();
@@ -98,7 +98,7 @@ public class SingleProductControllers extends HttpServlet {
         //QUANTITY
         int quantitySold = productDao.getQuantitySoldByProductId(id);
         int avgRating = feedbackDAO.avgRating(id);
-        
+        request.setAttribute("cate", categorys);
         request.setAttribute("avgRating", avgRating);
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);

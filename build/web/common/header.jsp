@@ -100,7 +100,7 @@
             <li class="cat-list-item">
                 <a href="shop"  title="">Tất cả</a>
             </li>
-            <c:forEach items="${category}" var="cate">
+            <c:forEach items="${cate}" var="cate">
                 <li class="cat-list-item">
                     <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                 </li>
