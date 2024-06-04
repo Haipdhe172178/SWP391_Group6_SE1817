@@ -163,20 +163,16 @@
                     </div>
 
                     <!-- Change Password -->
-                    <div class="p-3 py-5" id="changepass" style="display: none;">
-
+                      <div class="p-3 py-5" id="changepass" style="display: none;">
                         <form action="changepassword" method="post">
                             <input type="hidden" name="username" value="${sessionScope.account.userName}">
-
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Đổi mật khẩu</h4>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-md-12">
-
                                     <label class="labels">Mật khẩu hiện tại</label>
                                     <input type="password" class="form-control" placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
-
                                     <h4 style="color: red">${requestScope.ms}</h4>
                                 </div>
                             </div>
@@ -184,6 +180,7 @@
                                 <div class="col-md-12">
                                     <label class="labels">Mật khẩu mới</label>
                                     <input type="password" class="form-control" placeholder="nhập mật khẩu mới" name="newpassword" required>
+                                    <p class="labels">Mật khẩu của bạn phải có tối thiểu 8 ký tự, đồng thời bao gồm cả chữ số, chữ cái và ký tự đặc biệt (!@$%#).</p>
                                 </div>
                             </div>
                             <div class="row mt-3">

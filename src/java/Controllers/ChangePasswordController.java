@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -72,36 +73,40 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        AccountDAO d = new AccountDAO();
-        String oldPassword = request.getParameter("oldpassword");
-        String newPassword = request.getParameter("newpassword");
-        String confirmPassword = request.getParameter("confirmpassword");
+         HttpSession session = request.getSession();
+    Account a = (Account) session.getAttribute("account");
+    AccountDAO d = new AccountDAO();
+    String oldPassword = request.getParameter("oldpassword");
+    String newPassword = request.getParameter("newpassword");
+    String confirmPassword = request.getParameter("confirmpassword");
 
-        if (!a.getPassWord().equals(oldPassword)) {
-            String ms = "Mật khẩu hiện tại không đúng.";
-            request.setAttribute("ms", ms);
-            request.setAttribute("showChangePassword", true);
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
-        }
-        else if (!newPassword.equals(confirmPassword)) {
-            String m = "Xác nhận mật khẩu không khớp.";
-            request.setAttribute("m", m);
-            request.setAttribute("showChangePassword", true);
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
-        } else {
-            a.setPassWord(newPassword);
-            d.changePassword(a);
+    String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
 
-            String mess = "Mật khẩu đã được thay đổi";
-            request.setAttribute("mess", mess);
-            request.setAttribute("showChangePassword", true);
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+    if (!a.getPassWord().equals(oldPassword)) {
+        String ms = "Mật khẩu hiện tại không đúng.";
+        request.setAttribute("ms", ms);
+        request.setAttribute("showChangePassword", true);
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+    } else if (!newPassword.equals(confirmPassword)) {
+        String m = "Xác nhận mật khẩu không khớp.";
+        request.setAttribute("m", m);
+        request.setAttribute("showChangePassword", true);
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+    } else if (!Pattern.matches(passwordPattern, newPassword)) {
+        String m = "Mật khẩu của bạn phải có tối thiểu 8 ký tự, đồng thời bao gồm cả chữ số, chữ cái và ký tự đặc biệt (!@$%#).";
+        request.setAttribute("m", m);
+        request.setAttribute("showChangePassword", true);
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+    } else {
+        a.setPassWord(newPassword);
+        d.changePassword(a);
 
-        }
+        String mess = "Mật khẩu đã được thay đổi";
+        request.setAttribute("mess", mess);
+        request.setAttribute("showChangePassword", true);
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
     }
-
+}
     /**
      * Returns a short description of the servlet.
      *
