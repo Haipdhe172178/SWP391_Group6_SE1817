@@ -539,9 +539,9 @@
                 <div class="cart-table">
                     <div class="cart-header border-bottom border-top">
                         <div class="row d-flex text-capitalize">
-                            <h4 class="col-lg-4 py-3 m-0">Product</h4>
-                            <h4 class="col-lg-3 py-3 m-0">Quantity</h4>
-                            <h4 class="col-lg-4 py-3 m-0">Subtotal</h4>
+                            <h4 class="col-lg-4 py-3 m-0">Sản phẩm</h4>
+                            <h4 class="col-lg-3 py-3 m-0">Số lượng</h4>
+                            <h4 class="col-lg-4 py-3 m-0">Tổng phụ</h4>
                         </div>
                     </div>
 
@@ -671,22 +671,12 @@
                     </div>
                 </div>
                 <div class="cart-totals padding-medium pb-0">
-                    <h3 class="mb-3">Cart Totals</h3>
+                    <h3 class="mb-3">Tổng số giỏ hàng</h3>
                     <div class="total-price pb-3">
                         <table cellspacing="0" class="table text-capitalize">
-                            <tbody>
-                                <tr class="subtotal pt-2 pb-2 border-top border-bottom">
-                                    <th>Subtotal</th>
-                                    <td data-title="Subtotal">
-                                        <span class="price-amount amount text-primary ps-5 fw-light">
-                                            <bdi>
-                                                <span class="price-currency-symbol">$</span>2,400.00
-                                            </bdi>
-                                        </span>
-                                    </td>
-                                </tr>
+
                                 <tr class="order-total pt-2 pb-2 border-bottom">
-                                    <th>Total</th>
+                                    <th>Tổng</th>
                                     <td data-title="Total">
                                         <span class="price-amount amount text-primary ps-5 fw-light">
                                             <bdi>
@@ -694,13 +684,13 @@
                                         </span>
                                     </td>
                                 </tr>
-                            </tbody>
+                          
                         </table>
                     </div>
                     <div class="button-wrap d-flex flex-wrap gap-3">
-                        <button class="btn">Update Cart</button>
-                        <button class="btn">Continue Shopping</button>
-                        <button class="btn">Proceed to checkout</button>
+                        <button class="btn">Cập nhật giỏ hàng</button>
+                         <a href="shop" class="btn">Tiếp tục mua sắm</a>
+                        <button class="btn">Thanh toán</button>
                     </div>
                 </div>
             </div>
@@ -976,45 +966,7 @@
                                 <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                                 <p>
                                     "Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
-                                <!--                            <div class="social-links">
-                                                                <ul class="d-flex list-unstyled">
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="facebook">
-                                                                            <use xlink:href="#facebook" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="instagram">
-                                                                            <use xlink:href="#instagram" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="twitter">
-                                                                            <use xlink:href="#twitter" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="linkedin">
-                                                                            <use xlink:href="#linkedin" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="youtube">
-                                                                            <use xlink:href="#youtube" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>-->
+                               
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-6 pb-3">
