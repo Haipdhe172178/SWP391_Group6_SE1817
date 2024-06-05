@@ -270,6 +270,7 @@
                                             <button type="submit" class="btn btn-primary" name="submit">Add</button>
                                         </div>
                                     </form>
+                                     <h3>${error}</h3>
                                 </div>
 
                             </div>
