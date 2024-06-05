@@ -149,7 +149,7 @@ public class ProfileController extends HttpServlet {
                 isCompleted = accDAO.updateAccountInfo(a);
                 if (isCompleted) {
                     session.setAttribute("account", a);
-                    request.setAttribute("messageSuccess", "Cập nhật thành công");
+                    request.setAttribute(MESSAGE_SUCCESS, "Cập nhật thành công");
                 } else {
                     request.setAttribute(MESSAGE_FAIL, "Cập nhật thất bại");
                 }
