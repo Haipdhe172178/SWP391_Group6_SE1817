@@ -75,30 +75,69 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <c:set var="totalNews" value="${requestScope.quantityNews}"/>
-                        <c:set var="total" value="${(totalNews / 6) + (totalNews % 6 == 0 ? 0 : 1)}"/>
+                        <c:set var="total" value="${requestScope.endPage}"/>
                         <c:set var="page" value="${requestScope.page}"/>
+
                         <nav class="pt-5" aria-label="Page navigation">
                             <ul class="pagination justify-content-center gap-4">
+                                <!-- Nút "Prev" -->
                                 <li class="page-item">
-                                    <c:if test="${requestScope.page > 1}">
+                                    <c:if test="${page > 1}">
                                         <a class="page-link" href="blog?page=${page-1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Prev</a>
                                     </c:if>
                                 </li>
-                                <c:forEach begin="${1}" end="${total}" step="${1}" var="pageNum">
-                                    <li class="page-item active" aria-current="page">
-                                        <a href="blog?page=${pageNum}&id=${requestScope.tid}&sort=${requestScope.sortNews}" <c:if test="${requestScope.page == pageNum}">style="background-color: #F86D72;padding: 8px 16px ;border-radius: 10px; color: white"</c:if>>
-                                            ${pageNum}
-                                        </a> 
+
+                                <!-- Hiển thị các trang đầu, giữa và cuối nếu cần -->
+                                <c:if test="${total <= 5}">
+                                    <c:forEach begin="1" end="${total}" var="pageNum">
+                                        <li class="page-item ${page == pageNum ? 'active' : ''}">
+                                            <a class="page-link" href="blog?page=${pageNum}&id=${requestScope.tid}&sort=${requestScope.sortNews}" ${page == pageNum ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                        </li>
+                                    </c:forEach>
+                                </c:if>
+
+                                <c:if test="${total > 5}">
+                                    <!-- Hiển thị trang đầu tiên -->
+                                    <li class="page-item ${page == 1 ? 'active' : ''}">
+                                        <a class="page-link" href="blog?page=1&id=${requestScope.tid}&sort=${requestScope.sortNews}" ${page == 1 ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>1</a>
                                     </li>
-                                </c:forEach>
+
+                                    <!-- Nếu trang hiện tại > 3, hiển thị "..." -->
+                                    <c:if test="${page > 3}">
+                                        <li class="page-item disabled">
+                                            <span class="page-link">...</span>
+                                        </li>
+                                    </c:if>
+
+                                    <!-- Hiển thị 2 trang trước và sau trang hiện tại -->
+                                    <c:forEach begin="${page > 2 ? page - 1 : 2}" end="${page < total - 1 ? page + 1 : total - 1}" var="pageNum">
+                                        <li class="page-item ${page == pageNum ? 'active' : ''}">
+                                            <a class="page-link" href="blog?page=${pageNum}&id=${requestScope.tid}&sort=${requestScope.sortNews}" ${page == pageNum ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                        </li>
+                                    </c:forEach>
+
+                                    <!-- Nếu trang hiện tại < tổng số trang - 2, hiển thị "..." -->
+                                    <c:if test="${page < total - 2}">
+                                        <li class="page-item disabled">
+                                            <span class="page-link">...</span>
+                                        </li>
+                                    </c:if>
+
+                                    <!-- Hiển thị trang cuối cùng -->
+                                    <li class="page-item ${page == total ? 'active' : ''}">
+                                        <a class="page-link" href="blog?page=${total}&id=${requestScope.tid}&sort=${requestScope.sortNews}" ${page == total ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
+                                    </li>
+                                </c:if>
+
+                                <!-- Nút "Next" -->
                                 <li class="page-item">
-                                    <c:if test="${requestScope.page < 8 }">
+                                    <c:if test="${page < total}">
                                         <a class="page-link" href="blog?page=${page+1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Next</a>
-                                    </c:if>  
+                                    </c:if>
                                 </li>
                             </ul>
                         </nav>
+
                     </main>
                     <aside class="col-md-3">
                         <div class="sidebar">
