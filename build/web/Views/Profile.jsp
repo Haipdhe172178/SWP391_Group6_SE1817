@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Profile
-    Created on : May 25, 2024, 5:49:46 PM
-    Author     : Hai Pham
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
@@ -27,10 +21,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-
         <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
         <style>
-
             .add-experience:hover {
                 background: #f86d72;
                 color: #fff;
@@ -38,10 +30,26 @@
                 border: solid 1px #BA68C8
             }
 
-            .profile{
+
+            .profile {
                 border-radius: 2em;
                 box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3),
                     -3px -3px 6px rgba(255, 255, 255, 0.5);
+            }
+
+            #customButton {
+                margin-left: 5px;
+                padding: 10px 20px;
+                background-color: #016dd8;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            #customButton:hover {
+                background-color: #0056b3;
             }
             .nav-user-dropdown {
                 position: relative;
@@ -83,29 +91,26 @@
             .nav-user-dropdown:hover .dropdown-content {
                 display: block;
             }
-            #customButton {
-                margin-left: 5px;
-                padding: 10px 20px;
-                background-color: #016dd8;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            #customButton:hover {
-                background-color: #0056b3;
-            }
         </style>
     </head>
-    <jsp:include page="../common/header.jsp"></jsp:include>
-        <body className='snippet-body'>
+    <body class='snippet-body'>
+        <c:if test="${requestScope.messageSuccess != null}">
+            <jsp:include page="../common/modalSuccess.jsp"></jsp:include>
+        </c:if>
+        <c:if test="${requestScope.messageFail != null}">
+            <jsp:include page="../common/modalFailure.jsp"></jsp:include>
+        </c:if>
+        <jsp:include page="../common/header.jsp"></jsp:include>
         <c:set var="acc" value="${sessionScope.account}"/>
         <div class="container rounded bg-white mt-5 mb-5" style="width: 60%">
             <div class="row profile">
                 <div class="col-md-4 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}"><span class="font-weight-bold">${acc.fullName}</span><span class="text-black-50">${acc.email}</span><span> </span></div>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}">
+                        <span class="font-weight-bold">${acc.fullName}</span>
+                        <span class="text-black-50">${acc.email}</span>
+                        <span></span>
+                    </div>
                     <center>
                         <form id="uploadForm" action="profile" method="post" enctype="multipart/form-data">
                             <input type="file" id="avatarInput" name="avatar" style="display:none" required oninvalid="this.setCustomValidity('Vui lòng chọn một tệp hình ảnh để tải lên')" onchange="document.getElementById('uploadForm').submit()">
@@ -113,26 +118,19 @@
                             <input type="hidden" value="changeAvt" name="action">
                         </form>
                     </center>
-                    <script>
-                        document.getElementById('customButton').addEventListener('click', function () {
-                            document.getElementById('avatarInput').click();
-                        });
-                    </script>
                 </div>
-                <div class="col-md-8" >
+                <div class="col-md-8">
                     <!-- Profile -->
                     <div class="p-3 py-5" id="profile">
                         <form action="profile" method="post">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Hồ Sơ Của Tôi</h4>                    <h5 style="color: red">${requestScope.message}</h5>
-
+                                <h4 class="text-right">Hồ Sơ Của Tôi</h4>
                                 <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Đổi mật khẩu</span>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6 inputprofile"><label class="labels">Họ và tên</label><input type="text" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" ></div>
+                                <div class="col-md-6 inputprofile"><label class="labels">Họ và tên</label><input type="text" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" required oninvalid="this.setCustomValidity('Tên không được để trống')" oninput="this.setCustomValidity('')"></div>
                                 <div class="col-md-6 "><label class="labels">Tên đăng nhập</label><input type="text" name="username" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
                             </div>
-
                             <div class="row mt-3">
                                 <label class="labels">Giới tính</label>
                                 <div class="d-flex align-items-center gender-options">
@@ -148,12 +146,11 @@
                                             <input type="radio" name="gender" class="form-check-input" value="Other"
                                             <c:if test="${acc.gender eq 'Other'}">checked</c:if>> Khác
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-12 inputprofile"><label class="labels">Số điện thoại</label><input type="text" name="phonenumber" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" required pattern="^0\d{9}$" oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại đúng định dạng 0xxxxxxxxx')" onchange="this.setCustomValidity('')"></div>
-                                <div class="col-md-12 inputprofile"><label class="labels">Địa chỉ</label><input type="text" name="address" class="form-control" placeholder="enter address" value="${acc.address}" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ')" ></div>
+                                    <div class="col-md-12 inputprofile"><label class="labels">Số điện thoại</label><input type="text" name="phonenumber" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" required pattern="^0\d{9}$" oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại đúng định dạng 0xxxxxxxxx')" oninput="this.setCustomValidity('')"></div>
+                                <div class="col-md-12 inputprofile"><label class="labels">Địa chỉ</label><input type="text" name="address" class="form-control" placeholder="enter address" value="${acc.address}" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ')" oninput="this.setCustomValidity('')"></div>
                                 <div class="col-md-12 "><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
                             </div>
                             <div class="mt-5 text-center">
@@ -161,7 +158,6 @@
                             </div>
                         </form>
                     </div>
-
                     <!-- Change Password -->
                     <div class="p-3 py-5" id="changepass" style="display: none;">
                         <form action="changepassword" method="post">
@@ -192,64 +188,51 @@
                             </div>
                             <div class="mt-5 text-center">
                                 <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
-                                <button class="btn btn-secondary profile-button" type="button" onclick="document.getElementById('changepass').style.display = 'none'">Thoát</button>
+                                <button class="btn btn-secondary profile-button" type="button" onclick="showProfile()">Thoát</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<jsp:include page="../common/footer.jsp"></jsp:include>
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript'>#</script>
-    <script type='text/javascript'>
-        var myLink = document.querySelector('a[href="#"]');
-        myLink.addEventListener('click', function (e) {
-            e.preventDefault();
-        });
-    </script>
-<% Boolean showChangePassword = (Boolean) request.getAttribute("showChangePassword"); %>
+        <jsp:include page="../common/footer.jsp"></jsp:include>
 
-<script>
-    window.onload = function () {
-    <% if (showChangePassword != null && showChangePassword) { %>
-        showChangePassword();
-    <% } else { %>
-        showProfile();
-    <% } %>
-    }
 
-    // Hàm để ẩn phần tử có id là "profile" và hiển thị phần tử có id là "changepass"
-    function showChangePassword() {
-        document.getElementById('profile').style.display = 'none';
-        document.getElementById('changepass').style.display = '';
-    }
+            <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+            <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        // Handle profile and change password form display
+                                        function showChangePassword() {
+                                            document.getElementById('profile').style.display = 'none';
+                                            document.getElementById('changepass').style.display = 'block';
+                                        }
 
-    // Hàm để ẩn phần tử có id là "changepass" và hiển thị phần tử có id là "profile"
-    function showProfile() {
-        document.getElementById('profile').style.display = '';
-        document.getElementById('changepass').style.display = 'none';
-    }
+                                        function showProfile() {
+                                            document.getElementById('profile').style.display = 'block';
+                                            document.getElementById('changepass').style.display = 'none';
+                                        }
 
-    // Sự kiện click cho nút "Change Password"
-    document.querySelector('.btn.btn-secondary.profile-button').addEventListener('click', function () {
-        showChangePassword();
-    });
+                                        // Event listeners for profile and change password buttons
+                                        document.querySelector('.add-experience').addEventListener('click', showChangePassword);
+                                        document.querySelector('.btn.btn-secondary.profile-button').addEventListener('click', showProfile);
 
-    // Sự kiện click cho nút "Cancel" trong form "Change Password"
-    document.querySelector('.p-3.py-5#changepass .btn.btn-secondary.profile-button').addEventListener('click', function () {
-        showProfile();
-    });
+                                        // Check if change password should be shown
+            <% Boolean showChangePassword = (Boolean) request.getAttribute("showChangePassword"); %>
+            <% if (showChangePassword != null && showChangePassword) { %>
+                                        showChangePassword();
+            <% } else { %>
+                                        showProfile();
+            <% } %>
 
-    // Sự kiện click cho nút "Edit Profile"
-    document.querySelector('.add-experience').addEventListener('click', function () {
-        showChangePassword();
-    });
-</script>
-
+                                        // File input trigger for custom button
+                                        document.getElementById('customButton').addEventListener('click', function () {
+                                            document.getElementById('avatarInput').click();
+                                        });
+                                    });
+        </script>
+        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+    </body>
 </html>

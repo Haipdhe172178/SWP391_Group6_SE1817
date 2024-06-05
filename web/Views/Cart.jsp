@@ -414,7 +414,7 @@
                                             <div class="nav-user-dropdown">
                                                 <button class="dropbtn">${sessionScope.account.getUserName()}</button>
                                                 <div class="dropdown-content">
-                                                    <a href="#">Tài khoản của tôi</a>
+                                                    <a href="profile">Tài khoản của tôi</a>
                                                     <a href="#">Đơn mua</a>
                                                     <a href="logout">Đăng xuất</a>
                                                 </div>

@@ -5,7 +5,9 @@
 package Controllers;
 
 import DAL.AccountDAO;
+import DAL.CategoryDao;
 import Models.Account;
+import Models.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  *
@@ -26,6 +29,8 @@ import java.nio.file.Path;
 public class ProfileController extends HttpServlet {
 
     public static final String PROFILE_PAGE = "Views/Profile.jsp";
+    public static final String MESSAGE_SUCCESS = "messageSuccess";
+    public static final String MESSAGE_FAIL = "messageFail";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,10 +71,14 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getSession().getAttribute("account") != null) {
+            CategoryDao categoryDao = new CategoryDao();
+            List<Category> categorys = categoryDao.getallCategorys();
+            request.setAttribute("cate", categorys);
             request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
         } else {
             response.sendRedirect("home");
         }
+
     }
 
     /**
@@ -88,10 +97,13 @@ public class ProfileController extends HttpServlet {
         AccountDAO accDAO = new AccountDAO();
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
-        if (a==null) {
+        if (a == null) {
             response.sendRedirect("home");
             return;
         }
+        CategoryDao categoryDao = new CategoryDao();
+        List<Category> categorys = categoryDao.getallCategorys();
+        request.setAttribute("cate", categorys);
         boolean isCompleted;
         switch (action) {
             //Xử lí ảnh avt
@@ -113,11 +125,12 @@ public class ProfileController extends HttpServlet {
                 if (isCompleted) {
                     a = accDAO.check(a.getUserName(), a.getPassWord());
                     session.setAttribute("account", a);
+                    request.setAttribute(MESSAGE_SUCCESS, "Update avatar complete");
                 } else {
-                    request.setAttribute("message", "Failed to update avatar");
+                    request.setAttribute(MESSAGE_FAIL, "Failed to update avatar");
                 }
             } catch (Exception e) {
-                request.setAttribute("message", "Failed to update avatar");
+                request.setAttribute(MESSAGE_FAIL, "Failed to update avatar");
             }
             request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
             break;
@@ -136,9 +149,9 @@ public class ProfileController extends HttpServlet {
                 isCompleted = accDAO.updateAccountInfo(a);
                 if (isCompleted) {
                     session.setAttribute("account", a);
-                    request.setAttribute("message", "Cập nhật thành công");
+                    request.setAttribute(MESSAGE_SUCCESS, "Cập nhật thành công");
                 } else {
-                    request.setAttribute("message", "Cập nhật thất bại");
+                    request.setAttribute(MESSAGE_FAIL, "Cập nhật thất bại");
                 }
                 request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
                 break;
