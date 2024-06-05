@@ -105,7 +105,6 @@
                     <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                 </li>
             </c:forEach>
-
         </ul>
 
     </div>
@@ -158,17 +157,18 @@
                             <a class="nav-link me-4" href="shop">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-4 active" href="blog">Blogs</a>
+                            <a class="nav-link me-4 " href="blog">Blogs</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link me-4 dropdown-toggle link-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages</a>
+                            <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages</a>
                             <ul class="dropdown-menu animate slide border">
                                 <li>
                                     <a href="about" class="dropdown-item fw-light">About <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="shop" class="dropdown-item fw-light">Shop <span class="badge bg-primary"></span></a>
+                                    <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
                                 </li>
+
                                 <li>
                                     <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
                                 </li>
@@ -176,8 +176,9 @@
                                     <a href="check" class="dropdown-item fw-light">Checkout <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="blog" class="dropdown-item active fw-light">Blog <span class="badge bg-primary"></span></a>
+                                    <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
                                 </li>
+
                                 <li>
                                     <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
                                 </li>
@@ -292,28 +293,7 @@
                                         </div>
                                     </li>
 
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                            var signInTab = document.getElementById('nav-sign-in-tab');
-                                            var registerTab = document.getElementById('nav-register-tab');
-                                            var signInForm = document.getElementById('nav-sign-in');
-                                            var registerForm = document.getElementById('nav-register');
 
-                                            signInTab.addEventListener('click', function () {
-                                                signInTab.classList.add('active');
-                                                registerTab.classList.remove('active');
-                                                signInForm.classList.add('show', 'active');
-                                                registerForm.classList.remove('show', 'active');
-                                            });
-
-                                            registerTab.addEventListener('click', function () {
-                                                signInTab.classList.remove('active');
-                                                registerTab.classList.add('active');
-                                                signInForm.classList.remove('show', 'active');
-                                                registerForm.classList.add('show', 'active');
-                                            });
-                                        });
-                                    </script>
 
                                 </c:when>
                                 <c:otherwise>
