@@ -28,6 +28,20 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
         <style>
+            .filter-box {
+                border: 1px solid #ddd;
+                padding: 20px;
+                border-radius: 5px;
+                background-color: white;
+                margin-bottom: 20px;
+                margin-top: 20px
+            }
+
+            .filter-box h2 {
+                text-align: center;
+                margin-top: 0;
+                font-size: 20px;
+            }
             .collapsible {
                 cursor: pointer;
                 user-select: none;
@@ -663,86 +677,88 @@
                                 </form>
                             </div>
                         </div>
-                        <form action="filter" method="get">
-                            <div class="widget-product-categories pt-5">
-                                <div class="section-title overflow-hidden mb-2 collapsible">
-                                    <h3 class="d-flex flex-column mb-0">Thể loại</h3>
-                                </div>
-                                <div class="content">
-                                    <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                        <li class="cat-item">
-                                            <label>
-                                                <input type="checkbox" name="categoryId" value="all"> Tất cả
-                                            </label>
-                                        </li>
-                                        <c:forEach items="${category}" var="c">
+                           <div class="filter-box">
+                            <h2>Lọc sản phẩm</h2>
+                            <form action="filter" method="get">
+                                <div class="widget-product-categories pt-5">
+                                    <div class="section-title overflow-hidden mb-2 collapsible">
+                                        <h3 class="d-flex flex-column mb-0">Thể loại</h3>
+                                    </div>
+                                    <div class="content">
+                                        <ul class="product-categories mb-0 sidebar-list list-unstyled">
                                             <li class="cat-item">
                                                 <label>
-                                                    <input type="checkbox" name="categoryId" value="${c.categoryId}"> ${c.categoryName}
+                                                    <input type="checkbox" name="categoryId" value="all"> Tất cả
                                                 </label>
                                             </li>
-                                        </c:forEach>
-                                    </ul>
+                                            <c:forEach items="${category}" var="c">
+                                                <li class="cat-item">
+                                                    <label>
+                                                        <input type="checkbox" name="categoryId" value="${c.categoryId}"> ${c.categoryName}
+                                                    </label>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="widget-product-tags pt-5">
-                                <div class="section-title overflow-hidden mb-2 collapsible">
-                                    <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
+                                <div class="widget-product-tags pt-5">
+                                    <div class="section-title overflow-hidden mb-2 collapsible">
+                                        <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
+                                    </div>
+                                    <div class="content">
+                                        <ul class="product-tags mb-0 sidebar-list list-unstyled">
+                                            <c:forEach items="${objage}" var="ob">
+                                                <li class="cat-item">
+                                                    <label>
+                                                        <input type="checkbox" name="objage" value="${ob.ageId}" onclick="limitCheckboxSelection(this)"> ${ob.age}
+                                                    </label>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="content">
-                                    <ul class="product-tags mb-0 sidebar-list list-unstyled">
 
-                                        <c:forEach items="${objage}" var="ob">
-                                            <li class="cat-item">
+                                <div class="widget-price-filter pt-5">
+                                    <div class="section-title overflow-hidden mb-2 collapsible">
+                                        <h3 class="d-flex flex-column mb-0">Khoảng giá</h3>
+                                    </div>
+                                    <div class="content">
+                                        <ul class="product-tags mb-0 sidebar-list list-unstyled">
+                                            <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="objage" value="${ob.ageId}" onclick="limitCheckboxSelection(this)"> ${ob.age}
+                                                    <input type="checkbox" name="price_filter" value="lessthan10" onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
                                                 </label>
                                             </li>
-                                        </c:forEach>
-                                    </ul>
+                                            <li class="tags-item">
+                                                <label>
+                                                    <input type="checkbox" name="price_filter" value="10to20" onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
+                                                </label>
+                                            </li>
+                                            <li class="tags-item">
+                                                <label>
+                                                    <input type="checkbox" name="price_filter" value="20to30" onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
+                                                </label>
+                                            </li>
+                                            <li class="tags-item">
+                                                <label>
+                                                    <input type="checkbox" name="price_filter" value="30to40" onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
+                                                </label>
+                                            </li>
+                                            <li class="tags-item">
+                                                <label>
+                                                    <input type="checkbox" name="price_filter" value="morethan50" onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="widget-price-filter pt-5">
-                                <div class="section-title overflow-hidden mb-2 collapsible">
-                                    <h3 class="d-flex flex-column mb-0">Khoảng giá</h3>
+                                <div class="pt-5 text-center">
+                                    <button type="submit">Lọc</button>
                                 </div>
-                                <div class="content">
-                                    <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                        <li class="tags-item">
-                                            <label>
-                                                <input type="checkbox" name="price_filter" value="lessthan10" onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
-                                            </label>
-                                        </li>
-                                        <li class="tags-item">
-                                            <label>
-                                                <input type="checkbox" name="price_filter" value="10to20" onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
-                                            </label>
-                                        </li>
-                                        <li class="tags-item">
-                                            <label>
-                                                <input type="checkbox" name="price_filter" value="20to30" onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
-                                            </label>
-                                        </li>
-                                        <li class="tags-item">
-                                            <label>
-                                                <input type="checkbox" name="price_filter" value="30to40" onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
-                                            </label>
-                                        </li>
-                                        <li class="tags-item">
-                                            <label>
-                                                <input type="checkbox" name="price_filter" value="morethan50" onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="pt-5">
-                                <button type="submit">Filter</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </aside>
             </div>
