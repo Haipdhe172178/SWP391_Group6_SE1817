@@ -335,7 +335,8 @@
                                                 </c:forEach>
                                             </div>
                                         </div>
-                                        <span class="price text-primary fw-bold mb-2 fs-5">${p.price}</span>
+
+                                        <span class="price text-primary fw-bold mb-2 fs-5"><fmt:formatNumber value="${p.price}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
                                         <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                             <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
                                                 <svg class="cart">
