@@ -78,10 +78,12 @@ public class ChangePasswordController extends HttpServlet {
         AccountDAO d = new AccountDAO();
         String oldPassword = request.getParameter("oldpassword");
         String newPassword = request.getParameter("newpassword");
+        
         String confirmPassword = request.getParameter("confirmpassword");
         if (!a.getPassWord().equals(oldPassword)) {
             String ms = "Mật khẩu hiện tại không đúng.";
             request.setAttribute("ms", ms);
+            request.setAttribute("mess", newPassword);
             request.setAttribute("showChangePassword", true);
             request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
         } else if (!newPassword.equals(confirmPassword)) {

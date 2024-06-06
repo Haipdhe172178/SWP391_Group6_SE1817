@@ -168,21 +168,21 @@
                             <div class="row mt-2">
                                 <div class="col-md-12">
                                     <label class="labels">Mật khẩu hiện tại</label>
-                                    <input type="password" class="form-control" placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
+                                    <input type="password" class="form-control"  placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
                                     <h4 style="color: red">${requestScope.ms}</h4>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <label class="labels">Mật khẩu mới</label>
-                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
+                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới"value="${mess}" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
                                     <p class="labels">Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.</p>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <label class="labels">Xác nhận mật khẩu mới</label>
-                                    <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" name="confirmpassword" required>
+                                    <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" value="${mess}" name="confirmpassword" required>
                                     <h4 style="color: red">${requestScope.m}</h4>
                                 </div>
                             </div>

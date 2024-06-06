@@ -547,7 +547,7 @@
                             </div>
                         </div>
                         <div class="w-100">
-                            <input type="text" name="phoneNumber" placeholder="Số điện thoại" class="form-control w-100">
+                            <input type="text" name="phoneNumber" pattern="[0-9]*" placeholder="Số điện thoại" class="form-control w-100">
                         </div>
                         <div class="w-100">
                             <input type="text" name="topic" pattern="^(?! ).*$" placeholder="Chủ đề" class="form-control w-100">
@@ -557,8 +557,6 @@
                         </div>
                         <button type="submit" name="submit" class="btn my-3">Gửi liên hệ của bạn</button>
                     </form>
-
-                    <!-- Display message from servlet if any -->
                     <div>
                         ${requestScope.message}
                     </div>
