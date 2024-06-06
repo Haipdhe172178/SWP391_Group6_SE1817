@@ -540,20 +540,20 @@
                     <form id="form" class="d-flex gap-3 flex-wrap" method="post" action="${pageContext.request.contextPath}/contact">
                         <div class="w-100 d-flex gap-3">
                             <div class="w-50">
-                                <input type="text" name="name" placeholder="Họ và tên *" class="form-control w-100" required>
+                                <input type="text" name="name" pattern="^(?! ).*$" placeholder="Họ và tên *" class="form-control w-100" required>
                             </div>
                             <div class="w-50">
-                                <input type="email" name="email" placeholder="Email *" class="form-control w-100" required>
+                                <input type="email" name="email"  placeholder="Email *" class="form-control w-100" required>
                             </div>
                         </div>
                         <div class="w-100">
                             <input type="text" name="phoneNumber" placeholder="Số điện thoại" class="form-control w-100">
                         </div>
                         <div class="w-100">
-                            <input type="text" name="topic" placeholder="Chủ đề" class="form-control w-100">
+                            <input type="text" name="topic" pattern="^(?! ).*$" placeholder="Chủ đề" class="form-control w-100">
                         </div>
                         <div class="w-100">
-                            <textarea name="message" placeholder="Nội dung *" class="form-control w-100" required></textarea>
+                            <textarea name="message" pattern="^(?! ).*$" placeholder="Nội dung *" class="form-control w-100" required></textarea>
                         </div>
                         <button type="submit" name="submit" class="btn my-3">Gửi liên hệ của bạn</button>
                     </form>
