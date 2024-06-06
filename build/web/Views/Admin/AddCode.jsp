@@ -250,20 +250,20 @@
                                     <form action="addcode" method="get" enctype="multipart/form-data">
                                         <div class="mb-3">
                                             <label for="productName">Mã Code</label>
-                                            <input type="text" class="form-control"  name="meomeo" required>
+                                            <input type="text" class="form-control"  name="meomeo" value="${meomeo}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productPrice">Giảm giá bao nhiêu phần trăm</label>
-                                            <input type="text" class="form-control"  name="discount1" required>
+                                            <input type="text" class="form-control"  name="discount1" value="${discount1}" required>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="productQuantity">Giảm giá nhân dịp</label>
-                                            <input type="text" class="form-control"  name="theloai" required>
+                                            <input type="text" class="form-control"  name="theloai" value="${theloai}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productName">Số lượng mã phát ra</label>
-                                            <input type="text" class="form-control"  name="soluong" required>
+                                            <input type="text" class="form-control"  name="soluong"  value="${soluong}" required>
                                         </div>
                                         <div>
                                             

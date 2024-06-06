@@ -60,15 +60,23 @@ public class AddcodeController extends HttpServlet {
         
         if(request.getParameter("submit") != null ){
                 String codename = request.getParameter("meomeo");
+                
             String discountStr = request.getParameter("discount1");
+           
             String coupon_type = request.getParameter("theloai");
-             String qualityStr = request.getParameter("soluong");          
+           
+             String qualityStr = request.getParameter("soluong");   
+             request.setAttribute("soluong",qualityStr );
+             request.setAttribute("meomeo", codename);
+               request.setAttribute("discount1",discountStr );
+                 request.setAttribute("theloai", coupon_type);
                  DiscountDAO dal = new DiscountDAO();
                String error="";
                try {
                 float discount = Float.parseFloat(discountStr);
                 int quality = Integer.parseInt(qualityStr);
                 if(codename.isBlank()||coupon_type.isBlank()){
+                    
                       error = "Bạn không được để trống";
                  request.setAttribute("error", error);
                 
@@ -103,8 +111,16 @@ public class AddcodeController extends HttpServlet {
                 }
                 
                 if(error == ""){
+                    request.setAttribute("soluong",qualityStr );
+             request.setAttribute("meomeo", codename);
+               request.setAttribute("discount1",discountStr );
+                 request.setAttribute("theloai", coupon_type);
                     response.sendRedirect("discount");
                 }else{
+                    request.setAttribute("soluong",qualityStr );
+             request.setAttribute("meomeo", codename);
+               request.setAttribute("discount1",discountStr );
+                 request.setAttribute("theloai", coupon_type);
                      request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
                 }
                 

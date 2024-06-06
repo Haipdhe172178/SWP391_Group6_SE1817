@@ -149,8 +149,8 @@ public class AddControllers extends HttpServlet {
 
         } catch (NumberFormatException | IOException | ServletException ex) {
             ex.printStackTrace();
+            }
         }
-    }
 
     /**
      * Returns a short description of the servlet.

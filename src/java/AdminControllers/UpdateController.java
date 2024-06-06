@@ -112,15 +112,21 @@ public class UpdateController extends HttpServlet {
     throws ServletException, IOException {
          try {
              String id = request.getParameter("ID");
+             request.setAttribute("ID", id);
             String productName = request.getParameter("name");
+            request.setAttribute("name",productName );
             float productPrice = Float.parseFloat(request.getParameter("price"));
-            
+            request.setAttribute("price",productPrice );
             int productQuantity = Integer.parseInt(request.getParameter("quantity"));
+            request.setAttribute("quantity", productQuantity);
             String description = request.getParameter("description");
+            request.setAttribute("description", description);
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+            request.setAttribute("category", categoryId);
             int authorId = Integer.parseInt(request.getParameter("author"));
+            request.setAttribute("author", authorId);
             int ageId = Integer.parseInt(request.getParameter("ageId"));
-            
+            request.setAttribute("ageId", ageId);
             // Xử lý ảnh
              String imgProduct = null;
               imgProduct = request.getParameter("imgProduct12");
@@ -142,7 +148,7 @@ public class UpdateController extends HttpServlet {
             }else{
                 imgProduct = request.getParameter("imgProduct12");
             }
-
+       
             // Tạo đối tượng Product mới
             Product product = new Product();
             product.setName(productName);
