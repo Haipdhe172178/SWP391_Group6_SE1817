@@ -73,8 +73,11 @@ public class UpdateController extends HttpServlet {
              String meo = request.getParameter("meo") == null ? "" : request.getParameter("meo");
         String error = "";
         if(meo.equals("1")){
-             error = "sai du lieu updata";
-        } 
+             error = "Bạn phải nhập giá tiền hoặc số lượng sản phẩm lớn hơn 0 ";
+        }
+        if(meo.equals("2")){
+             error = "Bạn không được bỏ trống ô nào cả ";
+        }
         
        
         
@@ -117,7 +120,7 @@ public class UpdateController extends HttpServlet {
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
             int authorId = Integer.parseInt(request.getParameter("author"));
             int ageId = Integer.parseInt(request.getParameter("ageId"));
-
+            
             // Xử lý ảnh
              String imgProduct = null;
               imgProduct = request.getParameter("imgProduct12");
@@ -155,16 +158,17 @@ public class UpdateController extends HttpServlet {
             // Thêm sản phẩm vào cơ sở dữ liệu
             ProductDao productDao = new ProductDao();
             //productDao.updateProduct(product);
-            
+            if(productName.isBlank()||description.isBlank() ){
+                 response.sendRedirect("update" +"?id="+id+"&meo=2");
+            }else{
             if(productPrice > 0 && productQuantity > 0){
                 productDao.updateProduct(product);
                  response.sendRedirect(request.getContextPath() + "/data");
             }else{
-              String erron = "nhap du lieu không dung";
-              request.setAttribute("erron", erron);
+             
               
                 response.sendRedirect("update" +"?id="+id+"&meo=1");
-                
+            }
             }
            
             

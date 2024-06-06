@@ -64,24 +64,54 @@ public class AddcodeController extends HttpServlet {
             String coupon_type = request.getParameter("theloai");
              String qualityStr = request.getParameter("soluong");          
                  DiscountDAO dal = new DiscountDAO();
-               
+               String error="";
                try {
                 float discount = Float.parseFloat(discountStr);
                 int quality = Integer.parseInt(qualityStr);
-                
-                if(discount>0 && quality>0){
-                     dal.addDiscount(codename, discountStr, coupon_type, qualityStr);
-                     response.sendRedirect("discount");
-                }else{
-                     String error = "Bạn phải nhập phần trăm > 0 và số lượng > 0";
+                if(codename.isBlank()||coupon_type.isBlank()){
+                      error = "Bạn không được để trống";
                  request.setAttribute("error", error);
-                  request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
+                
+                }else{
+                if(discount>0 && quality>0){
+                   
+                     ArrayList<UsedCoupon> data = new ArrayList<>();
+                     data = dal.listcode();
+                     int k = 0 ;
+                     for (int i = 0; i < data.size(); i++) {
+                        if(data.get(i).getCodeName().equalsIgnoreCase(codename)){
+                             error = "Mã code đã tồn tại";
+                            k++;
+                          request.setAttribute("error", error);
+                        
+                          
+                        }
+                                
+                    }
+                     if(k==0){
+                      dal.addDiscount(codename, discountStr, coupon_type, qualityStr);
+                      
+                     
+                     }
+                             
+                   
+                }else{
+                      error = "Bạn phải nhập phần trăm > 0 và số lượng > 0";
+                 request.setAttribute("error", error);
                  
                 }
+                }
+                
+                if(error == ""){
+                    response.sendRedirect("discount");
+                }else{
+                     request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
+                }
+                
             } catch (Exception e) {
-                String error = "Bạn nhập số không đúng định dạng phần trăm giảm giá và số lượng mã phát ra";
+                 error = "Bạn nhập số không đúng định dạng phần trăm giảm giá và số lượng mã phát ra";
                  request.setAttribute("error", error);
-                request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
+                   request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
             }
                  
                  
