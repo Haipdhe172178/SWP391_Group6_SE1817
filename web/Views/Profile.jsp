@@ -158,40 +158,48 @@
                             </div>
                         </form>
                     </div>
-                    <!-- Change Password -->
-                    <div class="p-3 py-5" id="changepass" style="display: none;">
-                        <form action="changepassword" method="post">
-                            <input type="hidden" name="username" value="${sessionScope.account.userName}">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Đổi mật khẩu</h4>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-12">
-                                    <label class="labels">Mật khẩu hiện tại</label>
-                                    <input type="password" class="form-control"  placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
-                                    <h4 style="color: red">${requestScope.ms}</h4>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <label class="labels">Mật khẩu mới</label>
-                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới"value="${mess}" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
-                                    <p class="labels">Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.</p>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <label class="labels">Xác nhận mật khẩu mới</label>
-                                    <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" value="${mess}" name="confirmpassword" required>
-                                    <h4 style="color: red">${requestScope.m}</h4>
-                                </div>
-                            </div>
-                            <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
-                                <button class="btn btn-secondary profile-button" type="button" onclick="showProfile()">Thoát</button>
-                            </div>
-                        </form>
-                    </div>
+                   <!-- Change Password -->
+<div class="p-3 py-5" id="changepass" style="display: none;">
+    <form action="changepassword" method="post">
+        <input type="hidden" name="username" value="${sessionScope.account.userName}">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Đổi mật khẩu</h4>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <label class="labels">Mật khẩu hiện tại</label>
+                <input type="password" class="form-control"  placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
+                <h4 style="color: red">${requestScope.ms}</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <label class="labels">Mật khẩu mới</label>
+                <input type="password" class="form-control" placeholder="nhập mật khẩu mới"value="${mess}" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
+                <p class="labels">Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <label class="labels">Xác nhận mật khẩu mới</label>
+                <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" value="${mess}" name="confirmpassword" required>
+                <h4 style="color: red">${requestScope.m}</h4>
+            </div>
+        </div>
+        <div class="mt-5 text-center">
+            <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
+            <button class="btn btn-secondary profile-button" type="button" onclick="showProfile()">Thoát</button>
+        </div>
+    </form>
+</div>
+
+<c:if test="${not empty requestScope.successMessage}">
+    <script>
+        alert("${requestScope.successMessage}");
+        window.location.href = "login";
+    </script>
+</c:if>
+
                 </div>
             </div>
         </div>

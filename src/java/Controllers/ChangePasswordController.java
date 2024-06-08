@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.regex.Pattern;
+
 
 /**
  *
@@ -71,33 +71,34 @@ public class ChangePasswordController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        AccountDAO d = new AccountDAO();
-        String oldPassword = request.getParameter("oldpassword");
-        String newPassword = request.getParameter("newpassword");
-        
-        String confirmPassword = request.getParameter("confirmpassword");
-        if (!a.getPassWord().equals(oldPassword)) {
-            String ms = "Mật khẩu hiện tại không đúng.";
-            request.setAttribute("ms", ms);
-            request.setAttribute("mess", newPassword);
-            request.setAttribute("showChangePassword", true);
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
-        } else if (!newPassword.equals(confirmPassword)) {
-            String m = "Xác nhận mật khẩu không khớp.";
-            request.setAttribute("m", m);
-            request.setAttribute("showChangePassword", true);
-            request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
-        } else {
-            a.setPassWord(newPassword);
-            d.changePassword(a);
-            session.invalidate();
-            response.sendRedirect("login");
-        }
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    Account a = (Account) session.getAttribute("account");
+    AccountDAO d = new AccountDAO();
+    String oldPassword = request.getParameter("oldpassword");
+    String newPassword = request.getParameter("newpassword");
+    String confirmPassword = request.getParameter("confirmpassword");
+
+    if (!a.getPassWord().equals(oldPassword)) {
+        String ms = "Mật khẩu hiện tại không đúng.";
+        request.setAttribute("ms", ms);
+        request.setAttribute("mess", newPassword);
+        request.setAttribute("showChangePassword", true);
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+    } else if (!newPassword.equals(confirmPassword)) {
+        String m = "Xác nhận mật khẩu không khớp.";
+        request.setAttribute("m", m);
+        request.setAttribute("showChangePassword", true);
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
+    } else {
+        a.setPassWord(newPassword);
+        d.changePassword(a);
+        session.invalidate();
+        request.setAttribute("successMessage", "Bạn đã đổi mật khẩu thành công.");
+        request.getRequestDispatcher("Views/Profile.jsp").forward(request, response);
     }
+}
 
     /**
      * Returns a short description of the servlet.
