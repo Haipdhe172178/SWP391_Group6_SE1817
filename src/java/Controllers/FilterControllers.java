@@ -98,10 +98,6 @@ public class FilterControllers extends HttpServlet {
         if (categoryIdStrArray != null) {
             for (String categoryIdStr : categoryIdStrArray) {
                 if (categoryIdStr != null && !categoryIdStr.isEmpty()) {
-                    if (categoryIdStr.equals("all")) {
-                        selectAll = true;
-                        break;
-                    }
                     int categoryId = Integer.parseInt(categoryIdStr);
                     selectedCategoryIds.add(categoryId);
                 }
@@ -143,37 +139,13 @@ public class FilterControllers extends HttpServlet {
         }
         String searchKeyword = request.getParameter("s");
         // Lấy danh sách sản phẩm và số lượng sản phẩm tương ứng với các tiêu chí đã chọn
-        if (!selectedCategoryIds.isEmpty() && ageId != 0 && (minPrice > 0 || maxPrice > 0)) {
-            list = productDao.paginProductByCateIdAgeIdPrice(index, selectedCategoryIds, ageId, minPrice, maxPrice, true, true);
-            count = productDao.countProductsByCategoryIdsAgeIDPrice(selectedCategoryIds, ageId, minPrice, maxPrice);
-            //Lấy danh sách sản phẩm và số lượng sản phẩm tương ứng với categoryId va ageId
-        } else if (!selectedCategoryIds.isEmpty() && ageId != 0) {
-            list = productDao.pagingProductsByCateIdAgeId(index, selectedCategoryIds, ageId);
-            count = productDao.countProductsByCategoryIdsAgeID(selectedCategoryIds, ageId);
-            //Lấy danh sách sản phẩm và số lượng sản phẩm tương ứng với categoryId va price   
-        } else if (!selectedCategoryIds.isEmpty() && (minPrice > 0 || maxPrice > 0)) {
-            list = productDao.pagingProductsByCateIdPrice(index, selectedCategoryIds, minPrice, maxPrice);
-            count = productDao.countProductsByCareIdPrice(selectedCategoryIds, minPrice, maxPrice);
-        } else if (ageId != 0 && (minPrice > 0 || maxPrice > 0)) {
-            list = productDao.pagingProductAgeIdPrice(index, ageId, minPrice, maxPrice);
-            count = productDao.countProductAgeIdPrice(ageId, minPrice, maxPrice);
-        } else if (!selectedCategoryIds.isEmpty()) {
-            // Nếu người dùng chỉ lọc theo categoryId
-            list = productDao.pagingProductsByCatagoryId(index, selectedCategoryIds);
-            count = productDao.countProductsByCategoryIds(selectedCategoryIds);
-        } else if (ageId != 0) {
-            // Nếu người dùng chỉ lọc theo ageId
-            list = productDao.pagingProductsByAgeId(index, ageId);
-            count = productDao.countProductsByAgeId(ageId);
-        } else if (minPrice > 0 || maxPrice > 0) {
-            // Nếu người dùng lọc theo khoảng giá
-            list = productDao.pagingProductsByPriceRange(index, minPrice, maxPrice);
-            count = productDao.countPriceRange(minPrice, maxPrice);
+        if (!selectedCategoryIds.isEmpty() || ageId != 0 || minPrice > 0 || maxPrice > 0) {
+            list = productDao.paginProductByFilter(index, selectedCategoryIds, ageId, minPrice, maxPrice);
+            count = productDao.countProductsByFilter(selectedCategoryIds, ageId, minPrice, maxPrice);
         } else if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
             list = productDao.pagingProductsByKeyword(index, searchKeyword);
             count = productDao.getTotalProductsByKeyword(searchKeyword);
         } else {
-            // Nếu không có tiêu chí lọc nào được chọn, sử dụng phân trang thông thường
             list = productDao.pagingProducts(index);
             count = productDao.getTotalProduct();
         }
@@ -208,7 +180,9 @@ public class FilterControllers extends HttpServlet {
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
-
+        request.setAttribute("selectedCategoryIds", selectedCategoryIds);
+        request.setAttribute("selectedAgeId", ageId);
+        request.setAttribute("selectedPriceFilter", priceFilter);
         request.setAttribute("query", query);
         request.setAttribute("author", authors);
         request.setAttribute("category", categories);

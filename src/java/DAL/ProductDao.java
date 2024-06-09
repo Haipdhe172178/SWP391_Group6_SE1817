@@ -265,246 +265,113 @@ public class ProductDao extends DBContext {
     }
 
     //Method hien tai can dung
-    public List<Product> pagingProductsByCatagoryId(int index, List<Integer> categoryIds) {
+    public List<Product> paginProductByFilter(int index, List<Integer> categoryIds, int ageId, float minPrice, float maxPrice) {
         List<Product> products = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE 1=1");
+        if (!categoryIds.isEmpty()) {
+            queryBuilder.append(" AND categoryId IN (");
+            for (int i = 0; i < categoryIds.size(); i++) {
+                queryBuilder.append("?");
+                if (i < categoryIds.size() - 1) {
+                    queryBuilder.append(", ");
+                }
             }
+            queryBuilder.append(")");
         }
-        queryBuilder.append(") ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
-
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-            ps.setInt(parameterIndex++, (index - 1) * 8);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (ageId != 0) {
+            queryBuilder.append(" AND AgeID = ?");
         }
-        return products;
-    }
-
-    public int countProductsByCategoryIds(List<Integer> categoryIds) {
-        int totalCount = 0;
-        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(")");
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                totalCount = rs.getInt(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return totalCount;
-    }
-
-    public List<Product> pagingProductsByCateIdAgeId(int index, List<Integer> categoryIds, int ageId) {
-        List<Product> products = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(") AND AgeID = ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
-
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-            ps.setInt(parameterIndex++, ageId);
-            ps.setInt(parameterIndex++, (index - 1) * 8);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return products;
-    }
-
-    public int countProductsByCategoryIdsAgeID(List<Integer> categoryIds, int ageId) {
-        int totalCount = 0;
-        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(") AND AgeID = ?");
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-            ps.setInt(parameterIndex++, ageId);
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                totalCount = rs.getInt(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return totalCount;
-    }
-
-    public List<Product> paginProductByCateIdAgeIdPrice(int index, List<Integer> categoryIds, int ageId, float minPrice, float maxPrice, boolean above, boolean below) {
-        List<Product> products = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(") AND AgeID = ? ");
-
-        if (above && below) {
-            queryBuilder.append("AND price BETWEEN ? AND ? ");
-        } else if (above) {
-            queryBuilder.append("AND price >= ? ");
-        } else if (below) {
-            queryBuilder.append("AND price <= ? ");
-        }
-
-        queryBuilder.append("ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
-
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-            ps.setInt(parameterIndex++, ageId);
-
-            if (above && below) {
-                ps.setFloat(parameterIndex++, minPrice);
-                ps.setFloat(parameterIndex++, maxPrice);
-            } else if (above) {
-                ps.setFloat(parameterIndex++, minPrice);
-            } else if (below) {
-                ps.setFloat(parameterIndex++, maxPrice);
-            }
-
-            ps.setInt(parameterIndex++, (index - 1) * 8);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return products;
-    }
-
-    public int countProductsByCategoryIdsAgeIDPrice(List<Integer> categoryIds, int ageId, float minPrice, float maxPrice) {
-        int totalCount = 0;
-        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(") AND AgeID = ?");
-
-        if (minPrice >= 0 && maxPrice > 0) {
-            queryBuilder.append(" AND price BETWEEN ? AND ?");
-        } else if (minPrice >= 0) {
+        if (minPrice > 0) {
             queryBuilder.append(" AND price >= ?");
-        } else if (maxPrice > 0) {
+        }
+        if (maxPrice > 0) {
+            queryBuilder.append(" AND price <= ?");
+        }
+        queryBuilder.append(" ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
+        String query = queryBuilder.toString();
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            int parameterIndex = 1;
+            for (Integer categoryId : categoryIds) {
+                ps.setInt(parameterIndex++, categoryId);
+            }
+            if (ageId != 0) {
+                ps.setInt(parameterIndex++, ageId);
+            }
+            if (minPrice > 0) {
+                ps.setFloat(parameterIndex++, minPrice);
+            }
+            if (maxPrice > 0) {
+                ps.setFloat(parameterIndex++, maxPrice);
+            }
+            ps.setInt(parameterIndex++, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setAuthorID(rs.getInt("authorId"));
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setAgeId(rs.getInt("ageId"));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+
+    public int countProductsByFilter(List<Integer> categoryIds, int ageId, float minPrice, float maxPrice) {
+        int totalCount = 0;
+        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Product WHERE 1=1");
+
+        if (!categoryIds.isEmpty()) {
+            queryBuilder.append(" AND categoryId IN (");
+            for (int i = 0; i < categoryIds.size(); i++) {
+                queryBuilder.append("?");
+                if (i < categoryIds.size() - 1) {
+                    queryBuilder.append(", ");
+                }
+            }
+            queryBuilder.append(")");
+        }
+
+        if (ageId != 0) {
+            queryBuilder.append(" AND AgeID = ?");
+        }
+
+        if (minPrice > 0) {
+            queryBuilder.append(" AND price >= ?");
+        }
+        if (maxPrice > 0) {
             queryBuilder.append(" AND price <= ?");
         }
 
         String query = queryBuilder.toString();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-
             int parameterIndex = 1;
+
             for (Integer categoryId : categoryIds) {
                 ps.setInt(parameterIndex++, categoryId);
             }
-            ps.setInt(parameterIndex++, ageId);
 
-            if (minPrice >= 0 && maxPrice > 0) {
+            if (ageId != 0) {
+                ps.setInt(parameterIndex++, ageId);
+            }
+
+            if (minPrice > 0) {
                 ps.setFloat(parameterIndex++, minPrice);
-                ps.setFloat(parameterIndex, maxPrice);
-            } else if (minPrice >= 0) {
-                ps.setFloat(parameterIndex, minPrice);
-            } else if (maxPrice > 0) {
-                ps.setFloat(parameterIndex, maxPrice);
+            }
+            if (maxPrice > 0) {
+                ps.setFloat(parameterIndex++, maxPrice);
             }
 
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 totalCount = rs.getInt(1);
             }
@@ -513,52 +380,6 @@ public class ProductDao extends DBContext {
         }
         return totalCount;
     }
-
-    //đếm số lượng sản phẩm theo độ tuổi
-    public int countProductsByAgeId(int ageId) {
-        int total = 0;
-        String query = "SELECT COUNT(*) FROM Product WHERE ageId = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, ageId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return total;
-    }
-
-    //phân trang sản phẩm theo độ tuổi
-    public List<Product> pagingProductsByAgeId(int index, int ageId) {
-        List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE ageId = ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, ageId);
-            ps.setInt(2, (index - 1) * 8);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return products;
-    }
-
     //Đếm số lượng product trong data
     public int getTotalProduct() {
         String query = "Select count (*) from Product";
@@ -602,277 +423,8 @@ public class ProductDao extends DBContext {
         }
         return list;
     }
-
-    //đếm số lượng sản phẩm theo giá
-    public int countPriceRange(float minPrice, float maxPrice) {
-        int total = 0;
-        String query;
-        if (maxPrice > 0) {
-            query = "SELECT COUNT(*) FROM Product WHERE price BETWEEN ? AND ?";
-        } else {
-            query = "SELECT COUNT(*) FROM Product WHERE price >= ?";
-        }
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setFloat(1, minPrice);
-
-            if (maxPrice > 0) {
-                ps.setFloat(2, maxPrice);
-            }
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return total;
-    }
-
-    // Phân trang sản phẩm trong khoảng giá xác định
-    public List<Product> pagingProductsByPriceRange(int index, float minPrice, float maxPrice) {
-        List<Product> products = new ArrayList<>();
-        String query;
-        if (maxPrice > 0) {
-            query = "SELECT * FROM Product WHERE price BETWEEN ? AND ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
-        } else {
-            query = "SELECT * FROM Product WHERE price >= ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
-        }
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setFloat(1, minPrice);
-            if (maxPrice > 0) {
-                ps.setFloat(2, maxPrice);
-                ps.setInt(3, (index - 1) * 8);
-            } else {
-                ps.setInt(2, (index - 1) * 8);
-            }
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return products;
-    }
-
-    public List<Product> pagingProductsByCateIdPrice(int index, List<Integer> categoryIds, float minPrice, float maxPrice) {
-        List<Product> products = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(")");
-        if (minPrice > 0 || maxPrice > 0) {
-            if (minPrice > 0 && maxPrice > 0) {
-                queryBuilder.append(" AND price BETWEEN ? AND ?");
-            } else if (minPrice > 0) {
-                queryBuilder.append(" AND price >= ?");
-            } else {
-                queryBuilder.append(" AND price <= ?");
-            }
-        }
-        queryBuilder.append(" ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-            if (minPrice > 0 || maxPrice > 0) {
-                if (minPrice > 0 && maxPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                    ps.setFloat(parameterIndex++, maxPrice);
-                } else if (minPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                } else {
-                    ps.setFloat(parameterIndex++, maxPrice);
-                }
-            }
-            ps.setInt(parameterIndex++, (index - 1) * 8);
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return products;
-    }
-
-    public int countProductsByCareIdPrice(List<Integer> categoryIds, float minPrice, float maxPrice) {
-        int totalCount = 0;
-        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Product WHERE categoryId IN (");
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(")");
-        if (minPrice > 0 || maxPrice > 0) {
-            if (minPrice > 0 && maxPrice > 0) {
-                queryBuilder.append(" AND price BETWEEN ? AND ?");
-            } else if (minPrice > 0) {
-                queryBuilder.append(" AND price >= ?");
-            } else {
-                queryBuilder.append(" AND price <= ?");
-            }
-        }
-
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-
-            int parameterIndex = 1;
-            for (Integer categoryId : categoryIds) {
-                ps.setInt(parameterIndex++, categoryId);
-            }
-            if (minPrice > 0 || maxPrice > 0) {
-                if (minPrice > 0 && maxPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                    ps.setFloat(parameterIndex++, maxPrice);
-                } else if (minPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                } else {
-                    ps.setFloat(parameterIndex++, maxPrice);
-                }
-            }
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                totalCount = rs.getInt(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return totalCount;
-    }
-
-    public List<Product> pagingProductAgeIdPrice(int index, int ageId, float minPrice, float maxPrice) {
-        List<Product> products = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE AgeID = ?");
-
-        if (minPrice > 0 || maxPrice > 0) {
-            if (minPrice > 0 && maxPrice > 0) {
-                queryBuilder.append(" AND price BETWEEN ? AND ?");
-            } else if (minPrice > 0) {
-                queryBuilder.append(" AND price >= ?");
-            } else {
-                queryBuilder.append(" AND price <= ?");
-            }
-        }
-
-        queryBuilder.append(" ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
-
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            int parameterIndex = 1;
-
-            ps.setInt(parameterIndex++, ageId);
-
-            if (minPrice > 0 || maxPrice > 0) {
-                if (minPrice > 0 && maxPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                    ps.setFloat(parameterIndex++, maxPrice);
-                } else if (minPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                } else {
-                    ps.setFloat(parameterIndex++, maxPrice);
-                }
-            }
-
-            ps.setInt(parameterIndex++, (index - 1) * 8);
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("productId"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getFloat("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
-                products.add(product);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return products;
-    }
-
-    public int countProductAgeIdPrice(int ageId, float minPrice, float maxPrice) {
-        int totalCount = 0;
-        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Product WHERE AgeID = ?");
-
-        if (minPrice > 0 || maxPrice > 0) {
-            if (minPrice > 0 && maxPrice > 0) {
-                queryBuilder.append(" AND price BETWEEN ? AND ?");
-            } else if (minPrice > 0) {
-                queryBuilder.append(" AND price >= ?");
-            } else {
-                queryBuilder.append(" AND price <= ?");
-            }
-        }
-
-        String query = queryBuilder.toString();
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            int parameterIndex = 1;
-
-            ps.setInt(parameterIndex++, ageId);
-
-            if (minPrice > 0 || maxPrice > 0) {
-                if (minPrice > 0 && maxPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                    ps.setFloat(parameterIndex++, maxPrice);
-                } else if (minPrice > 0) {
-                    ps.setFloat(parameterIndex++, minPrice);
-                } else {
-                    ps.setFloat(parameterIndex++, maxPrice);
-                }
-            }
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                totalCount = rs.getInt(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return totalCount;
-    }
-public int getQuantitySoldByProductId(int id) {
+    
+    public int getQuantitySoldByProductId(int id) {
         String query = " Select * From QualityofProductsell WHERE ProducID=?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -888,40 +440,39 @@ public int getQuantitySoldByProductId(int id) {
         return 0;
     }
 
-public void deleteStudent(int studentID) {
+    public void deleteStudent(int studentID) {
         PreparedStatement pstmt = null;
         try {
 
             // Xóa sinh viên từ bảng Students
-            String deleteStudentSql1 = "DELETE FROM [dbo].[Feedback]\n" +
-"      WHERE ProductID = ?";
+            String deleteStudentSql1 = "DELETE FROM [dbo].[Feedback]\n"
+                    + "      WHERE ProductID = ?";
             pstmt = connection.prepareStatement(deleteStudentSql1);
             pstmt.setInt(1, studentID);
             pstmt.executeUpdate();
 
-            String deleteStudentSql2 = "DELETE FROM [dbo].OrderDetailGuest\n" +
-"      WHERE ProductID = ?";
+            String deleteStudentSql2 = "DELETE FROM [dbo].OrderDetailGuest\n"
+                    + "      WHERE ProductID = ?";
             pstmt = connection.prepareStatement(deleteStudentSql2);
             pstmt.setInt(1, studentID);
             pstmt.executeUpdate();
-            String deleteStudentSql3 = "DELETE FROM [dbo].OrderDetailCustomer\n" +
-"      WHERE ProductID = ?";
+            String deleteStudentSql3 = "DELETE FROM [dbo].OrderDetailCustomer\n"
+                    + "      WHERE ProductID = ?";
             pstmt = connection.prepareStatement(deleteStudentSql3);
             pstmt.setInt(1, studentID);
             pstmt.executeUpdate();
-            String deleteStudentSql4 = "DELETE FROM [dbo].QualityofProductsell\n" +
-"      WHERE ProducID = ?";
+            String deleteStudentSql4 = "DELETE FROM [dbo].QualityofProductsell\n"
+                    + "      WHERE ProducID = ?";
             pstmt = connection.prepareStatement(deleteStudentSql4);
             pstmt.setInt(1, studentID);
             pstmt.executeUpdate();
 
-            String deleteStudentSql5 = "DELETE FROM [dbo].[Product]\n" +
-"      WHERE ProductID = ?";
+            String deleteStudentSql5 = "DELETE FROM [dbo].[Product]\n"
+                    + "      WHERE ProductID = ?";
             pstmt = connection.prepareStatement(deleteStudentSql5);
             pstmt.setInt(1, studentID);
             pstmt.executeUpdate();
-            
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -939,7 +490,7 @@ public void deleteStudent(int studentID) {
 
     }
 
-public Product get1Productbyid(String id) {
+    public Product get1Productbyid(String id) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         PreparedStatement stm;//thuc hien cau lenh sql
         ResultSet rs;// lua tru du lieu duoc lay ve tu select
@@ -983,7 +534,7 @@ public Product get1Productbyid(String id) {
 
     }
 
-public void updateProduct(Product u) {
+    public void updateProduct(Product u) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         try {
             String stSQL = "UPDATE [dbo].[Product]\n"
@@ -1012,7 +563,8 @@ public void updateProduct(Product u) {
             System.out.println("updateProduct" + e.getMessage());
         }
     }
-   public Product getProductByName(String name) {
+
+    public Product getProductByName(String name) {
         String query = " Select * From Product WHERE name = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -1036,5 +588,5 @@ public void updateProduct(Product u) {
         }
         return null;
     }
-    
+
 }

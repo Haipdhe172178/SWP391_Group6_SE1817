@@ -64,8 +64,6 @@
                 content: '\2212';
             }
             .content {
-                display: none;
-                overflow: hidden;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
@@ -292,115 +290,8 @@
                                                 <svg class="user">
                                                 <use xlink:href="#user"></use>
                                                 </svg>
-                                            </a>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header border-bottom-0">
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="tabs-listing">
-                                                                <nav>
-                                                                    <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                                                                        <button class="nav-link text-capitalize active" id="nav-sign-in-tab" data-bs-toggle="tab" data-bs-target="#nav-sign-in" type="button" role="tab" aria-controls="nav-sign-in" aria-selected="true">Đăng nhập</button>
-                                                                        <button class="nav-link text-capitalize" id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab" aria-controls="nav-register" aria-selected="false">Đăng ký</button>
-                                                                    </div>
-                                                                </nav>
-                                                                <div class="tab-content" id="nav-tabContent">
-                                                                    <div class="tab-pane fade active show" id="nav-sign-in" role="tabpanel" aria-labelledby="nav-sign-in-tab">
-                                                                        <form id="loginForm" action="login" method="post">
-                                                                            <div class="form-group py-3">
-                                                                                <label class="mb-2" for="sign-in">Tài khoản hoặc Email *</label>
-                                                                                <input type="text" minlength="2" name="username" placeholder="Tài khoản" class="form-control w-100 rounded-3 p-3" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-3">
-                                                                                <label class="mb-2" for="sign-in">Mật khẩu *</label>
-                                                                                <input type="password" minlength="2" name="password" placeholder="Mật khẩu" class="form-control w-100 rounded-3 p-3" required>
-                                                                            </div>
-                                                                            <label class="py-3">
-                                                                                <input type="checkbox" required="" class="d-inline">
-                                                                                <span class="label-body">Luôn luôn nhớ</span>
-                                                                                <span class="label-body"><a href="#" class="fw-bold">Quên mật khẩu</a></span>
-                                                                            </label>
-                                                                            <div class="text-center">
-                                                                                <!-- Thêm liên kết đăng nhập bằng Google -->
-                                                                                <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=652190424847-po8btulm9gsk84b8o7hfmsdjs597p866.apps.googleusercontent.com&redirect_uri=http://localhost:9999/SWP391/login&response_type=code&scope=profile%20email&access_type=online" 
-                                                                                   class="btn btn-danger w-100 my-3">Đăng nhập bằng Google</a>
-                                                                            </div>
-                                                                            <button type="submit" name="submit" class="btn btn-dark w-100 my-3">Đăng nhập</button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
-                                                                        <form id="registerForm" action="register" method="post">
-                                                                            <div class="form-group py-2">
-                                                                                <label class="mb-2" for="Name">Họ và tên *</label>
-                                                                                <input type="text" minlength="2" name="FullName" placeholder="Họ và tên" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="username">Tên đăng nhập *</label>
-                                                                                <input type="text" minlength="2" name="Username" placeholder="Tên đăng nhập" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="password">Mật khẩu *</label>
-                                                                                <input type="password" minlength="2" name="Password" placeholder="Mật khẩu" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="rePassword">Xác thực mật khẩu *</label>
-                                                                                <input type="password" minlength="2" name="rePassword" placeholder="Nhập lại mật khẩu" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="email">Email *</label>
-                                                                                <input type="email" name="Email" placeholder="Email" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="phonenumber">Số điện thoại *</label>
-                                                                                <input type="tel" name="PhoneNumber" placeholder="Số điện thoại" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="adress">Địa chỉ *</label>
-                                                                                <input type="text" minlength="2" name="Address" placeholder="Địa chỉ" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <label class="py-2">
-                                                                                <input type="checkbox" required="" class="d-inline">
-                                                                                <span class="label-body">Tôi đồng ý <a href="#" class="fw-bold">Chính sách bảo mật</a></span>
-                                                                            </label>
-                                                                            <button type="submit" name="submit" class="btn btn-dark w-100 my-2">Đăng ký</button>
-                                                                        </form>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </a>                                      
                                         </li>
-
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function () {
-                                                var signInTab = document.getElementById('nav-sign-in-tab');
-                                                var registerTab = document.getElementById('nav-register-tab');
-                                                var signInForm = document.getElementById('nav-sign-in');
-                                                var registerForm = document.getElementById('nav-register');
-
-                                                signInTab.addEventListener('click', function () {
-                                                    signInTab.classList.add('active');
-                                                    registerTab.classList.remove('active');
-                                                    signInForm.classList.add('show', 'active');
-                                                    registerForm.classList.remove('show', 'active');
-                                                });
-
-                                                registerTab.addEventListener('click', function () {
-                                                    signInTab.classList.remove('active');
-                                                    registerTab.classList.add('active');
-                                                    signInForm.classList.remove('show', 'active');
-                                                    registerForm.classList.add('show', 'active');
-                                                });
-                                            });
-                                        </script>
-
                                     </c:when>
                                     <c:otherwise>
                                         <li class="pe-3">
@@ -677,24 +568,21 @@
                                 </form>
                             </div>
                         </div>
-                           <div class="filter-box">
+                        <div class="filter-box">
                             <h2>Lọc sản phẩm</h2>
                             <form action="filter" method="get">
+                                <!-- Thể loại -->
                                 <div class="widget-product-categories pt-5">
                                     <div class="section-title overflow-hidden mb-2 collapsible">
                                         <h3 class="d-flex flex-column mb-0">Thể loại</h3>
                                     </div>
                                     <div class="content">
                                         <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                            <li class="cat-item">
-                                                <label>
-                                                    <input type="checkbox" name="categoryId" value="all"> Tất cả
-                                                </label>
-                                            </li>
                                             <c:forEach items="${category}" var="c">
                                                 <li class="cat-item">
                                                     <label>
-                                                        <input type="checkbox" name="categoryId" value="${c.categoryId}"> ${c.categoryName}
+                                                        <input type="checkbox" name="categoryId" value="${c.categoryId}" 
+                                                               ${selectedCategoryIds.contains(c.categoryId) ? "checked" : ""}> ${c.categoryName}
                                                     </label>
                                                 </li>
                                             </c:forEach>
@@ -702,6 +590,7 @@
                                     </div>
                                 </div>
 
+                                <!-- Độ tuổi -->
                                 <div class="widget-product-tags pt-5">
                                     <div class="section-title overflow-hidden mb-2 collapsible">
                                         <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
@@ -711,7 +600,8 @@
                                             <c:forEach items="${objage}" var="ob">
                                                 <li class="cat-item">
                                                     <label>
-                                                        <input type="checkbox" name="objage" value="${ob.ageId}" onclick="limitCheckboxSelection(this)"> ${ob.age}
+                                                        <input type="checkbox" name="objage" value="${ob.ageId}" 
+                                                               ${selectedAgeId == ob.ageId ? "checked" : ""} onclick="limitCheckboxSelection(this)"> ${ob.age}
                                                     </label>
                                                 </li>
                                             </c:forEach>
@@ -719,6 +609,7 @@
                                     </div>
                                 </div>
 
+                                <!-- Khoảng giá -->
                                 <div class="widget-price-filter pt-5">
                                     <div class="section-title overflow-hidden mb-2 collapsible">
                                         <h3 class="d-flex flex-column mb-0">Khoảng giá</h3>
@@ -727,27 +618,32 @@
                                         <ul class="product-tags mb-0 sidebar-list list-unstyled">
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="lessthan10" onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
+                                                    <input type="checkbox" name="price_filter" value="lessthan10" 
+                                                           ${"lessthan10".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="10to20" onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
+                                                    <input type="checkbox" name="price_filter" value="10to20" 
+                                                           ${"10to20".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="20to30" onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
+                                                    <input type="checkbox" name="price_filter" value="20to30" 
+                                                           ${"20to30".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="30to40" onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
+                                                    <input type="checkbox" name="price_filter" value="30to40" 
+                                                           ${"30to40".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="morethan50" onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
+                                                    <input type="checkbox" name="price_filter" value="morethan50" 
+                                                           ${"morethan50".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
                                                 </label>
                                             </li>
                                         </ul>
@@ -759,6 +655,7 @@
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </aside>
             </div>
@@ -1058,20 +955,6 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var coll = document.getElementsByClassName("collapsible");
-            for (var i = 0; i < coll.length; i++) {
-                coll[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var content = this.nextElementSibling;
-                    if (content.style.display === "block") {
-                        content.style.display = "none";
-                    } else {
-                        content.style.display = "block";
-                    }
-                });
-            }
-        });
         function limitCheckboxSelection(checkbox) {
             var checkboxes = document.getElementsByName(checkbox.name);
             checkboxes.forEach(function (currentCheckbox) {
