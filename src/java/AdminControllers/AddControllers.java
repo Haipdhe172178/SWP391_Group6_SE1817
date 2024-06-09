@@ -135,9 +135,14 @@ public class AddControllers extends HttpServlet {
                     product.setAuthorID(authorId);
                     product.setImgProduct(imgProduct);
                     product.setAgeId(ageId);
-
+                    if (productName.isBlank() || description.isBlank()) {
+                        session.setAttribute("notification", "Khong thanh cong");
+                        
+                    }else{
                     productDao.addProduct(product);
                     session.setAttribute("notification", "Thêm thành công");
+                        
+                    }
                 }
             }
             response.sendRedirect(request.getContextPath() + "/data");

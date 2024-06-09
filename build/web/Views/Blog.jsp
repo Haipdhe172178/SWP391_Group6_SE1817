@@ -28,25 +28,6 @@
 
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
-
-            <section class="hero-section position-relative padding-large" style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;">
-                <div class="hero-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="text-center">
-                                <h1>Blog</h1>
-                                <div class="breadcrumbs">
-                                    <span class="item">
-                                        <a href="home">Home > </a>
-                                    </span>
-                                    <span class="item text-decoration-underline">Blog</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <div id="blog" class="padding-large">
                 <div class="container">
                     <div class="row flex-row-reverse g-md-5">

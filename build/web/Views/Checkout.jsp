@@ -301,113 +301,7 @@
                                                 </svg>
                                             </a>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header border-bottom-0">
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="tabs-listing">
-                                                                <nav>
-                                                                    <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                                                                        <button class="nav-link text-capitalize active" id="nav-sign-in-tab" data-bs-toggle="tab" data-bs-target="#nav-sign-in" type="button" role="tab" aria-controls="nav-sign-in" aria-selected="true">Đăng nhập</button>
-                                                                        <button class="nav-link text-capitalize" id="nav-register-tab" data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab" aria-controls="nav-register" aria-selected="false">Đăng ký</button>
-                                                                    </div>
-                                                                </nav>
-                                                                <div class="tab-content" id="nav-tabContent">
-                                                                    <div class="tab-pane fade active show" id="nav-sign-in" role="tabpanel" aria-labelledby="nav-sign-in-tab">
-                                                                        <form id="loginForm" action="login" method="post">
-                                                                            <div class="form-group py-3">
-                                                                                <label class="mb-2" for="sign-in">Tài khoản hoặc Email *</label>
-                                                                                <input type="text" minlength="2" name="username" placeholder="Tài khoản" class="form-control w-100 rounded-3 p-3" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-3">
-                                                                                <label class="mb-2" for="sign-in">Mật khẩu *</label>
-                                                                                <input type="password" minlength="2" name="password" placeholder="Mật khẩu" class="form-control w-100 rounded-3 p-3" required>
-                                                                            </div>
-                                                                            <label class="py-3">
-                                                                                <input type="checkbox" required="" class="d-inline">
-                                                                                <span class="label-body">Luôn luôn nhớ</span>
-                                                                                <span class="label-body"><a href="#" class="fw-bold">Quên mật khẩu</a></span>
-                                                                            </label>
-                                                                            <div class="text-center">
-                                                                                <!-- Thêm liên kết đăng nhập bằng Google -->
-                                                                                <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=652190424847-po8btulm9gsk84b8o7hfmsdjs597p866.apps.googleusercontent.com&redirect_uri=http://localhost:9999/SWP391/login&response_type=code&scope=profile%20email&access_type=online" 
-                                                                                   class="btn btn-danger w-100 my-3">Đăng nhập bằng Google</a>
-                                                                            </div>
-                                                                            <button type="submit" name="submit" class="btn btn-dark w-100 my-3">Đăng nhập</button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
-                                                                        <form id="registerForm" action="register" method="post">
-                                                                            <div class="form-group py-2">
-                                                                                <label class="mb-2" for="Name">Họ và tên *</label>
-                                                                                <input type="text" minlength="2" name="FullName" placeholder="Họ và tên" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="username">Tên đăng nhập *</label>
-                                                                                <input type="text" minlength="2" name="Username" placeholder="Tên đăng nhập" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="password">Mật khẩu *</label>
-                                                                                <input type="password" minlength="2" name="Password" placeholder="Mật khẩu" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="rePassword">Xác thực mật khẩu *</label>
-                                                                                <input type="password" minlength="2" name="rePassword" placeholder="Nhập lại mật khẩu" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="email">Email *</label>
-                                                                                <input type="email" name="Email" placeholder="Email" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="phonenumber">Số điện thoại *</label>
-                                                                                <input type="tel" name="PhoneNumber" placeholder="Số điện thoại" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <div class="form-group pb-1">
-                                                                                <label class="mb-2" for="adress">Địa chỉ *</label>
-                                                                                <input type="text" minlength="2" name="Address" placeholder="Địa chỉ" class="form-control w-100 rounded-3 p-2" required>
-                                                                            </div>
-                                                                            <label class="py-2">
-                                                                                <input type="checkbox" required="" class="d-inline">
-                                                                                <span class="label-body">Tôi đồng ý <a href="#" class="fw-bold">Chính sách bảo mật</a></span>
-                                                                            </label>
-                                                                            <button type="submit" name="submit" class="btn btn-dark w-100 my-2">Đăng ký</button>
-                                                                        </form>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </li>
-
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function () {
-                                                var signInTab = document.getElementById('nav-sign-in-tab');
-                                                var registerTab = document.getElementById('nav-register-tab');
-                                                var signInForm = document.getElementById('nav-sign-in');
-                                                var registerForm = document.getElementById('nav-register');
-
-                                                signInTab.addEventListener('click', function () {
-                                                    signInTab.classList.add('active');
-                                                    registerTab.classList.remove('active');
-                                                    signInForm.classList.add('show', 'active');
-                                                    registerForm.classList.remove('show', 'active');
-                                                });
-
-                                                registerTab.addEventListener('click', function () {
-                                                    signInTab.classList.remove('active');
-                                                    registerTab.classList.add('active');
-                                                    signInForm.classList.remove('show', 'active');
-                                                    registerForm.classList.add('show', 'active');
-                                                });
-                                            });
-                                        </script>
-
                                     </c:when>
                                     <c:otherwise>
                                         <li class="dropdown pe-3">
@@ -514,25 +408,6 @@
         </nav>
 
     </header>
-
-    <section class="hero-section position-relative padding-large" style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;">
-        <div class="hero-content">
-            <div class="container">
-                <div class="row">
-                    <div class="text-center">
-                        <h1>Checkout</h1>
-                        <div class="breadcrumbs">
-                            <span class="item">
-                                <a href="home">Home > </a>
-                            </span>
-                            <span class="item text-decoration-underline">Checkout</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="checkout-wrap padding-large">
         <div class="container">
             <form class="form-group">

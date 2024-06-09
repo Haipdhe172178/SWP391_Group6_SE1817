@@ -170,42 +170,12 @@
     </symbol>
     </svg>
 
-    <!--    <div id="preloader" class="preloader-container">
-            <div class="book">
-                <div class="inner">
-                    <div class="left"></div>
-                    <div class="middle"></div>
-                    <div class="right"></div>
-                </div>
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </div>-->
-
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="GET" class="search-form" action="filter">
-                <input type="search" id="search-form" class="search-field" placeholder="Vui lòng nhập" value="" name="s" />
-                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="search"></use></svg></button>
+            <form role="search" method="get" class="search-form" action="filter">
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
+                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
             <h5 class="cat-list-title">Thể loại sách</h5>
@@ -537,25 +507,6 @@
         </nav>
 
     </header>
-
-    <section class="hero-section position-relative padding-large" style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;">
-        <div class="hero-content">
-            <div class="container">
-                <div class="row">
-                    <div class="text-center">
-                        <h1>Shop</h1>
-                        <div class="breadcrumbs">
-                            <span class="item">
-                                <a href="home">Home > </a>
-                            </span>
-                            <span class="item text-decoration-underline">Shop</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <div class="shopify-grid padding-large">
         <div class="container">
             <div class="row flex-row-reverse g-md-5">

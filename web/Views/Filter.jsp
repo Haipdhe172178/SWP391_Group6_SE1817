@@ -173,9 +173,9 @@
     <div class="search-popup">
         <div class="search-popup-container">
 
-            <form role="search" method="GET" class="search-form" action="filter">
-                <input type="search" id="search-form" class="search-field" placeholder="Vui lòng nhập" value="" name="s" />
-                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="search"></use></svg></button>
+            <form role="search" method="get" class="search-form" action="filter">
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
+                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
             </form>
 
             <h5 class="cat-list-title">Thể loại sách</h5>

@@ -244,58 +244,58 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="white_card_body">
-                                        <form action="add" method="POST" enctype="multipart/form-data">
-                                            <div class="mb-3">
-                                                <label for="productName">Tên</label>
-                                                <input type="text" class="form-control" id="productName" name="name" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="productPrice">Giá</label>
-                                                <input type="number" min="1" class="form-control" id="productPrice" name="price" required >
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="productQuantity">Số lượng</label>
-                                                <input type="number" min="1" class="form-control" id="productQuantity" name="quantity" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="productName">Mô tả</label>
-                                                <input type="text" class="form-control" id="productdescription" name="description" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="productCategory" class="form-label">Category</label>
-                                                <select class="form-select" id="productCategory" name="categoryId" required>
-                                                    <c:forEach items="${category}" var="c">
-                                                        <option value="${c.categoryId}">${c.categoryName}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="productAge" class="form-label">Tác giả</label>
-                                                <select class="form-select" id="productAge" name="author" required>
-                                                    <c:forEach items="${author}" var="au">
-                                                        <option value="${au.authorID}">${au.authorName}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
+                                <div class="white_card_body">
+                                    <form action="add" method="POST" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="productName">Tên</label>
+                                            <input type="text" class="form-control" id="productName" name="name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productPrice">Giá</label>
+                                            <input type="number" min="1" class="form-control" id="productPrice" name="price" required >
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productQuantity">Số lượng</label>
+                                            <input type="number" min="1" class="form-control" id="productQuantity" name="quantity" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productName">Mô tả</label>
+                                            <input type="text" class="form-control" id="productdescription" name="description"  required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productCategory" class="form-label">Category</label>
+                                            <select class="form-select" id="productCategory" name="categoryId" required>
+                                                <c:forEach items="${category}" var="c">
+                                                    <option value="${c.categoryId}">${c.categoryName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productAge" class="form-label">Tác giả</label>
+                                            <select class="form-select" id="productAge" name="author" required>
+                                                <c:forEach items="${author}" var="au">
+                                                    <option value="${au.authorID}">${au.authorName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
 
-                                            <div class="mb-3">
-                                                <label for="productImage" class="form-label">Ảnh</label>
-                                                <input type="file" class="form-control" id="productImage" name="imgProduct" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="productAge" class="form-label">Age</label>
-                                                <select class="form-select" id="productAge" name="ageId" required>
-                                                    <c:forEach items="${obage}" var="o">
-                                                        <option value="${o.ageId}">${o.age}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <button type="submit" class="btn btn-primary">Add</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control" id="productImage" name="imgProduct" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productAge" class="form-label">Age</label>
+                                            <select class="form-select" id="productAge" name="ageId" required>
+                                                <c:forEach items="${obage}" var="o">
+                                                    <option value="${o.ageId}">${o.age}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-primary">Add</button>
+                                        </div>
+                                    </form>
+                                </div>
 
                             </div>
                         </div>
@@ -450,7 +450,7 @@
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
 
-        <script src="js/custom.js"></script>
+        
     </body>
 
 </html>
