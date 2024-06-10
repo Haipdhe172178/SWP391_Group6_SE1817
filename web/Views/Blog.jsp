@@ -295,20 +295,20 @@
                                     <h5 class="widget-title pb-2">Trang chính</h5>
                                     <ul class="menu-list list-unstyled text-capitalize">
                                         <li class="menu-item mb-1">
-                                            <a href="#">Home</a>
-                                        </li>
-                                        <li class="menu-item mb-1">
-                                            <a href="#">About</a>
-                                        </li>
-                                        <li class="menu-item mb-1">
-                                            <a href="#">Shop</a>
-                                        </li>
-                                        <li class="menu-item mb-1">
-                                            <a href="#">Blogs</a>
-                                        </li>
-                                        <li class="menu-item mb-1">
-                                            <a href="#">Contact</a>
-                                        </li>
+                                        <a href="home">Trang chủ</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="about">Giới thiệu</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="shop">Sản phẩm</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="blog">Tin tức</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="contact">Liên hệ</a>
+                                    </li>
                                     </ul>
                                 </div>
                             </div>

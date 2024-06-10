@@ -62,20 +62,20 @@
                             <div class="footer-menu text-capitalize">
                                 <h5 class="widget-title pb-2">Trang chính</h5>
                                 <ul class="menu-list list-unstyled text-capitalize">
-                                    <li class="menu-item mb-1">
-                                        <a href="#">Home</a>
+                                   <li class="menu-item mb-1">
+                                        <a href="home">Trang chủ</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">About</a>
+                                        <a href="about">Giới thiệu</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">Shop</a>
+                                        <a href="shop">Sản phẩm</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">Blogs</a>
+                                        <a href="blog">Tin tức</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">Contact</a>
+                                        <a href="contact">Liên hệ</a>
                                     </li>
                                 </ul>
                             </div>

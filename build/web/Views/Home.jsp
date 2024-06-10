@@ -269,39 +269,39 @@
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link me-4 active" href="home">Home</a>
+                                <a class="nav-link me-4 active" href="home">Trang chủ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="about">About</a>
+                                <a class="nav-link me-4" href="about">Giới thiệu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="shop">Shop</a>
+                                <a class="nav-link me-4" href="shop">Sản phẩm</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="blog">Blogs</a>
+                                <a class="nav-link me-4" href="blog">Tin tức</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages</a>
+                                <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
                                 <ul class="dropdown-menu animate slide border">
                                     <li>
-                                        <a href="about" class="dropdown-item fw-light">About <span class="badge bg-primary"></span></a>
+                                        <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
-                                    </li>
-
-                                    <li>
-                                        <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="check" class="dropdown-item fw-light">Checkout <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
+                                        <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
                                     </li>
 
                                     <li>
-                                        <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
+                                        <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="check" class="dropdown-item fw-light">Thanh toán <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="contact" class="dropdown-item fw-light">Liên hệ <span class="badge bg-primary"></span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -1169,20 +1169,20 @@
                             <h5 class="widget-title pb-2">Trang chính</h5>
                             <ul class="menu-list list-unstyled text-capitalize">
                                 <li class="menu-item mb-1">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">About</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Shop</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Blogs</a>
-                                </li>
-                                <li class="menu-item mb-1">
-                                    <a href="#">Contact</a>
-                                </li>
+                                        <a href="home">Trang chủ</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="about">Giới thiệu</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="shop">Sản phẩm</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="blog">Tin tức</a>
+                                    </li>
+                                    <li class="menu-item mb-1">
+                                        <a href="contact">Liên hệ</a>
+                                    </li>
                             </ul>
                         </div>
                     </div>

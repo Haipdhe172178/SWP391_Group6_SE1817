@@ -231,44 +231,44 @@
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link me-4 " href="home">Home</a>
+                               <a class="nav-link me-4" href="home">Trang chủ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="about">About</a>
+                                <a class="nav-link me-4" href="about">Giới thiệu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4 active" href="shop">Shop</a>
+                                <a class="nav-link me-4" href="shop">Sản phẩm</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="blog">Blogs</a>
+                                <a class="nav-link me-4" href="blog">Tin tức</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages</a>
+                                <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
                                 <ul class="dropdown-menu animate slide border">
                                     <li>
-                                        <a href="about" class="dropdown-item fw-light">About <span class="badge bg-primary"></span></a>
+                                        <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="shop" class="dropdown-item active fw-light">Shop <span class="badge bg-primary"></span></a>
-                                    </li>
-
-                                    <li>
-                                        <a href="cart" class="dropdown-item fw-light">Cart <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="check" class="dropdown-item fw-light">Checkout <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="blog" class="dropdown-item fw-light">Blog <span class="badge bg-primary"></span></a>
+                                        <a href="shop" class="dropdown-item fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
                                     </li>
 
                                     <li>
-                                        <a href="contact" class="dropdown-item fw-light">Contact <span class="badge bg-primary"></span></a>
+                                        <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="check" class="dropdown-item fw-light">Thanh toán <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="contact" class="dropdown-item active fw-light">Liên hệ <span class="badge bg-primary"></span></a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="contact">Contact</a>
+                                <a class="nav-link active me-4" href="contact">Liên hệ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank"></a>
@@ -871,20 +871,20 @@
                             <div class="footer-menu text-capitalize">
                                 <h5 class="widget-title pb-2">Trang chính</h5>
                                 <ul class="menu-list list-unstyled text-capitalize">
-                                    <li class="menu-item mb-1">
-                                        <a href="#">Home</a>
+                                     <li class="menu-item mb-1">
+                                        <a href="home">Trang chủ</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">About</a>
+                                        <a href="about">Giới thiệu</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">Shop</a>
+                                        <a href="shop">Sản phẩm</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">Blogs</a>
+                                        <a href="blog">Tin tức</a>
                                     </li>
                                     <li class="menu-item mb-1">
-                                        <a href="#">Contact</a>
+                                        <a href="contact">Liên hệ</a>
                                     </li>
                                 </ul>
                             </div>
