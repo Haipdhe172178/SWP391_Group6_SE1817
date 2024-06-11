@@ -169,4 +169,29 @@ public class AccountDAO extends DBContext {
     public static void main(String[] args) {
         //Test function        
     }
+     public Account getAccountByEmail(String email) {
+        String sql = "SELECT * FROM [dbo].[Account] WHERE Email = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                account.setAccountId(rs.getInt("AccountID"));
+                account.setFullName(rs.getString("FullName"));
+                account.setUserName(rs.getString("Username"));
+                account.setPassWord(rs.getString("Password"));
+                account.setGender(rs.getString("Gender"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setAddress(rs.getString("Address"));
+                account.setRoleId(rs.getInt("RoleID"));
+                account.setImgAccount(rs.getString("ImgAccount"));
+                return account;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -60,7 +60,7 @@
                             <div class="social-login">
                                 <span class="social-label">Đăng nhập với</span>
                                 <ul class="socials">
-                                    <li><a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=652190424847-po8btulm9gsk84b8o7hfmsdjs597p866.apps.googleusercontent.com&redirect_uri=http://localhost:9999/SWP391/login&response_type=code&scope=profile%20email&access_type=online"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                                    <li><a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=652190424847-po8btulm9gsk84b8o7hfmsdjs597p866.apps.googleusercontent.com&redirect_uri=http://localhost:9999/SWP391/LoginGoogleHandler&response_type=code&scope=profile%20email&access_type=online"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                                 </ul>
                             </div>
                         </div>
