@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Login
-    Created on : May 28, 2024, 7:37:32 PM
-    Author     : Asus
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,6 +32,11 @@
 
                         <div class="signin-form">
                             <h2 class="form-title">Đăng nhập</h2>
+
+                            <c:if test="${param.success == 'true'}">
+                                <div class="success-message" style="color: green;">Tạo tài khoản thành công! Bạn có thể đăng nhập bây giờ.</div>
+                            </c:if>
+
                             <form method="POST" class="register-form" id="login-form">
                                 <c:if test="${not empty errorMessage}">
                                     <div class="error-message" style="color: red;">${errorMessage}</div>

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controllers;
 
 import DAL.AccountDAO;
@@ -11,7 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -31,18 +26,7 @@ public class RegisterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RegisterServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RegisterServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -89,48 +73,53 @@ public class RegisterServlet extends HttpServlet {
                 || address == null || address.isEmpty()) {
 
             request.setAttribute("notification", "All fields are required. Please fill in all fields.");
+            setFormData(request, fullName, userName, email, phoneNumber, address);
             processRequest(request, response);
             return;
         }
 
-
-   
         if (accountDAO.checkUserNameExists(userName)) {
             request.setAttribute("notification", "Tài khoản đã tồn tại. Làm ơn nhập tài khoản khác.");
-            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            setFormData(request, fullName, userName, email, phoneNumber, address);
+            processRequest(request, response);
             return;
         }
 
         if (accountDAO.checkEmailExists(email)) {
             request.setAttribute("notification", "Email đã tồn tại. Làm ơn nhập email khác.");
-            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            setFormData(request, fullName, userName, email, phoneNumber, address);
+            processRequest(request, response);
             return;
         }
 
         if (!password.equals(rePassword)) {
             request.setAttribute("notification", "Mật khẩu không đúng. Làm ơn thử lại.");
-            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            setFormData(request, fullName, userName, email, phoneNumber, address);
+            processRequest(request, response);
             return;
         }
 
         boolean userCreated = accountDAO.createUser(fullName, userName, password, email, phoneNumber, address);
 
         if (userCreated) {
-            request.setAttribute("notification", "Đăng ký thành công");
-            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            response.sendRedirect("login?success=true");
         } else {
             request.setAttribute("notification", "Lỗi tạo tài khoản. Làm ơn thử lại.");
-            request.getRequestDispatcher("Views/Register.jsp").forward(request, response);
+            setFormData(request, fullName, userName, email, phoneNumber, address);
+            processRequest(request, response);
         }
-
     }
 
-
-
+    private void setFormData(HttpServletRequest request, String fullName, String userName, String email, String phoneNumber, String address) {
+        request.setAttribute("name", fullName);
+        request.setAttribute("username", userName);
+        request.setAttribute("email", email);
+        request.setAttribute("phoneNumber", phoneNumber);
+        request.setAttribute("address", address);
+    }
 
     @Override
     public String getServletInfo() {
         return "Short description";
     }
-
 }

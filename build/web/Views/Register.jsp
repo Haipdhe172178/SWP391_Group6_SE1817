@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Register
-    Created on : May 28, 2024, 8:26:03 PM
-    Author     : Hai Pham
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,44 +28,43 @@
                     <div class="signup-content">
                         <div class="signup-form">
                             <h2 class="form-title">Đăng ký</h2>
-                            
+
                             <c:if test="${not empty notification}">
                                 <div class="notification">
-                                    <p style="color: #28A745;;">${notification}</p>
+                                    <p style="color: #28A745;">${notification}</p>
                                 </div>
                             </c:if>
                             <form action="register" method="post" class="register-form" id="register-form">
                                 <div class="form-group">
                                     <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="name" placeholder="Họ Và Tên" required/>
+                                    <input type="text" name="name" placeholder="Họ Và Tên" value="${param.name}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                    <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" placeholder="Email" required/>
+                                    <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" placeholder="Email" value="${param.email}" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email"><i class="zmdi zmdi-account-circle"></i></label>
-                                    <input type="text" name="username"  placeholder="Tên đăng nhập" required/>
+                                    <label for="username"><i class="zmdi zmdi-account-circle"></i></label>
+                                    <input type="text" name="username" pattern="[a-zA-Z0-9]{3,20}" placeholder="Tên đăng nhập" value="${param.username}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                                     <input type="password" name="pass" placeholder="Mật khẩu" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
-
                                 </div>
                                 <div class="form-group">
-                                    <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                    <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
                                     <input type="password" name="re_pass" placeholder="Nhập lại mật khẩu" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email"><i class="zmdi zmdi-phone"></i></label>
-                                    <input type="tel" name="phoneNumber" placeholder="Số điện thoại" pattern="0\d{9}" title="Vui lòng nhập số điện thoại hợp lệ bắt đầu bằng 0 và dài đúng 10 chữ số" required />
+                                    <label for="phoneNumber"><i class="zmdi zmdi-phone"></i></label>
+                                    <input type="tel" name="phoneNumber" placeholder="Số điện thoại" pattern="0\d{9}" title="Vui lòng nhập số điện thoại hợp lệ bắt đầu bằng 0 và dài đúng 10 chữ số" value="${param.phoneNumber}" required />
                                 </div>
                                 <div class="form-group">
-                                    <label for="email"><i class="zmdi zmdi-directions"></i></label>
-                                    <input type="text" name="address" placeholder="Địa chỉ" required/>
+                                    <label for="address"><i class="zmdi zmdi-directions"></i></label>
+                                    <input type="text" name="address" placeholder="Địa chỉ" value="${param.address}" required/>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" name="agree-term" class="agree-term" id="agree-term-checkbox" required/>
+                                    <input type="checkbox" name="agree-term" class="agree-term" id="agree-term-checkbox" ${param.agreeTerm == null ? "" : "checked"} required/>
                                     <label for="agree-term-checkbox" class="label-agree-term">
                                         <span></span> Tôi đồng ý với tất cả <a href="#" class="term-service">Điều khoản dịch vụ</a>
                                     </label>
@@ -95,4 +88,3 @@
         <script src="js/main.js"></script>
     </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
-
