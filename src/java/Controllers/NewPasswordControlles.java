@@ -29,24 +29,18 @@ public class NewPasswordControlles extends HttpServlet {
         String newPassword = request.getParameter("password");
         String confPassword = request.getParameter("confPassword");
 
-        // Check if the passwords match
         if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
-            // Get the user's email from the session
             String email = (String) session.getAttribute("email");
 
             if (email != null) {
-                // Create an Account object with the new password and email
                 Account account = new Account();
                 account.setPassWord(newPassword);
                 account.setEmail(email);
 
-                // Update the password in the database
                 AccountDAO accountDAO = new AccountDAO();
                 boolean passwordUpdated = accountDAO.updatePassword(account);
 
-                // Redirect based on password update result
                 if (passwordUpdated) {
-                    // Redirect to login page on success
                     response.sendRedirect(request.getContextPath() + "/login");
                 } else {
                     request.setAttribute("status", "resetFailed");
@@ -54,13 +48,11 @@ public class NewPasswordControlles extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
             } else {
-                // Handle the case where the email is not found in the session
                 request.setAttribute("status", "emailNotFound");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Views/newPassword.jsp");
                 dispatcher.forward(request, response);
             }
         } else {
-            // Handle the case where the passwords do not match
             request.setAttribute("status", "passwordMismatch");
             RequestDispatcher dispatcher = request.getRequestDispatcher("Views/newPassword.jsp");
             dispatcher.forward(request, response);
