@@ -165,6 +165,19 @@ public class AccountDAO extends DBContext {
             return false;
         }
     }
+     public boolean updatePassword(Account account) {
+        String sql = "UPDATE Account SET Password = ? WHERE Email = ?";
+        try {
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1, account.getPassWord());
+            pst.setString(2, account.getEmail());
+            int rowCount = pst.executeUpdate();
+            return rowCount > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
         //Test function        

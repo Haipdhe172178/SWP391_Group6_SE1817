@@ -1,3 +1,8 @@
+<%-- 
+    Document   : Login
+    Created on : May 28, 2024, 7:37:32 PM
+    Author     : Asus
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,11 +37,6 @@
 
                         <div class="signin-form">
                             <h2 class="form-title">Đăng nhập</h2>
-
-                            <c:if test="${param.success == 'true'}">
-                                <div class="success-message" style="color: green;">Tạo tài khoản thành công! Bạn có thể đăng nhập bây giờ.</div>
-                            </c:if>
-
                             <form method="POST" class="register-form" id="login-form">
                                 <c:if test="${not empty errorMessage}">
                                     <div class="error-message" style="color: red;">${errorMessage}</div>
@@ -53,6 +53,8 @@
                                     <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                     <label for="remember-me" class="label-agree-term"><span><span></span></span>Ghi nhớ đăng nhập</label>
                                 </div>
+                                    <a href="forgotPassword" style="color: black">Bạn quên mật khẩu?</a>
+
                                 <div class="form-group form-button">
                                     <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng nhập"/>
                                 </div>
@@ -60,7 +62,7 @@
                             <div class="social-login">
                                 <span class="social-label">Đăng nhập với</span>
                                 <ul class="socials">
-                                    <li><a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=652190424847-po8btulm9gsk84b8o7hfmsdjs597p866.apps.googleusercontent.com&redirect_uri=http://localhost:9999/SWP391/LoginGoogleHandler&response_type=code&scope=profile%20email&access_type=online"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                                    <li><a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=652190424847-po8btulm9gsk84b8o7hfmsdjs597p866.apps.googleusercontent.com&redirect_uri=http://localhost:9999/SWP391/login&response_type=code&scope=profile%20email&access_type=online"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -68,5 +70,6 @@
                 </div>
             </section>
         </div>
+        
     </body>
 </html>
