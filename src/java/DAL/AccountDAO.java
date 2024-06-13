@@ -74,7 +74,7 @@ public class AccountDAO extends DBContext {
     }
 
     public boolean createUser(String fullName, String username, String password, String email, String phoneNumber, String address) {
-        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address, RoleID) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, fullName);
@@ -83,6 +83,7 @@ public class AccountDAO extends DBContext {
             st.setString(4, email);
             st.setString(5, phoneNumber);
             st.setString(6, address);
+            st.setInt(7, 3); // Set RoleID to 3 by default
             int rowsInserted = st.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -152,7 +153,8 @@ public class AccountDAO extends DBContext {
             return false;
         }
     }
-     public boolean changePassword(Account a) {
+
+    public boolean changePassword(Account a) {
         String sql = "UPDATE Account SET Password = ? WHERE userName = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -165,7 +167,8 @@ public class AccountDAO extends DBContext {
             return false;
         }
     }
-     public boolean updatePassword(Account account) {
+
+    public boolean updatePassword(Account account) {
         String sql = "UPDATE Account SET Password = ? WHERE Email = ?";
         try {
             PreparedStatement pst = connection.prepareStatement(sql);
@@ -182,7 +185,8 @@ public class AccountDAO extends DBContext {
     public static void main(String[] args) {
         //Test function        
     }
-     public Account getAccountByEmail(String email) {
+
+    public Account getAccountByEmail(String email) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Email = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);

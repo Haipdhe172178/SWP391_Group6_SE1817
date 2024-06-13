@@ -41,6 +41,9 @@
                                 <c:if test="${not empty errorMessage}">
                                     <div class="error-message" style="color: red;">${errorMessage}</div>
                                 </c:if>
+                                <c:if test="${param.success eq 'true'}">
+                                    <div class="success-message" style="color: green;">Đăng ký thành công! Vui lòng đăng nhập.</div>
+                                </c:if>
                                 <div class="form-group">
                                     <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                     <input type="text" name="your_name" id="your_name" placeholder="Tài khoản"/>
