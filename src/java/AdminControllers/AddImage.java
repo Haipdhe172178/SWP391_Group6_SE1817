@@ -5,7 +5,7 @@
 
 package AdminControllers;
 
-import DAL.HomeDAO;
+//import DAL.HomeDAO;
 import Models.ImageBackground;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,7 +94,7 @@ public class AddImage extends HttpServlet {
             }
 
             // Thêm sản phẩm vào cơ sở dữ liệu
-            HomeDAO dal = new HomeDAO();
+//            HomeDAO dal = new HomeDAO();
             
             if (Names.isBlank()) {
                
@@ -107,7 +107,7 @@ public class AddImage extends HttpServlet {
                    
                     ims.setUrl(imgProduct);
                     ims.setStatus(status);
-                   dal.addImage(ims);
+//                   dal.addImage(ims);
                 }
            
                response.sendRedirect("image");

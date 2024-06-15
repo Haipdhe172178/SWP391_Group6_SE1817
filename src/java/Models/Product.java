@@ -9,32 +9,41 @@ package Models;
  * @author huyca
  */
 public class Product {
+
     private int productId;
     private String name;
     private float price;
     private int quantity;
     private String description;
-    private int categoryId;
-    private int authorId;
+    private Category category;
+    private Author author;
     private String imgProduct;
-    private int ageId;
+    private ObjectAge oage;
+    private int status;
 
     public Product() {
     }
 
-    public Product(int productId, String name, float price, int quantity, String description, int categoryId, int authorId, String imgProduct, int ageId) {
+    public Product(int productId, String name, float price, int quantity, String description, Category category, Author author, String imgProduct, ObjectAge oage, int status) {
         this.productId = productId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
-        this.categoryId = categoryId;
-        this.authorId = authorId;
+        this.category = category;
+        this.author = author;
         this.imgProduct = imgProduct;
-        this.ageId = ageId;
+        this.oage = oage;
+        this.status = status;
     }
 
-    
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getProductId() {
         return productId;
@@ -76,20 +85,20 @@ public class Product {
         this.description = description;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorID(int authorID) {
-        this.authorId = authorID;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getImgProduct() {
@@ -100,19 +109,12 @@ public class Product {
         this.imgProduct = imgProduct;
     }
 
-    public int getAgeId() {
-        return ageId;
+    public ObjectAge getOage() {
+        return oage;
     }
 
-    public void setAgeId(int ageId) {
-        this.ageId = ageId;
+    public void setOage(ObjectAge oage) {
+        this.oage = oage;
     }
-
-    @Override
-    public String toString() {
-        return "Product{" + "productId=" + productId + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", description=" + description + ", categoryId=" + categoryId + ", authorId=" + authorId + ", imgProduct=" + imgProduct + ", ageId=" + ageId + '}';
-    }
-
-    
     
 }

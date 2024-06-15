@@ -94,16 +94,70 @@ public class AddControllers extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         try {
             String productName = request.getParameter("name");
-            float productPrice = Float.parseFloat(request.getParameter("price"));
-            int productQuantity = Integer.parseInt(request.getParameter("quantity"));
+            String priceString = request.getParameter("price");
+            String quantityString = request.getParameter("quantity");
             String description = request.getParameter("description");
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            int authorId = Integer.parseInt(request.getParameter("author"));
-            int ageId = Integer.parseInt(request.getParameter("ageId"));
+            String categoryIdString = request.getParameter("categoryId");
+            String authorIdString = request.getParameter("author");
+            String ageIdString = request.getParameter("ageId");
 
-            // Xử lý ảnh
+            boolean hasError = false;
+
+            if (productName == null || productName.isBlank()) {
+                session.setAttribute("errorName", "Name cannot be empty or blank");
+                hasError = true;
+            }
+            if (description == null || description.isBlank()) {
+                session.setAttribute("errorDescription", "Description cannot be empty or blank");
+                hasError = true;
+            }
+
+            float productPrice = 0;
+
+            productPrice = Float.parseFloat(priceString);
+            if (productPrice <= 0) {
+                session.setAttribute("errorPrice", "Price must be greater than zero");
+                hasError = true;
+            }
+
+            int productQuantity = 0;
+
+            productQuantity = Integer.parseInt(quantityString);
+            if (productQuantity <= 0) {
+                session.setAttribute("errorQuantity", "Quantity must be greater than zero");
+                hasError = true;
+            }
+
+            int categoryId = 0;
+            int authorId = 0;
+            int ageId = 0;
+            try {
+                categoryId = Integer.parseInt(categoryIdString);
+                authorId = Integer.parseInt(authorIdString);
+                ageId = Integer.parseInt(ageIdString);
+            } catch (NumberFormatException e) {
+                hasError = true;
+            }
+
+            session.setAttribute("name", productName);
+            session.setAttribute("price", priceString);
+            session.setAttribute("quantity", quantityString);
+            session.setAttribute("description", description);
+            session.setAttribute("categoryId", categoryIdString);
+            session.setAttribute("author", authorIdString);
+            session.setAttribute("ageId", ageIdString);
+
+            if (hasError) {
+                session.setAttribute("errorImage", "Please re-upload the image");
+                session.setAttribute("notification", "error");
+                response.sendRedirect(request.getContextPath() + "/add");
+                return;
+            }
+
             Part part = request.getPart("imgProduct");
             String imgProduct = null;
             if (part != null && part.getSize() > 0) {
@@ -118,39 +172,53 @@ public class AddControllers extends HttpServlet {
                 imgProduct = request.getContextPath() + "/img/" + fileName;
             }
 
-            // Thêm sản phẩm vào cơ sở dữ liệu
             ProductDao productDao = new ProductDao();
-            HttpSession session = request.getSession();
             if (productName != null) {
                 Product existingProduct = productDao.getProductByName(productName);
                 if (existingProduct != null) {
-                    session.setAttribute("notification", "Sản phẩm đã tồn tại");
+                    session.setAttribute("notification", "error");
+                    session.setAttribute("errorMessage", "Product already exists");
                 } else {
                     Product product = new Product();
                     product.setName(productName);
                     product.setPrice(productPrice);
                     product.setQuantity(productQuantity);
                     product.setDescription(description);
-                    product.setCategoryId(categoryId);
-                    product.setAuthorID(authorId);
                     product.setImgProduct(imgProduct);
-                    product.setAgeId(ageId);
-                    if (productName.isBlank() || description.isBlank()) {
-                        session.setAttribute("notification", "Khong thanh cong");
-                        
-                    }else{
+                    Category category = new Category();
+                    category.setCategoryId(categoryId);
+                    product.setCategory(category);
+                    Author author = new Author();
+                    author.setAuthorID(authorId);
+                    product.setAuthor(author);
+                    ObjectAge objectAge = new ObjectAge();
+                    objectAge.setAgeId(ageId);
+                    product.setOage(objectAge);
+
                     productDao.addProduct(product);
-                    session.setAttribute("notification", "Thêm thành công");
-                        
-                    }
+                    session.setAttribute("notification", "success");
+
+                    session.removeAttribute("name");
+                    session.removeAttribute("price");
+                    session.removeAttribute("quantity");
+                    session.removeAttribute("description");
+                    session.removeAttribute("categoryId");
+                    session.removeAttribute("author");
+                    session.removeAttribute("ageId");
+                    session.removeAttribute("errorName");
+                    session.removeAttribute("errorPrice");
+                    session.removeAttribute("errorQuantity");
+                    session.removeAttribute("errorDescription");
+                    session.removeAttribute("errorImage");
+                    session.removeAttribute("errorMessage");
                 }
             }
-            response.sendRedirect(request.getContextPath() + "/data");
+            response.sendRedirect(request.getContextPath() + "/add");
 
         } catch (NumberFormatException | IOException | ServletException ex) {
             ex.printStackTrace();
-            }
         }
+    }
 
     /**
      * Returns a short description of the servlet.

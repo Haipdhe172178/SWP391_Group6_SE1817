@@ -72,6 +72,7 @@ public class ShopControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Get page index
         String indexPage = request.getParameter("index");
         int index;
         if (indexPage != null) {
@@ -80,9 +81,9 @@ public class ShopControllers extends HttpServlet {
             index = 1;
         }
 
+        // Sorting
         HttpSession session = request.getSession();
         String sortBy = request.getParameter("sortBy");
-
         if (sortBy == null) {
             sortBy = (String) session.getAttribute("sortBy");
             if (sortBy == null) {
@@ -100,41 +101,111 @@ public class ShopControllers extends HttpServlet {
         List<Author> authors = authorDao.getallAuthors();
         List<Category> categories = categoryDao.getallCategorys();
         List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
-
-        List<Product> list;
-        int count;
-        int endPage;
-
-        switch (sortBy) {
-            case "name_asc":
-                list = productDao.pagingProductsSortedByName(index, true);
-                break;
-            case "name_desc":
-                list = productDao.pagingProductsSortedByName(index, false);
-                break;
-            case "price_asc":
-                list = productDao.pagingProductsSortedByPrice(index, true);
-                break;
-            case "price_desc":
-                list = productDao.pagingProductsSortedByPrice(index, false);
-                break;
-            default:
-                list = productDao.pagingProducts(index);
-                break;
+        
+        String[] categoryIdStrArray = request.getParameterValues("categoryId");
+        List<Integer> selectedCategoryIds = new ArrayList<>();
+        if (categoryIdStrArray != null) {
+            for (String categoryIdStr : categoryIdStrArray) {
+                if (categoryIdStr != null && !categoryIdStr.isEmpty()) {
+                    int categoryId = Integer.parseInt(categoryIdStr);
+                    selectedCategoryIds.add(categoryId);
+                }
+            }
         }
 
-        count = productDao.getTotalProduct();
+        String ageIdStr = request.getParameter("objage");
+        int ageId = 0;
+        if (ageIdStr != null && !ageIdStr.isEmpty()) {
+            ageId = Integer.parseInt(ageIdStr);
+        }
 
-        endPage = count / 8;
+        String priceFilter = request.getParameter("price_filter");
+        float minPrice = 0;
+        float maxPrice = 0;
+        if (priceFilter != null) {
+            switch (priceFilter) {
+                case "lessthan10":
+                    maxPrice = 100000;
+                    break;
+                case "10to20":
+                    minPrice = 100000;
+                    maxPrice = 200000;
+                    break;
+                case "20to30":
+                    minPrice = 200000;
+                    maxPrice = 300000;
+                    break;
+                case "30to40":
+                    minPrice = 300000;
+                    maxPrice = 400000;
+                    break;
+                case "morethan50":
+                    minPrice = 500000;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        String searchKeyword = request.getParameter("s");
+
+        // Get products based on sorting and filtering
+        List<Product> list = new ArrayList<>();
+        int count = 0;
+
+        if (!selectedCategoryIds.isEmpty() || ageId != 0 || minPrice > 0 || maxPrice > 0) {
+            list = productDao.paginProductByFilter(index, selectedCategoryIds, ageId, minPrice, maxPrice);
+            count = productDao.countProductsByFilter(selectedCategoryIds, ageId, minPrice, maxPrice);
+        } else if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+            list = productDao.pagingProductsByKeyword(index, searchKeyword);
+            count = productDao.getTotalProductsByKeyword(searchKeyword);
+        } else {
+            switch (sortBy) {
+                case "name_asc":
+                    list = productDao.pagingProductsSortedByName(index, true);
+                    break;
+                case "name_desc":
+                    list = productDao.pagingProductsSortedByName(index, false);
+                    break;
+                case "price_asc":
+                    list = productDao.pagingProductsSortedByPrice(index, true);
+                    break;
+                case "price_desc":
+                    list = productDao.pagingProductsSortedByPrice(index, false);
+                    break;
+                default:
+                    list = productDao.pagingProducts(index);
+                    break;
+            }
+            count = productDao.getTotalProduct();
+        }
+
+        int endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;
         }
 
+        // Build query for pagination links
         StringBuilder query = new StringBuilder();
+        if (!selectedCategoryIds.isEmpty()) {
+            for (int categoryId : selectedCategoryIds) {
+                query.append("&categoryId=").append(categoryId);
+            }
+        }
+        if (ageId != 0) {
+            query.append("&objage=").append(ageId);
+        }
+        if (priceFilter != null) {
+            query.append("&price_filter=").append(priceFilter);
+        }
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            query.append("&s=").append(searchKeyword);
+        }
         if (!sortBy.equals("default")) {
             query.append("&sortBy=").append(sortBy);
         }
 
+        // Additional data for the page
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         AccountDAO accDAO = new AccountDAO();
@@ -144,6 +215,9 @@ public class ShopControllers extends HttpServlet {
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
+        request.setAttribute("selectedCategoryIds", selectedCategoryIds);
+        request.setAttribute("selectedAgeId", ageId);
+        request.setAttribute("selectedPriceFilter", priceFilter);
         request.setAttribute("query", query);
         request.setAttribute("author", authors);
         request.setAttribute("category", categories);

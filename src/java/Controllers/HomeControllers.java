@@ -7,7 +7,7 @@ package Controllers;
 import DAL.AccountDAO;
 import DAL.CategoryDao;
 import DAL.FeedbackDAO;
-import DAL.HomeDAO;
+//import DAL.HomeDAO;
 import DAL.NewsDao;
 import Models.Account;
 import Models.Category;
@@ -78,13 +78,13 @@ public class HomeControllers extends HttpServlet {
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
-        HomeDAO dal = new HomeDAO();
-        dataVanHoc = dal.get3addnew(2);
-         dataNuocNgoai = dal.get3addnew(3);
-          dataChuyenThong = dal.get3addnew(4);
-           dataKhoaHoc= dal.get3addnew(5);
-        imageBackground = dal.getImageBackground();
-        Sellmany = dal.get6sellmany();
+//        HomeDAO dal = new HomeDAO();
+//        dataVanHoc = dal.get3addnew(2);
+//         dataNuocNgoai = dal.get3addnew(3);
+//          dataChuyenThong = dal.get3addnew(4);
+//           dataKhoaHoc= dal.get3addnew(5);
+//        imageBackground = dal.getImageBackground();
+//        Sellmany = dal.get6sellmany();
 
         //Them list, news, feedback cho homepage
         NewsDao nd = new NewsDao();

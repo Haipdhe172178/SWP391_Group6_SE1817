@@ -77,10 +77,6 @@
         <servlet-class>Controllers.ChangePasswordController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FilterControllers</servlet-name>
-        <servlet-class>Controllers.FilterControllers</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UpdateController</servlet-name>
         <servlet-class>AdminControllers.UpdateController</servlet-class>
     </servlet>
@@ -179,10 +175,6 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordController</servlet-name>
         <url-pattern>/changepassword</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FilterControllers</servlet-name>
-        <url-pattern>/filter</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateController</servlet-name>

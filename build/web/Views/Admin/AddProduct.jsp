@@ -15,7 +15,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
 
-
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
 
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
@@ -32,6 +35,17 @@
         <link rel="stylesheet" href="css/metisMenu.css">
 
         <link rel="stylesheet" href="css/style1.css" />
+        <style>
+            .alert {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1000;
+                max-width: 500px;
+                width: 100%;
+            }
+        </style>
+
     </head>
 
     <body class="crm_body_bg">
@@ -232,7 +246,7 @@
                 </div>
             </div>
 
-            <div class="main_content_iner ">
+            <div class="main_content_iner">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
@@ -240,7 +254,21 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Data table</h3>
+                                            <h3 class="m-0">Thêm sản phẩm</h3>
+                                            <c:choose>
+                                                <c:when test="${sessionScope.notification == 'success'}">
+                                                    <div class="alert alert-success alert-dismissible">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                                        <strong>Thêm thành công</strong> Thêm thành công. Redirecting...
+                                                    </div>
+                                                </c:when>
+                                                <c:when test="${sessionScope.notification == 'error'}">
+                                                    <div class="alert alert-danger alert-dismissible">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                                        <strong>Thêm không thành công</strong> ${sessionScope.errorMessage}
+                                                    </div>
+                                                </c:when>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
@@ -248,46 +276,60 @@
                                     <form action="add" method="POST" enctype="multipart/form-data">
                                         <div class="mb-3">
                                             <label for="productName">Tên</label>
-                                            <input type="text" class="form-control" id="productName" name="name" required>
+                                            <input type="text" class="form-control" id="productName" name="name" value="${sessionScope.name}" required>
+                                            <c:if test="${not empty sessionScope.errorName}">
+                                                <small class="text-danger">${sessionScope.errorName}</small>
+                                            </c:if>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productPrice">Giá</label>
-                                            <input type="number" min="1" class="form-control" id="productPrice" name="price" required >
+                                            <input type="number" class="form-control" id="productPrice" name="price" value="${sessionScope.price}" required>
+                                            <c:if test="${not empty sessionScope.errorPrice}">
+                                                <small class="text-danger">${sessionScope.errorPrice}</small>
+                                            </c:if>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productQuantity">Số lượng</label>
-                                            <input type="number" min="1" class="form-control" id="productQuantity" name="quantity" required>
+                                            <input type="number" class="form-control" id="productQuantity" name="quantity" value="${sessionScope.quantity}" required>
+                                            <c:if test="${not empty sessionScope.errorQuantity}">
+                                                <small class="text-danger">${sessionScope.errorQuantity}</small>
+                                            </c:if>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productName">Mô tả</label>
-                                            <input type="text" class="form-control" id="productdescription" name="description"  required>
+                                            <label for="productdescription">Mô tả</label>
+                                            <input type="text" class="form-control" id="productdescription" name="description" value="${sessionScope.description}" required>
+                                            <c:if test="${not empty sessionScope.errorDescription}">
+                                                <small class="text-danger">${sessionScope.errorDescription}</small>
+                                            </c:if>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productCategory" class="form-label">Category</label>
                                             <select class="form-select" id="productCategory" name="categoryId" required>
                                                 <c:forEach items="${category}" var="c">
-                                                    <option value="${c.categoryId}">${c.categoryName}</option>
+                                                    <option value="${c.categoryId}" <c:if test="${c.categoryId == sessionScope.categoryId}">selected</c:if>>${c.categoryName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productAge" class="form-label">Tác giả</label>
-                                            <select class="form-select" id="productAge" name="author" required>
+                                            <label for="productAuthor" class="form-label">Tác giả</label>
+                                            <select class="form-select" id="productAuthor" name="author" required>
                                                 <c:forEach items="${author}" var="au">
-                                                    <option value="${au.authorID}">${au.authorName}</option>
+                                                    <option value="${au.authorID}" <c:if test="${au.authorID == sessionScope.author}">selected</c:if>>${au.authorName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
-
                                         <div class="mb-3">
                                             <label for="productImage" class="form-label">Ảnh</label>
                                             <input type="file" class="form-control" id="productImage" name="imgProduct" required>
+                                            <c:if test="${not empty sessionScope.errorImage}">
+                                                <small class="text-danger">${sessionScope.errorImage}</small>
+                                            </c:if>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productAge" class="form-label">Age</label>
                                             <select class="form-select" id="productAge" name="ageId" required>
                                                 <c:forEach items="${obage}" var="o">
-                                                    <option value="${o.ageId}">${o.age}</option>
+                                                    <option value="${o.ageId}" <c:if test="${o.ageId == sessionScope.ageId}">selected</c:if>>${o.age}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -296,13 +338,13 @@
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+
             <div class="footer_part">
                 <div class="container">
                     <div class="row">
@@ -449,8 +491,15 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
+        <c:if test="${sessionScope.notification == 'success'}">
+            <script type="text/javascript">
+                setTimeout(function () {
+                    window.location.href = "${pageContext.request.contextPath}/data";
+                }, 3000);
+            </script>
+        </c:if>
 
-        
+
     </body>
 
 </html>

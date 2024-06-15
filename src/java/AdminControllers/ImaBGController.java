@@ -6,7 +6,7 @@ package AdminControllers;
  */
 
 
-import DAL.HomeDAO;
+//import DAL.HomeDAO;
 import DAL.ProductDao;
 import Models.ImageBackground;
 import Models.Product;
@@ -64,9 +64,9 @@ public class ImaBGController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
       
-        HomeDAO dal = new HomeDAO();
+//        HomeDAO dal = new HomeDAO();
         ArrayList<ImageBackground> data = new  ArrayList<>();
-        data = dal.getImageBackgroundlist();
+//        data = dal.getImageBackgroundlist();
         request.setAttribute("data", data);
         request.getRequestDispatcher("Views/Admin/ImageBackground.jsp").forward(request, response);
     } 
@@ -102,7 +102,7 @@ public class ImaBGController extends HttpServlet {
             }
 
             // Thêm sản phẩm vào cơ sở dữ liệu
-            HomeDAO dal = new HomeDAO();
+//            HomeDAO dal = new HomeDAO();
             
             if (Names.isBlank()) {
                
@@ -115,7 +115,7 @@ public class ImaBGController extends HttpServlet {
                    
                     ims.setUrl(imgProduct);
                     ims.setStatus(status);
-                   dal.addImage(ims);
+//                   dal.addImage(ims);
                 }
            response.sendRedirect("image");
         } catch (NumberFormatException | IOException | ServletException ex) {

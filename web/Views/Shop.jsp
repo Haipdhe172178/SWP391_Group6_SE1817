@@ -231,13 +231,13 @@
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                             <li class="nav-item">
-                               <a class="nav-link me-4" href="home">Trang chủ</a>
+                                <a class="nav-link me-4" href="home">Trang chủ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="about">Giới thiệu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="shop">Sản phẩm</a>
+                                <a class="nav-link active me-4" href="shop">Sản phẩm</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="blog">Tin tức</a>
@@ -249,7 +249,7 @@
                                         <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="shop" class="dropdown-item fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
+                                        <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
                                     </li>
 
                                     <li>
@@ -263,12 +263,12 @@
                                     </li>
 
                                     <li>
-                                        <a href="contact" class="dropdown-item active fw-light">Liên hệ <span class="badge bg-primary"></span></a>
+                                        <a href="contact" class="dropdown-item fw-light">Liên hệ <span class="badge bg-primary"></span></a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active me-4" href="contact">Liên hệ</a>
+                                <a class="nav-link  me-4" href="contact">Liên hệ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank"></a>
@@ -433,13 +433,11 @@
                                             <a href="single?productID=${pro.productId}">${pro.name}</a>
                                         </h6>
                                         <div class="review-content d-flex">
-                                            <c:forEach items="${author}" var="au">
-                                                <c:if test="${au.authorID eq pro.authorId}">
-                                                    <p class="my-2 me-2 fs-6 text-black-50">
-                                                        ${au.authorName}
-                                                    </p>
-                                                </c:if>
-                                            </c:forEach>  
+
+                                            <p class="my-2 me-2 fs-6 text-black-50">
+                                                ${pro.author.authorName}
+                                            </p>
+
                                             <div class="rating text-warning d-flex align-items-center">
                                                 <svg class="star star-fill">
                                                 <use xlink:href="#star-fill"></use>
@@ -533,7 +531,7 @@
                     <div class="sidebar ps-lg-5">
                         <div class="widget-menu">
                             <div class="widget-search-bar">
-                                <form class="d-flex border rounded-3 p-2" role="search" method="GET" action="filter">
+                                <form class="d-flex border rounded-3 p-2" role="search" method="GET" action="shop">
                                     <input class="form-control border-0 me-2 py-2" type="search" name="s" placeholder="Search" aria-label="Search">
                                     <button class="btn rounded-3 p-3 d-flex align-items-center" type="submit">
                                         <svg class="search text-light" width="18" height="18">
@@ -545,7 +543,7 @@
                         </div>
                         <div class="filter-box">
                             <h2>Lọc sản phẩm</h2>
-                            <form action="filter" method="get">
+                            <form action="shop" method="get">
                                 <div class="widget-product-categories pt-5">
                                     <div class="section-title overflow-hidden mb-2 collapsible">
                                         <h3 class="d-flex flex-column mb-0">Thể loại</h3>
@@ -555,7 +553,8 @@
                                             <c:forEach items="${category}" var="c">
                                                 <li class="cat-item">
                                                     <label>
-                                                        <input type="checkbox" name="categoryId" value="${c.categoryId}"> ${c.categoryName}
+                                                        <input type="checkbox" name="categoryId" value="${c.categoryId}" 
+                                                               ${selectedCategoryIds.contains(c.categoryId) ? "checked" : ""}> ${c.categoryName}
                                                     </label>
                                                 </li>
                                             </c:forEach>
@@ -572,7 +571,8 @@
                                             <c:forEach items="${objage}" var="ob">
                                                 <li class="cat-item">
                                                     <label>
-                                                        <input type="checkbox" name="objage" value="${ob.ageId}" onclick="limitCheckboxSelection(this)"> ${ob.age}
+                                                        <input type="checkbox" name="objage" value="${ob.ageId}" 
+                                                               ${selectedAgeId == ob.ageId ? "checked" : ""} onclick="limitCheckboxSelection(this)"> ${ob.age}
                                                     </label>
                                                 </li>
                                             </c:forEach>
@@ -588,27 +588,32 @@
                                         <ul class="product-tags mb-0 sidebar-list list-unstyled">
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="lessthan10" onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
+                                                    <input type="checkbox" name="price_filter" value="lessthan10" 
+                                                           ${"lessthan10".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="10to20" onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
+                                                    <input type="checkbox" name="price_filter" value="10to20" 
+                                                           ${"10to20".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="20to30" onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
+                                                    <input type="checkbox" name="price_filter" value="20to30" 
+                                                           ${"20to30".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="30to40" onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
+                                                    <input type="checkbox" name="price_filter" value="30to40" 
+                                                           ${"30to40".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
                                                 </label>
                                             </li>
                                             <li class="tags-item">
                                                 <label>
-                                                    <input type="checkbox" name="price_filter" value="morethan50" onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
+                                                    <input type="checkbox" name="price_filter" value="morethan50" 
+                                                           ${"morethan50".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
                                                 </label>
                                             </li>
                                         </ul>
@@ -835,7 +840,7 @@
                             <div class="footer-menu text-capitalize">
                                 <h5 class="widget-title pb-2">Trang chính</h5>
                                 <ul class="menu-list list-unstyled text-capitalize">
-                                   <li class="menu-item mb-1">
+                                    <li class="menu-item mb-1">
                                         <a href="home">Trang chủ</a>
                                     </li>
                                     <li class="menu-item mb-1">

@@ -4,6 +4,9 @@
  */
 package DAL;
 
+import Models.Author;
+import Models.Category;
+import Models.ObjectAge;
 import Models.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +23,11 @@ public class ProductDao extends DBContext {
     //Ham nay de list du lieu trong database ra
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
-        String query = " Select * From Product";
+        String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription\n"
+                + "FROM Product p\n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                + "INNER JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                + "INNER JOIN Author a ON a.AuthorID = p.AuthorID;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -31,10 +38,23 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
+
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
+
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -45,7 +65,12 @@ public class ProductDao extends DBContext {
 
     //Get a product by productID
     public Product getProductById(int id) {
-        String query = " Select * From Product WHERE ProductID=?";
+        String query = " SELECT p.*, c.CategoryName,oa.Age, a.AuthorName,a.Description\n"
+                + "from Product p\n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                + "WHERE p.ProductID= 1";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
@@ -57,10 +82,21 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
                 return product;
             }
         } catch (Exception ex) {
@@ -74,9 +110,20 @@ public class ProductDao extends DBContext {
         List<Product> products = new ArrayList<>();
         String query;
         if (option.equalsIgnoreCase("fourRandom")) {
-            query = "SELECT TOP 4 * FROM Product WHERE CategoryID = ? Order by NEWID()";
+            query = "SELECT TOP 4 p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description\n"
+                    + "FROM Product p\n"
+                    + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                    + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                    + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                    + "WHERE p.CategoryID = ?\n"
+                    + "order by NEWID()";
         } else {
-            query = "SELECT * FROM Product WHERE CategoryID = ? ";
+            query = "SELECT  p.*, c.CategoryName,oa.Age, a.AuthorName,a.Description \n"
+                    + "FROM Product p\n"
+                    + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                    + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                    + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                    + "WHERE p.CategoryID = ?";
         }
 
         try {
@@ -90,10 +137,21 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -105,7 +163,13 @@ public class ProductDao extends DBContext {
     // phân trang khi tìm kiếm bằng key word
     public List<Product> pagingProductsByKeyword(int index, String keyword) {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE name LIKE ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        String query = "SELECT  p.*, c.CategoryName,oa.Age, a.AuthorName,a.Description \n"
+                + "FROM Product p\n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                + "\n"
+                + "WHERE name LIKE ? ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, "%" + keyword + "%");
@@ -118,10 +182,22 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
+
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -133,7 +209,12 @@ public class ProductDao extends DBContext {
     //Tìm kiếm theo tên
     public List<Product> searchProductsByName(String nameKeyword) {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE Name LIKE ?";
+        String query = "SELECT  p.*, c.CategoryName,oa.Age, a.AuthorName,a.Description  \n"
+                + "FROM Product p\n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                + "WHERE Name LIKE ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, "%" + nameKeyword + "%");
@@ -145,10 +226,22 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
+
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -178,9 +271,15 @@ public class ProductDao extends DBContext {
     public List<Product> pagingProductsSortedByName(int index, boolean ascending) {
         List<Product> products = new ArrayList<>();
         String sortOrder = ascending ? "ASC" : "DESC";
-        String query = "SELECT * FROM Product ORDER BY Name " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
+        String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription \n"
+                + "FROM Product p \n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID \n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID \n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID \n"
+                + "ORDER BY p.Name " + sortOrder + " \n"
+                + "OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, (index - 1) * 8);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -190,10 +289,21 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -206,9 +316,15 @@ public class ProductDao extends DBContext {
     public List<Product> pagingProductsSortedByPrice(int index, boolean ascending) {
         List<Product> products = new ArrayList<>();
         String sortOrder = ascending ? "ASC" : "DESC";
-        String query = "SELECT * FROM Product ORDER BY Price " + sortOrder + " OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
+        String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription \n"
+                + "FROM Product p \n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID \n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID \n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID \n"
+                + "ORDER BY p.Price " + sortOrder + " \n"
+                + "OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, (index - 1) * 8);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -218,10 +334,21 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -247,17 +374,17 @@ public class ProductDao extends DBContext {
 
     //thêm sản phẩm
     public void addProduct(Product product) {
-        String query = "INSERT INTO Product (name, price, quantity, description, categoryId, authorId, imgProduct, ageId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
+        String query = "INSERT INTO Product (name, price, quantity, description, categoryId, authorId, imgProduct, ageId, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, product.getName());
             ps.setFloat(2, product.getPrice());
             ps.setInt(3, product.getQuantity());
             ps.setString(4, product.getDescription());
-            ps.setInt(5, product.getCategoryId());
-            ps.setInt(6, product.getAuthorId());
+            ps.setInt(5, product.getCategory().getCategoryId());
+            ps.setInt(6, product.getAuthor().getAuthorID());
             ps.setString(7, product.getImgProduct());
-            ps.setInt(8, product.getAgeId());
+            ps.setInt(8, product.getOage().getAgeId());
+            ps.setInt(9, product.getStatus());
             ps.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -267,9 +394,17 @@ public class ProductDao extends DBContext {
     //Method hien tai can dung
     public List<Product> paginProductByFilter(int index, List<Integer> categoryIds, int ageId, float minPrice, float maxPrice) {
         List<Product> products = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Product WHERE 1=1");
+        StringBuilder queryBuilder = new StringBuilder(
+                "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription "
+                + "FROM Product p "
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID "
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID "
+                + "JOIN Author a ON a.AuthorID = p.AuthorID "
+                + "WHERE 1=1"
+        );
+
         if (!categoryIds.isEmpty()) {
-            queryBuilder.append(" AND categoryId IN (");
+            queryBuilder.append(" AND p.CategoryID IN (");
             for (int i = 0; i < categoryIds.size(); i++) {
                 queryBuilder.append("?");
                 if (i < categoryIds.size() - 1) {
@@ -279,15 +414,16 @@ public class ProductDao extends DBContext {
             queryBuilder.append(")");
         }
         if (ageId != 0) {
-            queryBuilder.append(" AND AgeID = ?");
+            queryBuilder.append(" AND p.AgeID = ?");
         }
         if (minPrice > 0) {
-            queryBuilder.append(" AND price >= ?");
+            queryBuilder.append(" AND p.Price >= ?");
         }
         if (maxPrice > 0) {
-            queryBuilder.append(" AND price <= ?");
+            queryBuilder.append(" AND p.Price <= ?");
         }
-        queryBuilder.append(" ORDER BY productId OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
+        queryBuilder.append(" ORDER BY p.ProductID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY");
+
         String query = queryBuilder.toString();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -313,10 +449,21 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
                 products.add(product);
             }
         } catch (Exception ex) {
@@ -380,6 +527,7 @@ public class ProductDao extends DBContext {
         }
         return totalCount;
     }
+
     //Đếm số lượng product trong data
     public int getTotalProduct() {
         String query = "Select count (*) from Product";
@@ -398,9 +546,13 @@ public class ProductDao extends DBContext {
     //Lấy prduct theo trang 
     public List<Product> pagingProducts(int index) {
         List<Product> list = new ArrayList<>();
-        String query = "Select * from Product\n"
-                + "  Order by ProductID\n"
-                + "  OFFSET ?  Rows fetch next 8 row only;";
+        String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription "
+                + "FROM Product p "
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID "
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID "
+                + "JOIN Author a ON a.AuthorID = p.AuthorID "
+                + "ORDER BY p.ProductID "
+                + "OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, (index - 1) * 8);
@@ -412,10 +564,21 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
+                product.setStatus(rs.getInt("status"));
                 list.add(product);
             }
         } catch (Exception ex) {
@@ -423,7 +586,7 @@ public class ProductDao extends DBContext {
         }
         return list;
     }
-    
+
     public int getQuantitySoldByProductId(int id) {
         String query = " Select * From QualityofProductsell WHERE ProducID=?";
         try {
@@ -523,9 +686,9 @@ public class ProductDao extends DBContext {
                 int authorID = rs.getInt(7);
                 String imgProduct = rs.getString(8);
                 int age = rs.getInt(9);
-                return new Product(productid, name, price, quantity, description, CategoryID, authorID, imgProduct, age);
-                //   student.setId(rs.getInt("sid"));
 
+//                return new Product(productid, name, price, quantity, description, imgProduct, age, category, author, oage);
+                //   student.setId(rs.getInt("sid"));
             }
         } catch (Exception e) {
             System.out.println("getUpdate" + e.getMessage());
@@ -549,23 +712,28 @@ public class ProductDao extends DBContext {
                     + " WHERE ProductID = ?";
             PreparedStatement stm = connection.prepareStatement(stSQL);
             stm = connection.prepareStatement(stSQL);
-            stm.setString(1, u.getName());
-            stm.setFloat(2, u.getPrice());
-            stm.setInt(3, u.getQuantity());
-            stm.setString(4, u.getDescription());
-            stm.setInt(5, u.getCategoryId());
-            stm.setInt(6, u.getAuthorId());
-            stm.setString(7, u.getImgProduct());
-            stm.setInt(8, u.getAgeId());
-            stm.setInt(9, u.getProductId());
-            int d = stm.executeUpdate();
+//            stm.setString(1, u.getName());
+//            stm.setFloat(2, u.getPrice());
+//            stm.setInt(3, u.getQuantity());
+//            stm.setString(4, u.getDescription());
+//            stm.setInt(5, u.getCategoryId());
+//            stm.setInt(6, u.getAuthorId());
+//            stm.setString(7, u.getImgProduct());
+//            stm.setInt(8, u.getAgeId());
+//            stm.setInt(9, u.getProductId());
+//            int d = stm.executeUpdate();
         } catch (Exception e) {
             System.out.println("updateProduct" + e.getMessage());
         }
     }
 
     public Product getProductByName(String name) {
-        String query = " Select * From Product WHERE name = ?";
+        String query = " Select   p.*, c.CategoryName,oa.Age, a.AuthorName,a.Description \n"
+                + "  FROM Product p\n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                + "  WHERE p.Name= ?;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
@@ -577,10 +745,17 @@ public class ProductDao extends DBContext {
                 product.setPrice(rs.getFloat("price"));
                 product.setQuantity(rs.getInt("quantity"));
                 product.setDescription(rs.getString("description"));
-                product.setCategoryId(rs.getInt("categoryId"));
-                product.setAuthorID(rs.getInt("authorId"));
+                Category c = new Category();
+                c.setCategoryId(rs.getInt(6));
+                c.setCategoryName(rs.getString("categoryName"));
+                ObjectAge oa = new ObjectAge();
+                oa.setAgeId(rs.getInt(9));
+                oa.setAge(rs.getString("age"));
+                Author a = new Author();
+                a.setAuthorID(7);
+                a.setAuthorName(rs.getString("authorName"));
+                a.setDescription(rs.getString("description"));
                 product.setImgProduct(rs.getString("imgProduct"));
-                product.setAgeId(rs.getInt("ageId"));
                 return product;
             }
         } catch (Exception ex) {
@@ -588,5 +763,4 @@ public class ProductDao extends DBContext {
         }
         return null;
     }
-
 }
