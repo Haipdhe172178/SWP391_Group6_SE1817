@@ -32,7 +32,7 @@
                     <div class="signin-content">
                         <div class="signin-image">
                             <figure><img src="images/SB88.png" alt="sing up image"></figure>
-                            <a href="register" class="signup-image-link">Bạn Chưa Có Tài Khoản</a>
+                            Bạn Chưa Có Tài Khoản<a href="register" style="color: #0077b5"> ĐĂNG KÍ</a>
                         </div>
 
                         <div class="signin-form">
@@ -56,7 +56,7 @@
                                     <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                     <label for="remember-me" class="label-agree-term"><span><span></span></span>Ghi nhớ đăng nhập</label>
                                 </div>
-                                    <a href="forgotPassword" style="color: black">Bạn quên mật khẩu?</a>
+                                <a href="forgotPassword" style="color: black">Bạn quên mật khẩu?</a>
 
                                 <div class="form-group form-button">
                                     <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng nhập"/>
@@ -73,6 +73,6 @@
                 </div>
             </section>
         </div>
-        
+
     </body>
 </html>

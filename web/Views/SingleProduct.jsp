@@ -27,6 +27,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/rating.css">
         <style>
             .nav-user-dropdown {
                 position: relative;
@@ -69,6 +70,15 @@
                 display: block;
             }
 
+            .linkLogin {
+                color: #0099cc;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .linkLogin:hover {
+                color: #F86D72; /* Change to desired hover color */
+            }
         </style>
     </head>
 
@@ -78,13 +88,13 @@
                 <div class="row">
                     <div class="breadcrumbs" style="padding-top: 2em">
                         <span class="item"><a href="shop">Cửa hàng / </a></span>
-                        <span class="item"><a href="filter?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName} / </a></span>
+                        <span class="item"><a href="filter?categoryId=${requestScope.product.category.categoryId}">${requestScope.product.category.categoryName} / </a></span>
                     <span class="item"><a href="single?productID=${requestScope.product.productId}">${requestScope.product.name} </a></span>
                 </div>
             </div>
         </div>
 
-        <section class="single-product padding-large" style="padding-top: 1em">
+        <section class="single-product padding-large" style="padding-top: 1em; padding-bottom: 1em">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
@@ -138,20 +148,20 @@
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Tác giả: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
-                                        ${requestScope.author.authorName}
+                                        <a href="shop?categoryId=${requestScope.product.author.authorID}">${requestScope.product.author.authorName}</a>
                                     </ul>
                                 </div>
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Thể loại: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
-                                        <a href="filter?categoryId=${requestScope.category.categoryId}">${requestScope.category.categoryName}</a>
+                                        <a href="shop?categoryId=${requestScope.product.category.categoryId}">${requestScope.product.category.categoryName}</a>
                                     </ul>
                                 </div>
                                 <div class="meta-item d-flex mb-1">
                                     <span class="fw-medium me-2">Đối tượng: </span>
                                     <ul class="select-list list-unstyled d-flex mb-0">
                                         <li data-value="S" class="select-item">
-                                            <a href="filter?objage=${requestScope.objectAge.ageId}">${requestScope.objectAge.age}</a>
+                                            <a href="shop?objage=${requestScope.product.oage.ageId}">${requestScope.product.oage.age}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -189,14 +199,88 @@
             </div>
         </section>
 
+        <!--RELATED PRODUCT-->                           
+        <section id="related-items" class="position-relative padding-large ">
+            <div class="container">
+                <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
+                    <h3 class="d-flex align-items-center">Sách liên quan</h3>
+                    <a href="filter?categoryId=${requestScope.product.category.categoryId}" class="btn">Xem tất cả</a>
+                </div>
+                <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
+                    <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
+                    <use xlink:href="#alt-arrow-right-outline"></use>
+                    </svg>
+                </div>
+                <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev">
+                    <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
+                    <use xlink:href="#alt-arrow-left-outline"></use>
+                    </svg>
+                </div>
+                <div class="swiper product-swiper">
+                    <div class="swiper-wrapper">
+                        <c:forEach var="p" items="${requestScope.relatedProduct}">
+                            <div class="swiper-slide">
+                                <a href="single?productID=${p.productId}">
+                                    <div class="card position-relative p-4 border rounded-3">
+                                        <div class="position-absolute">
+                                            <!-- DISCOUNT -->
+                                            <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2">10% off</p>
+                                        </div>
+                                        <div style="width: 250px;
+                                             height: 300px;
+                                             display: flex;
+                                             align-items: center;
+                                             justify-content: center;
+                                             overflow: hidden;">
+                                            <img src="${p.imgProduct}" class="img-fluid shadow-sm" alt="product item" style="max-width: 100%;
+                                                 max-height: 100%;
+                                                 object-fit: cover;"></div>
+                                        <h6 class="mt-4 mb-0 fw-bold"><a href="single?productID=${p.productId}" style="display: -webkit-box;
+                                                                         -webkit-box-orient: vertical;
+                                                                         -webkit-line-clamp: 2;
+                                                                         overflow: hidden;
+                                                                         text-overflow: ellipsis;
+                                                                         max-width: 100%; /* Adjust this value if needed */
+                                                                         line-height: 1.2em; /* Adjust line height if needed */
+                                                                         height: 2.4em;">${p.name}</a></h6>
+                                        <div class="review-content d-flex">
+                                            <p class="my-2 me-2 fs-6 text-black-50">${requestScope.p.author.authorName}</p>
+
+                                            <div class="rating text-warning d-flex align-items-center">
+                                                <c:forEach begin="1" end="5"> 
+                                                    <svg class="star star-fill" style="stroke: gold">
+                                                    <use xlink:href="#star-empty"></use>
+                                                    </svg>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+
+                                        <span class="price text-primary fw-bold mb-2 fs-5"><fmt:formatNumber value="${p.price}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
+                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                                            <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                                <svg class="cart">
+                                                <use xlink:href="#cart"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--END RELATED PRODUCT-->
+
+        <!--DESCRIPTION-->
         <section class="product-tabs">
             <div class="container">
                 <div class="row">
                     <div class="tabs-listing">
-                        <nav>
+                        <nav>                                
                             <div class="nav nav-tabs d-flex justify-content-center py-3" id="nav-tab" role="tablist">
-                                <button class="nav-link text-capitalize active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Mô tả</button>
-                                <button class="nav-link text-capitalize" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Đánh giá (${requestScope.listFeedback.size()})</button>
+                                <h4>Mô tả sản phẩm</h4>
                             </div>
                         </nav>
                         <div class="tab-content border-bottom py-4" id="nav-tabContent">
@@ -206,8 +290,81 @@
                                 <p>${requestScope.product.description}</p>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--DESCRIPTION-->
+        <section class="product-tabs">
+            <div class="container">
+                <div class="row" style="border-radius: 10px;
+                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds shadow for a subtle 3D effect */
+                     border: 1px solid #ddd; /* Light border for better definition */
+                     padding: 20px; /* Adds padding inside the border */
+                     background-color: #fff;">
+                    <div class="tabs-listing">
+                        <div >
+                        </div>
+                        <div class="row border-bottom">
+
+                            <div class="rating text-warning align-items-start margin-small col-md-6" >
+                                <h4 style="font-weight: bold; color: black">Đánh giá sản phẩm</h4>
+
+                                <h3>${requestScope.avgRating} / 5</h3>
+                                <div class="stars">
+                                    <c:forEach var="rate" begin="1" end="${requestScope.avgRating}">
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                    </c:forEach>
+                                    <c:forEach var="rate" begin="1" end="${5 - requestScope.avgRating}">
+                                        <svg class="star star-empty" style="stroke: gold">
+                                        <use xlink:href="#star-empty"></use>
+                                        </svg>
+                                    </c:forEach>
+                                </div>
+                                <p>(${requestScope.listFeedback.size()} đánh giá)</p>
+                            </div>
+                            <c:choose>
+                                <c:when test="${sessionScope.account eq null}">
+                                    <div class="add-review margin-small col-md-6 text-md-right" style="align-items: center">
+                                        <p>Chỉ có thành viên mới có thể viết nhận xét. Vui lòng 
+                                            <a href="login?productId=${requestScope.product.productId}" class="linkLogin">đăng nhập</a> hoặc 
+                                            <a href="register" class="linkLogin">đăng ký</a>
+                                        </p>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="add-review margin-small col-md-6 text-md-right" style="display: inline-block; text-align: center;">
+                                        <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post">
+                                            <div class="review-rating py-2 align-items-start">
+                                                <div class="rate-box">
+                                                    <input type="radio" name="star" id="star0" value="1"/>
+                                                    <label class="star" for="star0"></label>
+                                                    <input type="radio" name="star" id="star1" value="2"/>
+                                                    <label class="star" for="star1"></label>
+                                                    <input type="radio" name="star" id="star2" value="3" checked="checked"/>
+                                                    <label class="star" for="star2"></label>
+                                                    <input type="radio" name="star" id="star3" value="4"/>
+                                                    <label class="star" for="star3"></label>
+                                                    <input type="radio" name="star" id="star4" value="5"/>
+                                                    <label class="star" for="star4"></label>
+                                                </div>
+                                            </div>
+                                            <div class="w-100 d-flex align-items-start">
+                                                <textarea placeholder="Viết đánh giá của bạn" class="form-control flex-grow-1 mr-2" name="feedbackText"></textarea>
+                                                <button type="submit" name="submit" class="btn btn-primary my-3">Gửi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="tab-content py-4" id="nav-tabContent">
                             <!-- FEEDBACK -->
-                            <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                            <div class="tab-pane fade  active show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                                 <div class="review-box review-style d-flex gap-3 flex-column">
                                     <c:forEach var="feedback" items="${requestScope.listFeedback}">
                                         <div class="review-item d-flex">
@@ -244,51 +401,6 @@
                                         </div>
                                     </c:forEach>
                                 </div>
-                                <div class="add-review margin-small">
-                                    <h3>Đánh giá</h3>
-                                    <p>Bạn cần đăng nhập để có thể đánh giá <a href=""> </a></p>
-                                    <!-- comment
-                                    <div class="review-rating py-2">
-                                        <span class="my-2">Your rating *</span>
-                                        <div class="rating text-secondary">
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <input type="file" class="jfilestyle py-3 border-0" data-text="Choose your file">
-                                    <form id="form" class="d-flex gap-3 flex-wrap">
-                                        <div class="w-100 d-flex gap-3">
-                                            <div class="w-50">
-                                                <input type="text" name="name" placeholder="Write your name here *" class="form-control w-100">
-                                            </div>
-                                            <div class="w-50">
-                                                <input type="text" name="email" placeholder="Write your email here *" class="form-control w-100">
-                                            </div>
-                                        </div>
-                                        <div class="w-100">
-                                            <textarea placeholder="Write your review here *" class="form-control w-100"></textarea>
-                                        </div>
-                                        <label class="w-100">
-                                            <input type="checkbox" required="" class="d-inline">
-                                            <span>Save my name, email, and website in this browser for the next time.</span>
-                                        </label>
-                                        <button type="submit" name="submit" class="btn my-3">Submit</button>
-                                    </form>
-                                    -->
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -296,113 +408,6 @@
             </div>
         </section>
 
-        <section id="related-items" class="position-relative padding-large ">
-            <div class="container">
-                <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                    <h3 class="d-flex align-items-center">Sách liên quan</h3>
-                    <a href="filter?categoryId=${requestScope.category.categoryId}" class="btn">Xem tất cả</a>
-                </div>
-                <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
-                    <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                    <use xlink:href="#alt-arrow-right-outline"></use>
-                    </svg>
-                </div>
-                <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev">
-                    <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                    <use xlink:href="#alt-arrow-left-outline"></use>
-                    </svg>
-                </div>
-                <div class="swiper product-swiper">
-                    <div class="swiper-wrapper">
-                        <c:forEach var="p" items="${requestScope.relatedProduct}">
-                            <div class="swiper-slide">
-                                <a href="single?productID=${p.productId}">
-                                    <div class="card position-relative p-4 border rounded-3">
-                                        <div class="position-absolute">
-                                            <!-- DISCOUNT -->
-                                            <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2">10% off</p>
-                                        </div>
-                                        <img src="${p.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                        <h6 class="mt-4 mb-0 fw-bold"><a href="single?productID=${p.productId}">${p.name}</a></h6>
-                                        <div class="review-content d-flex">
-                                            <p class="my-2 me-2 fs-6 text-black-50">${requestScope.author.authorName}</p>
-
-                                            <div class="rating text-warning d-flex align-items-center">
-                                                <c:forEach begin="1" end="5"> 
-                                                    <svg class="star star-fill" style="stroke: gold">
-                                                    <use xlink:href="#star-empty"></use>
-                                                    </svg>
-                                                </c:forEach>
-                                            </div>
-                                        </div>
-
-                                        <span class="price text-primary fw-bold mb-2 fs-5"><fmt:formatNumber value="${p.price}" type="currency" currencySymbol="₫" groupingUsed="true" /></span>
-                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                            <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                                                <svg class="cart">
-                                                <use xlink:href="#cart"></use>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="customers-reviews" class="position-relative padding-large" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 600px;">
-            <div class="container offset-md-3 col-md-6 ">
-                <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next testimonial-button-next">
-                    <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                    <use xlink:href="#alt-arrow-right-outline"></use>
-                    </svg>
-                </div>
-                <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev testimonial-button-prev">
-                    <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                    <use xlink:href="#alt-arrow-left-outline"></use>
-                    </svg>
-                </div>
-                <div class="section-title mb-4 text-center">
-                    <h3 class="mb-4">Đánh giá từ khách hàng</h3>
-                </div>
-                <div class="swiper testimonial-swiper ">
-                    <div class="swiper-wrapper">
-                        <c:forEach var="feedback" items="${requestScope.listMostRating}">
-                            <div class="swiper-slide">
-                                <div class="card position-relative text-left p-5 border rounded-3">
-                                    <blockquote>"${feedback.comments}"</blockquote>
-                                    <div class="rating text-warning d-flex align-items-center">
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                        <svg class="star star-fill">
-                                        <use xlink:href="#star-fill"></use>
-                                        </svg>
-                                    </div>
-                                    <c:forEach var="acc" items="${requestScope.listAccount}">
-                                        <c:if test="${feedback.accountId == acc.accountId}">
-                                            <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
-                                        </c:if> 
-                                    </c:forEach>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section id="latest-posts" class="padding-large">
             <div class="container">
