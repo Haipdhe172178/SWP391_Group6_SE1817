@@ -249,8 +249,8 @@
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
                                             <h4>Table</h4>
-                                            <h3 style="color: red ">${notification}</h3>
                                             
+
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
@@ -292,22 +292,10 @@
                                                             <td>${p.price}</td>
                                                             <td>${p.quantity}</td>
                                                             <td>${fn:substring(p.description, 0, 50)}...</td>
-                                                            <c:forEach items="${category}" var="c">
-                                                                <c:if test="${c.categoryId eq p.categoryId}">
-                                                                    <td>${c.categoryName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:forEach items="${author}" var="au">
-                                                                <c:if test="${au.authorID eq p.authorId}">
-                                                                    <td>${au.authorName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
+                                                                <td>${p.category.categoryName}</td>
+                                                                <td>${p.author.authorName}</td>
                                                             <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
-                                                                <c:forEach items="${obage}" var="o">
-                                                                    <c:if test="${o.ageId eq p.ageId}">
-                                                                    <td>${o.age}</td>
-                                                                </c:if>
-                                                            </c:forEach>                                                        
+                                                                <td>${p.oage.age}</td>
                                                             <td><a href="delete?id=${p.productId}">DELETE</td>
                                                             <td><a href="update?id=${p.productId}">UPDATE</td>
                                                         </tr>

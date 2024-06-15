@@ -89,7 +89,7 @@
 <div class="search-popup">
     <div class="search-popup-container">
 
-        <form role="search" method="get" class="search-form" action="filter">
+        <form role="search" method="get" class="search-form" action="shop">
             <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
             <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
         </form>
@@ -102,7 +102,7 @@
             </li>
             <c:forEach items="${cate}" var="cate">
                 <li class="cat-list-item">
-                    <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    <a href="shop?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                 </li>
             </c:forEach>
         </ul>
@@ -157,7 +157,7 @@
                             <a class="nav-link me-4" href="shop">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-4 " href="blog">Tin tức</a>
+                            <a class="nav-link active me-4 " href="blog">Tin tức</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
@@ -166,7 +166,7 @@
                                     <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
+                                    <a href="shop" class="dropdown-item  fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
                                 </li>
 
                                 <li>
@@ -176,7 +176,7 @@
                                     <a href="check" class="dropdown-item fw-light">Thanh toán <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="blog" class="dropdown-item fw-light">Tin tức<span class="badge bg-primary"></span></a>
+                                    <a href="blog" class="dropdown-item active fw-light">Tin tức<span class="badge bg-primary"></span></a>
                                 </li>
 
                                 <li>

@@ -237,7 +237,7 @@
                                 <a class="nav-link me-4" href="about">Giới thiệu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="shop">Sản phẩm</a>
+                                <a class="nav-link active me-4" href="shop">Sản phẩm</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="blog">Tin tức</a>
@@ -249,7 +249,7 @@
                                         <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
                                     </li>
                                     <li>
-                                        <a href="shop" class="dropdown-item fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
+                                        <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
                                     </li>
 
                                     <li>
@@ -263,12 +263,12 @@
                                     </li>
 
                                     <li>
-                                        <a href="contact" class="dropdown-item active fw-light">Liên hệ <span class="badge bg-primary"></span></a>
+                                        <a href="contact" class="dropdown-item fw-light">Liên hệ <span class="badge bg-primary"></span></a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active me-4" href="contact">Liên hệ</a>
+                                <a class="nav-link  me-4" href="contact">Liên hệ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank"></a>

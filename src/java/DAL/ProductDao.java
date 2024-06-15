@@ -728,7 +728,12 @@ public class ProductDao extends DBContext {
     }
 
     public Product getProductByName(String name) {
-        String query = " Select * From Product WHERE name = ?";
+        String query = " Select   p.*, c.CategoryName,oa.Age, a.AuthorName,a.Description \n"
+                + "  FROM Product p\n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                + "  WHERE p.Name= ?;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
