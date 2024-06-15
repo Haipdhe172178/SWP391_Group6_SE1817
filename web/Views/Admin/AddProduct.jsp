@@ -87,10 +87,10 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/8.svg" alt>
                         </div>
-                        <span>Products</span>
+                        <span>Sale</span>
                     </a>
                     <ul>
-                        <li><a href="">Products</a></li>
+                       <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
                     </ul>
                 </li>        

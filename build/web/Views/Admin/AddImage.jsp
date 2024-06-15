@@ -90,7 +90,7 @@
                     <ul>
                         <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
-                         <li><a href="">Tác Giả</a></li>
+                        <li><a href="">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>
@@ -245,32 +245,45 @@
                                     </div>
                                 </div>
                                 <div class="white_card_body">
-                                   
-                                    
-                                    <form action="addcode" method="get" enctype="multipart/form-data">
+
+
+                                    <form action="addimage" method="post" enctype="multipart/form-data">
+
+
                                         <div class="mb-3">
-                                            <label for="productName">Mã Code</label>
-                                            <input type="text" class="form-control"  name="meomeo" value="${meomeo}" required>
+
+                                            <label for="productName">Tên</label>
+                                            <input type="text" class="form-control" id="productName" name="name" value="${data.name}" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productPrice">Giảm giá bao nhiêu phần trăm</label>
-                                            <input type="text" class="form-control"  name="discount1" value="${discount1}" required>
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control" id="prodctimg" name="imgProduct" >
+
                                         </div>
-                                        
+
+
                                         <div class="mb-3">
-                                            <label for="productQuantity">Giảm giá nhân dịp</label>
-                                            <input type="text" class="form-control"  name="theloai" value="${theloai}" required>
+                                            <label for="productCategory" class="form-label">Trạng thái hoạt động</label>
+                                            <select class="form-select" id="" name="status" required>
+
+
+                                                <option value="1"  >Sử dụng</option>
+                                                <option value="0"  >Không sử dụng</option>
+
+
+                                            </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="productName">Số lượng mã phát ra</label>
-                                            <input type="text" class="form-control"  name="soluong"  value="${soluong}" required>
-                                        </div>
+
+
+
+
+
+
                                         <div>
-                                            
-                                            <button type="submit" class="btn btn-primary" name="submit">Add</button>
+                                            <button type="submit" name="submit" class="btn btn-primary">ADD</button>
                                         </div>
                                     </form>
-                                     <h3>${error}</h3>
+                                    
                                 </div>
 
                             </div>
