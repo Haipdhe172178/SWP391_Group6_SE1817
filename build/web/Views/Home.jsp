@@ -29,6 +29,56 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <style>
+            .swiper-container {
+                width: 100%;
+                height: 900px;
+            }
+            .swiper-slide {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: auto;
+            }
+            .swiper-button-next, .swiper-button-prev {
+                color: #fff;
+                width: 50px;
+                height: 50px;
+                background-color: rgba(0, 0, 0, 0.5); /* Adjust the background color as needed */
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .swiper-button-next::after, .swiper-button-prev::after {
+                font-size: 20px;
+                #customers-reviews {
+                    padding-top: 50px;
+                    padding-bottom: 50px;
+                }
+
+                .swiper-next, .swiper-prev {
+                    cursor: pointer;
+                }
+
+                .card {
+                    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+                }
+
+                .star {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 5px;
+                }
+            }
+        </style>
+
         <style>
             .custom-time {
                 display: inline-block;
@@ -439,56 +489,42 @@
 
 
 
-    <section  id="billboard" class="position-relative d-flex align-items-center py-5 bg-light-gray" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
-        <div style="margin-top: 20px" class="position-absolute end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next main-slider-button-next">
-            <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-            <use xlink:href="#alt-arrow-right-outline"></use>
-            </svg>
-        </div>
-        <div class="position-absolute start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev main-slider-button-prev">
-            <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-            <use xlink:href="#alt-arrow-left-outline"></use>
-            </svg>
-        </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
 
+            <c:forEach items="${imageBG}" var="d">
+                <div class="swiper-slide" style="background-image: url('${d.url}');">
 
-        <div class="swiper main-swiper">
-            <div class="swiper-wrapper d-flex align-items-center">
+                </div>
+            </c:forEach>
 
 
 
-                <fmt:setLocale value="vi_VN" />
-                <c:forEach items="${data}" var="d">
-                    <div class="swiper-slide">
-                        <div class="container">
-                            <div class="row d-flex flex-column-reverse flex-md-row align-items-center">
-                                <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                                    <div class="banner-content">
-                                        <h3>${d.name}</h3>
-                                        <p>
-                                            <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                        </p>
-                                        <a href="single?productID=${d.productId}" class="btn mt-3"> Xem sách</a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <div class="image-holder">
-                                        <img src="${d.imgProduct}" class="img-fluid" alt="banner" height="50%" width="50%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-
-
-            </div>
 
 
 
         </div>
-    </section> 
 
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+        });
+    </script>
 
 
 
@@ -667,7 +703,7 @@
 <section id="items-listing" class="padding-large">
     <div class="container">
         <div class="row">
-
+            <h3 class="d-flex align-items-center">Sách mới</h3><br><br><br>
             <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
 
                 <div class="featured border rounded-3 p-4">
@@ -923,7 +959,7 @@
 <section id="categories" class="padding-large pt-0">
     <div class="container">
         <div class="section-title overflow-hidden mb-4">
-            <h3 class="d-flex align-items-center">Categories</h3>
+            <h3 class="d-flex align-items-center">Dành cho giới trẻ</h3>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -958,41 +994,41 @@
 </section>
 
 <section id="customers-reviews" class="position-relative padding-large" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 600px;">
-    <div class="container offset-md-3 col-md-6 ">
+    <div class="container">
         <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next testimonial-button-next">
             <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-            <use xlink:href="#alt-arrow-right-outline"></use>
+                <use xlink:href="#alt-arrow-right-outline"></use>
             </svg>
         </div>
         <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev testimonial-button-prev">
             <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-            <use xlink:href="#alt-arrow-left-outline"></use>
+                <use xlink:href="#alt-arrow-left-outline"></use>
             </svg>
         </div>
         <div class="section-title mb-4 text-center">
             <h3 class="mb-4">Đánh giá từ khách hàng</h3>
         </div>
-        <div class="swiper testimonial-swiper ">
+        <div class="swiper testimonial-swiper">
             <div class="swiper-wrapper">
                 <c:forEach var="feedback" items="${requestScope.listMostRating}">
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" >
                         <div class="card position-relative text-left p-5 border rounded-3">
                             <blockquote>"${feedback.comments}"</blockquote>
                             <div class="rating text-warning d-flex align-items-center">
                                 <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
+                                    <use xlink:href="#star-fill"></use>
                                 </svg>
                                 <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
+                                    <use xlink:href="#star-fill"></use>
                                 </svg>
                                 <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
+                                    <use xlink:href="#star-fill"></use>
                                 </svg>
                                 <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
+                                    <use xlink:href="#star-fill"></use>
                                 </svg>
                                 <svg class="star star-fill">
-                                <use xlink:href="#star-fill"></use>
+                                    <use xlink:href="#star-fill"></use>
                                 </svg>
                             </div>
                             <c:forEach var="acc" items="${requestScope.listAccount}">
@@ -1007,6 +1043,7 @@
         </div>
     </div>
 </section>
+
 
 <section id="latest-posts" class="padding-large">
     <div class="container">
@@ -1169,20 +1206,20 @@
                             <h5 class="widget-title pb-2">Trang chính</h5>
                             <ul class="menu-list list-unstyled text-capitalize">
                                 <li class="menu-item mb-1">
-                                        <a href="home">Trang chủ</a>
-                                    </li>
-                                    <li class="menu-item mb-1">
-                                        <a href="about">Giới thiệu</a>
-                                    </li>
-                                    <li class="menu-item mb-1">
-                                        <a href="shop">Sản phẩm</a>
-                                    </li>
-                                    <li class="menu-item mb-1">
-                                        <a href="blog">Tin tức</a>
-                                    </li>
-                                    <li class="menu-item mb-1">
-                                        <a href="contact">Liên hệ</a>
-                                    </li>
+                                    <a href="home">Trang chủ</a>
+                                </li>
+                                <li class="menu-item mb-1">
+                                    <a href="about">Giới thiệu</a>
+                                </li>
+                                <li class="menu-item mb-1">
+                                    <a href="shop">Sản phẩm</a>
+                                </li>
+                                <li class="menu-item mb-1">
+                                    <a href="blog">Tin tức</a>
+                                </li>
+                                <li class="menu-item mb-1">
+                                    <a href="contact">Liên hệ</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

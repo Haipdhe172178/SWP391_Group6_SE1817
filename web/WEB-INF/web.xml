@@ -96,6 +96,14 @@
         <servlet-name>NewPasswordControlles</servlet-name>
         <servlet-class>Controllers.NewPasswordControlles</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImaBGController</servlet-name>
+        <servlet-class>AdminControllers.ImaBGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddImage</servlet-name>
+        <servlet-class>AdminControllers.AddImage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -191,6 +199,14 @@
     <servlet-mapping>
         <servlet-name>NewPasswordControlles</servlet-name>
         <url-pattern>/newPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImaBGController</servlet-name>
+        <url-pattern>/image</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddImage</servlet-name>
+        <url-pattern>/addimage</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

@@ -69,6 +69,7 @@ public class DataProductControllers extends HttpServlet {
         CategoryDao categoryDao = new CategoryDao();
         AuthorDao authorDao = new AuthorDao();
         ObjectAgeDao oad = new ObjectAgeDao();
+        
         String indexPage = request.getParameter("index");
         int index;
         if (indexPage != null) {

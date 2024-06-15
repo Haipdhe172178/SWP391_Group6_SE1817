@@ -12,6 +12,7 @@ import DAL.NewsDao;
 import Models.Account;
 import Models.Category;
 import Models.Feedback;
+import Models.ImageBackground;
 import Models.News;
 import Models.Product;
 import java.io.IOException;
@@ -67,23 +68,23 @@ public class HomeControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Product> data = new ArrayList<>();
-        ArrayList<Product> data1 = new ArrayList<>();
-         ArrayList<Product> data01 = new ArrayList<>();
-          ArrayList<Product> data02 = new ArrayList<>();
-           ArrayList<Product> data03 = new ArrayList<>();
-            ArrayList<Product> data04 = new ArrayList<>();
+        ArrayList<ImageBackground> imageBackground = new ArrayList<>();
+        ArrayList<Product> Sellmany = new ArrayList<>();
+         ArrayList<Product> dataVanHoc = new ArrayList<>();
+          ArrayList<Product> dataNuocNgoai = new ArrayList<>();
+           ArrayList<Product> dataChuyenThong = new ArrayList<>();
+            ArrayList<Product> dataKhoaHoc = new ArrayList<>();
          
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
         HomeDAO dal = new HomeDAO();
-        data01 = dal.get3(2);
-         data02 = dal.get3(3);
-          data03 = dal.get3(4);
-           data04 = dal.get3(5);
-        data = dal.get3radum();
-        data1 = dal.get6sellmany();
+        dataVanHoc = dal.get3addnew(2);
+         dataNuocNgoai = dal.get3addnew(3);
+          dataChuyenThong = dal.get3addnew(4);
+           dataKhoaHoc= dal.get3addnew(5);
+        imageBackground = dal.getImageBackground();
+        Sellmany = dal.get6sellmany();
 
         //Them list, news, feedback cho homepage
         NewsDao nd = new NewsDao();
@@ -96,12 +97,12 @@ public class HomeControllers extends HttpServlet {
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
-        request.setAttribute("data1", data1);
-        request.setAttribute("data", data);
-        request.setAttribute("data01", data01);
-        request.setAttribute("data02", data02);
-        request.setAttribute("data03", data03);
-        request.setAttribute("data04", data04);
+        request.setAttribute("data1", Sellmany);
+        request.setAttribute("imageBG", imageBackground);
+        request.setAttribute("data01", dataVanHoc);
+        request.setAttribute("data02", dataNuocNgoai);
+        request.setAttribute("data03", dataChuyenThong);
+        request.setAttribute("data04", dataKhoaHoc);
 
         request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
 
