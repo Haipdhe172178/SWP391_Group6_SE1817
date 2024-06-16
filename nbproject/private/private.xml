@@ -3,54 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/HomeDAO.java</file>
             <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Controllers/ShopControllers.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/UpdateController.java</file>
-=======
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Filter.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Checkout.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SinglePost.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SingleProduct.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddProduct.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Contact.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddCode.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DeleteControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/UsedCoupon.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DashControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/UpdateController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Dashboard.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DiscountController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Home.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddcodeController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/img_product/105.jpg</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/About.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/DataDiscount.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DeleteCodeController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Product.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/images/main-logo.png</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/LoginServlet.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/css/style.css</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Blog.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/css/bootstrap1.min.css</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailCustomer.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/NewsDao.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Cart.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateProduct.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/images/insta-item5.jpg</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/HomeDAO.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DBContext.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DiscountDAO.java</file>
->>>>>>> 4403651b0ae67648dfa1364f6d4ab847a303cf7e
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/Product.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/AddProduct.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/AddControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/AuthorControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Models/Author.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/AuthorDao.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

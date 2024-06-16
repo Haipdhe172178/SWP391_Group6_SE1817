@@ -14,38 +14,66 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
-
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
-
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
-
         <link rel="stylesheet" href="vendors/scroll/scrollable.css" />
-
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
-
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
-
         <link rel="stylesheet" href="css/metisMenu.css">
-
         <link rel="stylesheet" href="css/style1.css" />
+        <title> Thêm Sản Phẩm</title>
         <style>
-            .alert {
+            .error {
+                color: red;
+                font-size: 0.8em;
+            }
+            /* CSS for notification */
+            .notification-container {
                 position: fixed;
-                top: 20px;
-                right: 20px;
+                top: 10px;
+                right: 10px;
+                display: none;
                 z-index: 1000;
-                max-width: 500px;
-                width: 100%;
+                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+            }
+
+            .notification {
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .notification.success {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .notification.error {
+                background-color: #f44336;
+                color: white;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                }
+                to {
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(100%);
+                }
             }
         </style>
-
     </head>
 
     <body class="crm_body_bg">
@@ -90,7 +118,7 @@
                         <span>Sale</span>
                     </a>
                     <ul>
-                       <li><a href="image">Image BackGround</a></li>
+                        <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
                     </ul>
                 </li>        
@@ -245,7 +273,7 @@
                     </div>
                 </div>
             </div>
-
+            <div id="notification-container" class="notification-container"></div>
             <div class="main_content_iner">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
@@ -255,58 +283,36 @@
                                     <div class="box_header m-0">
                                         <div class="main-title">
                                             <h3 class="m-0">Thêm sản phẩm</h3>
-                                            <c:choose>
-                                                <c:when test="${sessionScope.notification == 'success'}">
-                                                    <div class="alert alert-success alert-dismissible">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                                        <strong>Thêm thành công</strong> Thêm thành công. Redirecting...
-                                                    </div>
-                                                </c:when>
-                                                <c:when test="${sessionScope.notification == 'error'}">
-                                                    <div class="alert alert-danger alert-dismissible">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                                        <strong>Thêm không thành công</strong> ${sessionScope.errorMessage}
-                                                    </div>
-                                                </c:when>
-                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="white_card_body">
-                                    <form action="add" method="POST" enctype="multipart/form-data">
+                                <form action="add" method="POST" enctype="multipart/form-data" id="myForm">
+                                    <div class="white_card_body">
                                         <div class="mb-3">
-                                            <label for="productName">Tên</label>
-                                            <input type="text" class="form-control" id="productName" name="name" value="${sessionScope.name}" required>
-                                            <c:if test="${not empty sessionScope.errorName}">
-                                                <small class="text-danger">${sessionScope.errorName}</small>
-                                            </c:if>
+                                            <label for="productName">Tên sản phẩm:</label>
+                                            <input type="text" class="form-control" id="productName" name="name" required>
+                                            <div id="productNameError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productPrice">Giá</label>
-                                            <input type="number" class="form-control" id="productPrice" name="price" value="${sessionScope.price}" required>
-                                            <c:if test="${not empty sessionScope.errorPrice}">
-                                                <small class="text-danger">${sessionScope.errorPrice}</small>
-                                            </c:if>
+                                            <label for="productPrice">Giá:</label>
+                                            <input type="number" class="form-control" id="productPrice" name="price" required>
+                                            <div id="productPriceError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productQuantity">Số lượng</label>
-                                            <input type="number" class="form-control" id="productQuantity" name="quantity" value="${sessionScope.quantity}" required>
-                                            <c:if test="${not empty sessionScope.errorQuantity}">
-                                                <small class="text-danger">${sessionScope.errorQuantity}</small>
-                                            </c:if>
+                                            <label for="productQuantity">Số lượng:</label>
+                                            <input type="number" class="form-control" id="productQuantity" name="quantity" required>
+                                            <div id="productQuantityError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productdescription">Mô tả</label>
-                                            <input type="text" class="form-control" id="productdescription" name="description" value="${sessionScope.description}" required>
-                                            <c:if test="${not empty sessionScope.errorDescription}">
-                                                <small class="text-danger">${sessionScope.errorDescription}</small>
-                                            </c:if>
+                                            <label for="productDescription">Mô tả sản phẩm:</label>
+                                            <textarea class="form-control" id="productDescription" name="description" required></textarea>
+                                            <div id="productDescriptionError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productCategory" class="form-label">Category</label>
+                                            <label for="productCategory" class="form-label">Thể loại</label>
                                             <select class="form-select" id="productCategory" name="categoryId" required>
                                                 <c:forEach items="${category}" var="c">
-                                                    <option value="${c.categoryId}" <c:if test="${c.categoryId == sessionScope.categoryId}">selected</c:if>>${c.categoryName}</option>
+                                                    <option value="${c.categoryId}">${c.categoryName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -314,30 +320,28 @@
                                             <label for="productAuthor" class="form-label">Tác giả</label>
                                             <select class="form-select" id="productAuthor" name="author" required>
                                                 <c:forEach items="${author}" var="au">
-                                                    <option value="${au.authorID}" <c:if test="${au.authorID == sessionScope.author}">selected</c:if>>${au.authorName}</option>
+                                                    <option value="${au.authorID}">${au.authorName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productImage" class="form-label">Ảnh</label>
                                             <input type="file" class="form-control" id="productImage" name="imgProduct" required>
-                                            <c:if test="${not empty sessionScope.errorImage}">
-                                                <small class="text-danger">${sessionScope.errorImage}</small>
-                                            </c:if>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productAge" class="form-label">Age</label>
-                                            <select class="form-select" id="productAge" name="ageId" required>
+                                            <label for="productAgeSelect" class="form-label">Độ tuổi</label>
+                                            <select class="form-select" id="productAgeSelect" name="ageId" required>
                                                 <c:forEach items="${obage}" var="o">
-                                                    <option value="${o.ageId}" <c:if test="${o.ageId == sessionScope.ageId}">selected</c:if>>${o.age}</option>
+                                                    <option value="${o.ageId}">${o.age}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div>
                                             <button type="submit" class="btn btn-primary">Add</button>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -491,15 +495,101 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
-        <c:if test="${sessionScope.notification == 'success'}">
-            <script type="text/javascript">
-                setTimeout(function () {
-                    window.location.href = "${pageContext.request.contextPath}/data";
-                }, 3000);
-            </script>
-        </c:if>
+        <!--kiem tra validation-->
+        <script>
+            // JavaScript for form validation
+            document.getElementById('myForm').addEventListener('submit', function (event) {
+                var productName = document.getElementById('productName').value.trim();
+                var productPrice = document.getElementById('productPrice').value.trim();
+                var productQuantity = document.getElementById('productQuantity').value.trim();
+                var productDescription = document.getElementById('productDescription').value.trim();
+                var productImage = document.getElementById('productImage').value.trim();
 
+                var productNameError = document.getElementById('productNameError');
+                var productPriceError = document.getElementById('productPriceError');
+                var productQuantityError = document.getElementById('productQuantityError');
+                var productDescriptionError = document.getElementById('productDescriptionError');
 
-    </body>
+                var isValid = true;
+
+                // Reset previous error messages
+                productNameError.textContent = '';
+                productPriceError.textContent = '';
+                productQuantityError.textContent = '';
+                productDescriptionError.textContent = '';
+
+                if (productName === '') {
+                    productNameError.textContent = 'Vui lòng nhập tên sản phẩm.';
+                    isValid = false;
+                }
+                if (productPrice === '') {
+                    productPriceError.textContent = 'Vui lòng nhập giá sản phẩm.';
+                    isValid = false;
+                } else if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
+                    productPriceError.textContent = 'Giá sản phẩm phải là một số dương.';
+                    isValid = false;
+                }
+
+                if (productQuantity === '') {
+                    productQuantityError.textContent = 'Vui lòng nhập số lượng sản phẩm.';
+                    isValid = false;
+                } else if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
+                    productQuantityError.textContent = 'Số lượng sản phẩm phải là một số nguyên dương.';
+                    isValid = false;
+                }
+
+                if (productDescription === '') {
+                    productDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                    isValid = false;
+                }
+                if (productImage === '') {
+                    alert('Vui lòng chọn một ảnh cho sản phẩm.');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        </script>
+        <!--hien thi thong bao-->
+        <script>
+            function showNotificationAndRedirect() {
+                var notification = '<%= session.getAttribute("notification") %>';
+                if (notification === 'success') {
+                    var notificationContainer = document.getElementById('notification-container');
+                    if (notificationContainer) {
+                        var notificationElement = document.createElement('div');
+                        notificationElement.classList.add('notification', 'success');
+                        notificationElement.textContent = 'Product added successfully!';
+                        notificationContainer.appendChild(notificationElement);
+                        notificationContainer.style.display = 'block';
+                        setTimeout(function () {
+                            notificationContainer.style.display = 'none';
+                            window.location.href = '<%= request.getContextPath() %>/data';
+                        }, 5000);
+                    }
+                } else if (notification === 'error') {
+                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
+                    var notificationContainer = document.getElementById('notification-container');
+                    if (notificationContainer) {
+                        var notificationElement = document.createElement('div');
+                        notificationElement.classList.add('notification', 'error');
+                        notificationElement.textContent = 'Error: ' + errorMessage;
+                        notificationContainer.appendChild(notificationElement);
+                        notificationContainer.style.display = 'block';
+                        setTimeout(function () {
+                            notificationContainer.style.display = 'none';
+                        }, 5000);
+                    }
+                }
+            <% session.removeAttribute("notification"); %>
+            <% session.removeAttribute("errorMessage"); %>
+            }
+            window.onload = showNotificationAndRedirect;
+        </script>
+    </script>
+
+</body>
 
 </html>

@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
 
@@ -249,7 +249,7 @@
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
                                             <h4>Table</h4>
-                                            
+
 
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
@@ -263,7 +263,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="add_button ms-2">
-                                                    <a href="add" class="btn_1">Add Product</a>
+                                                    <a href="add" class="btn_1">Thêm Sản Phẩm</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,6 +281,7 @@
                                                         <th scope="col">Author</th>
                                                         <th scope="col">Img</th>
                                                         <th scope="col">Age</th>
+                                                        <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -292,12 +293,24 @@
                                                             <td>${p.price}</td>
                                                             <td>${p.quantity}</td>
                                                             <td>${fn:substring(p.description, 0, 50)}...</td>
-                                                                <td>${p.category.categoryName}</td>
-                                                                <td>${p.author.authorName}</td>
+                                                            <td>${p.category.categoryName}</td>
+                                                            <td>${p.author.authorName}</td>
                                                             <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
-                                                                <td>${p.oage.age}</td>
-                                                            <td><a href="delete?id=${p.productId}">DELETE</td>
-                                                            <td><a href="update?id=${p.productId}">UPDATE</td>
+                                                            <td>${p.oage.age}</td>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${p.status == 1}">
+                                                                        <span style="color: green;">Active</span>
+                                                                    </c:when>
+                                                                    <c:when test="${p.status == 0}">
+                                                                        <span style="color: red;">Inactive</span>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                            </td>
+                                                            <td>
+                                                                <a href="update?id=${p.productId}" title="Update"><i class="fas fa-edit"></i></a>
+                                                                <a href="delete?id=${p.productId}" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                            </td>
                                                         </tr>
 
                                                     </c:forEach>

@@ -55,16 +55,23 @@ public class AuthorDao extends DBContext {
         return null;
     }
 
-    public static void main(String[] args) {
-        AuthorDao authorDao = new AuthorDao();
-        List<Author> authors = authorDao.getallAuthors();
-        for (Author author : authors) {
-            System.out.println("Author id" + author.getAuthorID());
-            System.out.println("Author name" + author.getAuthorName());
+    public Author getAuthorByKeyword(String keyword) {
+        String query = "SELECT * FROM Author WHERE AuthorName LIKE ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                return author;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-        //Test method getAuthorByID()
-        Author aut = authorDao.getAuthorById(1);
-        System.out.println(aut.getAuthorName());
+        return null;
     }
+
 }

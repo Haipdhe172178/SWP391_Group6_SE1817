@@ -5,13 +5,8 @@
 package AdminControllers;
 
 import DAL.AuthorDao;
-import DAL.CategoryDao;
-import DAL.ObjectAgeDao;
-import DAL.ProductDao;
 import Models.Author;
-import Models.Category;
-import Models.ObjectAge;
-import Models.Product;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,7 +19,7 @@ import java.util.List;
  *
  * @author huyca
  */
-public class DataProductControllers extends HttpServlet {
+public class AuthorControllers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +38,10 @@ public class DataProductControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DataControllers</title>");
+            out.println("<title>Servlet AuthorControllers</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DataControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AuthorControllers at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,39 +59,16 @@ public class DataProductControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDao productDao = new ProductDao();
-          
-        String indexPage = request.getParameter("index");
-        int index;
-        if (indexPage != null) {
-            index = Integer.parseInt(indexPage);
-        } else {
-            index = 1;
-        }
-        List<Product> list;
-        int count = productDao.getTotalProduct();
-        int endPage;
-        list = productDao.pagingProducts(index);
-        String searchKeyword = request.getParameter("s");
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            list = productDao.pagingProductsByKeyword(index, searchKeyword);
-            count = productDao.getTotalProductsByKeyword(searchKeyword);
-        }
-        endPage = count / 8;
-        if (count % 8 != 0) {
-            endPage++;
-        }
-        String query = "";
-        if (searchKeyword != null) {
-            query += "&&s=" + searchKeyword;
-        }
-       
-       
-        request.setAttribute("query", query);
-        request.setAttribute("product", list);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", index);
-        request.getRequestDispatcher("Views/Admin/Product.jsp").forward(request, response);
+        String keyword = request.getParameter("q");
+        AuthorDao authorDao = new AuthorDao();
+        List<Author> authors = (List<Author>) authorDao.getAuthorByKeyword(keyword);
+        Gson gson = new Gson();
+        String json = gson.toJson(authors);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(json);
+        out.flush();
     }
 
     /**
@@ -110,16 +82,26 @@ public class DataProductControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+//        try (PrintWriter out = response.getWriter()) {
+//        String search = request.getParameter("search");
+//        AuthorDao authorDao = new AuthorDao();
+//        // Assume AuthorDAO is your data access object class
+//        List<Author> authors = (List<Author>) authorDao.getAuthorByKeyword(search);
+//        out.println("<ul>");
+//        for (Author author : authors) {
+//            out.println("<li>" + author.getAuthorName()+ "</li>");
+//        }
+//        out.println("</ul>");
+//    }
+}
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+/**
+ * Returns a short description of the servlet.
+ *
+ * @return a String containing servlet description
+ */
+@Override
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
