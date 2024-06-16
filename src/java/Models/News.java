@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author huyca
- */
 public class News {
     private int newId;
     private Topic topic;
@@ -19,22 +12,9 @@ public class News {
     private String imgNews2;
     private Date dateUpload;
     private String source;
+    private List<String> tags;
 
-    public News() {
-    }
-
-    public News(int newId, Topic topic, String title, String content, String imgNews1, String imgNews2, Date dateUpload, String source) {
-        this.newId = newId;
-        this.topic = topic;
-        this.title = title;
-        this.content = content;
-        this.imgNews1 = imgNews1;
-        this.imgNews2 = imgNews2;
-        this.dateUpload = dateUpload;
-        this.source = source;
-    }
-
-
+    // Getters and setters for all fields
     public int getNewId() {
         return newId;
     }
@@ -98,5 +78,12 @@ public class News {
     public void setSource(String source) {
         this.source = source;
     }
-    
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 }

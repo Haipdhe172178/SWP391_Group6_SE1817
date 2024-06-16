@@ -287,13 +287,13 @@
             <div class="container-fluid">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <p class="fs-6 my-2 text-center">Need any help? Call us <a href="#">112233344455</a></p>
+                        <p class="fs-6 my-2 text-center">Bạn cần giúp đỡ? Hãy gọi cho chúng tôi <a href="#">+84 38 272 0127</a></p>
                     </div>
                     <div class="col-md-4 border-start border-end">
-                        <p class="fs-6 my-2 text-center">Summer sale discount off 60% off! <a class="text-decoration-underline" href="shop">Shop Now</a></p>
+                        <p class="fs-6 my-2 text-center">Đang có giảm giá lên tới 60% <a class="text-decoration-underline" href="shop">Mua ngay!!</a></p>
                     </div>
                     <div class="col-md-4">
-                        <p class="fs-6 my-2 text-center">2-3 business days delivery & free returns</p>
+                        <p class="fs-6 my-2 text-center">Giao hàng 2-3 ngày làm việc và trả lại miễn phí</p>
                     </div>
                 </div>
             </div>
@@ -1048,20 +1048,19 @@
 <section id="latest-posts" class="padding-large">
     <div class="container">
         <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-            <h3 class="d-flex align-items-center">Latest posts</h3>
-            <a href="shop" class="btn">View All</a>
+            <h3 class="d-flex align-items-center">Tin tức mới nhất</h3>
+            <a href="blog" class="btn">Xem tất cả</a>
         </div>
         <div class="row">
             <!-- NEWS -->
-            <c:forEach var="n" items="${requestScope.news}">
-                <div class="col-md-3 posts mb-4">
-                    <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
-                    <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
-                    <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
-                    <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 
-                    </p>
-                </div>
-            </c:forEach>
+             <c:forEach var="n" items="${requestScope.news}">
+        <div class="col-md-3 posts mb-4">
+            <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
+            <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
+            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post?id=${n.newId}">${n.title}</a></h4>
+            <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post?id=${n.newId}">Read More</a></span></p>
+        </div>
+    </c:forEach>
         </div>
     </div>
 </section>
