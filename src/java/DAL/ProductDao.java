@@ -70,7 +70,7 @@ public class ProductDao extends DBContext {
                 + "INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
                 + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
                 + "JOIN Author a ON a.AuthorID = p.AuthorID\n"
-                + "WHERE p.ProductID= 1";
+                + "WHERE p.ProductID= ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);

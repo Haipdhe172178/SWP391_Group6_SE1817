@@ -11,6 +11,7 @@ import java.util.Date;
  * @author huyca
  */
 public class Feedback {
+
     private int feedbackId;
     private int accountId;
     private int productId;
@@ -28,6 +29,13 @@ public class Feedback {
         this.rating = rating;
         this.comments = comments;
         this.feedbackDate = feedbackDate;
+    }
+
+    public Feedback(int accountId, int productId, int rating, String comments) {
+        this.accountId = accountId;
+        this.productId = productId;
+        this.rating = rating;
+        this.comments = comments;
     }
 
     public int getFeedbackId() {
@@ -77,6 +85,5 @@ public class Feedback {
     public void setFeedbackDate(Date feedbackDate) {
         this.feedbackDate = feedbackDate;
     }
-    
-    
+
 }

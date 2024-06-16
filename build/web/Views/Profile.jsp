@@ -128,7 +128,20 @@
                                 <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Đổi mật khẩu</span>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6 inputprofile"><label class="labels">Họ và tên</label><input type="text" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" required oninvalid="this.setCustomValidity('Tên không được để trống')" oninput="this.setCustomValidity('')"></div>
+                                <div class="col-md-6 inputprofile">
+                                    <label class="labels">Họ và tên</label>
+                                    <input 
+                                        type="text" 
+                                        name="fullname" 
+                                        class="form-control" 
+                                        placeholder="full name" 
+                                        value="${acc.fullName}" 
+                                        required 
+                                        pattern="[A-Za-zÀ-ỹà-ỹ\s]+" 
+                                        oninvalid="this.setCustomValidity('Tên chỉ được chứa chữ cái và không được để trống')" 
+                                        oninput="this.setCustomValidity('')"
+                                        >
+                                </div>
                                 <div class="col-md-6 "><label class="labels">Tên đăng nhập</label><input type="text" name="username" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
                             </div>
                             <div class="row mt-3">
@@ -150,7 +163,21 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 inputprofile"><label class="labels">Số điện thoại</label><input type="text" name="phonenumber" class="form-control" placeholder="enter phone number" value="${acc.phoneNumber}" required pattern="^0\d{9}$" oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại đúng định dạng 0xxxxxxxxx')" oninput="this.setCustomValidity('')"></div>
-                                <div class="col-md-12 inputprofile"><label class="labels">Địa chỉ</label><input type="text" name="address" class="form-control" placeholder="enter address" value="${acc.address}" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ')" oninput="this.setCustomValidity('')"></div>
+                                <div class="col-md-12 inputprofile">
+                                    <label class="labels">Địa chỉ</label>
+                                    <input 
+                                        type="text" 
+                                        name="address" 
+                                        class="form-control" 
+                                        placeholder="Số nhà (nếu có) - Thôn - Xã/Phường - Huyện/Thị Xã - Thành Phố" 
+                                        value="${acc.address}" 
+                                        required 
+                                        pattern="(\d+\s*-\s*)?[A-Za-z0-9À-ỹà-ỹ\s]+-\s*[A-Za-zÀ-ỹà-ỹ\s]+-\s*[A-Za-zÀ-ỹà-ỹ\s]+-\s*[A-Za-zÀ-ỹà-ỹ\s]+" 
+                                        oninvalid="this.setCustomValidity('Địa chỉ phải theo định dạng: Số nhà (nếu có) - Thôn - Xã/Phường - Huyện/Thị Xã - Thành Phố')" 
+                                        oninput="this.setCustomValidity('')"
+                                        >
+                                </div>
+
                                 <div class="col-md-12 "><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
                             </div>
                             <div class="mt-5 text-center">
@@ -158,47 +185,47 @@
                             </div>
                         </form>
                     </div>
-                   <!-- Change Password -->
-<div class="p-3 py-5" id="changepass" style="display: none;">
-    <form action="changepassword" method="post">
-        <input type="hidden" name="username" value="${sessionScope.account.userName}">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="text-right">Đổi mật khẩu</h4>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-12">
-                <label class="labels">Mật khẩu hiện tại</label>
-                <input type="password" class="form-control"  placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
-                <h4 style="color: red">${requestScope.ms}</h4>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <label class="labels">Mật khẩu mới</label>
-                <input type="password" class="form-control" placeholder="nhập mật khẩu mới"value="${mess}" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
-                <p class="labels">Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.</p>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <label class="labels">Xác nhận mật khẩu mới</label>
-                <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" value="${mess}" name="confirmpassword" required>
-                <h4 style="color: red">${requestScope.m}</h4>
-            </div>
-        </div>
-        <div class="mt-5 text-center">
-            <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
-            <button class="btn btn-secondary profile-button" type="button" onclick="showProfile()">Thoát</button>
-        </div>
-    </form>
-</div>
+                    <!-- Change Password -->
+                    <div class="p-3 py-5" id="changepass" style="display: none;">
+                        <form action="changepassword" method="post">
+                            <input type="hidden" name="username" value="${sessionScope.account.userName}">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Đổi mật khẩu</h4>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <label class="labels">Mật khẩu hiện tại</label>
+                                    <input type="password" class="form-control"  placeholder="nhập mật khẩu hiện tại" name="oldpassword" required>
+                                    <h4 style="color: red">${requestScope.ms}</h4>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">Mật khẩu mới</label>
+                                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới"value="${mess}" name="newpassword" pattern="[a-zA-Z0-9]{8,}" title="Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số" required />
+                                    <p class="labels">Mật khẩu phải dài ít nhất 8 ký tự và chỉ chứa chữ cái và số.</p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">Xác nhận mật khẩu mới</label>
+                                    <input type="password" class="form-control" placeholder="xác nhận mật khẩu mới" value="${mess}" name="confirmpassword" required>
+                                    <h4 style="color: red">${requestScope.m}</h4>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-center">
+                                <button class="btn btn-primary profile-button" type="submit" value="CHANGE">Đổi mật khẩu</button>
+                                <button class="btn btn-secondary profile-button" type="button" onclick="showProfile()">Thoát</button>
+                            </div>
+                        </form>
+                    </div>
 
-<c:if test="${not empty requestScope.successMessage}">
-    <script>
-        alert("${requestScope.successMessage}");
-        window.location.href = "login";
-    </script>
-</c:if>
+                    <c:if test="${not empty requestScope.successMessage}">
+                        <script>
+                            alert("${requestScope.successMessage}");
+                            window.location.href = "login";
+                        </script>
+                    </c:if>
 
                 </div>
             </div>
@@ -208,35 +235,35 @@
 
             <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
             <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        // Handle profile and change password form display
-                                        function showChangePassword() {
-                                            document.getElementById('profile').style.display = 'none';
-                                            document.getElementById('changepass').style.display = 'block';
-                                        }
+                            document.addEventListener('DOMContentLoaded', function () {
+                                // Handle profile and change password form display
+                                function showChangePassword() {
+                                    document.getElementById('profile').style.display = 'none';
+                                    document.getElementById('changepass').style.display = 'block';
+                                }
 
-                                        function showProfile() {
-                                            document.getElementById('profile').style.display = 'block';
-                                            document.getElementById('changepass').style.display = 'none';
-                                        }
+                                function showProfile() {
+                                    document.getElementById('profile').style.display = 'block';
+                                    document.getElementById('changepass').style.display = 'none';
+                                }
 
-                                        // Event listeners for profile and change password buttons
-                                        document.querySelector('.add-experience').addEventListener('click', showChangePassword);
-                                        document.querySelector('.btn.btn-secondary.profile-button').addEventListener('click', showProfile);
+                                // Event listeners for profile and change password buttons
+                                document.querySelector('.add-experience').addEventListener('click', showChangePassword);
+                                document.querySelector('.btn.btn-secondary.profile-button').addEventListener('click', showProfile);
 
-                                        // Check if change password should be shown
+                                // Check if change password should be shown
             <% Boolean showChangePassword = (Boolean) request.getAttribute("showChangePassword"); %>
             <% if (showChangePassword != null && showChangePassword) { %>
-                                        showChangePassword();
+                                showChangePassword();
             <% } else { %>
-                                        showProfile();
+                                showProfile();
             <% } %>
 
-                                        // File input trigger for custom button
-                                        document.getElementById('customButton').addEventListener('click', function () {
-                                            document.getElementById('avatarInput').click();
-                                        });
-                                    });
+                                // File input trigger for custom button
+                                document.getElementById('customButton').addEventListener('click', function () {
+                                    document.getElementById('avatarInput').click();
+                                });
+                            });
         </script>
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

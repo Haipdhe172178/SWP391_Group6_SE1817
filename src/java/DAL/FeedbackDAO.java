@@ -9,6 +9,7 @@ import java.util.*;
 import java.lang.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class FeedbackDAO extends DBContext {
 
@@ -36,7 +37,7 @@ public class FeedbackDAO extends DBContext {
         }
         return listFeedback;
     }
-    
+
     //Lấy những đánh giá cao từ khách hàng
     public List<Feedback> getFeedbackMostRating() {
         List<Feedback> listFeedback = new ArrayList<>();
@@ -94,6 +95,22 @@ public class FeedbackDAO extends DBContext {
         } else {
             return 0;
         }
+    }
+
+    public boolean addFeedback(Feedback newFeedback) {
+        String sql = "  INSERT INTO [dbo].[Feedback] (AccountID, ProductID, Rating, Comments) VALUES (?, ?, ?, ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, newFeedback.getAccountId());
+            st.setInt(2, newFeedback.getProductId());
+            st.setInt(3, newFeedback.getRating());
+            st.setString(4, newFeedback.getComments());
+            int rowsInserted = st.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     //TEST FUNCTION
