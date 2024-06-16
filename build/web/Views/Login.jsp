@@ -38,6 +38,7 @@
                         <div class="signin-form">
                             <h2 class="form-title">Đăng nhập</h2>
                             <form method="POST" class="register-form" id="login-form">
+                                <input type="hidden" name="productID" value="${requestScope.productID}">
                                 <c:if test="${not empty errorMessage}">
                                     <div class="error-message" style="color: red;">${errorMessage}</div>
                                 </c:if>

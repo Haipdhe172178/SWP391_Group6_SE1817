@@ -330,33 +330,41 @@
                             <c:choose>
                                 <c:when test="${sessionScope.account eq null}">
                                     <div class="add-review margin-small col-md-6 text-md-right" style="align-items: center">
-                                        <p>Chỉ có thành viên mới có thể viết nhận xét. Vui lòng 
+                                        <p>Chỉ có thành viên mới có thể viết nhận xét. 
+                                            Vui lòng 
                                             <a href="login?productId=${requestScope.product.productId}" class="linkLogin">đăng nhập</a> hoặc 
-                                            <a href="register" class="linkLogin">đăng ký</a>
+                                            <a href="register?productId=${requestScope.product.productId}" class="linkLogin">đăng ký</a>
                                         </p>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="add-review margin-small col-md-6 text-md-right" style="display: inline-block; text-align: center;">
                                         <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post">
+                                            <input type="hidden" name="productID" value="${requestScope.product.productId}">
                                             <div class="review-rating py-2 align-items-start">
                                                 <div class="rate-box">
-                                                    <input type="radio" name="star" id="star0" value="1"/>
+                                                    <input type="radio" name="star" id="star0" value="5"/>
                                                     <label class="star" for="star0"></label>
-                                                    <input type="radio" name="star" id="star1" value="2"/>
+                                                    <input type="radio" name="star" id="star1" value="4"/>
                                                     <label class="star" for="star1"></label>
-                                                    <input type="radio" name="star" id="star2" value="3" checked="checked"/>
+                                                    <input type="radio" name="star" id="star2" value="3"/>
                                                     <label class="star" for="star2"></label>
-                                                    <input type="radio" name="star" id="star3" value="4"/>
+                                                    <input type="radio" name="star" id="star3" value="2"/>
                                                     <label class="star" for="star3"></label>
-                                                    <input type="radio" name="star" id="star4" value="5"/>
+                                                    <input type="radio" name="star" id="star4" value="1"/>
                                                     <label class="star" for="star4"></label>
                                                 </div>
                                             </div>
                                             <div class="w-100 d-flex align-items-start">
-                                                <textarea placeholder="Viết đánh giá của bạn" class="form-control flex-grow-1 mr-2" name="feedbackText"></textarea>
-                                                <button type="submit" name="submit" class="btn btn-primary my-3">Gửi</button>
+                                                <textarea placeholder="Viết đánh giá của bạn" class="form-control mr-2" name="feedbackText"></textarea></br>
                                             </div>
+                                            <button type="submit" name="submit" style="background-color: #007bff;
+                                                    color: white;
+                                                    border: none;
+                                                    padding: 10px 15px;
+                                                    border-radius: 4px;
+                                                    cursor: pointer;
+                                                    font-size: 14px;">Gửi đánh giá</button>
                                         </form>
                                     </div>
                                 </c:otherwise>

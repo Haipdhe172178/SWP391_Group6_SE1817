@@ -4,8 +4,9 @@
  */
 package Controllers;
 
-import DAL.AccountDAO;
+import DAL.FeedbackDAO;
 import Models.Account;
+import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,10 +18,10 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author ASUS TUF
+ * @author Hai Pham
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "FeedbackController", urlPatterns = {"/feedback"})
+public class FeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet FeedbackController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FeedbackController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,15 +61,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        request.setAttribute("productID", request.getParameter("productId"));
-        if (session.getAttribute("success") != null) {
-            request.setAttribute("success", session.getAttribute("success"));
-            session.removeAttribute("success");
-        }
-
-        request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -82,31 +75,27 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("your_name");
-        String password = request.getParameter("your_pass");
-        AccountDAO d = new AccountDAO();
-        Account a = d.check(username, password);
-        HttpSession session = request.getSession();
-        String productID = request.getParameter("productID");
-        if (a != null) {
-
-            if (a.getRoleId() == 1) {
-                session.setAttribute("role", "admin");
-                response.sendRedirect("dash");
-            } else {
-                session.setAttribute("role", "user");
-                if (productID != null && !productID.isEmpty()) {
-                    session.setAttribute("account", a);
-                    response.sendRedirect("single?productID=" + productID);
-                    return;
-                }
-                response.sendRedirect("home");
-            }
-            session.setAttribute("account", a);
-        } else {
-            request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu");
-            request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+        String comment = request.getParameter("feedbackText");
+        String star_raw = request.getParameter("star");
+        int productID = Integer.parseInt(request.getParameter("productID"));
+        int star = 0;
+        if (star_raw != null && !star_raw.isEmpty()) {
+            star = Integer.parseInt(star_raw);
         }
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
+        if (acc == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        int accID = acc.getAccountId();
+        FeedbackDAO fb = new FeedbackDAO();
+        Feedback newFeedback = new Feedback(accID, productID, star, comment);
+        boolean isAddComplete = fb.addFeedback(newFeedback);
+        if (isAddComplete) {
+            response.sendRedirect("single?productID=" + productID);
+        }
+        
     }
 
     /**
