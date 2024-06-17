@@ -4,34 +4,24 @@
  */
 package Controllers;
 
-import DAL.AccountDAO;
-import DAL.AuthorDao;
-import DAL.CategoryDao;
 import DAL.FeedbackDAO;
-import DAL.NewsDao;
-import DAL.ObjectAgeDao;
-import DAL.ProductDao;
 import Models.Account;
-import Models.Author;
-import Models.Category;
 import Models.Feedback;
-import Models.News;
-import Models.ObjectAge;
-import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author huyca
+ * @author Hai Pham
  */
-public class SingleProductControllers extends HttpServlet {
+@WebServlet(name = "FeedbackController", urlPatterns = {"/feedback"})
+public class FeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,10 +40,10 @@ public class SingleProductControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SingleProdcutControllers</title>");
+            out.println("<title>Servlet FeedbackController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SingleProdcutControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FeedbackController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,35 +61,7 @@ public class SingleProductControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("productID"));
-        //DAO
-        ProductDao productDao = new ProductDao();
-        NewsDao nd = new NewsDao();
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
-        AccountDAO accDAO = new AccountDAO();
-        
-        Product product = productDao.getProductById(id);
-        //LIST
-        List<Product> listP = productDao.getProductsByCategoryId(product.getCategory().getCategoryId(), "fourRandom");
-        List<News> listNews = nd.getFourNewsLated();
-        List<Feedback> listFeedback = feedbackDAO.getFeedbackByProductId(id);
-        List<Account> listAcc= accDAO.getAllAccount();
-        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
-        
-        
-        //QUANTITY
-        int quantitySold = productDao.getQuantitySoldByProductId(id);
-        int avgRating = feedbackDAO.avgRating(id);
-        request.setAttribute("avgRating", avgRating);
-        request.setAttribute("listMostRating", listMostRating);
-        request.setAttribute("listAccount", listAcc);
-        request.setAttribute("listFeedback", listFeedback);
-        request.setAttribute("quantitySold", quantitySold);
-        request.setAttribute("relatedProduct", listP);
-        request.setAttribute("product", product);
-        request.setAttribute("news", listNews);
-
-        request.getRequestDispatcher("Views/SingleProduct.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -113,7 +75,27 @@ public class SingleProductControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String comment = request.getParameter("feedbackText");
+        String star_raw = request.getParameter("star");
+        int productID = Integer.parseInt(request.getParameter("productID"));
+        int star = 0;
+        if (star_raw != null && !star_raw.isEmpty()) {
+            star = Integer.parseInt(star_raw);
+        }
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
+        if (acc == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        int accID = acc.getAccountId();
+        FeedbackDAO fb = new FeedbackDAO();
+        Feedback newFeedback = new Feedback(accID, productID, star, comment);
+        boolean isAddComplete = fb.addFeedback(newFeedback);
+        if (isAddComplete) {
+            response.sendRedirect("single?productID=" + productID);
+        }
+        
     }
 
     /**

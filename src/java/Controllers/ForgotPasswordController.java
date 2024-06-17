@@ -54,17 +54,16 @@ public class ForgotPasswordController extends HttpServlet {
 
             Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("thwww1303@gmail.com", "hbmbrxhmolhlunfn");
+                    return new PasswordAuthentication("shopbooksb88@gmail.com", "vplzvaciejmiqgll");
                 }
             });
 
             try {
                 MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("thwww1303@gmail.com"));
+                message.setFrom(new InternetAddress("shopbooksb88@gmail.com"));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                 message.setSubject("Your Email Verification Code");
                 message.setText("Your OTP is: " + otpvalue);
-
                 Transport.send(message);
                 System.out.println("Message sent successfully");
             } catch (MessagingException e) {
@@ -72,7 +71,7 @@ public class ForgotPasswordController extends HttpServlet {
             }
 
             dispatcher = request.getRequestDispatcher("Views/EnterOtp.jsp");
-            request.setAttribute("message", "OTP is sent to your email id");
+            request.setAttribute("message", "OTP được gửi đến id email của bạn");
             mySession.setAttribute("otp", otpvalue);
             mySession.setAttribute("email", email);
             dispatcher.forward(request, response);

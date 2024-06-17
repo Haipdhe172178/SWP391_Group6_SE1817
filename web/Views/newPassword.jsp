@@ -14,6 +14,27 @@
             padding-top: 70px;
         }
     </style>
+    <script>
+        $(document).ready(function(){
+            $('#reset-form').on('submit', function(event) {
+                var password = $('input[name="password"]').val();
+                var confPassword = $('input[name="confPassword"]').val();
+                var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+                if (!regex.test(password)) {
+                    event.preventDefault();
+                    alert('Mật khẩu phải bao gồm ít nhất 8 ký tự, chứa cả chữ cái và chữ số.');
+                    return false;
+                }
+
+                if (password !== confPassword) {
+                    event.preventDefault();
+                    alert('Mật khẩu và mật khẩu xác nhận không khớp.');
+                    return false;
+                }
+            });
+        });
+    </script>
 </head>
 <body class="bg-info">
     <div class="form-gap"></div>
@@ -41,7 +62,7 @@
                                 </div>
                             </c:if>
                             <div class="panel-body">
-                                <form id="reset-form" action="NewPasswordControlles" role="form" autocomplete="off" class="form" method="post">
+                                <form id="reset-form" action="newPassword" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key color-blue"></i></span>

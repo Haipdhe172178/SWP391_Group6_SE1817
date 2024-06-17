@@ -438,7 +438,7 @@
                                                 ${pro.author.authorName}
                                             </p>
 
-                                            <div class="rating text-warning d-flex align-items-center">
+<!--                                            <div class="rating text-warning d-flex align-items-center">
                                                 <svg class="star star-fill">
                                                 <use xlink:href="#star-fill"></use>
                                                 </svg>
@@ -454,7 +454,7 @@
                                                 <svg class="star star-fill">
                                                 <use xlink:href="#star-fill"></use>
                                                 </svg>
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <span class="price text-primary fw-bold mb-2 fs-5">
 
