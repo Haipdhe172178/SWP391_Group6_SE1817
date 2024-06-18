@@ -4,46 +4,101 @@
  */
 package Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author huyca
  */
 public class Cart {
-    private int accountId;
-    private int productId;
-    private int quantity;
+    private List<Item> items;
 
     public Cart() {
+        items = new ArrayList<>();
     }
 
-    public Cart(int accountId, int productId, int quantity) {
-        this.accountId = accountId;
-        this.productId = productId;
-        this.quantity = quantity;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public int getAccountId() {
-        return accountId;
+    private int getQuantityById(int id) {
+        Item item = getItemById(id);
+        return item != null ? item.getQuantity() : 0;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    private Item getItemById(int id) {
+        for (Item i : items) {
+            if (i.getProduct().getProductId() == id) {
+                return i;
+            }
+        }
+        return null;
     }
 
-    public int getProductId() {
-        return productId;
+    public void addItem(Item t) {
+        Item existingItem = getItemById(t.getProduct().getProductId());
+        if (existingItem != null) {
+            existingItem.setQuantity(existingItem.getQuantity() + t.getQuantity());
+        } else {
+            items.add(t);
+        }
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void removeItem(int id) {
+        Item item = getItemById(id);
+        if (item != null) {
+            items.remove(item);
+        }
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getTotalMoney() {
+        double total = 0;
+        for (Item i : items) {
+            total += (i.getQuantity() * i.getPrice());
+        }
+        return total;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public Product getProductById(int id, List<Product> list) {
+        for (Product i : list) {
+            if (i.getProductId() == id) {
+                return i;
+            }
+        }
+        return null;
     }
-    
+
+    public Cart(String txt, List<Product> list) {
+        items = new ArrayList<>();
+        try {
+            if (txt != null && txt.length() != 0) { // Giỏ hàng tồn tại
+                String[] s = txt.split(",");
+                for (String i : s) {
+                    String[] n = i.split(":");
+                    int id = Integer.parseInt(n[0]);
+                    int quantity = Integer.parseInt(n[1]);
+                    Product p = getProductById(id, list);
+                    if (p != null) {
+                        Item t = new Item(p, quantity, p.getPrice());
+                        addItem(t);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (Item item : items) {
+        sb.append(item.getProduct().getProductId()).append(":").append(item.getQuantity()).append(",");
+    }
+    if (sb.length() > 0) {
+        sb.deleteCharAt(sb.length() - 1); // Xóa dấu phẩy cuối cùng
+    }
+    return sb.toString();
+}
 }
