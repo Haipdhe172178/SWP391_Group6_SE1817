@@ -64,8 +64,8 @@
                     </a>
                     <ul>
 
-                        <li><a href="mail_box.html">Mail Box</a></li>
-                        <li><a href="chat.html">Chat</a></li>
+                         <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -90,7 +90,7 @@
                     <ul>
                          <li><a href="data">Sản phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
-                        <li><a href="">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>

@@ -1,11 +1,11 @@
 <%-- 
-    Document   : UpdateProduct
-    Created on : May 30, 2024, 2:23:39 PM
-    Author     : USER
+    Document   : AddAuthor.jsp
+    Created on : Jun 18, 2024, 10:50:22 AM
+    Author     : huyca
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -14,24 +14,66 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
-
-
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
-
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
-
         <link rel="stylesheet" href="vendors/scroll/scrollable.css" />
-
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
-
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
-
         <link rel="stylesheet" href="css/metisMenu.css">
-
         <link rel="stylesheet" href="css/style1.css" />
+        <title> Thêm Tác Giả</title>
+        <style>
+            .error {
+                color: red;
+                font-size: 0.8em;
+            }
+            /* CSS for notification */
+            .notification-container {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                display: none;
+                z-index: 1000;
+                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+            }
+
+            .notification {
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .notification.success {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .notification.error {
+                background-color: #f44336;
+                color: white;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                }
+                to {
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(100%);
+                }
+            }
+        </style>
     </head>
 
     <body class="crm_body_bg">
@@ -52,7 +94,7 @@
                         <span>Dashboard</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Sales</a></li>
+                        <li><a class="active" href="">Sales</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -64,8 +106,8 @@
                     </a>
                     <ul>
 
-                        <li><a href="mail_box.html">Mail Box</a></li>
-                        <li><a href="chat.html">Chat</a></li>
+                         <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -88,7 +130,9 @@
                         <span>Table</span>
                     </a>
                     <ul>
-                        <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="data">Sản phẩm</a></li>
+                        <li><a href="">Thể Loại</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>
@@ -229,8 +273,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="main_content_iner ">
+            <div id="notification-container" class="notification-container"></div>
+            <div class="main_content_iner">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
@@ -238,96 +282,37 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Data table</h3>
+                                            <h3 class="m-0">Thêm sản phẩm</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="white_card_body">
-                                  
-                                    <form action="update" method="post" enctype="multipart/form-data">
-                                        <div hidden="" class="mb-3">
-                                           
-                                            <label for="productName">ID</label>
-                                            <input type="text" class="form-control" id="productName" name="ID" value="${data.productId}" required>
-                                        </div>
-
+                                <form action="adda" method="POST" id="myForm">
+                                    <div class="white_card_body">
                                         <div class="mb-3">
-                                           
-                                            <label for="productName">Tên</label>
-                                            <input type="text" class="form-control" id="productName" name="name" value="${data.name}" required>
-                                        </div>
+                                            <label for="authorName">Tên tác giả</label>
+                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
+                                            <div id="authorNameError" class="error"></div>
+                                        </div>                                  
                                         <div class="mb-3">
-                                            <label for="productPrice">Giá</label>
-                                            <input type="number" class="form-control" id="productPrice" name="price" value="${data.price}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productQuantity">Số lượng</label>
-                                            <input type="number" class="form-control" id="productQuantity" name="quantity" value="${data.quantity}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productName">Mô tả</label>
-                                            <textarea class="form-control" id="productdescription" name="description" required>${data.description}</textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productCategory" class="form-label">Category</label>
-                                            <select class="form-select" id="productCategory" name="categoryId" required>
-                                                <c:forEach items="${category}" var="c">
-                              
-                                                    <option value="${c.categoryId}" ${c.categoryId == data.categoryId ? 'selected':''} >${c.categoryName}</option>
-                                                </c:forEach>
-                             
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productAge" class="form-label">Tác giả</label>
-                                            <select class="form-select" id="productAge" name="author" required>
-                                                <c:forEach items="${author}" var="au">
-                                                    <option value="${au.authorID}" ${au.authorID == data.authorId ? 'selected': '' }>${au.authorName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-
-<!--                                       <div class="mb-3">
-                                            <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control"  name="imgProduct"  >
-                                            <img height="10%" width="10%" src="${data.imgProduct}">
-                                        </div>                                                                             -->                                      
-                                          <div class="mb-3">
-                                            <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control" id="prodctimg" name="imgProduct" >
-                                            <img height="10%" width="10%" src="${data.imgProduct}">
-                                        </div>
-                                          <div hidden="" class="mb-3">
-                                            <label for="productName">anh</label>
-                                            <input type="text" class="form-control" id="productdescription" name="imgProduct12" value="${data.imgProduct}" >
-                                        </div>
-<!--                                         <div hidden="" class="mb-3">
-                                            <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="text" class="form-control"  name="imgProduct12"  value="${data.imgProduct}">
-                                        </div>-->
-                                       
-                                       
-                                        <div class="mb-3">
-                                            <label for="productAge" class="form-label">Age</label>
-                                            <select class="form-select" id="productAge" name="ageId" required>
-                                                <c:forEach items="${obage}" var="o">
-                                                    <option value="${o.ageId}" ${o.ageId == data.ageId ? 'selected':''}>${o.age}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
+                                            <label for="authorDescription">Tiểu sử</label>
+                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
+                                            <div id="authorDescriptionError" class="error"></div>
+                                        </div>                                                                                                                                                              
                                         <div>
-                                            <button type="submit" name="submit" class="btn btn-primary">Update</button>
+                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
+                                            <a href="data" class="btn btn-warning">Trở lại</a>
                                         </div>
-                                    </form>
-                                            <h2  style=" color: red">${error}</h2>
-                                </div>
+                                    </div>
+                                </form>
+
 
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+
             <div class="footer_part">
                 <div class="container">
                     <div class="row">
@@ -474,8 +459,68 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
+        <!--kiem tra validation-->
+        <script>
+            // JavaScript for form validation
+            document.getElementById('myForm').addEventListener('submit', function (event) {
+                var authorName = document.getElementById('authorName').value.trim();
+                var authorDescription = document.getElementById('authortDescription').value.trim();
+                var authorNameError = document.getElementById('authorNameError');
+                var authorDescriptionError = document.getElementById('authorDescriptionError');
+                var isValid = true;
+                // Reset previous error messages
+                authorNameError.textContent = '';
+                authorDescriptionError.textContent = '';
+                if (authorName === '') {
+                    authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
+                    isValid = false;
+                }
+                if (authorDescription === '') {
+                    authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                    isValid = false;
+                }
 
-        <script src="js/custom.js"></script>
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        </script>
+        <!--hien thi thong bao-->
+        <script>
+            function showNotificationAndRedirect() {
+                var notification = '<%= session.getAttribute("notification") %>';
+                if (notification === 'success') {
+                    var notificationContainer = document.getElementById('notification-container');
+                    if (notificationContainer) {
+                        var notificationElement = document.createElement('div');
+                        notificationElement.classList.add('notification', 'success');
+                        notificationElement.textContent = 'Thêm tác giả thành công!';
+                        notificationContainer.appendChild(notificationElement);
+                        notificationContainer.style.display = 'block';
+                        setTimeout(function () {
+                            notificationContainer.style.display = 'none';
+                            window.location.href = '<%= request.getContextPath() %>/author';
+                        }, 5000);
+                    }
+                } else if (notification === 'error') {
+                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
+                    var notificationContainer = document.getElementById('notification-container');
+                    if (notificationContainer) {
+                        var notificationElement = document.createElement('div');
+                        notificationElement.classList.add('notification', 'error');
+                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
+                        notificationContainer.appendChild(notificationElement);
+                        notificationContainer.style.display = 'block';
+                        setTimeout(function () {
+                            notificationContainer.style.display = 'none';
+                        }, 5000);
+                    }
+                }
+            <% session.removeAttribute("notification"); %>
+            <% session.removeAttribute("errorMessage"); %>
+            }
+            window.onload = showNotificationAndRedirect;
+        </script>
     </body>
-
 </html>
+

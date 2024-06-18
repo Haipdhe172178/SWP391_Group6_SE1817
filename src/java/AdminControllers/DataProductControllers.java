@@ -18,7 +18,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -66,10 +65,7 @@ public class DataProductControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDao productDao = new ProductDao();
-        CategoryDao categoryDao = new CategoryDao();
-        AuthorDao authorDao = new AuthorDao();
-        ObjectAgeDao oad = new ObjectAgeDao();
-        
+          
         String indexPage = request.getParameter("index");
         int index;
         if (indexPage != null) {
@@ -94,19 +90,10 @@ public class DataProductControllers extends HttpServlet {
         if (searchKeyword != null) {
             query += "&&s=" + searchKeyword;
         }
-        HttpSession session = request.getSession();
-        if (session.getAttribute("notification") != null) {
-            request.setAttribute("notification", session.getAttribute("notification"));
-            session.removeAttribute("notification");
-        }
-        List<Category> categorys = categoryDao.getallCategorys();
-        List<ObjectAge> oas = oad.getallObjectAges();
-        List<Author> au = authorDao.getallAuthors();
+       
+       
         request.setAttribute("query", query);
         request.setAttribute("product", list);
-        request.setAttribute("category", categorys);
-        request.setAttribute("obage", oas);
-        request.setAttribute("author", au);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.getRequestDispatcher("Views/Admin/Product.jsp").forward(request, response);
