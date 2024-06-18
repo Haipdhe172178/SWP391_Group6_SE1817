@@ -222,5 +222,49 @@ public class NewsDao extends DBContext {
         }
         return listNews;
     }
+ public News getNewsById(int id) {
+        News news = null;
+        String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source "
+                     + "FROM News n JOIN Topic t ON n.TopicID = t.TopicID WHERE n.NewID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                news = new News();
+                news.setNewId(rs.getInt(1));
+                Topic topic = new Topic(rs.getInt(2), rs.getString(3));
+                news.setTopic(topic);
+                news.setTitle(rs.getString(4));
+                news.setContent(rs.getString(5));
+                news.setImgNews1(rs.getString(6));
+                news.setImgNews2(rs.getString(7));
+                news.setDateUpload(rs.getDate(8));
+                news.setSource(rs.getString(9));
 
-}
+                // Fetch tags
+                news.setTags(getTagsByNewsId(id));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return news;
+    }
+
+    private List<String> getTagsByNewsId(int newsId) {
+        List<String> tags = new ArrayList<>();
+        String query = "SELECT TagName FROM NewsTags WHERE NewsID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, newsId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                tags.add(rs.getString("TagName"));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return tags;
+    }
+
+            }

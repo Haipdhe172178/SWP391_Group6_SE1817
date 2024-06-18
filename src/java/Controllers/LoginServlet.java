@@ -60,14 +60,14 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        
-        if(session.getAttribute("success") != null) {
+        request.setAttribute("productID", request.getParameter("productId"));
+        if (session.getAttribute("success") != null) {
             request.setAttribute("success", session.getAttribute("success"));
             session.removeAttribute("success");
         }
-        
+
         request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
     }
 
@@ -87,13 +87,19 @@ public class LoginServlet extends HttpServlet {
         AccountDAO d = new AccountDAO();
         Account a = d.check(username, password);
         HttpSession session = request.getSession();
-         if (a != null) {
-  
+        String productID = request.getParameter("productID");
+        if (a != null) {
+
             if (a.getRoleId() == 1) {
                 session.setAttribute("role", "admin");
                 response.sendRedirect("dash");
             } else {
                 session.setAttribute("role", "user");
+                if (productID != null && !productID.isEmpty()) {
+                    session.setAttribute("account", a);
+                    response.sendRedirect("single?productID=" + productID);
+                    return;
+                }
                 response.sendRedirect("home");
             }
             session.setAttribute("account", a);
