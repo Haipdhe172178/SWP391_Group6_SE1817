@@ -136,23 +136,23 @@
         <div class="search-popup-container">
 
             <form role="search" method="get" class="search-form" action="filter">
-            <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
-            <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
-        </form>
+                <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s" />
+                <button type="submit" class="search-submit"><svg class="search"><use xlink:href="#search"></use></svg></button>
+            </form>
 
-        <h5 class="cat-list-title">Thể loại sách</h5>
+            <h5 class="cat-list-title">Thể loại sách</h5>
 
-        <ul class="cat-list">
-            <li class="cat-list-item">
-                <a href="shop"  title="">Tất cả</a>
-            </li>
-            <c:forEach items="${category}" var="cate">
+            <ul class="cat-list">
                 <li class="cat-list-item">
-                    <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    <a href="shop"  title="">Tất cả</a>
                 </li>
-            </c:forEach>
+                <c:forEach items="${category}" var="cate">
+                    <li class="cat-list-item">
+                        <a href="filter?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
+                    </li>
+                </c:forEach>
 
-        </ul>
+            </ul>
 
         </div>
     </div>
@@ -468,39 +468,49 @@
             <div class="section-title mb-4 text-center">
                 <h3 class="mb-4">Đánh giá từ khách hàng</h3>
             </div>
-            <div class="swiper testimonial-swiper ">
+            <div class="swiper testimonial-swiper">
                 <div class="swiper-wrapper">
                     <c:forEach var="feedback" items="${requestScope.listMostRating}">
-                        <div class="swiper-slide">
-                            <div class="card position-relative text-left p-5 border rounded-3">
-                                <blockquote>"${feedback.comments}"</blockquote>
-                                <div class="rating text-warning d-flex align-items-center">
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
-                                    <svg class="star star-fill">
-                                    <use xlink:href="#star-fill"></use>
-                                    </svg>
+                        <div class="swiper-slide d-flex justify-content-center">
+                            <div class="card position-relative text-left p-5 border rounded-3 d-flex flex-row" style="width: 90%; max-width: 900px;">
+                                <div class="col-lg-8">
+                                    <blockquote>"${feedback.comments}"</blockquote>
+                                    <div class="rating text-warning d-flex align-items-center">
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                        <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                        </svg>
+                                    </div>
+                                    <c:forEach var="acc" items="${requestScope.listAccount}">
+                                        <c:if test="${feedback.accountId == acc.accountId}">
+                                            <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
+                                        </c:if>
+                                    </c:forEach>
                                 </div>
-                                <c:forEach var="acc" items="${requestScope.listAccount}">
-                                    <c:if test="${feedback.accountId == acc.accountId}">
-                                        <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
-                                    </c:if> 
-                                </c:forEach>
+                                <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
+                                    <c:forEach var="p" items="${requestScope.productList}">
+                                        <c:if test="${feedback.productId == p.productId}">
+                                            <a href="single?productID=${p.productId}" style="margin-left: 30px"><img src="${p.imgProduct}" width="75%" height="auto" alt="Product Image" /></a>
+                                            </c:if>
+                                        </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
             </div>
+
         </div>
     </section>
 

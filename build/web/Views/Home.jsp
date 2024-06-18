@@ -994,15 +994,15 @@
 </section>
 
 <section id="customers-reviews" class="position-relative padding-large" style="background-image: url(images/banner-image-bg.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 600px;">
-    <div class="container">
+    <div class="container offset-md-3 col-md-6 ">
         <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next testimonial-button-next">
             <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                <use xlink:href="#alt-arrow-right-outline"></use>
+            <use xlink:href="#alt-arrow-right-outline"></use>
             </svg>
         </div>
         <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev testimonial-button-prev">
             <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                <use xlink:href="#alt-arrow-left-outline"></use>
+            <use xlink:href="#alt-arrow-left-outline"></use>
             </svg>
         </div>
         <div class="section-title mb-4 text-center">
@@ -1011,57 +1011,38 @@
         <div class="swiper testimonial-swiper">
             <div class="swiper-wrapper">
                 <c:forEach var="feedback" items="${requestScope.listMostRating}">
-                    <div class="swiper-slide" >
-                        <div class="card position-relative text-left p-5 border rounded-3">
-                            <blockquote>"${feedback.comments}"</blockquote>
-                            <div class="rating text-warning d-flex align-items-center">
-                                <svg class="star star-fill">
+                    <div class="swiper-slide d-flex justify-content-center">
+                        <div class="card position-relative text-left p-5 border rounded-3 d-flex flex-row" style="width: 90%; max-width: 900px;">
+                            <div class="col-lg-8">
+                                <blockquote>"${feedback.comments}"</blockquote>
+                                <div class="rating text-warning d-flex align-items-center">
+                                    <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
+                                    </svg>
+                                    <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
+                                    </svg>
+                                    <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
+                                    </svg>
+                                    <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
-                                </svg>
-                                <svg class="star star-fill">
+                                    </svg>
+                                    <svg class="star star-fill">
                                     <use xlink:href="#star-fill"></use>
-                                </svg>
+                                    </svg>
+                                </div>
+                                <h5 class="mt-1 fw-normal">${feedback.account.fullName}</h5>
                             </div>
-                            <c:forEach var="acc" items="${requestScope.listAccount}">
-                                <c:if test="${feedback.accountId == acc.accountId}">
-                                    <h5 class="mt-1 fw-normal">${acc.fullName}</h5>
-                                </c:if> 
-                            </c:forEach>
+                            <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
+                                <a href="single?productID=${feedback.product.productId}" style="margin-left: 30px"><img src="${feedback.product.imgProduct}" width="75%" height="auto" alt="Product Image" /></a>
+                            </div>
                         </div>
                     </div>
                 </c:forEach>
             </div>
         </div>
-    </div>
-</section>
 
-
-<section id="latest-posts" class="padding-large">
-    <div class="container">
-        <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-            <h3 class="d-flex align-items-center">Tin tức mới nhất</h3>
-            <a href="blog" class="btn">Xem tất cả</a>
-        </div>
-        <div class="row">
-            <!-- NEWS -->
-             <c:forEach var="n" items="${requestScope.news}">
-        <div class="col-md-3 posts mb-4">
-            <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
-            <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
-            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post?id=${n.newId}">${n.title}</a></h4>
-            <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post?id=${n.newId}">Read More</a></span></p>
-        </div>
-    </c:forEach>
-        </div>
     </div>
 </section>
 

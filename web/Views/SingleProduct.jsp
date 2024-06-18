@@ -79,6 +79,32 @@
             .linkLogin:hover {
                 color: #F86D72; /* Change to desired hover color */
             }
+            .filterFeedback {
+                /* Căn chỉnh các phần tử con trên cùng một hàng */
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .filterFeedback filter {
+                /* Đặt các thẻ <a> trong cùng một hàng và cài đặt kiểu dáng */
+                display: inline-block;
+                margin-bottom: 10px; /* Khoảng cách dưới mỗi thẻ <a> */
+                padding: 8px 12px; /* Khoảng cách lề nội dung bên trong thẻ <a> */
+                text-decoration: none; /* Loại bỏ gạch chân mặc định */
+                font-weight: bold;
+                color: black; /* Màu chữ mặc định */
+                border-radius: 4px; /* Đường viền cong */
+                transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+                background-color: #F86D72; /* Màu nền */
+                border: 1px solid #F86D72; /* Viền cùng màu với nền */
+            }
+
+
+            .row.border-bottom .filter.active {
+                font-weight: bold;
+                color: #F86D72; /* Thay đổi màu chữ khi active */
+            }
         </style>
     </head>
 
@@ -203,7 +229,7 @@
         <section id="related-items" class="position-relative padding-large ">
             <div class="container">
                 <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                    <h3 class="d-flex align-items-center">Sách liên quan</h3>
+                    <h3 class="d-flex align-items-center">Sách cùng thể loại</h3>
                     <a href="filter?categoryId=${requestScope.product.category.categoryId}" class="btn">Xem tất cả</a>
                 </div>
                 <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
@@ -309,7 +335,7 @@
                         </div>
                         <div class="row border-bottom">
 
-                            <div class="rating text-warning align-items-start margin-small col-md-6" >
+                            <div id="feedback-section" class="rating text-warning align-items-start margin-small col-md-6"  style="margin-bottom: 20px">
                                 <h4 style="font-weight: bold; color: black">Đánh giá sản phẩm</h4>
 
                                 <h3>${requestScope.avgRating} / 5</h3>
@@ -325,7 +351,7 @@
                                         </svg>
                                     </c:forEach>
                                 </div>
-                                <p>(${requestScope.listFeedback.size()} đánh giá)</p>
+                                <p>(${requestScope.quantityFeedback} đánh giá)</p>
                             </div>
                             <c:choose>
                                 <c:when test="${sessionScope.account eq null}">
@@ -369,7 +395,18 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
+                            <c:if test="${requestScope.listFeedback != null}">
+                                <div class="filterFeedback col-lg-6">
+                                    <a href="single?page=1&productID=${requestScope.product.productId}" class="filter  ${requestScope.rating eq null ?'active':''}" style="margin-bottom: 10px" >Mới nhất</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=5" class="filter ${requestScope.rating eq "5" ?'active':''}" style="margin-bottom: 10px">5 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=4" class="filter ${requestScope.rating eq "4" ?'active':''}"" style="margin-bottom: 10px">4 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=3" class="filter ${requestScope.rating eq "3" ?'active':''}"" style="margin-bottom: 10px">3 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=2" class="filter ${requestScope.rating eq "2" ?'active':''}"" style="margin-bottom: 10px">2 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=1" class="filter ${requestScope.rating eq "1" ?'active':''}"" style="margin-bottom: 10px">1 Sao</a>
+                                </div>
+                            </c:if>
                         </div>
+
                         <div class="tab-content py-4" id="nav-tabContent">
                             <!-- FEEDBACK -->
                             <div class="tab-pane fade  active show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
@@ -377,11 +414,7 @@
                                     <c:forEach var="feedback" items="${requestScope.listFeedback}">
                                         <div class="review-item d-flex">
                                             <div class="image-holder me-2">
-                                                <c:forEach var="acc" items="${requestScope.listAccount}">
-                                                    <c:if test="${feedback.accountId == acc.accountId}"> 
-                                                        <img src="${acc.imgAccount}" alt="review" class="img-fluid rounded-3" style="width: 5em">
-                                                    </c:if>
-                                                </c:forEach>
+                                                <img src="${feedback.account.imgAccount}" alt="review" class="img-fluid rounded-3" style="width:  5em">
                                             </div>
                                             <div class="review-content">
                                                 <div class="rating text-primary">
@@ -397,17 +430,62 @@
                                                     </c:forEach> 
                                                 </div>
                                                 <div class="review-header">
-                                                    <c:forEach var="acc" items="${requestScope.listAccount}">
-                                                        <c:if test="${feedback.accountId == acc.accountId}">
-                                                            <span class="author-name fw-medium">${acc.fullName}</span>
-                                                        </c:if> 
-                                                    </c:forEach>
+                                                    <span class="author-name fw-medium">${feedback.account.fullName}</span>
                                                     <span class="review-date"> / ${feedback.feedbackDate}</span>
                                                 </div>
                                                 <p>${feedback.comments}</p>
                                             </div>
                                         </div>
                                     </c:forEach>
+                                    <!--endPage,page,listFeedback-->
+                                    <c:set var="total" value="${requestScope.endPage}" />
+                                    <c:set var="page" value="${requestScope.page}" />
+                                    <c:if test="${requestScope.listFeedback != null}">
+                                        <nav class="pt-5 border-top" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-5">
+                                                <li class="page-item">
+                                                    <c:if test="${page > 1}">
+                                                        <a class="page-link" href="single?page=${page-1}&productID=${requestScope.product.productId}&rating=${requestScope.rating}" >   <   </a>
+                                                    </c:if>
+                                                </li>
+                                                <c:if test="${total <= 5}">
+                                                    <c:forEach begin="1" end="${total}" var="pageNum">
+                                                        <li class="page-item ${page == pageNum ? 'active' : ''}">
+                                                            <a class="page-link" href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=${requestScope.rating}" ${page == pageNum ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                </c:if>
+                                                <c:if test="${total > 5}">
+                                                    <li class="page-item ${page == 1 ? 'active' : ''}">
+                                                        <a class="page-link" href="single?page=1&productID=${requestScope.product.productId}&rating=${requestScope.rating}"  ${page == 1 ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>1</a>
+                                                    </li>
+                                                    <c:if test="${page > 3}">
+                                                        <li class="page-item disabled">
+                                                            <span class="page-link">...</span>
+                                                        </li>
+                                                    </c:if>
+                                                    <c:forEach begin="${page > 2 ? page - 1 : 2}" end="${page < total - 1 ? page + 1 : total - 1}" var="pageNum">
+                                                        <li class="page-item ${page == pageNum ? 'active' : ''}">
+                                                            <a class="page-link" href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=${requestScope.rating}"  ${page == pageNum ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                    <c:if test="${page < total - 2}">
+                                                        <li class="page-item disabled">
+                                                            <span class="page-link">...</span>
+                                                        </li>
+                                                    </c:if>
+                                                    <li class="page-item ${page == total ? 'active' : ''}">
+                                                        <a class="page-link" href="single?page=${total}&productID=${requestScope.product.productId}&rating=${requestScope.rating}" ${page == total ? 'style="background-color: #F86D72; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
+                                                    </li>
+                                                </c:if>
+                                                <li class="page-item">
+                                                    <c:if test="${page < total}">
+                                                        <a class="page-link" href="single?page=${page+1}&productID=${requestScope.product.productId}&rating=${requestScope.rating}" > > </a>
+                                                    </c:if>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -415,110 +493,23 @@
                 </div>
             </div>
         </section>
+        <script>
+            // Hàm kiểm tra nếu URL chứa tham số page
+            function scrollToFeedbackSection() {
+                // Lấy giá trị của tham số page từ URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const pageParam = urlParams.get('page');
+                const ratingParam = urlParams.get('rating');
 
-
-        <section id="latest-posts" class="padding-large">
-            <div class="container">
-                <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                    <h3 class="d-flex align-items-center">Tin tức</h3>
-                    <a href="blog" class="btn">Xem tất cả</a>
-                </div>
-                <div class="row">
-                    <!-- NEWS -->
-                    <c:forEach var="n" items="${requestScope.news}">
-                        <div class="col-md-3 posts mb-4">
-                            <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
-                            <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 
-                            </p>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-        </section>
-
-        <section id="instagram">
-            <div class="container">
-                <div class="text-center mb-4">
-                    <h3>Instagram</h3>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <figure class="instagram-item position-relative rounded-3">
-                            <a href="https://templatesjungle.com/" class="image-link position-relative">
-                                <div class="icon-overlay position-absolute d-flex justify-content-center">
-                                    <svg class="instagram">
-                                    <use xlink:href="#instagram"></use>
-                                    </svg>
-                                </div>
-                                <img src="${pageContext.request.contextPath}/images/insta-item1.jpg" alt="instagram" class="img-fluid rounded-3 insta-image">
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="col-md-2">
-                        <figure class="instagram-item position-relative rounded-3">
-                            <a href="https://templatesjungle.com/" class="image-link position-relative">
-                                <div class="icon-overlay position-absolute d-flex justify-content-center">
-                                    <svg class="instagram">
-                                    <use xlink:href="#instagram"></use>
-                                    </svg>
-                                </div>
-                                <img src="${pageContext.request.contextPath}/images/insta-item2.jpg" alt="instagram" class="img-fluid rounded-3 insta-image">
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="col-md-2">
-                        <figure class="instagram-item position-relative rounded-3">
-                            <a href="https://templatesjungle.com/" class="image-link position-relative">
-                                <div class="icon-overlay position-absolute d-flex justify-content-center">
-                                    <svg class="instagram">
-                                    <use xlink:href="#instagram"></use>
-                                    </svg>
-                                </div>
-                                <img src="${pageContext.request.contextPath}/images/insta-item3.jpg" alt="instagram" class="img-fluid rounded-3 insta-image">
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="col-md-2">
-                        <figure class="instagram-item position-relative rounded-3">
-                            <a href="https://templatesjungle.com/" class="image-link position-relative">
-                                <div class="icon-overlay position-absolute d-flex justify-content-center">
-                                    <svg class="instagram">
-                                    <use xlink:href="#instagram"></use>
-                                    </svg>
-                                </div>
-                                <img src="${pageContext.request.contextPath}/images/insta-item4.jpg" alt="instagram" class="img-fluid rounded-3 insta-image">
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="col-md-2">
-                        <figure class="instagram-item position-relative rounded-3">
-                            <a href="https://templatesjungle.com/" class="image-link position-relative">
-                                <div class="icon-overlay position-absolute d-flex justify-content-center">
-                                    <svg class="instagram">
-                                    <use xlink:href="#instagram"></use>
-                                    </svg>
-                                </div>
-                                <img src="${pageContext.request.contextPath}/images/insta-item5.jpg" alt="instagram" class="img-fluid rounded-3 insta-image">
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="col-md-2">
-                        <figure class="instagram-item position-relative rounded-3">
-                            <a href="https://templatesjungle.com/" class="image-link position-relative">
-                                <div class="icon-overlay position-absolute d-flex justify-content-center">
-                                    <svg class="instagram">
-                                    <use xlink:href="#instagram"></use>
-                                    </svg>
-                                </div>
-                                <img src="${pageContext.request.contextPath}/images/insta-item6.jpg" alt="instagram" class="img-fluid rounded-3 insta-image">
-                            </a>
-                        </figure>
-                    </div>
-                </div>
-            </div>
-        </section>
+                // Nếu có tham số page và phần feedback có sẵn
+                if ((pageParam || ratingParam) && document.getElementById('feedback-section')) {
+                    // Cuộn trang đến vị trí của phần feedback
+                    document.getElementById('feedback-section').scrollIntoView();
+                }
+            }
+            // Gọi hàm này khi trang đã load hoàn toàn
+            window.onload = scrollToFeedbackSection;
+        </script>
 
         <jsp:include page="../common/footer.jsp"></jsp:include>
         <script src="js/jquery-1.11.0.min.js"></script>
