@@ -27,6 +27,7 @@ public class AuthorDao extends DBContext {
                 author.setAuthorID(rs.getInt("authorID"));
                 author.setAuthorName(rs.getString("authorName"));
                 author.setDescription(rs.getString("description"));
+                author.setStatus(rs.getInt("status"));
                 authors.add(author);
             }
         } catch (Exception ex) {
@@ -47,6 +48,7 @@ public class AuthorDao extends DBContext {
                 author.setAuthorID(rs.getInt("authorID"));
                 author.setAuthorName(rs.getString("authorName"));
                 author.setDescription(rs.getString("description"));
+                author.setStatus(rs.getInt("status"));
                 return author;
             }
         } catch (Exception ex) {
@@ -72,6 +74,102 @@ public class AuthorDao extends DBContext {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public Author getAuthorByName(String name) {
+        String query = "SELECT * FROM Author WHERE AuthorName = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                return author;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Author> pagingAuthors(int index) {
+        List<Author> list = new ArrayList<>();
+        String query = "SELECT * FROM Author "
+                + "ORDER BY AuthorID "
+                + "OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                author.setStatus(rs.getInt("status"));
+                list.add(author);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAuthors() {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Author";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return total;
+    }
+
+    public void insertAuthor(Author author) {
+        String query = "INSERT INTO Author (authorName, description, status) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, author.getAuthorName());
+            ps.setString(2, author.getDescription());
+            ps.setInt(3, author.getStatus());
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateAuthor(Author author) {
+        String query = "UPDATE Author SET AuthorName = ?, description = ?, status = ? WHERE AuthorID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, author.getAuthorName());
+            ps.setString(2, author.getDescription());
+            ps.setInt(3, author.getStatus());
+            ps.setInt(4, author.getAuthorID());
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void hideAuthor(int authorId) {
+        String query = "UPDATE author SET status = 0 WHERE authorID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, authorId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

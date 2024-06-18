@@ -19,11 +19,12 @@ public class Account {
     private String address;
     private int roleId;
     private String imgAccount;
+    private int status;
 
     public Account() {
     }
 
-    public Account(int accountId, String fullName, String userName, String passWord, String gender, String email, String phoneNumber, String address, int roleId, String imgAccount) {
+    public Account(int accountId, String fullName, String userName, String passWord, String gender, String email, String phoneNumber, String address, int roleId, String imgAccount, int status) {
         this.accountId = accountId;
         this.fullName = fullName;
         this.userName = userName;
@@ -34,6 +35,17 @@ public class Account {
         this.address = address;
         this.roleId = roleId;
         this.imgAccount = imgAccount;
+        this.status = status;
+    }
+
+    
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getAccountId() {
@@ -114,6 +126,11 @@ public class Account {
 
     public void setImgAccount(String imgAccount) {
         this.imgAccount = imgAccount;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" + "accountId=" + accountId + ", fullName=" + fullName + ", userName=" + userName + ", passWord=" + passWord + ", gender=" + gender + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", roleId=" + roleId + ", imgAccount=" + imgAccount + ", status=" + status + '}';
     }
     
 }

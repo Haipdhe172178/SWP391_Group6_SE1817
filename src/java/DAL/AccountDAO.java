@@ -36,7 +36,8 @@ public class AccountDAO extends DBContext {
                         rs.getString("PhoneNumber"),
                         rs.getString("Address"),
                         rs.getInt("RoleID"),
-                        rs.getString("ImgAccount")
+                        rs.getString("ImgAccount"),
+                        rs.getInt("status")
                 );
                 return a;
             }
@@ -74,7 +75,7 @@ public class AccountDAO extends DBContext {
     }
 
     public boolean createUser(String fullName, String username, String password, String email, String phoneNumber, String address) {
-        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address, RoleID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address, RoleID,Status) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, fullName);
@@ -84,6 +85,7 @@ public class AccountDAO extends DBContext {
             st.setString(5, phoneNumber);
             st.setString(6, address);
             st.setInt(7, 3); // Set RoleID to 3 by default
+            st.setInt(8, 1); // Set status to 1 by default
             int rowsInserted = st.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -110,6 +112,7 @@ public class AccountDAO extends DBContext {
                 acc.setAddress(rs.getString(8));
                 acc.setRoleId(rs.getInt(9));
                 acc.setImgAccount(rs.getString(10));
+                acc.setStatus(rs.getInt(11));
 
                 listAcc.add(acc);
             }
@@ -181,11 +184,7 @@ public class AccountDAO extends DBContext {
             return false;
         }
     }
-
-    public static void main(String[] args) {
-        //Test function        
-    }
-
+    
     public Account getAccountByEmail(String email) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Email = ?";
         try {
@@ -204,6 +203,7 @@ public class AccountDAO extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 account.setRoleId(rs.getInt("RoleID"));
                 account.setImgAccount(rs.getString("ImgAccount"));
+                account.setStatus(rs.getInt("Status"));
                 return account;
             }
         } catch (SQLException e) {
@@ -211,4 +211,12 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+    public static void main(String[] args) {
+        AccountDAO ac = new AccountDAO();
+        List<Account> accounts = ac.getAllAccount();
+        for (Account account : accounts) {
+            System.out.println(accounts);
+        }
+    }
+    
 }

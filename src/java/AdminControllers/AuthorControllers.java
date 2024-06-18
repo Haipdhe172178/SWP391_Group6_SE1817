@@ -6,7 +6,6 @@ package AdminControllers;
 
 import DAL.AuthorDao;
 import Models.Author;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,16 +58,28 @@ public class AuthorControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String keyword = request.getParameter("q");
-        AuthorDao authorDao = new AuthorDao();
-        List<Author> authors = (List<Author>) authorDao.getAuthorByKeyword(keyword);
-        Gson gson = new Gson();
-        String json = gson.toJson(authors);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(json);
-        out.flush();
+        AuthorDao ad = new AuthorDao();
+        String indexPage= request.getParameter("index");
+        int index;
+        if (indexPage!=null) {
+            index = Integer.parseInt(indexPage);
+        }else{
+            index = 1;
+        }
+        
+        List<Author> authors;
+        int count = ad.getTotalAuthors();
+        int endPage;
+        authors = ad.pagingAuthors(index);
+        endPage = count /8;
+        if (count % 8 != 0) {
+            endPage++;
+        }
+        
+        request.setAttribute("author", authors);
+        request.setAttribute("endP", endPage);
+         request.setAttribute("tag", index);
+       request.getRequestDispatcher("Views/Admin/Author.jsp").forward(request, response);
     }
 
     /**

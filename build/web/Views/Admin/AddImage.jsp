@@ -76,8 +76,8 @@
                         <span>Sale</span>
                     </a>
                     <ul>
-                        <li><a href="image">Image BackGround</a></li>
-                        <li><a href="discount">Discount</a></li>
+                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>        
                 <li class>
@@ -90,7 +90,7 @@
                     <ul>
                         <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
-                        <li><a href="">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>

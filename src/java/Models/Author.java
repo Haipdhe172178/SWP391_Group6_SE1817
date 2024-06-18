@@ -12,16 +12,26 @@ public class Author {
     private int authorID;
     private String authorName;
     private String description;
+    private int status;
 
     public Author() {
     }
 
-    public Author(int authorID, String authorName, String description) {
+    public Author(int authorID, String authorName, String description, int status) {
         this.authorID = authorID;
         this.authorName = authorName;
         this.description = description;
+        this.status = status;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
     public int getAuthorID() {
         return authorID;
     }
@@ -44,6 +54,11 @@ public class Author {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" + "authorID=" + authorID + ", authorName=" + authorName + ", description=" + description + ", status=" + status + '}';
     }
     
 }

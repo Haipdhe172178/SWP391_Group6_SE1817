@@ -49,10 +49,10 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
-                        <span>Dashboard</span>
+                        <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Sales</a></li>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -60,12 +60,12 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/2.svg" alt>
                         </div>
-                        <span>Apps</span>
+                        <span>Ứng dụng</span>
                     </a>
                     <ul>
 
-                        <li><a href="mail_box.html">Mail Box</a></li>
-                        <li><a href="chat.html">Chat</a></li>
+                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -73,7 +73,7 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/8.svg" alt>
                         </div>
-                        <span>Sale</span>
+                        <span>Bán hàng</span>
                     </a>
                     <ul>
                         <li><a href="image">Image BackGround</a></li>
@@ -86,12 +86,12 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/11.svg" alt>
                         </div>
-                        <span>Table</span>
+                        <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
                         <li><a href="data">Sản phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
-                        <li><a href="">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>
@@ -241,14 +241,14 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Data table</h3>
+                                            <h3 class="m-0">Sản phẩm</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Table</h4>
+                                            <h4>Bảng dữ liệu của sản phẩm</h4>
 
 
                                             <div class="box_right d-flex lms_block">
@@ -256,7 +256,7 @@
                                                     <div class="search_inner">
                                                         <form action="data" method="GET">
                                                             <div class="search_field">
-                                                                <input name="s" type="text" placeholder="Search here...">
+                                                                <input name="s" type="text" placeholder="Tìm kiếm....">
                                                             </div>
                                                             <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
                                                         </form>
@@ -272,17 +272,17 @@
                                             <table class="table lms_table_active ">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">ProductId</th>
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Quantity</th>
-                                                        <th scope="col">Description</th>
-                                                        <th scope="col">Category</th>
-                                                        <th scope="col">Author</th>
-                                                        <th scope="col">Img</th>
-                                                        <th scope="col">Age</th>
-                                                        <th scope="col">Status</th>
-                                                        <th scope="col">Action</th>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">Giá</th>
+                                                        <th scope="col">Số lượng</th>
+                                                        <th scope="col">Mô tả sản phẩm</th>
+                                                        <th scope="col">Thể loại</th>
+                                                        <th scope="col">Tác giả</th>
+                                                        <th scope="col">Ảnh</th>
+                                                        <th scope="col">Độ tuổi</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Hành động</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -512,5 +512,4 @@
 
         <script src="js/custom.js"></script>
     </body>
-
 </html>

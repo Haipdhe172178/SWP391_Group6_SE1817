@@ -106,8 +106,8 @@
                     </a>
                     <ul>
 
-                        <li><a href="mail_box.html">Mail Box</a></li>
-                        <li><a href="chat.html">Chat</a></li>
+                         <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -132,7 +132,7 @@
                     <ul>
                         <li><a href="data">Sản phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
-                        <li><a href="">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>
@@ -290,22 +290,22 @@
                                     <div class="white_card_body">
                                         <div class="mb-3">
                                             <label for="productName">Tên sản phẩm:</label>
-                                            <input type="text" class="form-control" id="productName" name="name" required>
+                                            <input type="text" class="form-control" id="productName" name="name" placeholder="nhập tên sản phẩm" required>
                                             <div id="productNameError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productPrice">Giá:</label>
-                                            <input type="number" class="form-control" id="productPrice" name="price" required>
+                                            <input type="number" class="form-control" id="productPrice" placeholder="nhập giá" name="price" required>
                                             <div id="productPriceError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productQuantity">Số lượng:</label>
-                                            <input type="number" class="form-control" id="productQuantity" name="quantity" required>
+                                            <input type="number" class="form-control" id="productQuantity" placeholder="nhập số lượng" name="quantity" required>
                                             <div id="productQuantityError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="productDescription">Mô tả sản phẩm:</label>
-                                            <textarea class="form-control" id="productDescription" name="description" required></textarea>
+                                            <textarea class="form-control" id="productDescription" name="description" placeholder="nhập mô tả" required></textarea>
                                             <div id="productDescriptionError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
@@ -337,7 +337,8 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Add</button>
+                                            <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
+                                            <a href="data" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
                                 </form>
@@ -497,60 +498,60 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
         <!--kiem tra validation-->
         <script>
-            // JavaScript for form validation
+                                                // JavaScript for form validation
             document.getElementById('myForm').addEventListener('submit', function (event) {
-                var productName = document.getElementById('productName').value.trim();
-                var productPrice = document.getElementById('productPrice').value.trim();
-                var productQuantity = document.getElementById('productQuantity').value.trim();
-                var productDescription = document.getElementById('productDescription').value.trim();
-                var productImage = document.getElementById('productImage').value.trim();
+                    var productName = document.getElementById('productName').value.trim();
+                    var productPrice = document.getElementById('productPrice').value.trim();
+                    var productQuantity = document.getElementById('productQuantity').value.trim();
+                    var productDescription = document.getElementById('productDescription').value.trim();
+                    var productImage = document.getElementById('productImage').value.trim();
 
-                var productNameError = document.getElementById('productNameError');
-                var productPriceError = document.getElementById('productPriceError');
-                var productQuantityError = document.getElementById('productQuantityError');
-                var productDescriptionError = document.getElementById('productDescriptionError');
+                    var productNameError = document.getElementById('productNameError');
+                    var productPriceError = document.getElementById('productPriceError');
+                    var productQuantityError = document.getElementById('productQuantityError');
+                    var productDescriptionError = document.getElementById('productDescriptionError');
 
-                var isValid = true;
+                    var isValid = true;
 
-                // Reset previous error messages
-                productNameError.textContent = '';
-                productPriceError.textContent = '';
-                productQuantityError.textContent = '';
-                productDescriptionError.textContent = '';
+                    // Reset previous error messages
+                    productNameError.textContent = '';
+                    productPriceError.textContent = '';
+                    productQuantityError.textContent = '';
+                    productDescriptionError.textContent = '';
 
-                if (productName === '') {
-                    productNameError.textContent = 'Vui lòng nhập tên sản phẩm.';
-                    isValid = false;
-                }
-                if (productPrice === '') {
-                    productPriceError.textContent = 'Vui lòng nhập giá sản phẩm.';
-                    isValid = false;
-                } else if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
-                    productPriceError.textContent = 'Giá sản phẩm phải là một số dương.';
-                    isValid = false;
-                }
+                    if (productName === '') {
+                        productNameError.textContent = 'Vui lòng nhập tên sản phẩm.';
+                        isValid = false;
+                    }
+                    if (productPrice === '') {
+                        productPriceError.textContent = 'Vui lòng nhập giá sản phẩm.';
+                        isValid = false;
+                    } else if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
+                        productPriceError.textContent = 'Giá sản phẩm phải là một số dương.';
+                        isValid = false;
+                    }
 
-                if (productQuantity === '') {
-                    productQuantityError.textContent = 'Vui lòng nhập số lượng sản phẩm.';
-                    isValid = false;
-                } else if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
-                    productQuantityError.textContent = 'Số lượng sản phẩm phải là một số nguyên dương.';
-                    isValid = false;
-                }
+                    if (productQuantity === '') {
+                        productQuantityError.textContent = 'Vui lòng nhập số lượng sản phẩm.';
+                        isValid = false;
+                    } else if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
+                        productQuantityError.textContent = 'Số lượng sản phẩm phải là một số nguyên dương.';
+                        isValid = false;
+                    }
 
-                if (productDescription === '') {
-                    productDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
-                    isValid = false;
-                }
-                if (productImage === '') {
-                    alert('Vui lòng chọn một ảnh cho sản phẩm.');
-                    isValid = false;
-                }
+                    if (productDescription === '') {
+                        productDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                        isValid = false;
+                    }
+                    if (productImage === '') {
+                        alert('Vui lòng chọn một ảnh cho sản phẩm.');
+                        isValid = false;
+                    }
 
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
+                    if (!isValid) {
+                        event.preventDefault();
+                    }
+                    });
         </script>
         <!--hien thi thong bao-->
         <script>
@@ -561,7 +562,7 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Product added successfully!';
+                        notificationElement.textContent = 'Thêm Sản Phẩm thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
@@ -575,7 +576,7 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'error');
-                        notificationElement.textContent = 'Error: ' + errorMessage;
+                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
@@ -588,7 +589,6 @@
             }
             window.onload = showNotificationAndRedirect;
         </script>
-    </script>
 
 </body>
 

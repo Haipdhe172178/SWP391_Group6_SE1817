@@ -124,12 +124,10 @@ public class AddControllers extends HttpServlet {
             Product existingProduct = productDao.getProductByName(productName);
             if (existingProduct != null) {
                 session.setAttribute("notification", "error");
-                session.setAttribute("errorMessage", "Product already exists");
+                session.setAttribute("errorMessage", "Sản phẩm đã tồn tại " + productName);
                 response.sendRedirect(request.getContextPath() + "/add");
                 return;
             }
-
-            // Create new Product object and add to database
             Product product = new Product();
             product.setName(productName);
             product.setPrice(productPrice);
