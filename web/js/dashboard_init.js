@@ -320,7 +320,7 @@ jQuery(function(e) {
         });
     }
     e(window).on("load", function() {});
-}) !(function(a) {
+}) (function(a) {
     "use strict";
     if (a("#page_views").length) {
         var r = a("#page_views").get(0).getContext("2d");
