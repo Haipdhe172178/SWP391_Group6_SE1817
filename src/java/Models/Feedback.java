@@ -13,29 +13,39 @@ import java.util.Date;
 public class Feedback {
 
     private int feedbackId;
-    private int accountId;
-    private int productId;
+    private Account account;
+    private Product product;
     private int rating;
     private String comments;
     private Date feedbackDate;
+    private int status;
 
     public Feedback() {
     }
 
-    public Feedback(int feedbackId, int accountId, int productId, int rating, String comments, Date feedbackDate) {
+    public Feedback(int feedbackId, Account account, Product product, int rating, String comments, Date feedbackDate, int status) {
         this.feedbackId = feedbackId;
-        this.accountId = accountId;
-        this.productId = productId;
+        this.account = account;
+        this.product = product;
         this.rating = rating;
         this.comments = comments;
         this.feedbackDate = feedbackDate;
+        this.status = status;
     }
 
-    public Feedback(int accountId, int productId, int rating, String comments) {
-        this.accountId = accountId;
-        this.productId = productId;
+    public Feedback(Account account, Product product, int rating, String comments) {
+        this.account = account;
+        this.product = product;
         this.rating = rating;
         this.comments = comments;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getFeedbackId() {
@@ -46,20 +56,28 @@ public class Feedback {
         this.feedbackId = feedbackId;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public Date getFeedbackDate() {
+        return feedbackDate;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setFeedbackDate(Date feedbackDate) {
+        this.feedbackDate = feedbackDate;
     }
 
-    public int getProductId() {
-        return productId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getRating() {
@@ -77,13 +95,4 @@ public class Feedback {
     public void setComments(String comments) {
         this.comments = comments;
     }
-
-    public Date getFeedbackDate() {
-        return feedbackDate;
-    }
-
-    public void setFeedbackDate(Date feedbackDate) {
-        this.feedbackDate = feedbackDate;
-    }
-
 }

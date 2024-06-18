@@ -18,6 +18,49 @@ import java.util.List;
  */
 public class AccountDAO extends DBContext {
 
+    public Account getAccountById(int id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "Select * From Account Where AccountID =?";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+
+                return acc;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public Account check(String username, String password) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Username=? AND Password=?";
         try {
@@ -184,7 +227,7 @@ public class AccountDAO extends DBContext {
             return false;
         }
     }
-    
+
     public Account getAccountByEmail(String email) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Email = ?";
         try {
@@ -211,6 +254,7 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     public static void main(String[] args) {
         AccountDAO ac = new AccountDAO();
         List<Account> accounts = ac.getAllAccount();
@@ -218,5 +262,5 @@ public class AccountDAO extends DBContext {
             System.out.println(accounts);
         }
     }
-    
+
 }
