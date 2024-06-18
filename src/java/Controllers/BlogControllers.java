@@ -64,7 +64,7 @@ public class BlogControllers extends HttpServlet {
             throws ServletException, IOException {
         //Get topicID
         String tidRaw = request.getParameter("id");
-
+        
         //Get page number
         int page = 1;
         String pageParam = request.getParameter("page");
@@ -101,6 +101,7 @@ public class BlogControllers extends HttpServlet {
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         
+        request.setAttribute("newsStatus", "news");
         request.setAttribute("cate", categorys);
         request.setAttribute("sortNews", sort);
         request.setAttribute("page", page);

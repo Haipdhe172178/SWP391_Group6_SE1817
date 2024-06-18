@@ -154,10 +154,10 @@
                             <a class="nav-link me-4" href="about">Giới thiệu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-4" href="shop">Sản phẩm</a>
+                            <a class="nav-link me-4 ${requestScope.productStatus eq 'product' ? 'active' : ''}" href="shop">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active me-4 " href="blog">Tin tức</a>
+                            <a class="nav-link me-4 ${requestScope.newsStatus eq 'news' ? 'active' : ''}" href="blog">Tin tức</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
@@ -176,7 +176,7 @@
                                     <a href="check" class="dropdown-item fw-light">Thanh toán <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="blog" class="dropdown-item active fw-light">Tin tức<span class="badge bg-primary"></span></a>
+                                    <a href="blog" class="dropdown-item fw-light active">Tin tức<span class="badge bg-primary"></span></a>
                                 </li>
 
                                 <li>

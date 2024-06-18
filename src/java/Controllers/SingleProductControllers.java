@@ -77,19 +77,20 @@ public class SingleProductControllers extends HttpServlet {
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         AccountDAO accDAO = new AccountDAO();
-        
+
         Product product = productDao.getProductById(id);
         //LIST
         List<Product> listP = productDao.getProductsByCategoryId(product.getCategory().getCategoryId(), "fourRandom");
         List<News> listNews = nd.getFourNewsLated();
         List<Feedback> listFeedback = feedbackDAO.getFeedbackByProductId(id);
-        List<Account> listAcc= accDAO.getAllAccount();
+        List<Account> listAcc = accDAO.getAllAccount();
         List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
-        
-        
+
         //QUANTITY
         int quantitySold = productDao.getQuantitySoldByProductId(id);
         int avgRating = feedbackDAO.avgRating(id);
+        
+        request.setAttribute("productStatus", "product");
         request.setAttribute("avgRating", avgRating);
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
@@ -114,6 +115,7 @@ public class SingleProductControllers extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

@@ -93,6 +93,9 @@ public class LoginServlet extends HttpServlet {
             if (a.getRoleId() == 1) {
                 session.setAttribute("role", "admin");
                 response.sendRedirect("dash");
+            } else if (a.getRoleId() == 2) {
+                session.setAttribute("role", "staff");
+                response.sendRedirect("dash");
             } else {
                 session.setAttribute("role", "user");
                 if (productID != null && !productID.isEmpty()) {
