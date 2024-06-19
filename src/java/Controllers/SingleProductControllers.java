@@ -86,16 +86,16 @@ public class SingleProductControllers extends HttpServlet {
         if (pageParam != null && !pageParam.isEmpty()) {
             page = Integer.parseInt(pageParam);
         }
-
+        
         int quantity = 0;
         //filter by rating
         if (rating != null && !rating.isEmpty()) {
             int filterRate = Integer.parseInt(rating);
             listFeedback = feedbackDAO.getFeedbackByProductId(id, page, filterRate);
-            quantity = feedbackDAO.getQuantityFeedbacks(id, rating);
+            quantity = feedbackDAO.getQuantityFeedbacksByPid(id, rating);
         } else {
             listFeedback = feedbackDAO.getFeedbackByProductId(id, page);
-            quantity = feedbackDAO.getQuantityFeedbacks(id, "");
+            quantity = feedbackDAO.getQuantityFeedbacksByPid(id, "");
         }
         //Get Feedback
         int endPage = (quantity / 5) + (quantity % 5 == 0 ? 0 : 1);
