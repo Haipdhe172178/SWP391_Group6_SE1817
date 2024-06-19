@@ -59,6 +59,7 @@ public class Cart {
         }
         return total;
     }
+    
 
     public Product getProductById(int id, List<Product> list) {
         for (Product i : list) {
@@ -99,8 +100,6 @@ public class Cart {
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public String toString() {

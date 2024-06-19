@@ -56,13 +56,13 @@ public class CartControllers extends HttpServlet {
         updateCartCookie(response, cart);
         
         
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         Account a = (Account)session.getAttribute("account");
         if (a!=null) {
         CartDAO cartDao = new CartDAO();
         cart.setAccountId(a.getAccountId());
         cartDao.addCartItem(cart);
-        cart = cartDao.getCartByUserId(a.getAccountId());
+        cartDao.getCartByUserId(a.getAccountId());
         }
          // Cập nhật giỏ hàng trong session
         session.setAttribute("cart", cart);
