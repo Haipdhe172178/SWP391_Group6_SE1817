@@ -84,25 +84,30 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("your_name");
         String password = request.getParameter("your_pass");
-        AccountDAO d = new AccountDAO();
-        Account a = d.check(username, password);
+        AccountDAO dao = new AccountDAO();
+        Account account = dao.check(username, password);
         HttpSession session = request.getSession();
         String productID = request.getParameter("productID");
-        if (a != null) {
 
-            if (a.getRoleId() == 1) {
+        if (account != null) {
+            if (account.getStatus() == 0) {
+                request.setAttribute("errorMessage", "Tài khoản của bạn đã bị vô hiệu hóa.");
+                request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+                return;
+            }
+            if (account.getRoleId() == 1) {
                 session.setAttribute("role", "admin");
                 response.sendRedirect("dash");
             } else {
                 session.setAttribute("role", "user");
                 if (productID != null && !productID.isEmpty()) {
-                    session.setAttribute("account", a);
+                    session.setAttribute("account", account);
                     response.sendRedirect("single?productID=" + productID);
                     return;
                 }
                 response.sendRedirect("home");
             }
-            session.setAttribute("account", a);
+            session.setAttribute("account", account);
         } else {
             request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu");
             request.getRequestDispatcher("Views/Login.jsp").forward(request, response);

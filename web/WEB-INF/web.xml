@@ -128,6 +128,26 @@
         <servlet-name>ChatController</servlet-name>
         <servlet-class>AdminControllers.ChatController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddAcountControllers</servlet-name>
+        <servlet-class>AdminControllers.AddAcountControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcDetailControllers</servlet-name>
+        <servlet-class>AdminControllers.AcDetailControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActiveControllers</servlet-name>
+        <servlet-class>AdminControllers.ActiveControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageStaffControllers</servlet-name>
+        <servlet-class>AdminControllers.ManageStaffControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeRoleControllers</servlet-name>
+        <servlet-class>AdminControllers.ChangeRoleControllers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -255,6 +275,26 @@
     <servlet-mapping>
         <servlet-name>ChatController</servlet-name>
         <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAcountControllers</servlet-name>
+        <url-pattern>/addac</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcDetailControllers</servlet-name>
+        <url-pattern>/accdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveControllers</servlet-name>
+        <url-pattern>/active</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageStaffControllers</servlet-name>
+        <url-pattern>/manages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeRoleControllers</servlet-name>
+        <url-pattern>/change</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

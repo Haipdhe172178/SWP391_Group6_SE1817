@@ -1,9 +1,9 @@
 <%-- 
-    Document   : Datacode
+    Document   : Account
     Created on : May 27, 2024, 10:09:46 AM
     Author     : huyca
 --%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,11 +27,22 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
 
         <link rel="stylesheet" href="css/style1.css" />
+        <style>
+
+            .active-row {
+                opacity: 1;
+            }
+
+            .inactive-row {
+                opacity: 0.5;
+            }
+
+        </style>
     </head>
 
     <body class="crm_body_bg">
@@ -102,10 +113,12 @@
                     </a>
                     <ul>
                         <li><a href="account">Tài Khoản</a></li>
+                         <li><a href="manages">Quản lý vai trò</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
+
         <section class="main_content dashboard_part large_header_bg">
 
             <div class="container-fluid g-0">
@@ -117,7 +130,7 @@
                             </div>
                             <div class="serach_field-area d-flex align-items-center">
                                 <div class="search_inner">
-                                    <form action="data" method="GET">
+                                    <form action="manages" method="GET">
                                         <div class="search_field">
                                             <input name="s" type="text" placeholder="Search here...">
                                         </div>
@@ -250,55 +263,117 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Data code</h3>
+                                            <h3 class="m-0">Tài Khoản</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
-
-
-                                    <form action="addimage" method="post" enctype="multipart/form-data">
-
-
-                                        <div class="mb-3">
-
-                                            <label for="productName">Tên</label>
-                                            <input type="text" class="form-control" id="productName" name="name" value="${data.name}" required>
+                                    <div class="QA_section">
+                                        <div class="white_box_tittle list_header">
+                                            <h4>Bảng dữ liệu của tài khoản</h4>
+                                            <div class="box_right d-flex lms_block">
+                                                <div class="serach_field_2">
+                                                    <div class="search_inner">
+                                                        <form action="manages" method="GET">
+                                                            <div class="search_field">
+                                                                <input name="s" type="text" placeholder="Tìm kiếm....">
+                                                            </div>
+                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+<!--                                                <div class="add_button ms-2">
+                                                    <a href="" class="btn_1"></a>
+                                                </div>-->
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control" id="prodctimg" name="imgProduct" >
+                                        <div class="QA_table mb_30">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">Vai trò</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Hành Động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${account}" var="ac">
+                                                      
+                                                            <tr class="${ac.status == 1 ? 'active-row' : 'inactive-row'}">
+                                                                <td>${ac.accountId}</td>
+                                                                <td>${ac.fullName}</td>
+                                                                <td>
+                                                                    <c:forEach items="${role}" var="ro">
+                                                                        <c:if test="${ac.roleId == ro.roleId}">
+                                                                            ${ro.roleName}
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </td>
+                                                                <td>
+                                                                     <c:choose>
+                                                                    <c:when test="${ac.status == 1}">
+                                                                        <span style="color: green;">Active</span>
+                                                                    </c:when>
+                                                                    <c:when test="${ac.status == 0}">
+                                                                        <span style="color: red;">Inactive</span>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                                </td>
+                                                                <<td>
+                                                                    <a href="change?accountId=${ac.accountId}" title="Update"><i class="fas fa-edit"></i></a>                                                        
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
 
                                         </div>
+                                        <nav class="py-5" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                                <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                                                <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                                                <c:if test="${end > endP}">
+                                                    <c:set var="end" value="${endP}" />
+                                                    <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                                                </c:if>
 
+                                                <!-- Nút Previous -->
+                                                <c:if test="${tag > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="manages?index=${tag - 1}${query}" aria-label="Previous">
+                                                            <span aria-hidden="true">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
 
-                                        <div class="mb-3">
-                                            <label for="productCategory" class="form-label">Trạng thái hoạt động</label>
-                                            <select class="form-select" id="" name="status" required>
+                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
+                                                    <li class="page-item ${tag == i ? 'active' : ''}">
+                                                        <a class="page-link" href="manages?index=${i}${query}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
 
+                                                <!-- Nút Next -->
+                                                <c:if test="${tag < endP}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="manages?index=${tag + 1}${query}" aria-label="Next">
+                                                            <span aria-hidden="true">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
 
-                                                <option value="1"  >Sử dụng</option>
-                                                <option value="0"  >Không sử dụng</option>
-
-
-                                            </select>
-                                        </div>
-
-
-
-
-
-
-                                        <div>
-                                            <button type="submit" name="submit" class="btn btn-primary">ADD</button>
-                                        </div>
-                                    </form>
-                                    
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
-
+                        <div class="col-12">
+                        </div>
                     </div>
                 </div>
             </div>

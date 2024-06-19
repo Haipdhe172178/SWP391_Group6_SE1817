@@ -4,9 +4,11 @@
  */
 package DAL;
 
+import Models.Account;
 import Models.Author;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,4 +174,53 @@ public class AuthorDao extends DBContext {
         }
     }
 
+    public List<Author> pagingSearchAuthor(int index, String keyword) {
+        List<Author> list = new ArrayList<>();
+        String query = "SELECT * FROM Author WHERE AuthorName LIKE ? ORDER BY AuthorID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                author.setStatus(rs.getInt("status"));
+                list.add(author);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAuthorsByKeyword(String keyword) {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Author WHERE AuthorName LIKE ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public static void main(String[] args) {
+        AuthorDao authorDao = new AuthorDao();
+        int index = 1; // Page index
+        String keyword = "n"; // Keyword to search
+
+        List<Author> authors = authorDao.pagingSearchAuthor(index, keyword);
+
+        // In ra kết quả
+        for (Author author : authors) {
+            System.out.println(author.getAuthorID() + ", " + author.getAuthorName() + ", " + author.getDescription() + ", " + author.getStatus());
+        }
+
+    }
 }

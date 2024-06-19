@@ -78,7 +78,7 @@
 
     <body class="crm_body_bg">
 
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -91,10 +91,10 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
-                        <span>Dashboard</span>
+                        <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="">Sales</a></li>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -102,10 +102,9 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/2.svg" alt>
                         </div>
-                        <span>Apps</span>
+                        <span>Ứng dụng</span>
                     </a>
                     <ul>
-
                         <li><a href="mail">Mail Box</a></li>
                         <li><a href="chat">Chat</a></li>
                     </ul>
@@ -115,11 +114,12 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/8.svg" alt>
                         </div>
-                        <span>Sale</span>
+                        <span>Bán hàng</span>
                     </a>
                     <ul>
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
+
                     </ul>
                 </li>        
                 <li class>
@@ -127,12 +127,23 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/11.svg" alt>
                         </div>
-                        <span>Table</span>
+                        <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
                         <li><a href="data">Sản phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
-                        <li><a href="">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Tài Khoản</a></li>
                     </ul>
                 </li>
             </ul>
@@ -282,7 +293,7 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Thêm sản phẩm</h3>
+                                            <h3 class="m-0">Thêm Tác Giả</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -292,18 +303,19 @@
                                             <label for="authorName">Tên tác giả</label>
                                             <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
                                             <div id="authorNameError" class="error"></div>
-                                        </div>                                  
+                                        </div>
                                         <div class="mb-3">
                                             <label for="authorDescription">Tiểu sử</label>
                                             <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
                                             <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
+                                        </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
-                                            <a href="data" class="btn btn-warning">Trở lại</a>
+                                            <button type="submit" class="btn btn-primary">Add Account</button>
+                                            <a href="data" class="btn btn-warning">Back</a>
                                         </div>
                                     </div>
                                 </form>
+
 
 
                             </div>

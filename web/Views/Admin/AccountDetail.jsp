@@ -1,9 +1,9 @@
 <%-- 
-    Document   : Datacode
+    Document   : Account
     Created on : May 27, 2024, 10:09:46 AM
     Author     : huyca
 --%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,11 +27,63 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
-
         <link rel="stylesheet" href="css/style1.css" />
+        <style>
+
+            body {
+                background-color: #f2f3f8;
+                font-family: Arial, sans-serif;
+            }
+
+            .main_content_iner {
+                padding: 20px;
+            }
+
+            .profile-wrapper {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 30px;
+            }
+
+            .white_card {
+                border: none;
+            }
+
+            .white_card_header {
+                background-color: #f8f9fa;
+                padding: 15px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+
+            .main-title h3 {
+                margin: 0;
+                color: #333;
+            }
+
+            .profile-container {
+                padding: 20px;
+            }
+
+            .labels {
+                font-weight: bold;
+                color: #555;
+            }
+
+            .form-control {
+                display: block;
+                width: 100%;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: #fff;
+            }
+        </style>
     </head>
 
     <body class="crm_body_bg">
@@ -106,6 +158,7 @@
                 </li>
             </ul>
         </nav>
+
         <section class="main_content dashboard_part large_header_bg">
 
             <div class="container-fluid g-0">
@@ -242,66 +295,90 @@
                 </div>
             </div>
 
-            <div class="main_content_iner ">
+            <div class="main_content_iner">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Data code</h3>
+                        <div class="col-lg-10">
+                            <div class="profile-wrapper">
+                                <div class="white_card card_height_100 mb-30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Thông tin Tài khoản</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container rounded bg-white mt-5 mb-5 profile-container">
+                                        <div class="row">
+                                            <div class="col-md-4 border-right">
+                                                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                                    <img class="mt-5" width="150px" src="${acc.imgAccount}" alt="Avatar">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="p-3 py-5" id="profile">
+                                                    <h4 class="text-right mb-4">Hồ Sơ Của ID: ${acc.accountId}</h4>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="fullname" class="labels">Họ và tên: ${acc.fullName}</label>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="username" class="labels">Tên đăng nhập: ${acc.userName}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="labels">Giới tính: ${acc.gender}</label>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="phonenumber" class="labels">Số điện thoại: ${acc.phoneNumber}</label>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="address" class="labels">Địa chỉ: ${acc.address}</label>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label for="email" class="labels">Email: ${acc.email}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="status" class="labels">Trạng thái:  <c:choose>
+                                                                    <c:when test="${acc.status == 1}">
+                                                                        <span style="color: green;">Active</span>
+                                                                    </c:when>
+                                                                    <c:when test="${acc.status == 0}">
+                                                                        <span style="color: red;">Inactive</span>
+                                                                    </c:when>
+                                                                </c:choose></label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                             <label for="role" class="labels">Chức vụ: 
+                                                            <c:forEach items="${role}" var="ro">
+                                                                <c:if test="${acc.roleId == ro.roleId}">
+                                                                    ${ro.roleName}
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>
+                                                         <a href="account" class="btn btn-outline-info">Trở lại</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="white_card_body">
-
-
-                                    <form action="addimage" method="post" enctype="multipart/form-data">
-
-
-                                        <div class="mb-3">
-
-                                            <label for="productName">Tên</label>
-                                            <input type="text" class="form-control" id="productName" name="name" value="${data.name}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control" id="prodctimg" name="imgProduct" >
-
-                                        </div>
-
-
-                                        <div class="mb-3">
-                                            <label for="productCategory" class="form-label">Trạng thái hoạt động</label>
-                                            <select class="form-select" id="" name="status" required>
-
-
-                                                <option value="1"  >Sử dụng</option>
-                                                <option value="0"  >Không sử dụng</option>
-
-
-                                            </select>
-                                        </div>
-
-
-
-
-
-
-                                        <div>
-                                            <button type="submit" name="submit" class="btn btn-primary">ADD</button>
-                                        </div>
-                                    </form>
-                                    
-                                </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+
             <div class="footer_part">
                 <div class="container">
                     <div class="row">

@@ -36,7 +36,7 @@
 
     <body class="crm_body_bg">
 
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+       <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -63,7 +63,6 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-
                         <li><a href="mail">Mail Box</a></li>
                         <li><a href="chat">Chat</a></li>
                     </ul>
@@ -92,6 +91,17 @@
                         <li><a href="data">Sản phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
                         <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Tài Khoản</a></li>
                     </ul>
                 </li>
             </ul>

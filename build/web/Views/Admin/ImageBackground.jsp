@@ -49,10 +49,10 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
-                        <span>Dashboard</span>
+                        <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Sales</a></li>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -60,11 +60,10 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/2.svg" alt>
                         </div>
-                        <span>Apps</span>
+                        <span>Ứng dụng</span>
                     </a>
                     <ul>
-
-                         <li><a href="mail">Mail Box</a></li>
+                        <li><a href="mail">Mail Box</a></li>
                         <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
@@ -73,11 +72,12 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/8.svg" alt>
                         </div>
-                        <span>Sale</span>
+                        <span>Bán hàng</span>
                     </a>
                     <ul>
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
+
                     </ul>
                 </li>        
                 <li class>
@@ -85,12 +85,23 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/11.svg" alt>
                         </div>
-                        <span>Table</span>
+                        <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
                         <li><a href="data">Sản phẩm</a></li>
                         <li><a href="">Thể Loại</a></li>
                         <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Tài Khoản</a></li>
                     </ul>
                 </li>
             </ul>

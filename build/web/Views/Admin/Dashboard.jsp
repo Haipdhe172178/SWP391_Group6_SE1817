@@ -118,6 +118,7 @@
                     </a>
                     <ul>
                         <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="manages">Quản lý</a></li>
                     </ul>
                 </li>
             </ul>

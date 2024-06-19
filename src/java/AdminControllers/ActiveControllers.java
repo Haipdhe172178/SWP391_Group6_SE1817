@@ -5,22 +5,18 @@
 package AdminControllers;
 
 import DAL.AccountDAO;
-import DAL.RoleDao;
-import Models.Account;
-import Models.Role;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author huyca
  */
-public class AccountAdminControllers extends HttpServlet {
+public class ActiveControllers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +35,10 @@ public class AccountAdminControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AccountAdminControllers</title>");
+            out.println("<title>Servlet ActiveControllers</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AccountAdminControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ActiveControllers at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,39 +56,17 @@ public class AccountAdminControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoleDao roleDao = new RoleDao();
-        List<Role> role = roleDao.getAllRole();
-        AccountDAO accountDAO = new AccountDAO();
-        String indexPage = request.getParameter("index");
-        int index;
-        if (indexPage != null) {
-            index = Integer.parseInt(indexPage);
-        } else {
-            index = 1;
-        }
-
-        List<Account> account;
-        int count = accountDAO.getTotalAccount();
-        int endPage;
-        account = accountDAO.pagingAccounts(index);
-        String searchKeyword = request.getParameter("s");
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            account = accountDAO.searchAccounts(searchKeyword, index);
-            count = accountDAO.getTotalAccountsByKeyword(searchKeyword);
-        }
-        endPage = count / 5;
-        if (count % 5 != 0) {
-            endPage++;
-        }
-        String query = "";
-        if (searchKeyword != null) {
-            query += "&&s=" + searchKeyword;
-        }
-        request.setAttribute("query", query);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("account", account);
-        request.setAttribute("role", role);
-        request.getRequestDispatcher("Views/Admin/Account.jsp").forward(request, response);
+        AccountDAO accountDao = new AccountDAO();
+        String action = request.getParameter("action");
+         if (action != null && !action.isEmpty()) {
+                int accountId = Integer.parseInt(request.getParameter("accountId"));
+                if ("hideacc".equals(action)) {
+                    accountDao.hideAccount(accountId);
+                } else if ("showacc".equals(action)) {
+                    accountDao.showAccount(accountId);
+                } 
+                response.sendRedirect(request.getContextPath() + "/account");
+    }
     }
 
     /**
