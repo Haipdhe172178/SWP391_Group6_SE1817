@@ -399,7 +399,7 @@
                 <div class="cart-item border-bottom padding-small">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1">
-                            <input type="checkbox" class="product-select" data-quantity="${item.quantity}" data-price="${item.quantity * item.price}" />
+                            <input type="checkbox" class="product-select" data-price="${item.quantity * item.price}" />
                         </div>
                         <div class="col-lg-4 col-md-3">
                             <div class="cart-info d-flex gap-2 flex-wrap align-items-center">
@@ -412,9 +412,7 @@
                                     <div class="card-detail">
                                         <h5 class="mt-2"><a href="single?productID=${item.product.productId}">${item.product.name}</a></h5>
                                         <div class="card-price">
-                                            <span class="price text-primary fw-bold mb-2 fs-5" data-currency-usd="${item.price}">
-                                                <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                            </span>
+                                            <span class="price text-primary fw-light" data-currency-usd="${item.price}">${item.price}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -445,10 +443,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="total-price">
-                                        <fmt:setLocale value="vi_VN" />
-                                        <fmt:setBundle basename="resources.application" />
-                                        <fmt:formatNumber var="totalPrice" value="${item.quantity * item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                        <span class="money fs-2 fw-light text-primary">${totalPrice}</span>
+                                        <span class="money fs-2 fw-light text-primary">${item.quantity * item.price}</span>
                                     </div>
                                 </div>
                             </div>
@@ -475,17 +470,7 @@
                         <td data-title="Total">
                             <span class="price-amount amount text-primary ps-5 fw-light">
                                 <bdi>
-                                    <span id="selected-total">0</span>
-                                </bdi>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="order-total pt-2 pb-2 border-bottom">
-                        <th>Tổng số lượng</th>
-                        <td data-title="Total Quantity">
-                            <span class="price-amount amount text-primary ps-5 fw-light">
-                                <bdi>
-                                    <span id="selected-quantity">0</span>
+                                    <span class="price-currency-symbol">$</span><span id="selected-total">0</span>
                                 </bdi>
                             </span>
                         </td>
@@ -501,37 +486,26 @@
     </div>
 </div>
 
+
 <!-- JavaScript to update total -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const productSelects = document.querySelectorAll('.product-select');
-        const selectedTotal = document.getElementById('selected-total');
-        const selectedQuantity = document.getElementById('selected-quantity');
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkboxes = document.querySelectorAll(".product-select");
+        const totalElement = document.getElementById("selected-total");
 
-        function updateTotals() {
-            let totalAmount = 0;
-            let totalQuantity = 0;
-
-            productSelects.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    totalAmount += parseFloat(checkbox.dataset.price);
-                    totalQuantity += parseInt(checkbox.dataset.quantity, 10);
-                }
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function() {
+                let total = 0;
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        total += parseFloat(cb.dataset.price);
+                    }
+                });
+                totalElement.textContent = total.toFixed(2);
             });
-
-            selectedTotal.textContent = totalAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('VND', '₫');
-            selectedQuantity.textContent = totalQuantity;
-        }
-
-        productSelects.forEach(function (checkbox) {
-            checkbox.addEventListener('change', updateTotals);
         });
-
-        // Initial calculation in case some checkboxes are pre-checked
-        updateTotals();
     });
 </script>
-
 
 
 

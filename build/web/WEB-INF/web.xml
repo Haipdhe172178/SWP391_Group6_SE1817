@@ -128,6 +128,10 @@
         <servlet-name>ChatController</servlet-name>
         <servlet-class>AdminControllers.ChatController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteCartControllers</servlet-name>
+        <servlet-class>Controllers.DeleteCartControllers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -255,6 +259,10 @@
     <servlet-mapping>
         <servlet-name>ChatController</servlet-name>
         <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCartControllers</servlet-name>
+        <url-pattern>/deletecart</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

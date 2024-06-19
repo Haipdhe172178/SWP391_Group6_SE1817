@@ -87,7 +87,6 @@ public class LoginServlet extends HttpServlet {
         AccountDAO d = new AccountDAO();
         Account a = d.check(username, password);
         HttpSession session = request.getSession();
-        String productID = request.getParameter("productID");
         if (a != null) {
 
             if (a.getRoleId() == 1) {
@@ -95,11 +94,9 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("dash");
             } else {
                 session.setAttribute("role", "user");
-                if (productID != null && !productID.isEmpty()) {
+               
                     session.setAttribute("account", a);
-                    response.sendRedirect("single?productID=" + productID);
-                    return;
-                }
+                
                 response.sendRedirect("home");
             }
             session.setAttribute("account", a);

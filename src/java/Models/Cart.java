@@ -1,28 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author huyca
- */
 public class Cart {
     private List<Item> items;
-
+    private int accountId; 
+    
     public Cart() {
         items = new ArrayList<>();
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public List<Item> getItems() {
         return items;
     }
 
-    private int getQuantityById(int id) {
+    public int getQuantityById(int id) {
         Item item = getItemById(id);
         return item != null ? item.getQuantity() : 0;
     }
@@ -68,6 +68,16 @@ public class Cart {
         }
         return null;
     }
+    
+     public void updateItem(Item t) {
+        for (Item i : items) {
+            if (i.getProduct().getProductId() == t.getProduct().getProductId()) {
+                i.setQuantity(t.getQuantity());
+                return;
+            }
+        }
+        items.add(t);
+    }
 
     public Cart(String txt, List<Product> list) {
         items = new ArrayList<>();
@@ -90,15 +100,17 @@ public class Cart {
         }
     }
 
-@Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (Item item : items) {
-        sb.append(item.getProduct().getProductId()).append(":").append(item.getQuantity()).append(",");
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Item item : items) {
+            sb.append(item.getProduct().getProductId()).append(":").append(item.getQuantity()).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1); // Xóa dấu phẩy cuối cùng
+        }
+        return sb.toString();
     }
-    if (sb.length() > 0) {
-        sb.deleteCharAt(sb.length() - 1); // Xóa dấu phẩy cuối cùng
-    }
-    return sb.toString();
-}
 }
