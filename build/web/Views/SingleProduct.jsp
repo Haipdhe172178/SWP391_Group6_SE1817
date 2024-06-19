@@ -215,7 +215,12 @@
                                 </div>
                                 <div class="action-buttons my-3 d-flex flex-wrap gap-3">
                                     <a href="#" class="btn">Mua ngay</a>
-                                    <a href="#" class="btn btn-dark">Thêm vào giỏ hàng</a>
+                                    <form action="cart" method="post">
+    <input type="hidden" name="productId" value="${product.productId}">
+    <input type="hidden" name="quantity" value="1"> 
+    <button type="submit" class="btn btn-dark">Thêm vào giỏ hàng</button>
+</form>
+            
                                 </div>
                             </div>
                             <hr>

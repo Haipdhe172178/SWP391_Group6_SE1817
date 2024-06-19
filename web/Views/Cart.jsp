@@ -423,7 +423,7 @@
                         <div class="col-lg-6 col-md-7">
                             <div class="row d-flex">
                                 <div class="col-md-6">
-                                    <div class="product-quantity my-2 my-2">
+                                    <div class="product-quantity my-2">
                                         <div class="input-group product-qty align-items-center" style="max-width: 150px;">
                                             <span class="input-group-btn">
                                                 <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus" data-type="minus" data-field="">
@@ -453,20 +453,17 @@
                                 </div>
                             </div>
                         </div>
-                       <div class="col-lg-1 col-md-2">
-                           
-                           <!-- Xoa khoi gio -->
-                           <form action="deletecart" method="post">
-    <div class="cart-cross-outline">
-        <a href="#" onclick="removeItem(${item.product.productId})">
-            <svg class="cart-cross-outline" width="38" height="38">
-                <use xlink:href="#cart-cross-outline"></use>
-            </svg>
-        </a>
-    </div>
-            </form>
-</div>
-
+                        <div class="col-lg-1 col-md-2">
+                            <!-- Remove from cart -->
+                            <form action="deletecart" method="post">
+                                <div class="cart-cross-outline">
+                                    <a href="#" onclick="removeItem(${item.product.productId})">
+                                        <svg class="cart-cross-outline" width="38" height="38">
+                                            <use xlink:href="#cart-cross-outline"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -481,7 +478,7 @@
                         <td data-title="Total">
                             <span class="price-amount amount text-primary ps-5 fw-light">
                                 <bdi>
-                                    <span id="selected-total">0</span>
+                                    <span id="selected-total">0 ₫</span>
                                 </bdi>
                             </span>
                         </td>
@@ -505,6 +502,8 @@
             </div>
         </div>
     </div>
+</div>
+
 
 
 
