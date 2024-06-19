@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,31 +60,42 @@ public class FeedbackListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         FeedbackDAO fDao = new FeedbackDAO();
-        
-        //Phân trang feedback
+
+        //Phân trang feedback and lấy theo Status
+        //Page
         int page = 1;
         String pageParam = request.getParameter("page");
         if (pageParam != null && !pageParam.isEmpty()) {
             page = Integer.parseInt(pageParam);
         }
+
+        //get Feedback theo status
         List<Feedback> listFeedback;
-        int quantity = 0;
         String status = request.getParameter("status");
-        if (status != null && !status.isEmpty()) {
-            listFeedback = fDao.getAllFeedbackByStatus(page, status);
-            quantity = fDao.getQuantityFeedbacks(status);
-            request.setAttribute("status", status);
-        } else {
-            listFeedback = fDao.getAllFeedbackByStatus(page, "pending");
-            quantity = fDao.getQuantityFeedbacks("pending");
-            request.setAttribute("status", "pending");
+        String search = request.getParameter("search");
+        String filter = request.getParameter("filter");
+
+        if (status == null || status.isEmpty()) {
+            status = "pending";
         }
-        
-        
+        if (search == null || search.isEmpty()) {
+            search = "";
+        }
+        if (filter == null || filter.isEmpty()) {
+            filter = "";
+        }
+
+        listFeedback = fDao.getAllFeedbackByStatus(page, status, search, filter);
+        int quantity = fDao.getQuantityFeedbacks(status, search, filter);
+
+        request.setAttribute("filter", filter);
+        request.setAttribute("status", status);
+        request.setAttribute("searchResult", search);
+        request.setAttribute("listFeedback", listFeedback);
+
         int endPage = (quantity / 5) + (quantity % 5 == 0 ? 0 : 1);
         request.setAttribute("endPage", endPage);
         request.setAttribute("page", page);
-        request.setAttribute("listFeedback", listFeedback);
         request.getRequestDispatcher("Views/Staff/FeedbackList.jsp").forward(request, response);
     }
 
@@ -98,7 +110,42 @@ public class FeedbackListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        FeedbackDAO fDao = new FeedbackDAO();
+        String action = request.getParameter("action");
+        String search = request.getParameter("search");
+        String status = request.getParameter("status");
+        String filter = request.getParameter("filter");
+        String page = request.getParameter("page");
+
+        int feedbackId = Integer.parseInt(request.getParameter("feedbackId"));
+
+        if (action != null && !action.isEmpty()) {
+            boolean isComplete = false;
+            String ms;
+            switch (action) {
+                case "display":
+                    isComplete = fDao.updateStatusFeedback(feedbackId, 1);
+                    ms = "Hiển thị thành công";
+                    break;
+                case "hidden":
+                    isComplete = fDao.updateStatusFeedback(feedbackId, -1);
+                    ms = "Đã ẩn đánh giá";
+                    break;
+                case "delete":
+                    isComplete = fDao.deleteFeedback(feedbackId);
+                    ms = "Đã xóa đánh giá";
+                    break;
+                default:
+                    ms = "Vui lòng thử lại!";
+            }
+            if (isComplete) {
+                request.setAttribute("messageSuccess", ms);
+            }
+            response.sendRedirect("feedbacklist?page=" + page + "&status=" + status + "&search=" + search + "&filter=" + filter);
+        } else {
+            response.sendRedirect("feedbacklist?page=" + page + "&status=" + status + "&search=" + search + "&filter=" + filter);
+        }
     }
 
     /**

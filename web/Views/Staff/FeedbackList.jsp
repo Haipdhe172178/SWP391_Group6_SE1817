@@ -196,38 +196,44 @@
                                         <div class="white_box_tittle list_header">
                                             <div>
                                                 <!--<h4>Đánh giá sản phẩm</h4>-->
-                                                <label for="filter">Đánh giá</label>
-                                                <select name="filter">
-                                                    <option value="value">5 Sao</option>
-                                                    <option value="value">4 Sao</option>
-                                                    <option value="value">3 Sao</option>
-                                                    <option value="value">2 Sao</option>
-                                                    <option value="value">1 Sao</option>
+                                                <form action="feedbacklist" method="get" id="filterForm">
+                                                    <label for="filter">Đánh giá:</label>
+                                                    <select name="filter" onchange="document.getElementById('filterForm').submit()">
+                                                        <option value="" ${requestScope.filter eq null ? 'selected': ''}>Tất cả</option>
+                                                    <option value="5" ${requestScope.filter eq '5' ? 'selected': ''}>5 Sao</option>
+                                                    <option value="4" ${requestScope.filter eq '4' ? 'selected': ''}>4 Sao</option>
+                                                    <option value="3" ${requestScope.filter eq '3' ? 'selected': ''}>3 Sao</option>
+                                                    <option value="2" ${requestScope.filter eq '2' ? 'selected': ''}>2 Sao</option>
+                                                    <option value="1" ${requestScope.filter eq '1' ? 'selected': ''}>1 Sao</option>
                                                 </select>
-                                                
-                                            </div>
-                                            <div class="box_right d-flex lms_block">
-                                                <div class="serach_field_2">
-                                                    <div class="search_inner">
-                                                        <form action="feedbacklist" method="GET">
-                                                            <div class="search_field">
-                                                                <input name="search" type="text" placeholder="Tìm kiếm....">
-                                                            </div>
-                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                        </form>
-                                                    </div>
+                                                <input type="hidden" name="status" value="${requestScope.status}">
+                                                <input type="hidden" name="search" value="${requestScope.search}">
+                                            </form>
+                                        </div>
+                                        <div class="box_right d-flex lms_block">
+                                            <div class="serach_field_2">
+                                                <div class="search_inner">
+                                                    <form action="feedbacklist" method="GET">
+                                                        <input type="hidden" name="status" value="${requestScope.status}">
+                                                        <input type="hidden" name="filter" value="${requestScope.filter}">
+                                                        <div class="search_field">
+                                                            <input name="search" type="text" placeholder="Tìm kiếm...." value="${requestScope.searchResult}">
+                                                        </div>
+                                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="QA_table mb_30">
-                                            <div class="filterFeedback">
-                                                <a href="feedbacklist?page=1&status=pending" class="filter  ${requestScope.status eq 'pending' ?'active':''}">Chờ duyệt</a>
-                                            <a href="feedbacklist?page=1&status=accept" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị</a>
-                                            <a href="feedbacklist?page=1&status=reject" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn</a>
+                                    </div>
+                                    <div class="QA_table mb_30">
+                                        <div class="filterFeedback">
+                                            <a href="feedbacklist?page=1&status=pending&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'pending' ?'active':''}">Chờ duyệt</a>
+                                            <a href="feedbacklist?page=1&status=accept&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị</a>
+                                            <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn</a>
                                             <c:if test="${requestScope.status eq 'pending'}">
                                                 <div style="margin-left: 30rem">
-                                                    <input type="button" value="Chấp nhận tất cả" />
-                                                    <input type="button" value="Từ chối tất cả" />
+                                                    <input type="button" onclick="" value="Chấp nhận tất cả" />
+                                                    <input type="button" onclick="" value="Từ chối tất cả" />
                                                 </div>
                                             </c:if>
                                             <c:if test="${requestScope.status eq 'accept'}">
@@ -284,31 +290,51 @@
                                                         <c:if test="${feedback.status == -1}"><td class="status-rejected">Bị ẩn</td></c:if>
 
                                                             <td>
-                                                            <c:choose>
-                                                                <c:when test="${feedback.status == 0}">
-                                                                    <div class="btn edit-btn">
-                                                                        <a href="#"><i class="fas fa-check" style="color: white"></i></a>
-                                                                    </div>
-                                                                    <div class="btn delete-btn">
-                                                                        <a href="#"><i class="fas fa-ban" style="color: white"></i></a>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <c:if test="${feedback.status == 1}">
+                                                                <form action="feedbacklist" method="post">
+                                                                    <input type="hidden" name="feedbackId" value="${feedback.feedbackId}">
+                                                                <input type="hidden" name="page" value="${requestScope.page}">
+                                                                <input type="hidden" name="search" value="${requestScope.searchResult}">
+                                                                <input type="hidden" name="filter" value="${requestScope.filter}">
+                                                                <input type="hidden" name="status" value="${requestScope.status}">
+                                                                <c:choose>
+                                                                    <c:when test="${feedback.status == 0}">
+                                                                        <!--Duyet feedback moi-->
                                                                         <div class="btn edit-btn">
-                                                                            <a href="#"><i class="fas fa-eye-slash" style="color: white"></i></a>
-                                                                        </div>
-                                                                    </c:if>
-                                                                    <c:if test="${feedback.status == -1}">
-                                                                        <div class="btn edit-btn">
-                                                                            <a href="#"><i class="fas fa-eye" style="color: white"></i></a>
+                                                                            <button type="submit" name="action" value="display" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                <i class="fas fa-check" style="color: white"></i>
+                                                                            </button>
                                                                         </div>
                                                                         <div class="btn delete-btn">
-                                                                            <a href="#"><i class="fas fa-trash-alt" style="color: white"></i></a>
+                                                                            <button type="submit" name="action" value="hidden" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                <i class="fas fa-ban" style="color: white"></i>
+                                                                            </button>
                                                                         </div>
-                                                                    </c:if>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <c:if test="${feedback.status == 1}">
+                                                                            <!--Ẩn feedback-->
+                                                                            <div class="btn edit-btn">
+                                                                                <button type="submit" name="action" value="hidden" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                    <i class="fas fa-eye-slash" style="color: white"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </c:if>
+                                                                        <c:if test="${feedback.status == -1}">
+                                                                            <!--Xóa hoặc hiển thị lại feedback-->
+                                                                            <div class="btn edit-btn">
+                                                                                <button type="submit" name="action" value="display" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                    <i class="fas fa-eye" style="color: white"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="btn delete-btn">
+                                                                                <button type="submit" name="action" value="delete" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                    <i class="fas fa-trash-alt" style="color: white"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </c:if>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -323,19 +349,19 @@
                                             <ul class="pagination justify-content-center gap-5">
                                                 <li class="page-item">
                                                     <c:if test="${page > 1}">
-                                                        <a class="page-link" href="feedbacklist?page=${page-1}" >   <   </a>
+                                                        <a class="page-link" href="feedbacklist?page=${page-1}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}">   <   </a>
                                                     </c:if>
                                                 </li>
                                                 <c:if test="${total <= 5}">
                                                     <c:forEach begin="1" end="${total}" var="pageNum">
                                                         <li class="page-item ${page == pageNum ? 'active' : ''}">
-                                                            <a class="page-link" href="feedbacklist?page=${pageNum}" ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                                            <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
                                                         </li>
                                                     </c:forEach>
                                                 </c:if>
                                                 <c:if test="${total > 5}">
                                                     <li class="page-item ${page == 1 ? 'active' : ''}">
-                                                        <a class="page-link" href="feedbacklist?page=1"  ${page == 1 ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>1</a>
+                                                        <a class="page-link" href="feedbacklist?page=1&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}"  ${page == 1 ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>1</a>
                                                     </li>
                                                     <c:if test="${page > 3}">
                                                         <li class="page-item disabled">
@@ -344,7 +370,7 @@
                                                     </c:if>
                                                     <c:forEach begin="${page > 2 ? page - 1 : 2}" end="${page < total - 1 ? page + 1 : total - 1}" var="pageNum">
                                                         <li class="page-item ${page == pageNum ? 'active' : ''}">
-                                                            <a class="page-link" href="feedbacklist?page=${pageNum}"  ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                                            <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}"  ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
                                                         </li>
                                                     </c:forEach>
                                                     <c:if test="${page < total - 2}">
@@ -353,12 +379,12 @@
                                                         </li>
                                                     </c:if>
                                                     <li class="page-item ${page == total ? 'active' : ''}">
-                                                        <a class="page-link" href="feedbacklist?page=${pageNum}" ${page == total ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
+                                                        <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == total ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
                                                     </li>
                                                 </c:if>
                                                 <li class="page-item">
                                                     <c:if test="${page < total}">
-                                                        <a class="page-link" href="feedbacklist?page=${page+1}" > > </a>
+                                                        <a class="page-link" href="feedbacklist?page=${page+1}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" > > </a>
                                                     </c:if>
                                                 </li>
                                             </ul>
