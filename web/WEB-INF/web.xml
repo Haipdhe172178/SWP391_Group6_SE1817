@@ -128,6 +128,14 @@
         <servlet-name>ChatController</servlet-name>
         <servlet-class>AdminControllers.ChatController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FeedbackListController</servlet-name>
+        <servlet-class>Controllers.StaffController.FeedbackListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffDashboardController</servlet-name>
+        <servlet-class>Controllers.StaffController.StaffDashboardController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -255,6 +263,14 @@
     <servlet-mapping>
         <servlet-name>ChatController</servlet-name>
         <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedbackListController</servlet-name>
+        <url-pattern>/feedbacklist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffDashboardController</servlet-name>
+        <url-pattern>/staffdashboard</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

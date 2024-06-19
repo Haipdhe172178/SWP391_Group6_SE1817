@@ -50,6 +50,82 @@ public class FeedbackDAO extends DBContext {
         return listFeedback;
     }
 
+    public List<Feedback> getAllFeedback(int index) {
+        List<Feedback> listFeedback = new ArrayList<>();
+        String query = "SELECT * FROM Feedback ORDER BY FeedbackID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+
+        try {
+            int offset = (index - 1) * ELEMENTS_PER_PAGE;
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            ps.setInt(1, offset);
+            ps.setInt(2, ELEMENTS_PER_PAGE);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Feedback fb = new Feedback();
+                fb.setFeedbackId(rs.getInt(1));
+                fb.setAccount(accDao.getAccountById(rs.getInt(2)));
+                fb.setProduct(pDao.getProductById(rs.getInt(3)));
+                fb.setRating(rs.getInt(4));
+                fb.setComments(rs.getString(5));
+                fb.setFeedbackDate(rs.getDate(6));
+                fb.setStatus(rs.getInt(7));
+                listFeedback.add(fb);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listFeedback;
+    }
+
+    public List<Feedback> getAllFeedbackByStatus(int index, String status) {
+        List<Feedback> listFeedback = new ArrayList<>();
+        String query = "SELECT * FROM Feedback  Where Status = ? ORDER BY FeedbackID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+
+        try {
+            int offset = (index - 1) * ELEMENTS_PER_PAGE;
+            PreparedStatement ps = connection.prepareStatement(query);
+            switch (status) {
+                case "accept":
+                    ps.setInt(1, 1);
+                    break;
+                case "reject":
+                    ps.setInt(1, -1);
+                    break;
+                case "pending":
+                    ps.setInt(1, 0);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            ps.setInt(2, offset);
+            ps.setInt(3, ELEMENTS_PER_PAGE);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Feedback fb = new Feedback();
+                fb.setFeedbackId(rs.getInt(1));
+                fb.setAccount(accDao.getAccountById(rs.getInt(2)));
+                fb.setProduct(pDao.getProductById(rs.getInt(3)));
+                fb.setRating(rs.getInt(4));
+                fb.setComments(rs.getString(5));
+                fb.setFeedbackDate(rs.getDate(6));
+                fb.setStatus(rs.getInt(7));
+                listFeedback.add(fb);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listFeedback;
+    }
+
     public List<Feedback> getFeedbackByProductId(int pid, int index, int filter) {
         List<Feedback> listFeedback = new ArrayList<>();
         String query = "SELECT * FROM Feedback WHERE ProductID = ? AND Rating = ? ORDER BY FeedbackID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
@@ -82,7 +158,37 @@ public class FeedbackDAO extends DBContext {
         return listFeedback;
     }
 
-    public int getQuantityFeedbacks(int pid, String rating) {
+    public int getQuantityFeedbacks(String status) {
+        int quantity = 0;
+        String query = "SELECT Count(*)\n"
+                + "FROM Feedback ";
+        switch (status) {
+            case "accept":
+                query += "where Status = 1";
+                break;
+            case "pending":
+                query += "where Status = 0";
+                break;
+            case "reject":
+                query += "where Status = -1";
+                break;
+            default:
+        }
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                quantity = rs.getInt(1); // Lấy kết quả của Count(*)
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return quantity; // Trả về số lượng phản hồi
+    }
+
+    public int getQuantityFeedbacksByPid(int pid, String rating) {
         int quantity = 0;
         String query = "SELECT Count(*)\n"
                 + "FROM Feedback \n"
