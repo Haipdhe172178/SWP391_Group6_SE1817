@@ -453,14 +453,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-1 col-md-2">
-                            <div class="cart-cross-outline">
-                                <a href="#">
-                                    <svg class="cart-cross-outline" width="38" height="38">
-                                        <use xlink:href="#cart-cross-outline"></use>
-                                    </svg>
-                                </a>
-                            </div>
+                       <div class="col-lg-1 col-md-2">
+                           
+                           <!-- Xoa khoi gio -->
+                           <form action="deletecart" method="post">
+    <div class="cart-cross-outline">
+        <a href="#" onclick="removeItem(${item.product.productId})">
+            <svg class="cart-cross-outline" width="38" height="38">
+                <use xlink:href="#cart-cross-outline"></use>
+            </svg>
+        </a>
+    </div>
+            </form>
+</div>
+
                         </div>
                     </div>
                 </div>
@@ -499,9 +505,30 @@
             </div>
         </div>
     </div>
-</div>
+
+
 
 <!-- JavaScript to update total -->
+
+<script>
+function removeItem(productId) {
+    fetch('/cart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=remove&productId=${productId}`
+    }).then(response => {
+        if (response.ok) {
+            location.reload(); // Reload the page to reflect changes
+        } else {
+            console.error('Failed to remove item');
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const productSelects = document.querySelectorAll('.product-select');
