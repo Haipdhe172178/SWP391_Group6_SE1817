@@ -21,7 +21,7 @@ public class FeedbackDAO extends DBContext {
 
     public List<Feedback> getFeedbackByProductId(int pid, int index) {
         List<Feedback> listFeedback = new ArrayList<>();
-        String query = "SELECT * FROM Feedback WHERE ProductID = ? ORDER BY FeedbackID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        String query = "SELECT * FROM Feedback WHERE Status = 1 AND ProductID = ? ORDER BY FeedbackID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try {
             int offset = (index - 1) * ELEMENTS_PER_PAGE;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -153,7 +153,7 @@ public class FeedbackDAO extends DBContext {
 
     public List<Feedback> getFeedbackByProductId(int pid, int index, int filter) {
         List<Feedback> listFeedback = new ArrayList<>();
-        String query = "SELECT * FROM Feedback WHERE ProductID = ? AND Rating = ? ORDER BY FeedbackID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        String query = "SELECT * FROM Feedback WHERE Status = 1 AND ProductID = ? AND Rating = ? ORDER BY FeedbackID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try {
             int offset = (index - 1) * ELEMENTS_PER_PAGE;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -229,7 +229,7 @@ public class FeedbackDAO extends DBContext {
         int quantity = 0;
         String query = "SELECT Count(*)\n"
                 + "FROM Feedback \n"
-                + "WHERE ProductID = ?";
+                + "WHERE ProductID = ? AND Status = 1 ";
         if (rating != null && !rating.isEmpty()) {
             query += " AND Rating = ?";
         }

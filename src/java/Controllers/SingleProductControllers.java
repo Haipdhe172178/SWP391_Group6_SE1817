@@ -102,6 +102,7 @@ public class SingleProductControllers extends HttpServlet {
 
         /*End Pagination*/
         Product product = productDao.getProductById(id);
+        
         //LIST
         List<Product> listP = productDao.getProductsByCategoryId(product.getCategory().getCategoryId(), "fourRandom");
 

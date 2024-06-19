@@ -14,24 +14,28 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
-
-
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
-
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
-
         <link rel="stylesheet" href="vendors/scroll/scrollable.css" />
-
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
-
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
         <link rel="stylesheet" href="css/metisMenu.css">
-
         <link rel="stylesheet" href="css/style1.css" />
+
+        <!--for modal-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#myModal').modal('show');
+            });
+        </script>
+
 
         <style>
             table {
@@ -159,6 +163,51 @@
                 color: white;
                 border-color: #f44336;
             }
+            /* Basic styles for the notification container */
+            .notification-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                width: 300px;
+                z-index: 9999;
+                display: none; /* Hidden by default, will be shown when needed */
+            }
+
+            /* Styles for the notification */
+            .notification {
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                color: #fff;
+                font-size: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                animation: fadein 0.5s, fadeout 0.5s 4.5s; /* Fade in and fade out animations */
+            }
+
+            /* Success notification style */
+            .notification.success {
+                background-color: #4caf50; /* Green background */
+            }
+
+            /* Keyframes for fade in and fade out animations */
+            @keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
         </style>
     </head>
     <svg style="display: none;">
@@ -177,29 +226,76 @@
     </svg>
 
     <body class="crm_body_bg">
-
         <jsp:include page="../../common/header_dashboard.jsp"></jsp:include>
-            <div class="main_content_iner ">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <!--<h3 class="m-0">Sản phẩm</h3>-->
-                                        </div>
+
+            <div id="notification-container" class="notification-container"></div>
+            <script>
+                function showNotificationAndRedirect() {
+                    var notification = '<%= session.getAttribute("notification") %>';
+                    if (notification === 'display') {
+                        var notificationContainer = document.getElementById('notification-container');
+                        if (notificationContainer) {
+                            var notificationElement = document.createElement('div');
+                            notificationElement.classList.add('notification', 'success');
+                            notificationElement.textContent = 'Hiển thị thành công';
+                            notificationContainer.appendChild(notificationElement);
+                            notificationContainer.style.display = 'block';
+                            setTimeout(function () {
+                                notificationContainer.style.display = 'none';
+                            }, 5000);
+                        }
+                    }
+                    if (notification === 'hidden') {
+                        var notificationContainer = document.getElementById('notification-container');
+                        if (notificationContainer) {
+                            var notificationElement = document.createElement('div');
+                            notificationElement.classList.add('notification', 'success');
+                            notificationElement.textContent = 'Đã ẩn đánh giá';
+                            notificationContainer.appendChild(notificationElement);
+                            notificationContainer.style.display = 'block';
+                            setTimeout(function () {
+                                notificationContainer.style.display = 'none';
+                            }, 5000);
+                        }
+                    }
+                    if (notification === 'delete') {
+                        var notificationContainer = document.getElementById('notification-container');
+                        if (notificationContainer) {
+                            var notificationElement = document.createElement('div');
+                            notificationElement.classList.add('notification', 'success');
+                            notificationElement.textContent = 'Đã xóa đánh giá';
+                            notificationContainer.appendChild(notificationElement);
+                            notificationContainer.style.display = 'block';
+                            setTimeout(function () {
+                                notificationContainer.style.display = 'none';
+                            }, 5000);
+                        }
+                    }
+            <% session.removeAttribute("notification"); %>
+                }
+                window.onload = showNotificationAndRedirect;
+        </script>
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="white_card card_height_100 mb_30">
+                            <div class="white_card_header">
+                                <div class="box_header m-0">
+                                    <div class="main-title">
+                                        <!--<h3 class="m-0">Sản phẩm</h3>-->
                                     </div>
                                 </div>
-                                <div class="white_card_body">
-                                    <div class="QA_section">
-                                        <div class="white_box_tittle list_header">
-                                            <div>
-                                                <!--<h4>Đánh giá sản phẩm</h4>-->
-                                                <form action="feedbacklist" method="get" id="filterForm">
-                                                    <label for="filter">Đánh giá:</label>
-                                                    <select name="filter" onchange="document.getElementById('filterForm').submit()">
-                                                        <option value="" ${requestScope.filter eq null ? 'selected': ''}>Tất cả</option>
+                            </div>
+                            <div class="white_card_body">
+                                <div class="QA_section">
+                                    <div class="white_box_tittle list_header">
+                                        <div>
+                                            <!--<h4>Đánh giá sản phẩm</h4>-->
+                                            <form action="feedbacklist" method="get" id="filterForm">
+                                                <label for="filter">Đánh giá:</label>
+                                                <select name="filter" onchange="document.getElementById('filterForm').submit()">
+                                                    <option value="" ${requestScope.filter eq null ? 'selected': ''}>Tất cả</option>
                                                     <option value="5" ${requestScope.filter eq '5' ? 'selected': ''}>5 Sao</option>
                                                     <option value="4" ${requestScope.filter eq '4' ? 'selected': ''}>4 Sao</option>
                                                     <option value="3" ${requestScope.filter eq '3' ? 'selected': ''}>3 Sao</option>
@@ -232,7 +328,7 @@
                                             <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn</a>
                                             <c:if test="${requestScope.status eq 'pending'}">
                                                 <div style="margin-left: 30rem">
-                                                    <input type="button" onclick="" value="Chấp nhận tất cả" />
+                                                    <a href="#myModal" class="trigger-btn" data-toggle="modal"><input type="button" value="Chấp nhận tất cả" /></a>
                                                     <input type="button" onclick="" value="Từ chối tất cả" />
                                                 </div>
                                             </c:if>
@@ -394,18 +490,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
-                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-
-
-
 
 
     <script src="js/jquery1-3.4.1.min.js"></script>
@@ -430,5 +518,6 @@
     <script src="vendors/scroll/scrollable-custom.js"></script>
 
     <script src="js/custom.js"></script>
+
 </body>
 </html>
