@@ -3,7 +3,7 @@
     <servlet>
         <servlet-name>HomeControllers</servlet-name>
         <servlet-class>Controllers.HomeControllers</servlet-class>
-    </servlet>
+    </servlet>    
     <servlet>
         <servlet-name>AboutControllers</servlet-name>
         <servlet-class>Controllers.AboutControllers</servlet-class>
@@ -101,6 +101,22 @@
         <servlet-class>AdminControllers.AddImage</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UpdateCodeController</servlet-name>
+        <servlet-class>AdminControllers.UpdateCodeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryController</servlet-name>
+        <servlet-class>AdminControllers.CategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCategory</servlet-name>
+        <servlet-class>AdminControllers.AddCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCategory</servlet-name>
+        <servlet-class>AdminControllers.UpdateCategory</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AuthorControllers</servlet-name>
         <servlet-class>AdminControllers.AuthorControllers</servlet-class>
     </servlet>
@@ -139,6 +155,7 @@
     <servlet>
         <servlet-name>StaffDashboardController</servlet-name>
         <servlet-class>Controllers.StaffController.StaffDashboardController</servlet-class>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -241,6 +258,26 @@
         <url-pattern>/addimage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
+        <servlet-name>UpdateCodeController</servlet-name>
+        <url-pattern>/updatecode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryController</servlet-name>
+        <url-pattern>/category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCategory</servlet-name>
+        <url-pattern>/addcategory</url-pattern>
+    </servlet-mapping>
+    
+    
+    
+    <servlet-mapping>
+        <servlet-name>UpdateCategory</servlet-name>
+        <url-pattern>/updatecategory</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
         <servlet-name>AuthorControllers</servlet-name>
         <url-pattern>/author</url-pattern>
     </servlet-mapping>
@@ -268,17 +305,21 @@
         <servlet-name>ChatController</servlet-name>
         <url-pattern>/chat</url-pattern>
     </servlet-mapping>
+   
     <servlet-mapping>
         <servlet-name>DeleteCartControllers</servlet-name>
         <url-pattern>/deletecart</url-pattern>    
     </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>FeedbackListController</servlet-name>
         <url-pattern>/feedbacklist</url-pattern>
     </servlet-mapping>
+  
     <servlet-mapping>
         <servlet-name>StaffDashboardController</servlet-name>
         <url-pattern>/staffdashboard</url-pattern>
+
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

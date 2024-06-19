@@ -65,4 +65,38 @@ public class CategoryDao extends DBContext {
         Category c = categoryDao.getCategoryByID(1);
         System.out.println(c.getCategoryName());
     }
+
+    public void addCategory(String name) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String sql = "INSERT INTO Category (CategoryName) VALUES (?)";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+
+            stm.execute();
+        } catch (Exception e) {
+            System.out.println("addcategory" + e.getMessage());
+        }
+
+    }
+
+    public void updateCategory(String id, String name) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String stSQL = "UPDATE [dbo].[Category]\n"
+                    + "   SET [CategoryName] = ?\n"
+                    + " WHERE CategoryID = ?";
+            PreparedStatement stm = connection.prepareStatement(stSQL);
+            stm = connection.prepareStatement(stSQL);
+            stm.setString(1, name);
+            stm.setString(2, id);
+
+            int d = stm.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("updateCategory" + e.getMessage());
+        }
+
+    }
 }

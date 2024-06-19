@@ -58,54 +58,68 @@
                 <i class="ti-close"></i>
             </div>
         </div>
-        <ul id="sidebar_menu">
-            <li class="mm-active">
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/dashboard.svg" alt>
-                    </div>
-                    <span>Dashboard</span>
-                </a>
-                <ul>
-                    <li><a class="active" href="index.html">Sales</a></li>
-                </ul>
-            </li>
-            <li class>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/2.svg" alt>
-                    </div>
-                    <span>Apps</span>
-                </a>
-                <ul>
+         <ul id="sidebar_menu">
+                <li class="mm-active">
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/dashboard.svg" alt>
+                        </div>
+                        <span>Bảng điều khiển</span>
+                    </a>
+                    <ul>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/2.svg" alt>
+                        </div>
+                        <span>Ứng dụng</span>
+                    </a>
+                    <ul>
+                        <li><a href="mail">Liên hệ</a></li>
+                        <li><a href="chat">Tin nhắn</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/8.svg" alt>
+                        </div>
+                        <span>Bán hàng</span>
+                    </a>
+                    <ul>
+                        <li><a href="image">Ảnh trang chủ</a></li>
+                        <li><a href="discount">Mã Giảm giá</a></li>
 
-                    <li><a href="mail">Mail Box</a></li>
-                        <li><a href="chat">Chat</a></li>
-                </ul>
-            </li>
-            <li class>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/8.svg" alt>
-                    </div>
-                    <span>Products</span>
-                </a>
-                <ul>
-                    <li><a href="Products.html">Products</a></li>
-                </ul>
-            </li>        
-            <li class>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/11.svg" alt>
-                    </div>
-                    <span>Table</span>
-                </a>
-                <ul>
-                    <li><a href="data_table.html">Data Tables</a></li>
-                </ul>
-            </li>
-        </ul>
+                    </ul>
+                </li>        
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/11.svg" alt>
+                        </div>
+                        <span>Bảng dữ liệu</span>
+                    </a>
+                    <ul>
+                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Tài Khoản</a></li>
+                    </ul>
+                </li>
+            </ul>
     </nav>
 
     <section class="main_content dashboard_part large_header_bg">

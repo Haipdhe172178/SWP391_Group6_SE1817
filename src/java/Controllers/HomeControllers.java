@@ -6,8 +6,10 @@ package Controllers;
 
 import DAL.AccountDAO;
 import DAL.CategoryDao;
+import DAL.DiscountDAO;
 import DAL.FeedbackDAO;
-//import DAL.HomeDAO;
+import DAL.HomeDAO;
+
 import DAL.NewsDao;
 import Models.Account;
 import Models.Category;
@@ -15,6 +17,7 @@ import Models.Feedback;
 import Models.ImageBackground;
 import Models.News;
 import Models.Product;
+import Models.UsedCoupon;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -68,23 +71,26 @@ public class HomeControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<ImageBackground> imageBackground = new ArrayList<>();
+           ArrayList<ImageBackground> imageBackground = new ArrayList<>();
         ArrayList<Product> Sellmany = new ArrayList<>();
          ArrayList<Product> dataVanHoc = new ArrayList<>();
           ArrayList<Product> dataNuocNgoai = new ArrayList<>();
            ArrayList<Product> dataChuyenThong = new ArrayList<>();
             ArrayList<Product> dataKhoaHoc = new ArrayList<>();
-         
+          ArrayList<UsedCoupon> codename = new ArrayList<>();
+          
+          DiscountDAO dao = new DiscountDAO();
+          codename = dao.Displaycode();
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
-//        HomeDAO dal = new HomeDAO();
-//        dataVanHoc = dal.get3addnew(2);
-//         dataNuocNgoai = dal.get3addnew(3);
-//          dataChuyenThong = dal.get3addnew(4);
-//           dataKhoaHoc= dal.get3addnew(5);
-//        imageBackground = dal.getImageBackground();
-//        Sellmany = dal.get6sellmany();
+        HomeDAO dal = new HomeDAO();
+        dataVanHoc = dal.get3addnew(2);
+         dataNuocNgoai = dal.get3addnew(3);
+          dataChuyenThong = dal.get3addnew(4);
+           dataKhoaHoc= dal.get3addnew(5);
+        imageBackground = dal.getImageBackground();
+        Sellmany = dal.get6sellmany();
 
         //Them list, news, feedback cho homepage
         NewsDao nd = new NewsDao();
@@ -103,7 +109,7 @@ public class HomeControllers extends HttpServlet {
         request.setAttribute("data02", dataNuocNgoai);
         request.setAttribute("data03", dataChuyenThong);
         request.setAttribute("data04", dataKhoaHoc);
-
+        request.setAttribute("codediscount", codename);
         request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
 
     }

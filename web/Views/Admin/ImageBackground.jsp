@@ -88,9 +88,9 @@
                         <span>Table</span>
                     </a>
                     <ul>
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="author">Tác Giả</a></li>
+                            <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
             </ul>
@@ -297,20 +297,20 @@
                                                                     <c:when test="${p.status != 1}">
                                                                         Không được sử dụng
                                                                     </c:when>
-                                                                </c:choose>
-                                                               
+                                                                </c:choose>                                                              
                                                             </td>
 
 
                                                             <td><a href="image?id=${p.id}">UPDATE<a></td>
-                                                                    </c:forEach>
+                                                      </tr>
+                                                </c:forEach>
                                                                     </ul>
                                                                     </nav>
                                                                     </div>
                                                                     </div>
                                                                     </div>
                                                                     </div>
-                                            
+
                                                                     <div class="col-12">
                                                                     </div>
                                                                     </div>

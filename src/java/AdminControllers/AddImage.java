@@ -1,21 +1,24 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.jakarta to edit this template
  */
 
 package AdminControllers;
 
 //import DAL.HomeDAO;
+import DAL.HomeDAO;
 import Models.ImageBackground;
-import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 
 /**
@@ -94,7 +97,7 @@ public class AddImage extends HttpServlet {
             }
 
             // Thêm sản phẩm vào cơ sở dữ liệu
-//            HomeDAO dal = new HomeDAO();
+           HomeDAO dal = new HomeDAO();
             
             if (Names.isBlank()) {
                
@@ -107,7 +110,7 @@ public class AddImage extends HttpServlet {
                    
                     ims.setUrl(imgProduct);
                     ims.setStatus(status);
-//                   dal.addImage(ims);
+                  dal.addImage(ims);
                 }
            
                response.sendRedirect("image");

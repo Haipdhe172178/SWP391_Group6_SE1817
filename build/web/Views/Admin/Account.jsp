@@ -54,7 +54,7 @@
                     <i class="ti-close"></i>
                 </div>
             </div>
-            <ul id="sidebar_menu">
+           <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -74,9 +74,8 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-
-                        <li><a href="mail">Mail Box</a></li>
-                        <li><a href="chat">Chat</a></li>
+                        <li><a href="mail">Liên hệ</a></li>
+                        <li><a href="chat">Tin nhắn</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -87,8 +86,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-                        <li><a href="image">Image BackGround</a></li>
-                        <li><a href="discount">Discount</a></li>
+                        <li><a href="image">Ảnh trang chủ</a></li>
+                        <li><a href="discount">Mã Giảm giá</a></li>
 
                     </ul>
                 </li>        
@@ -100,9 +99,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="author">Tác Giả</a></li>
+                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>

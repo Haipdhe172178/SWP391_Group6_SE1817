@@ -11,19 +11,21 @@ package Models;
 public class UsedCoupon {
     private int codeId;
     private String codeName;
-    private int discount;
+    private float discount;
     private String couponType;
     private int quantity;
+    private int status;
 
     public UsedCoupon() {
     }
 
-    public UsedCoupon(int codeId, String codeName, int discount, String couponType, int quantity) {
+    public UsedCoupon(int codeId, String codeName, float discount, String couponType, int quantity, int status) {
         this.codeId = codeId;
         this.codeName = codeName;
         this.discount = discount;
         this.couponType = couponType;
         this.quantity = quantity;
+        this.status = status;
     }
 
     public int getCodeId() {
@@ -42,11 +44,11 @@ public class UsedCoupon {
         this.codeName = codeName;
     }
 
-    public int getDiscount() {
+    public float getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(float discount) {
         this.discount = discount;
     }
 
@@ -65,5 +67,16 @@ public class UsedCoupon {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    
+
     
 }

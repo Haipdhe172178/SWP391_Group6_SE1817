@@ -1,0 +1,150 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
+package AdminControllers;
+
+import DAL.DiscountDAO;
+import Models.UsedCoupon;
+import java.io.IOException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author USER
+ */
+public class UpdateCodeController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateCodeController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateCodeController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    } 
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        String id = request.getParameter("id");
+        DiscountDAO dal = new DiscountDAO();
+        UsedCoupon discount = new UsedCoupon();
+        discount = dal.get1DistoUpdate(id);
+        request.setAttribute("code", discount);
+        request.getRequestDispatcher("Views/Admin/UpdateCode.jsp").forward(request, response);
+    } 
+
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+      
+                String codename = request.getParameter("meomeo");
+                String id = request.getParameter("id");
+            String discountStr = request.getParameter("discount1");
+           
+            String coupon_type = request.getParameter("theloai");
+           
+             String qualityStr = request.getParameter("soluong");   
+             String status = request.getParameter("status");
+             
+             request.setAttribute("soluong",qualityStr );
+             request.setAttribute("meomeo", codename);
+               request.setAttribute("discount1",discountStr );
+                 request.setAttribute("theloai", coupon_type);
+                   request.setAttribute("status", status);
+                 DiscountDAO dal = new DiscountDAO();
+               String error="";
+               try {
+                float discount = Float.parseFloat(discountStr);
+                int quality = Integer.parseInt(qualityStr);
+                if(codename.isBlank()||coupon_type.isBlank()){
+                    
+                      error = "Bạn không được để trống";
+                 request.setAttribute("error", error);
+                      
+                
+                }else{
+                if(discount>0 && quality>0 ){                   
+                      dal.UpdateDiscount(codename, discountStr, coupon_type, qualityStr,status,id);      
+                }else{
+                    
+                      error = "Bạn phải nhập phần trăm > 0 và số lượng > 0";
+                 request.setAttribute("error", error);
+                    
+                 
+                }
+                }
+                
+                
+                if(error==""){
+                   response.sendRedirect("discount");  
+                }else{
+                      UsedCoupon discount1 = new UsedCoupon();
+                  discount1 = dal.get1DistoUpdate(id);
+                    request.setAttribute("code", discount1);
+                      request.getRequestDispatcher("Views/Admin/UpdateCode.jsp").forward(request, response);  
+                }
+                 
+                
+            } catch (Exception e) {
+                   UsedCoupon discount = new UsedCoupon();
+                   discount = dal.get1DistoUpdate(id);
+                         request.setAttribute("code", discount);
+      
+                 error = "Bạn nhập số không đúng định dạng phần trăm giảm giá và số lượng mã phát ra";
+                 request.setAttribute("error", error);
+                   request.getRequestDispatcher("Views/Admin/UpdateCode.jsp").forward(request, response);
+            }
+                 
+                 
+            
+         
+    }
+
+    /** 
+     * Returns a short description of the servlet.
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
