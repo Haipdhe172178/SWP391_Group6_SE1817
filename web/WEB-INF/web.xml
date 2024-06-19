@@ -131,6 +131,8 @@
     <servlet>
         <servlet-name>DeleteCartControllers</servlet-name>
         <servlet-class>Controllers.DeleteCartControllers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FeedbackListController</servlet-name>
         <servlet-class>Controllers.StaffController.FeedbackListController</servlet-class>
     </servlet>
@@ -268,7 +270,9 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteCartControllers</servlet-name>
-        <url-pattern>/deletecart</url-pattern>
+        <url-pattern>/deletecart</url-pattern>    
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FeedbackListController</servlet-name>
         <url-pattern>/feedbacklist</url-pattern>
     </servlet-mapping>
