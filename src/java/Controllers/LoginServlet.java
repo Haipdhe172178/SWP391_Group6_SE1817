@@ -92,11 +92,11 @@ public class LoginServlet extends HttpServlet {
             if (a.getRoleId() == 1) {
                 session.setAttribute("role", "admin");
                 response.sendRedirect("dash");
+            } else if (a.getRoleId() == 2) {
+                session.setAttribute("role", "staff");
+                response.sendRedirect("staffdashboard");
             } else {
                 session.setAttribute("role", "user");
-               
-                    session.setAttribute("account", a);
-                
                 response.sendRedirect("home");
             }
             session.setAttribute("account", a);

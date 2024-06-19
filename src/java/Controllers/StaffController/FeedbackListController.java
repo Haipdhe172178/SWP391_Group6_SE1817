@@ -140,7 +140,7 @@ public class FeedbackListController extends HttpServlet {
                     ms = "Vui lòng thử lại!";
             }
             if (isComplete) {
-                request.setAttribute("messageSuccess", ms);
+                request.getSession().setAttribute("notification", action);
             }
             response.sendRedirect("feedbacklist?page=" + page + "&status=" + status + "&search=" + search + "&filter=" + filter);
         } else {

@@ -8,7 +8,7 @@
 
 <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
     <div class="logo d-flex justify-content-between">
-        <a href="dash"><img src="images/anh456.png" alt></a>
+        <a href="staffdashboard"><img src="images/anh456.png" alt></a>
         <div class="sidebar_close_icon d-lg-none">
             <i class="ti-close"></i>
         </div>
@@ -151,12 +151,12 @@
                             <img src="img/client_img.png" alt="#">
                             <div class="profile_info_iner">
                                 <div class="profile_author_name">
-                                    <p>Staff</p>
+                                    <p>Nhân viên</p>
                                     <h5>${sessionScope.account.fullName}</h5>
                                 </div>
                                 <div class="profile_info_details">
-                                    <a href="#">Hồ sơ của tôi</a>
-                                    <a href="#">Đăng xuất </a>
+                                    <a href="profile">Hồ sơ của tôi</a>
+                                    <a href="logout">Đăng xuất </a>
                                 </div>
                             </div>
                         </div>
