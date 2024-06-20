@@ -347,4 +347,36 @@
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+    <servlet>
+        <servlet-name>AddNewsControllers</servlet-name>
+        <servlet-class>AdminControllers.AddNewsControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateNewsControllers</servlet-name>
+        <servlet-class>AdminControllers.UpdateNewsControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewsController</servlet-name>
+        <servlet-class>AdminControllers.AddNewsControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FixNewsControllers</servlet-name>
+        <servlet-class>Controllers.FixNewsControllers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddNewsControllers</servlet-name>
+        <url-pattern>/addnews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateNewsControllers</servlet-name>
+        <url-pattern>/upnews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewsController</servlet-name>
+        <url-pattern>/addnew</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FixNewsControllers</servlet-name>
+        <url-pattern>/fixnews</url-pattern>
+    </servlet-mapping>
 </web-app>
