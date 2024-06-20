@@ -207,7 +207,6 @@
                     opacity: 0;
                 }
             }
-
         </style>
     </head>
     <svg style="display: none;">
@@ -232,7 +231,7 @@
             <script>
                 function showNotificationAndRedirect() {
                     var notification = '<%= session.getAttribute("notification") %>';
-                    if (notification === 'display') {
+                    if (notification === 'displayElement') {
                         var notificationContainer = document.getElementById('notification-container');
                         if (notificationContainer) {
                             var notificationElement = document.createElement('div');
@@ -327,21 +326,21 @@
                                             <a href="feedbacklist?page=1&status=accept&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị</a>
                                             <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn</a>
                                             <c:if test="${requestScope.status eq 'pending'}">
-                                                <div style="margin-left: 30rem">
+<!--                                                <div style="margin-left: 30rem">
                                                     <a href="#myModal" class="trigger-btn" data-toggle="modal"><input type="button" value="Chấp nhận tất cả" /></a>
                                                     <input type="button" onclick="" value="Từ chối tất cả" />
-                                                </div>
+                                                </div>-->
                                             </c:if>
                                             <c:if test="${requestScope.status eq 'accept'}">
-                                                <div style="margin-left: 30rem">
+<!--                                                <div style="margin-left: 30rem">
                                                     <input type="button" value="Ẩn tất cả" />
-                                                </div>
+                                                </div>-->
                                             </c:if>
                                             <c:if test="${requestScope.status eq 'reject'}">
-                                                <div style="margin-left: 30rem">
+<!--                                                <div style="margin-left: 30rem">
                                                     <input type="button" value="Hiển thị tất cả" />
                                                     <input type="button" value="Xóa tất cả" />
-                                                </div>
+                                                </div>-->
                                             </c:if>
                                         </div>
                                         <table>
@@ -418,7 +417,7 @@
                                                                         <c:if test="${feedback.status == -1}">
                                                                             <!--Xóa hoặc hiển thị lại feedback-->
                                                                             <div class="btn edit-btn">
-                                                                                <button type="submit" name="action" value="display" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                <button type="submit" name="action" value="displayElement" style="background: none; border: none; padding: 0; cursor: pointer;">
                                                                                     <i class="fas fa-eye" style="color: white"></i>
                                                                                 </button>
                                                                             </div>
@@ -475,7 +474,7 @@
                                                         </li>
                                                     </c:if>
                                                     <li class="page-item ${page == total ? 'active' : ''}">
-                                                        <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == total ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
+                                                        <a class="page-link" href="feedbacklist?page=${total}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == total ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
                                                     </li>
                                                 </c:if>
                                                 <li class="page-item">

@@ -124,7 +124,7 @@ public class FeedbackListController extends HttpServlet {
             boolean isComplete = false;
             String ms;
             switch (action) {
-                case "display":
+                case "displayElement":
                     isComplete = fDao.updateStatusFeedback(feedbackId, 1);
                     ms = "Hiển thị thành công";
                     break;
