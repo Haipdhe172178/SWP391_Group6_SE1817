@@ -62,6 +62,11 @@ public class FixNewsControllers extends HttpServlet {
 
             request.setAttribute("message", "Cập nhật tin tức thành công");
             response.sendRedirect("upnews");
+        } else if ("delete".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            newsDao.deleteNews(id);
+            request.setAttribute("message", "Đã xóa bản tin thành công");
+            response.sendRedirect("upnews");
         }
     }
 
@@ -101,6 +106,6 @@ public class FixNewsControllers extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Servlet to handle the update of news records.";
+        return "Servlet to handle the update and deletion of news records.";
     }
 }

@@ -275,14 +275,14 @@ public class NewsDao extends DBContext {
     }
 
     public boolean deleteNews(int id) {
-        String query = "DELETE FROM News WHERE NewID = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, id);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return false;
+    String query = "DELETE FROM News WHERE NewID = ?";
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setInt(1, id);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+    return false;
+}
 }

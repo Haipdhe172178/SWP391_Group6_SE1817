@@ -266,7 +266,7 @@
                                                         <td><img src="${news.imgNews2}" alt="Image 2"></td>
                                                         <td>
                                                             <a href="fixnews?action=edit&id=${news.newId}" class="btn btn-primary btn-sm">Update</a>
-                                                            <a href="delete?id=${news.newId}" class="btn btn-danger btn-sm">Delete</a>
+                                                            <a href="fixnews?action=delete&id=${news.newId}" class="btn btn-danger btn-sm">Delete</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

@@ -63,7 +63,7 @@ public class AddNewsController extends HttpServlet {
         newsDao.insertNews(news);
 
         request.setAttribute("message", "Thêm tin tức thành công");
-        processRequest(request, response);
+        response.sendRedirect("upnews");
     }
 
     private String uploadFile(Part part, HttpServletRequest request) throws IOException {
