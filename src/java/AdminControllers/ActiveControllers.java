@@ -2,25 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers;
+package AdminControllers;
 
 import DAL.AccountDAO;
-import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author ASUS TUF
+ * @author huyca
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+public class ActiveControllers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +35,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ActiveControllers</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ActiveControllers at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,15 +56,17 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        request.setAttribute("productID", request.getParameter("productId"));
-        if (session.getAttribute("success") != null) {
-            request.setAttribute("success", session.getAttribute("success"));
-            session.removeAttribute("success");
-        }
-
-        request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
+        AccountDAO accountDao = new AccountDAO();
+        String action = request.getParameter("action");
+         if (action != null && !action.isEmpty()) {
+                int accountId = Integer.parseInt(request.getParameter("accountId"));
+                if ("hideacc".equals(action)) {
+                    accountDao.hideAccount(accountId);
+                } else if ("showacc".equals(action)) {
+                    accountDao.showAccount(accountId);
+                } 
+                response.sendRedirect(request.getContextPath() + "/account");
+    }
     }
 
     /**
@@ -82,40 +80,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("your_name");
-        String password = request.getParameter("your_pass");
-        AccountDAO dao = new AccountDAO();
-        Account account = dao.check(username, password);
-        HttpSession session = request.getSession();
-        String productID = request.getParameter("productID");
-        
-
-        if (account != null) {
-            if (account.getStatus() == 0) {
-                request.setAttribute("errorMessage", "Tài khoản của bạn đã bị vô hiệu hóa.");
-                request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
-                return;
-            }
-            if (account.getRoleId() == 1) {
-                session.setAttribute("role", "admin");
-                response.sendRedirect("dash");
-            } else if (account.getRoleId() == 2) {
-                session.setAttribute("role", "staff");
-                response.sendRedirect("staffdashboard");
-            } else {
-                session.setAttribute("role", "user");
-                if (productID != null && !productID.isEmpty()) {
-                    session.setAttribute("account", account);
-                    response.sendRedirect("single?productID=" + productID);
-                    return;
-                }
-                response.sendRedirect("home");
-            }
-            session.setAttribute("account", account);
-        } else {
-            request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu");
-            request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

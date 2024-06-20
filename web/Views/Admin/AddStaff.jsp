@@ -1,5 +1,5 @@
 <%-- 
-    Document   : AddAuthor.jsp
+    Document   : AddAcount.jsp
     Created on : Jun 18, 2024, 10:50:22 AM
     Author     : huyca
 --%>
@@ -23,13 +23,12 @@
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
         <link rel="stylesheet" href="css/metisMenu.css">
         <link rel="stylesheet" href="css/style1.css" />
-        <title> Thêm Tác Giả</title>
+        <title> Thêm Tài Khoản</title>
         <style>
             .error {
                 color: red;
                 font-size: 0.8em;
             }
-            /* CSS for notification */
             .notification-container {
                 position: fixed;
                 top: 10px;
@@ -38,7 +37,6 @@
                 z-index: 1000;
                 animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
             }
-
             .notification {
                 background-color: #4CAF50;
                 color: white;
@@ -50,7 +48,6 @@
                 background-color: #4CAF50;
                 color: white;
             }
-
             .notification.error {
                 background-color: #f44336;
                 color: white;
@@ -78,7 +75,7 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -105,8 +102,8 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-                        <li><a href="mail">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
+                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -117,13 +114,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                        <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -135,20 +127,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="data">Sản phẩm</a></li>
+                        <li><a href="">Thể Loại</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -309,30 +290,75 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Thêm sản phẩm</h3>
+                                            <h3 class="m-0">Thêm Tài Khoản</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <form action="adda" method="POST" id="myForm">
+                                <form action="addac" method="POST" enctype="multipart/form-data" id="accountForm">
                                     <div class="white_card_body">
                                         <div class="mb-3">
-                                            <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
-                                            <div id="authorNameError" class="error"></div>
-                                        </div>                                  
+                                            <label for="fullName">Họ và tên</label>
+                                            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nhập họ và tên" value="${sessionScope.fullName}" required>
+                                            <div id="fullNameError" class="error"></div>
+                                        </div>
                                         <div class="mb-3">
-                                            <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
-                                            <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
+                                            <label for="userName">Tên tài khoản</label>
+                                            <input type="text" class="form-control" id="userName" name="userName" placeholder="nhập tên tài khoản" value="${sessionScope.userName}" required>
+                                            <div id="userNameError" class="error">${sessionScope.userNameError}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="passWord">Mật khẩu</label>
+                                            <input type="password" class="form-control" id="passWord" name="passWord" placeholder="nhập mật khẩu" value="${sessionScope.passWord}" required>
+                                            <div id="passWordError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmPassWord">Nhập lại mật khẩu</label>
+                                            <input type="password" class="form-control" id="confirmPassWord" name="confirmPassWord" placeholder="nhập lại mật khẩu" value="${sessionScope.confirmPassWord}" required>
+                                            <div id="confirmPassWordError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="gender">Giới tính</label><br>
+                                            <input type="radio" id="male" name="gender" value="male" ${sessionScope.gender == 'male' ? 'checked' : ''} required>
+                                            <label for="male">Nam</label><br>
+                                            <input type="radio" id="female" name="gender" value="female" ${sessionScope.gender == 'female' ? 'checked' : ''} required>
+                                            <label for="female">Nữ</label>
+                                            <div id="genderError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email">Email</label>
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Nhập Email" value="${sessionScope.email}" required>
+                                            <div id="emailError" class="error">${sessionScope.emailError}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phoneNumber">Số điện thoại</label>
+                                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Nhập số điện thoại" value="${sessionScope.phoneNumber}" required>
+                                            <div id="phoneNumberError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address">Địa chỉ</label>
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ" value="${sessionScope.address}" required>
+                                            <div id="addressError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="imgAccount" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control" id="imgAccount" name="imgAccount">
+                                            <div id="imgAccountError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="roleId">Vai trò</label>
+                                            <select class="form-control" id="roleId" name="roleId" required>
+                                                <c:forEach items="${role}" var="ro">
+                                                    <option value="${ro.roleId}" ${sessionScope.roleId == ro.roleId ? 'selected' : ''}>${ro.roleName}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <div id="roleIdError" class="error"></div>
+                                        </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
-                                            <a href="data" class="btn btn-warning">Trở lại</a>
+                                            <button type="submit" class="btn btn-primary">Thêm tài khoản</button>
+                                            <a href="account" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>
@@ -352,7 +378,7 @@
                 </div>
             </div>
         </section>
-
+        <div id="notification-container" style="display:none;"></div>
 
         <div class="CHAT_MESSAGE_POPUPBOX">
             <div class="CHAT_POPUP_HEADER">
@@ -489,21 +515,92 @@
         <!--kiem tra validation-->
         <script>
             // JavaScript for form validation
-            document.getElementById('myForm').addEventListener('submit', function (event) {
-                var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authortDescription').value.trim();
-                var authorNameError = document.getElementById('authorNameError');
-                var authorDescriptionError = document.getElementById('authorDescriptionError');
+            document.getElementById('accountForm').addEventListener('submit', function (event) {
+                var fullName = document.getElementById('fullName').value.trim();
+                var userName = document.getElementById('userName').value.trim();
+                var passWord = document.getElementById('passWord').value.trim();
+                var confirmPassWord = document.getElementById('confirmPassWord').value.trim();
+                var gender = document.querySelector('input[name="gender"]:checked');
+                var email = document.getElementById('email').value.trim();
+                var phoneNumber = document.getElementById('phoneNumber').value.trim();
+                var address = document.getElementById('address').value.trim();
+                var imgAccount = document.getElementById('imgAccount').value.trim();
+
+                var fullNameError = document.getElementById('fullNameError');
+                var userNameError = document.getElementById('userNameError');
+                var passWordError = document.getElementById('passWordError');
+                var confirmPassWordError = document.getElementById('confirmPassWordError');
+                var genderError = document.getElementById('genderError');
+                var emailError = document.getElementById('emailError');
+                var phoneNumberError = document.getElementById('phoneNumberError');
+                var addressError = document.getElementById('addressError');
+                var imgAccountError = document.getElementById('imgAccountError');
+                var roleIdError = document.getElementById('roleIdError');
+
                 var isValid = true;
+
                 // Reset previous error messages
-                authorNameError.textContent = '';
-                authorDescriptionError.textContent = '';
-                if (authorName === '') {
-                    authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
+                fullNameError.textContent = '';
+                userNameError.textContent = '';
+                passWordError.textContent = '';
+                confirmPassWordError.textContent = '';
+                genderError.textContent = '';
+                emailError.textContent = '';
+                phoneNumberError.textContent = '';
+                addressError.textContent = '';
+                imgAccountError.textContent = '';
+                roleIdError.textContent = '';
+
+                if (fullName === '') {
+                    fullNameError.textContent = 'Vui lòng nhập họ và tên.';
                     isValid = false;
                 }
-                if (authorDescription === '') {
-                    authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                if (userName === '') {
+                    userNameError.textContent = 'Vui lòng nhập tên tài khoản.';
+                    isValid = false;
+                }
+                if (passWord === '') {
+                    passWordError.textContent = 'Vui lòng nhập mật khẩu.';
+                    isValid = false;
+                } else if (!/^[a-zA-Z0-9]{8,}$/.test(passWord)) {
+                    passWordError.textContent = 'Mật khẩu phải có ít nhất 8 ký tự và chỉ bao gồm chữ cái và số.';
+                    isValid = false;
+                }
+                if (confirmPassWord === '') {
+                    confirmPassWordError.textContent = 'Vui lòng nhập lại mật khẩu.';
+                    isValid = false;
+                } else if (passWord !== confirmPassWord) {
+                    confirmPassWordError.textContent = 'Mật khẩu không khớp.';
+                    isValid = false;
+                }
+                if (!gender) {
+                    genderError.textContent = 'Vui lòng chọn giới tính.';
+                    isValid = false;
+                }
+                if (email === '') {
+                    emailError.textContent = 'Vui lòng nhập email.';
+                    isValid = false;
+                } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                    emailError.textContent = 'Email không đúng định dạng.';
+                    isValid = false;
+                }
+                if (phoneNumber === '') {
+                    phoneNumberError.textContent = 'Vui lòng nhập số điện thoại.';
+                    isValid = false;
+                } else if (!/^0\d{9}$/.test(phoneNumber)) {
+                    phoneNumberError.textContent = 'Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0.';
+                    isValid = false;
+                }
+                if (address === '') {
+                    addressError.textContent = 'Vui lòng nhập địa chỉ.';
+                    isValid = false;
+                }
+                if (imgAccount === '') {
+                    imgAccountError.textContent = 'Vui lòng nhập ảnh.';
+                    isValid = false;
+                }
+                if (!document.getElementById('roleId').value) {
+                    roleIdError.textContent = 'Vui lòng chọn vai trò.';
                     isValid = false;
                 }
 
@@ -521,33 +618,22 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tác giả thành công!';
+                        notificationElement.textContent = 'Thêm tài khoản thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
                             notificationContainer.style.display = 'none';
-                            window.location.href = '<%= request.getContextPath() %>/author';
+                            window.location.href = '<%= request.getContextPath() %>/account';
                         }, 5000);
                     }
-                } else if (notification === 'error') {
-                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
-                    var notificationContainer = document.getElementById('notification-container');
-                    if (notificationContainer) {
-                        var notificationElement = document.createElement('div');
-                        notificationElement.classList.add('notification', 'error');
-                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
-                        notificationContainer.appendChild(notificationElement);
-                        notificationContainer.style.display = 'block';
-                        setTimeout(function () {
-                            notificationContainer.style.display = 'none';
-                        }, 5000);
-                    }
-                }
-            <% session.removeAttribute("notification"); %>
-            <% session.removeAttribute("errorMessage"); %>
+                } 
+                // Remove attributes after use
+            <% session.removeAttribute("notification"); %>      
             }
             window.onload = showNotificationAndRedirect;
         </script>
+
+
     </body>
 </html>
 

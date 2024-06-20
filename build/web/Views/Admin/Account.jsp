@@ -47,7 +47,7 @@
 
     <body class="crm_body_bg">
 
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -113,6 +113,7 @@
                     </a>
                     <ul>
                         <li><a href="account">Tài Khoản</a></li>
+                         <li><a href="manages">Quản lý nhân viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -270,8 +271,6 @@
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
                                             <h4>Bảng dữ liệu của tài khoản</h4>
-
-
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
@@ -284,22 +283,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="add_button ms-2">
-                                                    <a href="" class="btn_1">Thêm Tài Khoản</a>
+                                                    <a href="addac" class="btn_1">Thêm Tài Khoản</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
-
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">ID</th>
-                                                        <th scope="col">Tên người dùng</th>
-                                                        <th scope="col">Giới tính</th>
+                                                        <th scope="col">Tên người dùng</th>                                                      
                                                         <th scope="col">Email</th>
-                                                        <th scope="col">Số điện thoại</th>
-                                                        <th scope="col">Địa Chỉ</th>
-                                                        <th scope="col">Vai trò</th>
+                                                        <th scope="col">Số điện thoại</th>                                                                                                           
                                                         <th scope="col">Ảnh</th>
                                                         <th scope="col">Trạng thái</th>
                                                         <th scope="col">Hành Động</th>
@@ -309,18 +304,9 @@
                                                     <c:forEach items="${account}" var="ac">
                                                         <tr class="${ac.status == 1 ? 'active-row' : 'inactive-row'}">
                                                             <td>${ac.accountId}</td>
-                                                            <td>${ac.fullName}</td>                                                                                                                       
-                                                            <td>${ac.gender}</td>
+                                                            <td>${ac.fullName}</td>                                                                                                                                                                                   
                                                             <td>${ac.email}</td> 
                                                             <td>${ac.phoneNumber}</td>
-                                                            <td>${ac.address}</td> 
-                                                            <td>
-                                                                <c:forEach items="${role}" var="ro">
-                                                                    <c:if test="${ac.roleId == ro.roleId}">
-                                                                        ${ro.roleName}
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </td>
                                                             <td><img src="${ac.imgAccount}" alt="Product Image" style="width:100px;height:auto;"></td>
                                                             <td>
                                                                 <c:choose>
@@ -333,8 +319,10 @@
                                                                 </c:choose>
                                                             </td>
                                                             <td>
-                                                                <a href="updatea?id=${a.authorID}" title="Update"><i class="fas fa-edit"></i></a>
-                                                                <a href="hidea?id=${a.authorID}" title="Hide"><i class="fas fa-ban"></i></a>
+                                                                <a href="accdetail?id=${ac.accountId}" title="View"><i class="fas fa-eye"></i></a>
+                                                                <a href="active?action=hideacc&accountId=${ac.accountId}" title="Hide"><i class="fas fa-ban"></i></a>
+                                                                <a href="active?action=showacc&accountId=${ac.accountId}" title="Show"><i class="fas fa-check-circle"></i></a>
+
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
@@ -342,7 +330,42 @@
                                             </table>
 
                                         </div>
+                                        <nav class="py-5" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                                <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                                                <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                                                <c:if test="${end > endP}">
+                                                    <c:set var="end" value="${endP}" />
+                                                    <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                                                </c:if>
 
+                                                <!-- Nút Previous -->
+                                                <c:if test="${tag > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="account?index=${tag - 1}${query}" aria-label="Previous">
+                                                            <span aria-hidden="true">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+
+                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
+                                                    <li class="page-item ${tag == i ? 'active' : ''}">
+                                                        <a class="page-link" href="account?index=${i}${query}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
+
+                                                <!-- Nút Next -->
+                                                <c:if test="${tag < endP}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="account?index=${tag + 1}${query}" aria-label="Next">
+                                                            <span aria-hidden="true">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
 
                                     </div>
                                 </div>

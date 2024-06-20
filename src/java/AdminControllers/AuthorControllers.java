@@ -56,30 +56,41 @@ public class AuthorControllers extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AuthorDao ad = new AuthorDao();
-        String indexPage= request.getParameter("index");
+        String indexPage = request.getParameter("index");
         int index;
-        if (indexPage!=null) {
+        if (indexPage != null) {
             index = Integer.parseInt(indexPage);
-        }else{
+        } else {
             index = 1;
         }
-        
+
         List<Author> authors;
-        int count = ad.getTotalAuthors();
-        int endPage;
-        authors = ad.pagingAuthors(index);
-        endPage = count /8;
+        int count;
+        String searchKeyword = request.getParameter("s");
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            authors = ad.pagingSearchAuthor(index, searchKeyword);
+            count = ad.getTotalAuthorsByKeyword(searchKeyword);
+        } else {
+            authors = ad.pagingAuthors(index);
+            count = ad.getTotalAuthors();
+        }
+        int endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;
         }
-        
+
+        String query = "";
+        if (searchKeyword != null) {
+            query += "&s=" + searchKeyword;
+        }
+        request.setAttribute("query", query);
         request.setAttribute("author", authors);
         request.setAttribute("endP", endPage);
-         request.setAttribute("tag", index);
-       request.getRequestDispatcher("Views/Admin/Author.jsp").forward(request, response);
+        request.setAttribute("tag", index);
+
+        request.getRequestDispatcher("Views/Admin/Author.jsp").forward(request, response);
     }
 
     /**
@@ -104,15 +115,15 @@ public class AuthorControllers extends HttpServlet {
 //        }
 //        out.println("</ul>");
 //    }
-}
+    }
 
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

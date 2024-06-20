@@ -1,11 +1,11 @@
 <%-- 
-    Document   : AddAuthor.jsp
-    Created on : Jun 18, 2024, 10:50:22 AM
+    Document   : Account
+    Created on : May 27, 2024, 10:09:46 AM
     Author     : huyca
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -14,65 +14,34 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
+
+
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
+
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
+
         <link rel="stylesheet" href="vendors/scroll/scrollable.css" />
+
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
+
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
         <link rel="stylesheet" href="css/metisMenu.css">
+
         <link rel="stylesheet" href="css/style1.css" />
-        <title> Thêm Tác Giả</title>
         <style>
-            .error {
-                color: red;
-                font-size: 0.8em;
-            }
-            /* CSS for notification */
-            .notification-container {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-                display: none;
-                z-index: 1000;
-                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+
+            .active-row {
+                opacity: 1;
             }
 
-            .notification {
-                background-color: #4CAF50;
-                color: white;
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-            .notification.success {
-                background-color: #4CAF50;
-                color: white;
+            .inactive-row {
+                opacity: 0.5;
             }
 
-            .notification.error {
-                background-color: #f44336;
-                color: white;
-            }
-
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                }
-                to {
-                    transform: translateX(0);
-                }
-            }
-
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                }
-                to {
-                    transform: translateX(100%);
-                }
-            }
         </style>
     </head>
 
@@ -105,8 +74,8 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-                        <li><a href="mail">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
+                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -117,13 +86,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                        <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -135,9 +99,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+                        <li><a href="data">Sản phẩm</a></li>
+                        <li><a href="">Thể Loại</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -149,17 +113,7 @@
                     </a>
                     <ul>
                         <li><a href="account">Tài Khoản</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                         <li><a href="manages">Quản lý vai trò</a></li>
                     </ul>
                 </li>
             </ul>
@@ -176,7 +130,7 @@
                             </div>
                             <div class="serach_field-area d-flex align-items-center">
                                 <div class="search_inner">
-                                    <form action="data" method="GET">
+                                    <form action="manages" method="GET">
                                         <div class="search_field">
                                             <input name="s" type="text" placeholder="Search here...">
                                         </div>
@@ -300,8 +254,8 @@
                     </div>
                 </div>
             </div>
-            <div id="notification-container" class="notification-container"></div>
-            <div class="main_content_iner">
+
+            <div class="main_content_iner ">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
@@ -309,37 +263,120 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Thêm sản phẩm</h3>
+                                            <h3 class="m-0">Tài Khoản</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <form action="adda" method="POST" id="myForm">
-                                    <div class="white_card_body">
-                                        <div class="mb-3">
-                                            <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
-                                            <div id="authorNameError" class="error"></div>
-                                        </div>                                  
-                                        <div class="mb-3">
-                                            <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
-                                            <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
-                                        <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
-                                            <a href="data" class="btn btn-warning">Trở lại</a>
+                                <div class="white_card_body">
+                                    <div class="QA_section">
+                                        <div class="white_box_tittle list_header">
+                                            <h4>Bảng dữ liệu của tài khoản</h4>
+                                            <div class="box_right d-flex lms_block">
+                                                <div class="serach_field_2">
+                                                    <div class="search_inner">
+                                                        <form action="manages" method="GET">
+                                                            <div class="search_field">
+                                                                <input name="s" type="text" placeholder="Tìm kiếm....">
+                                                            </div>
+                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+<!--                                                <div class="add_button ms-2">
+                                                    <a href="" class="btn_1"></a>
+                                                </div>-->
+                                            </div>
                                         </div>
+                                        <div class="QA_table mb_30">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">Vai trò</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Hành Động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${account}" var="ac">
+                                                      
+                                                            <tr class="${ac.status == 1 ? 'active-row' : 'inactive-row'}">
+                                                                <td>${ac.accountId}</td>
+                                                                <td>${ac.fullName}</td>
+                                                                <td>
+                                                                    <c:forEach items="${role}" var="ro">
+                                                                        <c:if test="${ac.roleId == ro.roleId}">
+                                                                            ${ro.roleName}
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </td>
+                                                                <td>
+                                                                     <c:choose>
+                                                                    <c:when test="${ac.status == 1}">
+                                                                        <span style="color: green;">Active</span>
+                                                                    </c:when>
+                                                                    <c:when test="${ac.status == 0}">
+                                                                        <span style="color: red;">Inactive</span>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                                </td>
+                                                                <<td>
+                                                                    <a href="change?accountId=${ac.accountId}" title="Update"><i class="fas fa-edit"></i></a>                                                        
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <nav class="py-5" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                                <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                                                <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                                                <c:if test="${end > endP}">
+                                                    <c:set var="end" value="${endP}" />
+                                                    <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                                                </c:if>
+
+                                                <!-- Nút Previous -->
+                                                <c:if test="${tag > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="manages?index=${tag - 1}${query}" aria-label="Previous">
+                                                            <span aria-hidden="true">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+
+                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
+                                                    <li class="page-item ${tag == i ? 'active' : ''}">
+                                                        <a class="page-link" href="manages?index=${i}${query}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
+
+                                                <!-- Nút Next -->
+                                                <c:if test="${tag < endP}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="manages?index=${tag + 1}${query}" aria-label="Next">
+                                                            <span aria-hidden="true">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
+
                                     </div>
-                                </form>
-
-
+                                </div>
                             </div>
+                        </div>
+                        <div class="col-12">
                         </div>
                     </div>
                 </div>
             </div>
-
-
             <div class="footer_part">
                 <div class="container">
                     <div class="row">
@@ -486,68 +523,8 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
-        <!--kiem tra validation-->
-        <script>
-            // JavaScript for form validation
-            document.getElementById('myForm').addEventListener('submit', function (event) {
-                var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authortDescription').value.trim();
-                var authorNameError = document.getElementById('authorNameError');
-                var authorDescriptionError = document.getElementById('authorDescriptionError');
-                var isValid = true;
-                // Reset previous error messages
-                authorNameError.textContent = '';
-                authorDescriptionError.textContent = '';
-                if (authorName === '') {
-                    authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
-                    isValid = false;
-                }
-                if (authorDescription === '') {
-                    authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
-                    isValid = false;
-                }
 
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
-        </script>
-        <!--hien thi thong bao-->
-        <script>
-            function showNotificationAndRedirect() {
-                var notification = '<%= session.getAttribute("notification") %>';
-                if (notification === 'success') {
-                    var notificationContainer = document.getElementById('notification-container');
-                    if (notificationContainer) {
-                        var notificationElement = document.createElement('div');
-                        notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tác giả thành công!';
-                        notificationContainer.appendChild(notificationElement);
-                        notificationContainer.style.display = 'block';
-                        setTimeout(function () {
-                            notificationContainer.style.display = 'none';
-                            window.location.href = '<%= request.getContextPath() %>/author';
-                        }, 5000);
-                    }
-                } else if (notification === 'error') {
-                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
-                    var notificationContainer = document.getElementById('notification-container');
-                    if (notificationContainer) {
-                        var notificationElement = document.createElement('div');
-                        notificationElement.classList.add('notification', 'error');
-                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
-                        notificationContainer.appendChild(notificationElement);
-                        notificationContainer.style.display = 'block';
-                        setTimeout(function () {
-                            notificationContainer.style.display = 'none';
-                        }, 5000);
-                    }
-                }
-            <% session.removeAttribute("notification"); %>
-            <% session.removeAttribute("errorMessage"); %>
-            }
-            window.onload = showNotificationAndRedirect;
-        </script>
+        <script src="js/custom.js"></script>
     </body>
-</html>
 
+</html>

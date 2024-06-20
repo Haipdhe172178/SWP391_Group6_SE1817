@@ -1,6 +1,6 @@
 <%-- 
-    Document   : AddAuthor.jsp
-    Created on : Jun 18, 2024, 10:50:22 AM
+    Document   : UpdateAuthor.jsp
+    Created on : Jun 18, 2024, 3:46:05 PM
     Author     : huyca
 --%>
 
@@ -78,7 +78,7 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -105,8 +105,8 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-                        <li><a href="mail">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
+                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -117,13 +117,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                        <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -135,20 +130,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="data">Sản phẩm</a></li>
+                        <li><a href="">Thể Loại</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -176,7 +160,7 @@
                             </div>
                             <div class="serach_field-area d-flex align-items-center">
                                 <div class="search_inner">
-                                    <form action="data" method="GET">
+                                    <form action="manages" method="GET">
                                         <div class="search_field">
                                             <input name="s" type="text" placeholder="Search here...">
                                         </div>
@@ -313,25 +297,34 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form action="adda" method="POST" id="myForm">
+                                <form action="change" method="POST" id="myForm">
                                     <div class="white_card_body">
+                                        <input type="hidden" id="accountID" name="id" value="${acc.accountId}">
+
                                         <div class="mb-3">
-                                            <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
-                                            <div id="authorNameError" class="error"></div>
-                                        </div>                                  
+                                            <label for="accountName">Tên</label>
+                                            <input type="text" class="form-control" id="accountName" name="name" placeholder="Nhập tên" value="${empty acc.fullName ? '' : acc.fullName}" readonly>
+                                            <div id="accountNameError" class="error"></div>
+                                        </div>
+
                                         <div class="mb-3">
-                                            <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
-                                            <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
+                                            <label for="accountRole">Vai trò</label>
+                                            <select class="form-control" id="accountRole" name="roleID" required>
+                                                <c:forEach items="${role}" var="role">
+                                                    <c:if test="${role.roleId != 1}">
+                                                        <option value="${role.roleId}" ${role.roleId == acc.roleId ? 'selected' : ''}>${role.roleName}</option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </select>
+                                            <div id="accountRoleError" class="error"></div>
+                                        </div>
+
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
-                                            <a href="data" class="btn btn-warning">Trở lại</a>
+                                            <a href="author" class="btn btn-warning">Trở lại</a>
+                                            <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                         </div>
                                     </div>
                                 </form>
-
 
                             </div>
                         </div>
@@ -488,20 +481,22 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
         <!--kiem tra validation-->
         <script>
-            // JavaScript for form validation
             document.getElementById('myForm').addEventListener('submit', function (event) {
                 var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authortDescription').value.trim();
+                var authorDescription = document.getElementById('authorDescription').value.trim();
                 var authorNameError = document.getElementById('authorNameError');
                 var authorDescriptionError = document.getElementById('authorDescriptionError');
                 var isValid = true;
+
                 // Reset previous error messages
                 authorNameError.textContent = '';
                 authorDescriptionError.textContent = '';
+
                 if (authorName === '') {
                     authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
                     isValid = false;
                 }
+
                 if (authorDescription === '') {
                     authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
                     isValid = false;
@@ -511,6 +506,7 @@
                     event.preventDefault();
                 }
             });
+
         </script>
         <!--hien thi thong bao-->
         <script>
@@ -521,33 +517,20 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tác giả thành công!';
+                        notificationElement.textContent = 'Cập nhật tác giả thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
                             notificationContainer.style.display = 'none';
-                            window.location.href = '<%= request.getContextPath() %>/author';
-                        }, 5000);
-                    }
-                } else if (notification === 'error') {
-                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
-                    var notificationContainer = document.getElementById('notification-container');
-                    if (notificationContainer) {
-                        var notificationElement = document.createElement('div');
-                        notificationElement.classList.add('notification', 'error');
-                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
-                        notificationContainer.appendChild(notificationElement);
-                        notificationContainer.style.display = 'block';
-                        setTimeout(function () {
-                            notificationContainer.style.display = 'none';
+                            window.location.href = '<%= request.getContextPath() %>/manages';
                         }, 5000);
                     }
                 }
             <% session.removeAttribute("notification"); %>
-            <% session.removeAttribute("errorMessage"); %>
             }
             window.onload = showNotificationAndRedirect;
         </script>
     </body>
 </html>
+
 

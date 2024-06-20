@@ -1,11 +1,11 @@
 <%-- 
-    Document   : AddAuthor.jsp
-    Created on : Jun 18, 2024, 10:50:22 AM
+    Document   : Account
+    Created on : May 27, 2024, 10:09:46 AM
     Author     : huyca
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -14,64 +14,74 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
+
+
         <link rel="stylesheet" href="css/bootstrap1.min.css" />
+
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
+
         <link rel="stylesheet" href="vendors/scroll/scrollable.css" />
+
         <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
+
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
         <link rel="stylesheet" href="css/metisMenu.css">
         <link rel="stylesheet" href="css/style1.css" />
-        <title> Thêm Tác Giả</title>
         <style>
-            .error {
-                color: red;
-                font-size: 0.8em;
-            }
-            /* CSS for notification */
-            .notification-container {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-                display: none;
-                z-index: 1000;
-                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+
+            body {
+                background-color: #f2f3f8;
+                font-family: Arial, sans-serif;
             }
 
-            .notification {
-                background-color: #4CAF50;
-                color: white;
+            .main_content_iner {
+                padding: 20px;
+            }
+
+            .profile-wrapper {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 30px;
+            }
+
+            .white_card {
+                border: none;
+            }
+
+            .white_card_header {
+                background-color: #f8f9fa;
                 padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-            .notification.success {
-                background-color: #4CAF50;
-                color: white;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
             }
 
-            .notification.error {
-                background-color: #f44336;
-                color: white;
+            .main-title h3 {
+                margin: 0;
+                color: #333;
             }
 
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                }
-                to {
-                    transform: translateX(0);
-                }
+            .profile-container {
+                padding: 20px;
             }
 
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                }
-                to {
-                    transform: translateX(100%);
-                }
+            .labels {
+                font-weight: bold;
+                color: #555;
+            }
+
+            .form-control {
+                display: block;
+                width: 100%;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: #fff;
             }
         </style>
     </head>
@@ -105,8 +115,8 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-                        <li><a href="mail">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
+                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -117,13 +127,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                        <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -135,20 +140,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="data">Sản phẩm</a></li>
+                        <li><a href="">Thể Loại</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -300,39 +294,84 @@
                     </div>
                 </div>
             </div>
-            <div id="notification-container" class="notification-container"></div>
+
             <div class="main_content_iner">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Thêm sản phẩm</h3>
+                        <div class="col-lg-10">
+                            <div class="profile-wrapper">
+                                <div class="white_card card_height_100 mb-30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Thông tin Tài khoản</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container rounded bg-white mt-5 mb-5 profile-container">
+                                        <div class="row">
+                                            <div class="col-md-4 border-right">
+                                                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                                    <img class="mt-5" width="150px" src="${acc.imgAccount}" alt="Avatar">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="p-3 py-5" id="profile">
+                                                    <h4 class="text-right mb-4">Hồ Sơ Của ID: ${acc.accountId}</h4>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="fullname" class="labels">Họ và tên: ${acc.fullName}</label>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="username" class="labels">Tên đăng nhập: ${acc.userName}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="labels">Giới tính: ${acc.gender}</label>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="phonenumber" class="labels">Số điện thoại: ${acc.phoneNumber}</label>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="address" class="labels">Địa chỉ: ${acc.address}</label>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label for="email" class="labels">Email: ${acc.email}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="status" class="labels">Trạng thái:  <c:choose>
+                                                                    <c:when test="${acc.status == 1}">
+                                                                        <span style="color: green;">Active</span>
+                                                                    </c:when>
+                                                                    <c:when test="${acc.status == 0}">
+                                                                        <span style="color: red;">Inactive</span>
+                                                                    </c:when>
+                                                                </c:choose></label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                             <label for="role" class="labels">Chức vụ: 
+                                                            <c:forEach items="${role}" var="ro">
+                                                                <c:if test="${acc.roleId == ro.roleId}">
+                                                                    ${ro.roleName}
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>
+                                                         <a href="account" class="btn btn-outline-info">Trở lại</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <form action="adda" method="POST" id="myForm">
-                                    <div class="white_card_body">
-                                        <div class="mb-3">
-                                            <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
-                                            <div id="authorNameError" class="error"></div>
-                                        </div>                                  
-                                        <div class="mb-3">
-                                            <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
-                                            <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
-                                        <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
-                                            <a href="data" class="btn btn-warning">Trở lại</a>
-                                        </div>
-                                    </div>
-                                </form>
-
-
                             </div>
                         </div>
                     </div>
@@ -486,68 +525,8 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
-        <!--kiem tra validation-->
-        <script>
-            // JavaScript for form validation
-            document.getElementById('myForm').addEventListener('submit', function (event) {
-                var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authortDescription').value.trim();
-                var authorNameError = document.getElementById('authorNameError');
-                var authorDescriptionError = document.getElementById('authorDescriptionError');
-                var isValid = true;
-                // Reset previous error messages
-                authorNameError.textContent = '';
-                authorDescriptionError.textContent = '';
-                if (authorName === '') {
-                    authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
-                    isValid = false;
-                }
-                if (authorDescription === '') {
-                    authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
-                    isValid = false;
-                }
 
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
-        </script>
-        <!--hien thi thong bao-->
-        <script>
-            function showNotificationAndRedirect() {
-                var notification = '<%= session.getAttribute("notification") %>';
-                if (notification === 'success') {
-                    var notificationContainer = document.getElementById('notification-container');
-                    if (notificationContainer) {
-                        var notificationElement = document.createElement('div');
-                        notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tác giả thành công!';
-                        notificationContainer.appendChild(notificationElement);
-                        notificationContainer.style.display = 'block';
-                        setTimeout(function () {
-                            notificationContainer.style.display = 'none';
-                            window.location.href = '<%= request.getContextPath() %>/author';
-                        }, 5000);
-                    }
-                } else if (notification === 'error') {
-                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
-                    var notificationContainer = document.getElementById('notification-container');
-                    if (notificationContainer) {
-                        var notificationElement = document.createElement('div');
-                        notificationElement.classList.add('notification', 'error');
-                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
-                        notificationContainer.appendChild(notificationElement);
-                        notificationContainer.style.display = 'block';
-                        setTimeout(function () {
-                            notificationContainer.style.display = 'none';
-                        }, 5000);
-                    }
-                }
-            <% session.removeAttribute("notification"); %>
-            <% session.removeAttribute("errorMessage"); %>
-            }
-            window.onload = showNotificationAndRedirect;
-        </script>
+        <script src="js/custom.js"></script>
     </body>
-</html>
 
+</html>

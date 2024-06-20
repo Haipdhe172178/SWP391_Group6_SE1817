@@ -78,7 +78,7 @@
 
     <body class="crm_body_bg">
 
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -117,8 +117,13 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
+<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
+                        <li><a href="image">Image BackGround</a></li>
+                        <li><a href="discount">Discount</a></li>
+=======
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
+>>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -130,9 +135,6 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -293,7 +295,7 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Thêm sản phẩm</h3>
+                                            <h3 class="m-0">Thêm Tác Giả</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -303,18 +305,19 @@
                                             <label for="authorName">Tên tác giả</label>
                                             <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
                                             <div id="authorNameError" class="error"></div>
-                                        </div>                                  
+                                        </div>
                                         <div class="mb-3">
                                             <label for="authorDescription">Tiểu sử</label>
                                             <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
                                             <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
+                                        </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
-                                            <a href="data" class="btn btn-warning">Trở lại</a>
+                                            <button type="submit" class="btn btn-primary">Add Account</button>
+                                            <a href="data" class="btn btn-warning">Back</a>
                                         </div>
                                     </div>
                                 </form>
+
 
 
                             </div>
@@ -535,3 +538,12 @@
     </body>
 </html>
 
+<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
+                        <li><a href="data">Sản phẩm</a></li>
+                        <li><a href="">Thể Loại</a></li>
+                        <li><a href="author">Tác Giả</a></li>
+=======
+                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
+>>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53

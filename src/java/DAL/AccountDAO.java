@@ -255,12 +255,268 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    public static void main(String[] args) {
-        AccountDAO ac = new AccountDAO();
-        List<Account> accounts = ac.getAllAccount();
-        for (Account account : accounts) {
-            System.out.println(accounts);
+    public List<Account> pagingAccounts(int index) {
+        List<Account> list = new ArrayList<>();
+        String query = "  select * from Account order"
+                + " by AccountID "
+                + "offset ? rows fetch next 5 rows only ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 5);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+                acc.setStatus(rs.getInt(11));
+
+                list.add(acc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAccount() {
+        int total = 0;
+        String query = " Select count(*) from Account";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public boolean createAccount(String fullName, String username, String password, String gender, String email, String phoneNumber, String address, int roleId, String imgAccount) {
+        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Gender, Email, PhoneNumber, Address, RoleID, ImgAccount, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullName);
+            st.setString(2, username);
+            st.setString(3, password);
+            st.setString(4, gender);
+            st.setString(5, email);
+            st.setString(6, phoneNumber);
+            st.setString(7, address);
+            st.setInt(8, roleId);
+            st.setString(9, imgAccount);
+            st.setInt(10, 1);
+            int rowsInserted = st.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Account getAccountByid(int id) {
+        String query = "  Select * from Account Where AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setAccountId(rs.getInt("AccountID"));
+                account.setFullName(rs.getString("FullName"));
+                account.setUserName(rs.getString("Username"));
+                account.setPassWord(rs.getString("Password"));
+                account.setGender(rs.getString("Gender"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setAddress(rs.getString("Address"));
+                account.setRoleId(rs.getInt("RoleID"));
+                account.setImgAccount(rs.getString("ImgAccount"));
+                account.setStatus(rs.getInt("Status"));
+                return account;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public void hideAccount(int accountId) {
+        String query = "UPDATE Account Set Status = 0 Where AccountID =?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    public void showAccount(int accountId) {
+        String query = "UPDATE Account Set Status = 1 Where AccountID =?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Account> pagingStaff(int index) {
+        List<Account> list = new ArrayList<>();
+        String query = "SELECT * FROM Account WHERE RoleID = 2 Or RoleID = 3"
+                + "ORDER BY AccountID "
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 5);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+                acc.setStatus(rs.getInt(11));
+
+                list.add(acc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAccountWithRole() {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Account WHERE RoleID = 2 OR RoleID = 3";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public boolean updateRole(int accountId, int roleId) {
+        String query = "UPDATE Account SET RoleID = ? WHERE AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, roleId);
+            ps.setInt(2, accountId);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<Account> searchAccounts(String keyword, int index) {
+        List<Account> list = new ArrayList<>();
+        String query = "SELECT * FROM Account WHERE fullName LIKE ? ORDER BY AccountID OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, (index - 1) * 5);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+                acc.setStatus(rs.getInt(11));
+                list.add(acc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAccountsByKeyword(String keyword) {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Account WHERE fullName LIKE ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public List<Account> searchAccountRole(int index, String keyword) {
+        List<Account> list = new ArrayList<>();
+        String query = "SELECT * FROM Account WHERE fullName LIKE ? AND (RoleID = 2 OR RoleID = 3) ORDER BY AccountID OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, (index - 1) * 5);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+                acc.setStatus(rs.getInt(11));
+                list.add(acc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAccountsByKeywordWithRole(String keyword) {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Account WHERE fullName LIKE ? AND (RoleID = 2 OR RoleID = 3)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
 }
