@@ -100,16 +100,38 @@ public class CartDAO extends DBContext {
 
         return cart;
     }
-    public void removeCartItem(Cart cart, int productId) {
-    String query = "DELETE FROM CartItems WHERE accountId = ? AND productId = ?";
-    try (PreparedStatement ps = connection.prepareStatement(query)){
-        ps.setInt(1, cart.getAccountId());
-        ps.setInt(2, productId);
-        ps.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
+     public void removeCartItem(int accountId, int productId) {
+        String sql = "DELETE FROM CartItems WHERE account_id = ? AND product_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accountId);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
+     public void updateCart(Cart cart) {
+        String checkSql = "SELECT Quantity FROM Cart WHERE AccountID = ? AND ProductID = ?";
+
+        try (PreparedStatement checkPs = connection.prepareStatement(checkSql)) {
+            for (Item item : cart.getItems()) {
+                checkPs.setInt(1, cart.getAccountId());
+                checkPs.setInt(2, item.getProduct().getProductId());
+                ResultSet rs = checkPs.executeQuery();
+
+                if (rs.next()) {
+                    int newQuantity = rs.getInt("Quantity") + item.getQuantity();
+                    item.setQuantity(newQuantity);
+
+                    updateCartItem(cart, item);
+                } else {
+                    insertCartItem(cart, item);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         CartDAO cartDAO = new CartDAO();
         int userId = 1; 
