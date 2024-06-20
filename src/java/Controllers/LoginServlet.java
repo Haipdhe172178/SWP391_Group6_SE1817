@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         request.setAttribute("productID", request.getParameter("productId"));
+        request.setAttribute("index", request.getParameter("index"));
         if (session.getAttribute("success") != null) {
             request.setAttribute("success", session.getAttribute("success"));
             session.removeAttribute("success");
@@ -88,6 +89,7 @@ public class LoginServlet extends HttpServlet {
         Account account = dao.check(username, password);
         HttpSession session = request.getSession();
         String productID = request.getParameter("productID");
+        String index = request.getParameter("index");
         
 
         if (account != null) {
@@ -106,7 +108,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("role", "user");
                 if (productID != null && !productID.isEmpty()) {
                     session.setAttribute("account", account);
-                    response.sendRedirect("single?productID=" + productID);
+                    response.sendRedirect("single?productID=" + productID+"&index="+index);
                     return;
                 }
                 response.sendRedirect("home");

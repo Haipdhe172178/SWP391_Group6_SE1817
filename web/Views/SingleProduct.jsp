@@ -105,6 +105,51 @@
                 font-weight: bold;
                 color: #F86D72; /* Thay đổi màu chữ khi active */
             }
+
+            /* Basic styles for the notification container */
+            .notification-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                width: 300px;
+                z-index: 9999;
+                display: none; /* Hidden by default, will be shown when needed */
+            }
+
+            /* Styles for the notification */
+            .notification {
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                color: #fff;
+                font-size: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                animation: fadein 0.5s, fadeout 0.5s 4.5s; /* Fade in and fade out animations */
+            }
+
+            /* Success notification style */
+            .notification.success {
+                background-color: #4caf50; /* Green background */
+            }
+
+            /* Keyframes for fade in and fade out animations */
+            @keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
         </style>
     </head>
 
@@ -326,6 +371,19 @@
                 </div>
             </div>
         </section>
+        <!--modal-->
+        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body" style="align-items: center">
+                        <h4>Đánh giá của bạn sẽ được kiểm duyệt trước khi hiển thị</h4> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal-->
 
         <!--DESCRIPTION-->
         <section class="product-tabs">
@@ -337,6 +395,8 @@
                      background-color: #fff;">
                     <div class="tabs-listing">
                         <div >
+                            <div id="notification-container" class="notification-container"></div>
+
                         </div>
                         <div class="row border-bottom">
 
@@ -363,22 +423,23 @@
                                     <div class="add-review margin-small col-md-6 text-md-right" style="align-items: center">
                                         <p>Chỉ có thành viên mới có thể viết nhận xét. 
                                             Vui lòng 
-                                            <a href="login?productId=${requestScope.product.productId}" class="linkLogin">đăng nhập</a> hoặc 
-                                            <a href="register?productId=${requestScope.product.productId}" class="linkLogin">đăng ký</a>
+                                            <a href="login?productId=${requestScope.product.productId}&index=1" class="linkLogin">đăng nhập</a>  
                                         </p>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="add-review margin-small col-md-6 text-md-right" style="display: inline-block; text-align: center;">
-                                        <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post">
+                                        <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post" onsubmit="return show()">
                                             <input type="hidden" name="productID" value="${requestScope.product.productId}">
+                                            <input type="hidden" name="index" value="1">
+                                            <input type="hidden" name="success" value="1">
                                             <div class="review-rating py-2 align-items-start">
                                                 <div class="rate-box">
                                                     <input type="radio" name="star" id="star0" value="5"/>
                                                     <label class="star" for="star0"></label>
                                                     <input type="radio" name="star" id="star1" value="4"/>
                                                     <label class="star" for="star1"></label>
-                                                    <input type="radio" name="star" id="star2" value="3"/>
+                                                    <input type="radio" checked name="star" id="star2" value="3"/>
                                                     <label class="star" for="star2"></label>
                                                     <input type="radio" name="star" id="star3" value="2"/>
                                                     <label class="star" for="star3"></label>
@@ -387,8 +448,9 @@
                                                 </div>
                                             </div>
                                             <div class="w-100 d-flex align-items-start">
-                                                <textarea placeholder="Viết đánh giá của bạn" class="form-control mr-2" name="feedbackText"></textarea></br>
+                                                <textarea placeholder="Viết đánh giá của bạn" class="form-control mr-2" name="feedbackText" ></textarea></br>
                                             </div>
+
                                             <button type="submit" name="submit" style="background-color: #007bff;
                                                     color: white;
                                                     border: none;
@@ -498,24 +560,32 @@
                 </div>
             </div>
         </section>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script>
-            // Hàm kiểm tra nếu URL chứa tham số page
-            function scrollToFeedbackSection() {
-                // Lấy giá trị của tham số page từ URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const pageParam = urlParams.get('page');
-                const ratingParam = urlParams.get('rating');
+                                            // Hàm kiểm tra nếu URL chứa tham số index
+                                            function scrollToFeedbackSection() {
+                                                // Lấy giá trị của tham số index từ URL
+                                                const urlParams = new URLSearchParams(window.location.search);
+                                                const indexParam = urlParams.get('index');
+                                                const successParam = urlParams.get('success');
 
-                // Nếu có tham số page và phần feedback có sẵn
-                if ((pageParam || ratingParam) && document.getElementById('feedback-section')) {
-                    // Cuộn trang đến vị trí của phần feedback
-                    document.getElementById('feedback-section').scrollIntoView();
-                }
-            }
-            // Gọi hàm này khi trang đã load hoàn toàn
-            window.onload = scrollToFeedbackSection;
+                                                // Nếu có tham số index và phần feedback có sẵn
+                                                if (indexParam && document.getElementById('feedback-section')) {
+                                                    // Cuộn trang đến vị trí của phần feedback
+                                                    document.getElementById('feedback-section').scrollIntoView({
+                                                        behavior: 'smooth', // Cuộn mượt
+                                                        block: 'start' // Đặt phần tử đến vị trí đầu của viewport
+                                                    });
+                                                    if (successParam) {
+                                                        $('#feedbackModal').modal('show');
+                                                    }
+                                                    // Hiển thị modal nếu notification là 'display'
+                                                }
+                                            }
+                                            // Gọi hàm này khi trang đã load hoàn toàn
+                                            window.onload = scrollToFeedbackSection;
         </script>
-
         <jsp:include page="../common/footer.jsp"></jsp:include>
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
