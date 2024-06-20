@@ -8,13 +8,15 @@ import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+@WebServlet("/AddNewsController")
 @MultipartConfig
-public class AddNewsControllers extends HttpServlet {
+public class AddNewsController extends HttpServlet {
     private NewsDao newsDao = new NewsDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -68,8 +70,8 @@ public class AddNewsControllers extends HttpServlet {
         String fileName = extractFileName(part);
         String savePath = getServletContext().getRealPath("/") + "uploads" + File.separator + fileName;
         File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
+        if (!fileSaveDir.getParentFile().exists()) {
+            fileSaveDir.getParentFile().mkdirs();
         }
         part.write(savePath);
         return "uploads/" + fileName;
