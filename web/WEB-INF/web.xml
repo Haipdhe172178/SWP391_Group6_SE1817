@@ -3,7 +3,7 @@
     <servlet>
         <servlet-name>HomeControllers</servlet-name>
         <servlet-class>Controllers.HomeControllers</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>AboutControllers</servlet-name>
         <servlet-class>Controllers.AboutControllers</servlet-class>
@@ -281,7 +281,6 @@
         <url-pattern>/addimage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
         <servlet-name>UpdateCodeController</servlet-name>
         <url-pattern>/updatecode</url-pattern>
     </servlet-mapping>
@@ -327,7 +326,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteCartControllers</servlet-name>
-        <url-pattern>/deletecart</url-pattern>    
+        <url-pattern>/deletecart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FeedbackListController</servlet-name>
