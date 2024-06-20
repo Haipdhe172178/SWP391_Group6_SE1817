@@ -13,6 +13,10 @@
         <servlet-class>Controllers.ShopControllers</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ActiveControllers</servlet-name>
+        <servlet-class>AdminControllers.ActiveControllers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BlogControllers</servlet-name>
         <servlet-class>Controllers.BlogControllers</servlet-class>
     </servlet>
@@ -79,6 +83,10 @@
     <servlet>
         <servlet-name>UpdateController</servlet-name>
         <servlet-class>AdminControllers.UpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcDetailControllers</servlet-name>
+        <servlet-class>AdminControllers.AcDetailControllers</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
@@ -157,8 +165,12 @@
         <servlet-class>Controllers.StaffController.StaffDashboardController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UpdateCartControllers</servlet-name>
-        <servlet-class>Controllers.UpdateCartControllers</servlet-class>
+        <servlet-name>ManageStaffControllers</servlet-name>
+        <servlet-class>AdminControllers.ManageStaffControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeRoleControllers</servlet-name>
+        <servlet-class>AdminControllers.ChangeRoleControllers</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -211,6 +223,14 @@
     <servlet-mapping>
         <servlet-name>DataProductControllers</servlet-name>
         <url-pattern>/data</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcDetailControllers</servlet-name>
+        <url-pattern>/accdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveControllers</servlet-name>
+        <url-pattern>/active</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddControllers</servlet-name>
@@ -317,8 +337,12 @@
         <url-pattern>/staffdashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateCartControllers</servlet-name>
-        <url-pattern>/updateCart</url-pattern>
+        <servlet-name>ManageStaffControllers</servlet-name>
+        <url-pattern>/manages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeRoleControllers</servlet-name>
+        <url-pattern>/change</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

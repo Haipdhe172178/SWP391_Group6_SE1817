@@ -113,6 +113,7 @@
                     </a>
                     <ul>
                         <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="manages">Quản lý nhân viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -304,7 +305,7 @@
                                                     <c:forEach items="${author}" var="a">
                                                         <tr class="${a.status == 1 ? 'active-row' : 'inactive-row'}">
                                                             <td>${a.authorID}</td>
-                                                            <td>${a.authorName}</td>                                                                                                                       
+                                                            <td>${a.authorName}</td>                                                                                                                      
                                                             <td>${fn:substring(a.description, 0, 50)}...</td>  
                                                             <td>
                                                                 <c:choose>
@@ -324,6 +325,7 @@
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+
 
                                         </div>
                                         <nav class="py-5" aria-label="Page navigation">
@@ -362,6 +364,8 @@
                                                 </c:if>
                                             </ul>
                                         </nav>
+
+
 
                                     </div>
                                 </div>

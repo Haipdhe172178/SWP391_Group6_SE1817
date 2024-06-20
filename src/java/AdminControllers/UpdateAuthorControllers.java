@@ -59,7 +59,6 @@ public class UpdateAuthorControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String authorId = request.getParameter("id");
-
         int authorIds = Integer.parseInt(authorId);
         AuthorDao authorDao = new AuthorDao();
         Author au = authorDao.getAuthorById(authorIds);
