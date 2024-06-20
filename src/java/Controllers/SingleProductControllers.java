@@ -72,32 +72,54 @@ public class SingleProductControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("productID"));
+        String rating = request.getParameter("rating");
         //DAO
         ProductDao productDao = new ProductDao();
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         AccountDAO accDAO = new AccountDAO();
+        List<Feedback> listFeedback;
+
+        /*Pagination*/
+        int page = 1;
+        String pageParam = request.getParameter("page");
+        if (pageParam != null && !pageParam.isEmpty()) {
+            page = Integer.parseInt(pageParam);
+        }
         
+        int quantity = 0;
+        //filter by rating
+        if (rating != null && !rating.isEmpty()) {
+            int filterRate = Integer.parseInt(rating);
+            listFeedback = feedbackDAO.getFeedbackByProductId(id, page, filterRate);
+            quantity = feedbackDAO.getQuantityFeedbacksByPid(id, rating);
+        } else {
+            listFeedback = feedbackDAO.getFeedbackByProductId(id, page);
+            quantity = feedbackDAO.getQuantityFeedbacksByPid(id, "");
+        }
+        //Get Feedback
+        int endPage = (quantity / 5) + (quantity % 5 == 0 ? 0 : 1);
+
+        /*End Pagination*/
         Product product = productDao.getProductById(id);
+        
         //LIST
         List<Product> listP = productDao.getProductsByCategoryId(product.getCategory().getCategoryId(), "fourRandom");
-        List<News> listNews = nd.getFourNewsLated();
-        List<Feedback> listFeedback = feedbackDAO.getFeedbackByProductId(id);
-        List<Account> listAcc= accDAO.getAllAccount();
-        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
-        
-        
-        //QUANTITY
+
+        //QUANTITY sold product
         int quantitySold = productDao.getQuantitySoldByProductId(id);
         int avgRating = feedbackDAO.avgRating(id);
+
+        request.setAttribute("rating", rating);
+        request.setAttribute("quantityFeedback", quantity);
+        request.setAttribute("page", page);
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("productStatus", "product");
         request.setAttribute("avgRating", avgRating);
-        request.setAttribute("listMostRating", listMostRating);
-        request.setAttribute("listAccount", listAcc);
         request.setAttribute("listFeedback", listFeedback);
         request.setAttribute("quantitySold", quantitySold);
         request.setAttribute("relatedProduct", listP);
         request.setAttribute("product", product);
-        request.setAttribute("news", listNews);
 
         request.getRequestDispatcher("Views/SingleProduct.jsp").forward(request, response);
     }
@@ -114,6 +136,7 @@ public class SingleProductControllers extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

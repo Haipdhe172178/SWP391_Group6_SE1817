@@ -66,10 +66,13 @@ public class AddcodeController extends HttpServlet {
             String coupon_type = request.getParameter("theloai");
            
              String qualityStr = request.getParameter("soluong");   
+             String status = request.getParameter("status");
+             
              request.setAttribute("soluong",qualityStr );
              request.setAttribute("meomeo", codename);
                request.setAttribute("discount1",discountStr );
                  request.setAttribute("theloai", coupon_type);
+                   request.setAttribute("status", status);
                  DiscountDAO dal = new DiscountDAO();
                String error="";
                try {
@@ -97,7 +100,7 @@ public class AddcodeController extends HttpServlet {
                                 
                     }
                      if(k==0){
-                      dal.addDiscount(codename, discountStr, coupon_type, qualityStr);
+                      dal.addDiscount(codename, discountStr, coupon_type, qualityStr,status);
                       
                      
                      }
@@ -115,12 +118,15 @@ public class AddcodeController extends HttpServlet {
              request.setAttribute("meomeo", codename);
                request.setAttribute("discount1",discountStr );
                  request.setAttribute("theloai", coupon_type);
-                    response.sendRedirect("discount");
+                   request.setAttribute("status", status);
+                 response.sendRedirect("discount");
+                    
                 }else{
                     request.setAttribute("soluong",qualityStr );
              request.setAttribute("meomeo", codename);
                request.setAttribute("discount1",discountStr );
                  request.setAttribute("theloai", coupon_type);
+                  request.setAttribute("status", status);
                      request.getRequestDispatcher("Views/Admin/AddCode.jsp").forward(request, response);
                 }
                 

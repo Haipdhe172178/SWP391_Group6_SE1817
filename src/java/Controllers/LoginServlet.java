@@ -88,6 +88,7 @@ public class LoginServlet extends HttpServlet {
         Account account = dao.check(username, password);
         HttpSession session = request.getSession();
         String productID = request.getParameter("productID");
+        
 
         if (account != null) {
             if (account.getStatus() == 0) {
@@ -98,6 +99,9 @@ public class LoginServlet extends HttpServlet {
             if (account.getRoleId() == 1) {
                 session.setAttribute("role", "admin");
                 response.sendRedirect("dash");
+            } else if (account.getRoleId() == 2) {
+                session.setAttribute("role", "staff");
+                response.sendRedirect("staffdashboard");
             } else {
                 session.setAttribute("role", "user");
                 if (productID != null && !productID.isEmpty()) {

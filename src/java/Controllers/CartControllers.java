@@ -1,6 +1,8 @@
 package Controllers;
 
+import DAL.CartDAO;
 import DAL.ProductDao;
+import Models.Account;
 import Models.Cart;
 import Models.Item;
 import Models.Product;
@@ -10,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -33,6 +36,7 @@ public class CartControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         int productId = Integer.parseInt(request.getParameter("productId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
@@ -50,7 +54,23 @@ public class CartControllers extends HttpServlet {
         }
 
         updateCartCookie(response, cart);
+        
+        
+        HttpSession session = request.getSession();
+        Account a = (Account)session.getAttribute("account");
+        if (a!=null) {
+        CartDAO cartDao = new CartDAO();
+        cart.setAccountId(a.getAccountId());
+        cartDao.addCartItem(cart);
+        cartDao.getCartByUserId(a.getAccountId());
+        }
+         // Cập nhật giỏ hàng trong session
+        session.setAttribute("cart", cart);
 
+        // Cập nhật cookie giỏ hàng
+        updateCartCookie(response, cart);
+
+        // Chuyển hướng đến trang sản phẩm
         response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
     }
 

@@ -668,7 +668,8 @@ public class ProductDao extends DBContext {
                     + "      ,[AuthorID]\n"
                     + "      ,[ImgProduct]\n"
                     + "      ,[AgeID]\n"
-                    + "  FROM [dbo].[Product]\n"
+                    + "      ,[Status]\n"
+                    + "  FROM [ShopBook88].[dbo].[Product]\n"
                     + "  where ProductID = ?";
 
             stm = connection.prepareStatement(stSQL);
@@ -682,12 +683,20 @@ public class ProductDao extends DBContext {
                 float price = rs.getFloat(3);
                 int quantity = rs.getInt(4);
                 String description = rs.getString(5);
+
                 int CategoryID = rs.getInt(6);
+                Category c = new Category();
+                c.setCategoryId(CategoryID);
                 int authorID = rs.getInt(7);
+                Author a = new Author();
+                a.setAuthorID(authorID);
                 String imgProduct = rs.getString(8);
                 int age = rs.getInt(9);
+                ObjectAge o = new ObjectAge();
+                o.setAgeId(age);
+                int status = rs.getInt(10);
 
-//                return new Product(productid, name, price, quantity, description, imgProduct, age, category, author, oage);
+                return new Product(productid, name, price, quantity, description, c, a, imgProduct, o, status);
                 //   student.setId(rs.getInt("sid"));
             }
         } catch (Exception e) {
@@ -709,19 +718,23 @@ public class ProductDao extends DBContext {
                     + "      ,[AuthorID] = ?\n"
                     + "      ,[ImgProduct] = ?\n"
                     + "      ,[AgeID] = ?\n"
+                    + "      ,[Status] = ?\n"
                     + " WHERE ProductID = ?";
             PreparedStatement stm = connection.prepareStatement(stSQL);
             stm = connection.prepareStatement(stSQL);
-//            stm.setString(1, u.getName());
-//            stm.setFloat(2, u.getPrice());
-//            stm.setInt(3, u.getQuantity());
-//            stm.setString(4, u.getDescription());
-//            stm.setInt(5, u.getCategoryId());
-//            stm.setInt(6, u.getAuthorId());
-//            stm.setString(7, u.getImgProduct());
-//            stm.setInt(8, u.getAgeId());
-//            stm.setInt(9, u.getProductId());
-//            int d = stm.executeUpdate();
+            stm.setString(1, u.getName());
+            stm.setFloat(2, u.getPrice());
+            stm.setInt(3, u.getQuantity());
+            stm.setString(4, u.getDescription());
+            stm.setInt(5, u.getCategory().getCategoryId());
+            stm.setInt(6, u.getAuthor().getAuthorID());
+            stm.setString(7, u.getImgProduct());
+            stm.setInt(8, u.getOage().getAgeId());
+            
+            stm.setInt(9, u.getStatus());
+            stm.setInt(10, u.getProductId());
+            int d = stm.executeUpdate();
+
         } catch (Exception e) {
             System.out.println("updateProduct" + e.getMessage());
         }

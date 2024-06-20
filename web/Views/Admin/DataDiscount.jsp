@@ -88,9 +88,10 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="author">Tác Giả</a></li>
+                             <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
+
                     </ul>
                 </li>
                 <li class>
@@ -284,7 +285,9 @@
                                                         <th scope="col">Giảm giá bao nhiêu phần trăm</th>
                                                         <th scope="col">Giảm giá nhân dịp</th>
                                                         <th scope="col">Số lượng mã phát ra</th>
+                                                        
                                                         <th scope="col">Hoạt động</th>
+                                                       
                                                        
                                                     </tr>
                                                 </thead>
@@ -296,7 +299,21 @@
                                                             <td>${p.discount}</td>
                                                             <td>${p.couponType}</td>
                                                             <td>${p.quantity}</td>
-                                                            <td><a href="deletecode?id=${p.codeId}">DELETE</a></td>
+                                                               
+                                                            <td>
+                                                                <c:choose>
+
+                                                                    <c:when test="${p.status == 1}">
+                                                                        Đang sử dụng
+                                                                    </c:when>
+                                                                    <c:when test="${p.status != 1}">
+                                                                        Không được sử dụng
+                                                                    </c:when>
+                                                                </c:choose>
+                                                               
+                                                            </td>
+                                                              <td><a href="updatecode?id=${p.codeId}">UPDATE</td>
+                                                              </tr>
                                                 </c:forEach>
                                             </ul>
                                         </nav>
