@@ -13,6 +13,10 @@
         <servlet-class>Controllers.ShopControllers</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ActiveControllers</servlet-name>
+        <servlet-class>AdminControllers.ActiveControllers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BlogControllers</servlet-name>
         <servlet-class>Controllers.BlogControllers</servlet-class>
     </servlet>
@@ -79,6 +83,10 @@
     <servlet>
         <servlet-name>UpdateController</servlet-name>
         <servlet-class>AdminControllers.UpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcDetailControllers</servlet-name>
+        <servlet-class>AdminControllers.AcDetailControllers</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
@@ -217,6 +225,14 @@
         <url-pattern>/data</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AcDetailControllers</servlet-name>
+        <url-pattern>/accdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveControllers</servlet-name>
+        <url-pattern>/active</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AddControllers</servlet-name>
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
@@ -281,7 +297,7 @@
         <servlet-name>UpdateCategory</servlet-name>
         <url-pattern>/updatecategory</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AuthorControllers</servlet-name>
         <url-pattern>/author</url-pattern>
     </servlet-mapping>
