@@ -432,6 +432,7 @@
                                         <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post" onsubmit="return show()">
                                             <input type="hidden" name="productID" value="${requestScope.product.productId}">
                                             <input type="hidden" name="index" value="1">
+                                            <input type="hidden" name="success" value="1">
                                             <div class="review-rating py-2 align-items-start">
                                                 <div class="rate-box">
                                                     <input type="radio" name="star" id="star0" value="5"/>
@@ -559,29 +560,32 @@
                 </div>
             </div>
         </section>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    // Hàm kiểm tra nếu URL chứa tham số index
-    function scrollToFeedbackSection() {
-        // Lấy giá trị của tham số index từ URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const indexParam = urlParams.get('index');
+        <script>
+                                            // Hàm kiểm tra nếu URL chứa tham số index
+                                            function scrollToFeedbackSection() {
+                                                // Lấy giá trị của tham số index từ URL
+                                                const urlParams = new URLSearchParams(window.location.search);
+                                                const indexParam = urlParams.get('index');
+                                                const successParam = urlParams.get('success');
 
-        // Nếu có tham số index và phần feedback có sẵn
-        if (indexParam && document.getElementById('feedback-section')) {
-            // Cuộn trang đến vị trí của phần feedback
-            document.getElementById('feedback-section').scrollIntoView({
-                behavior: 'smooth', // Cuộn mượt
-                block: 'start' // Đặt phần tử đến vị trí đầu của viewport
-            });
-            // Hiển thị modal nếu notification là 'display'
-                $('#feedbackModal').modal('show');
-        }
-    }
-    // Gọi hàm này khi trang đã load hoàn toàn
-    window.onload = scrollToFeedbackSection;
-</script>
+                                                // Nếu có tham số index và phần feedback có sẵn
+                                                if (indexParam && document.getElementById('feedback-section')) {
+                                                    // Cuộn trang đến vị trí của phần feedback
+                                                    document.getElementById('feedback-section').scrollIntoView({
+                                                        behavior: 'smooth', // Cuộn mượt
+                                                        block: 'start' // Đặt phần tử đến vị trí đầu của viewport
+                                                    });
+                                                    if (successParam) {
+                                                        $('#feedbackModal').modal('show');
+                                                    }
+                                                    // Hiển thị modal nếu notification là 'display'
+                                                }
+                                            }
+                                            // Gọi hàm này khi trang đã load hoàn toàn
+                                            window.onload = scrollToFeedbackSection;
+        </script>
         <jsp:include page="../common/footer.jsp"></jsp:include>
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
