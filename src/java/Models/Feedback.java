@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Feedback {
 
+    private int stt;
     private int feedbackId;
     private Account account;
     private Product product;
@@ -23,7 +24,8 @@ public class Feedback {
     public Feedback() {
     }
 
-    public Feedback(int feedbackId, Account account, Product product, int rating, String comments, Date feedbackDate, int status) {
+    public Feedback(int stt, int feedbackId, Account account, Product product, int rating, String comments, Date feedbackDate, int status) {
+        this.stt = stt;
         this.feedbackId = feedbackId;
         this.account = account;
         this.product = product;
@@ -38,6 +40,14 @@ public class Feedback {
         this.product = product;
         this.rating = rating;
         this.comments = comments;
+    }
+
+    public int getStt() {
+        return stt;
+    }
+
+    public void setStt(int stt) {
+        this.stt = stt;
     }
 
     public int getStatus() {

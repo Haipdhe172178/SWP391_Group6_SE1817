@@ -24,26 +24,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="css/metisMenu.css">
         <link rel="stylesheet" href="css/style1.css" />
-
-        <!--for modal-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#myModal').modal('show');
-            });
-        </script>
-
-
         <style>
             table {
                 width: 100%;
                 border-collapse: collapse;
             }
             th, td {
-                border: 1px solid #ddd;
                 padding: 8px;
                 text-align: center;
             }
@@ -96,37 +82,29 @@
             .text-warning {
                 color: #ffc107;
             }
-            /* Basic button styles */
+
+            /*Button */
             .btn {
                 display: inline-block; /* Makes div behave like button */
-                padding: 5px 10px; /* Smaller padding for smaller buttons */
+                padding: 2px 3px; /* Smaller padding for smaller buttons */
                 border-radius: 3px; /* Rounded corners */
                 text-align: center; /* Center the text */
-                margin-right: 5px; /* Small margin between buttons */
+                margin-right: 1px; /* Small margin between buttons */
             }
 
-            /* Input styles inside buttons */
-            .btn input[type="submit"] {
-                background: none; /* Remove default input background */
-                border: none; /* Remove default input border */
-                color: white; /* White text color */
-                font-size: 14px; /* Font size */
-                cursor: pointer; /* Pointer cursor */
-                padding: 5px 10px; /* Padding inside the input */
+            .btn.edit-btn i {
+                color: #567AED;
+                transition: color 0.3s, transform 0.3s;
             }
 
-            /* Edit button styles */
-            .edit-btn {
-                background-color: #4CAF50; /* Green background */
+            .btn.delete-btn i{
+                color: #F44336;
+                transition: color 0.3s, transform 0.3s;
             }
 
-            .edit-btn a:hover {
-                background-color: #45a049; /* Darker green on hover */
-            }
-
-            /* Delete button styles */
-            .delete-btn {
-                background-color: #f44336; /* Red background */
+            .btn.edit-btn button:hover i,
+            .btn.delete-btn button:hover i {
+                transform: scale(1.4);
             }
 
             .delete-btn a:hover {
@@ -138,19 +116,23 @@
                 margin-right: 5px; /* Margin between buttons */
             }
 
+
+            /*Button */
+
+
             .filterFeedback {
                 display: flex;
                 justify-content: flex-start;
-                padding: 1px;
             }
 
             .filter {
                 padding: 10px 20px;
                 text-decoration: none;
-                color: #555;
-                border: 1px solid #ccc;
+                color: #333;
+                border: 1px solid #F8FAFF;
                 border-radius: 5px 5px 0 0;
                 transition: background-color 0.3s ease, color 0.3s ease;
+                background-color: #F8FAFF;
             }
 
             .filter:hover {
@@ -159,9 +141,9 @@
             }
 
             .filter.active {
-                background-color: #f44336;
+                background-color: #6FC9BA;
                 color: white;
-                border-color: #f44336;
+                border-color: #6FC9BA;
             }
             /* Basic styles for the notification container */
             .notification-container {
@@ -189,6 +171,28 @@
                 background-color: #4caf50; /* Green background */
             }
 
+            .cbo_filter label {
+                margin-right: 10px;
+            }
+
+            .cbo_filter select {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #fff;
+                font-size: 16px;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            .cbo_filter select:focus {
+                border-color: #4caf50;
+                box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+                outline: none;
+            }
+
+            .cbo_filter input[type="hidden"] {
+                display: none;
+            }
             /* Keyframes for fade in and fade out animations */
             @keyframes fadein {
                 from {
@@ -225,11 +229,161 @@
     </svg>
 
     <body class="crm_body_bg">
-        <jsp:include page="../../common/header_dashboard.jsp"></jsp:include>
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+            <div class="logo d-flex justify-content-between">
+                <a href="staffdashboard"><img src="images/anh456.png" alt></a>
+                <div class="sidebar_close_icon d-lg-none">
+                    <i class="ti-close"></i>
+                </div>
+            </div>
+            <ul id="sidebar_menu">
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/8.svg" alt>
+                        </div>
+                        <span>Đơn đặt hàng</span>
+                    </a>
+                </li>        
+                <li class>
+                    <a class="has-arrow" href="feedbacklist" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/11.svg" alt>
+                        </div>
+                        <span>Đánh giá từ khách hàng</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <section class="main_content dashboard_part large_header_bg">
+
+            <div class="container-fluid g-0">
+                <div class="row">
+                    <div class="col-lg-12 p-0">
+                        <div class="header_iner d-flex justify-content-between align-items-center">
+                            <div class="sidebar_icon d-lg-none">
+                                <i class="ti-menu"></i>
+                            </div>
+                            <div class="serach_field-area d-flex align-items-center">
+                                <div class="search_inner">
+                                    <h3 style="margin-left: 20px">Đánh giá sản phẩm </h3>
+                                </div>
+                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
+                            </div>
+                            <div class="header_right d-flex justify-content-between align-items-center">
+                                <div class="header_notification_warp d-flex align-items-center">
+                                    <li>
+                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img src="img/icon/bell.svg" alt>
+                                        </a>
+
+                                        <div class="Menu_NOtification_Wrap">
+                                            <div class="notification_Header">
+                                                <h4>Thông báo</h4>
+                                            </div>
+                                            <div class="Notification_body">
+
+                                                <div class="single_notify d-flex align-items-center">
+                                                    <div class="notify_thumb">
+                                                        <a href="#"><img src="img/staf/2.png" alt></a>
+                                                    </div>
+                                                    <div class="notify_content">
+                                                        <a href="#">
+                                                            <h5>Cool Marketing </h5>
+                                                        </a>
+                                                        <p>Lorem ipsum dolor sit amet</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="single_notify d-flex align-items-center">
+                                                    <div class="notify_thumb">
+                                                        <a href="#"><img src="img/staf/4.png" alt></a>
+                                                    </div>
+                                                    <div class="notify_content">
+                                                        <a href="#">
+                                                            <h5>Awesome packages</h5>
+                                                        </a>
+                                                        <p>Lorem ipsum dolor sit amet</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="single_notify d-flex align-items-center">
+                                                    <div class="notify_thumb">
+                                                        <a href="#"><img src="img/staf/3.png" alt></a>
+                                                    </div>
+                                                    <div class="notify_content">
+                                                        <a href="#">
+                                                            <h5>what a packages</h5>
+                                                        </a>
+                                                        <p>Lorem ipsum dolor sit amet</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="single_notify d-flex align-items-center">
+                                                    <div class="notify_thumb">
+                                                        <a href="#"><img src="img/staf/2.png" alt></a>
+                                                    </div>
+                                                    <div class="notify_content">
+                                                        <a href="#">
+                                                            <h5>Cool Marketing </h5>
+                                                        </a>
+                                                        <p>Lorem ipsum dolor sit amet</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="single_notify d-flex align-items-center">
+                                                    <div class="notify_thumb">
+                                                        <a href="#"><img src="img/staf/4.png" alt></a>
+                                                    </div>
+                                                    <div class="notify_content">
+                                                        <a href="#">
+                                                            <h5>Awesome packages</h5>
+                                                        </a>
+                                                        <p>Lorem ipsum dolor sit amet</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="single_notify d-flex align-items-center">
+                                                    <div class="notify_thumb">
+                                                        <a href="#"><img src="img/staf/3.png" alt></a>
+                                                    </div>
+                                                    <div class="notify_content">
+                                                        <a href="#">
+                                                            <h5>what a packages</h5>
+                                                        </a>
+                                                        <p>Lorem ipsum dolor sit amet</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nofity_footer">
+                                                <div class="submit_button text-center pt_20">
+                                                    <a href="#" class="btn_1">See More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="profile_info">
+                                    <img src="${sessionScope.account.imgAccount}">
+                                    <div class="profile_info_iner">
+                                        <div class="profile_author_name">
+                                            <p>Nhân viên</p>
+                                            <h5>${sessionScope.account.fullName}</h5>
+                                        </div>
+                                        <div class="profile_info_details">
+                                            <a href="logout">Đăng xuất </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div id="notification-container" class="notification-container"></div>
             <script>
-                function showNotificationAndRedirect() {
+                function showNotification() {
                     var notification = '<%= session.getAttribute("notification") %>';
                     if (notification === 'displayElement') {
                         var notificationContainer = document.getElementById('notification-container');
@@ -270,253 +424,282 @@
                             }, 5000);
                         }
                     }
-            <% session.removeAttribute("notification"); %>
+                    if (notification === 'accept_all') {
+                        var notificationContainer = document.getElementById('notification-container');
+                        if (notificationContainer) {
+                            var notificationElement = document.createElement('div');
+                            notificationElement.classList.add('notification', 'success');
+                            notificationElement.textContent = 'Đã chấp nhận tất cả đánh giá mới';
+                            notificationContainer.appendChild(notificationElement);
+                            notificationContainer.style.display = 'block';
+                            setTimeout(function () {
+                                notificationContainer.style.display = 'none';
+                            }, 5000);
+                        }
+                    }
+                <% session.removeAttribute("notification"); %>
                 }
-                window.onload = showNotificationAndRedirect;
-        </script>
-        <div class="main_content_iner ">
-            <div class="container-fluid p-0">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="white_card card_height_100 mb_30">
-                            <div class="white_card_header">
-                                <div class="box_header m-0">
-                                    <div class="main-title">
-                                        <!--<h3 class="m-0">Sản phẩm</h3>-->
+                window.onload = showNotification;
+            </script>
+            <div class="main_content_iner ">
+                <div class="container-fluid p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="white_card card_height_100 mb_30">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <!--<h3 class="m-0">Sản phẩm</h3>-->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="white_card_body">
-                                <div class="QA_section">
-                                    <div class="white_box_tittle list_header">
-                                        <div>
-                                            <!--<h4>Đánh giá sản phẩm</h4>-->
-                                            <form action="feedbacklist" method="get" id="filterForm">
-                                                <label for="filter">Đánh giá:</label>
-                                                <select name="filter" onchange="document.getElementById('filterForm').submit()">
-                                                    <option value="" ${requestScope.filter eq null ? 'selected': ''}>Tất cả</option>
-                                                    <option value="5" ${requestScope.filter eq '5' ? 'selected': ''}>5 Sao</option>
-                                                    <option value="4" ${requestScope.filter eq '4' ? 'selected': ''}>4 Sao</option>
-                                                    <option value="3" ${requestScope.filter eq '3' ? 'selected': ''}>3 Sao</option>
-                                                    <option value="2" ${requestScope.filter eq '2' ? 'selected': ''}>2 Sao</option>
-                                                    <option value="1" ${requestScope.filter eq '1' ? 'selected': ''}>1 Sao</option>
-                                                </select>
-                                                <input type="hidden" name="status" value="${requestScope.status}">
-                                                <input type="hidden" name="search" value="${requestScope.search}">
-                                            </form>
-                                        </div>
-                                        <div class="box_right d-flex lms_block">
-                                            <div class="serach_field_2">
-                                                <div class="search_inner">
-                                                    <form action="feedbacklist" method="GET">
-                                                        <input type="hidden" name="status" value="${requestScope.status}">
-                                                        <input type="hidden" name="filter" value="${requestScope.filter}">
-                                                        <div class="search_field">
-                                                            <input name="search" type="text" placeholder="Tìm kiếm...." value="${requestScope.searchResult}">
-                                                        </div>
-                                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                    </form>
+                                <div class="white_card_body">
+                                    <div class="QA_section">
+                                        <div class="white_box_tittle list_header">
+                                            <!--FILTER BY RATING-->
+                                            <div class="cbo_filter">
+                                                <form action="feedbacklist" method="get" id="filterForm">
+                                                    <label for="filter">Đánh giá:</label>
+                                                    <select name="filter" onchange="document.getElementById('filterForm').submit()">
+                                                        <option value="" ${requestScope.filter eq null ? 'selected': ''}>Tất cả</option>
+                                                        <option value="5" ${requestScope.filter eq '5' ? 'selected': ''}>5 Sao</option>
+                                                        <option value="4" ${requestScope.filter eq '4' ? 'selected': ''}>4 Sao</option>
+                                                        <option value="3" ${requestScope.filter eq '3' ? 'selected': ''}>3 Sao</option>
+                                                        <option value="2" ${requestScope.filter eq '2' ? 'selected': ''}>2 Sao</option>
+                                                        <option value="1" ${requestScope.filter eq '1' ? 'selected': ''}>1 Sao</option>
+                                                    </select>
+                                                    <input type="hidden" name="status" value="${requestScope.status}">
+                                                    <input type="hidden" name="search" value="${requestScope.search}">
+                                                </form>
+                                            </div>
+                                            <!--FILTER BY RATING-->
+
+                                            <!--SEARCH BY PRODUCT NAME-->
+                                            <div class="box_right d-flex lms_block">
+                                                <div class="serach_field_2">
+                                                    <div class="search_inner">
+                                                        <form action="feedbacklist" method="GET">
+                                                            <input type="hidden" name="status" value="${requestScope.status}">
+                                                            <input type="hidden" name="filter" value="${requestScope.filter}">
+                                                            <div class="search_field">
+                                                                <input name="search" type="text" placeholder="Tìm kiếm...." value="${requestScope.searchResult}">
+                                                            </div>
+                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="QA_table mb_30">
-                                        <div class="filterFeedback">
-                                            <a href="feedbacklist?page=1&status=pending&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'pending' ?'active':''}">Chờ duyệt</a>
-                                            <a href="feedbacklist?page=1&status=accept&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị</a>
-                                            <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn</a>
-                                            <c:if test="${requestScope.status eq 'pending'}">
-<!--                                                <div style="margin-left: 30rem">
-                                                    <a href="#myModal" class="trigger-btn" data-toggle="modal"><input type="button" value="Chấp nhận tất cả" /></a>
-                                                    <input type="button" onclick="" value="Từ chối tất cả" />
-                                                </div>-->
-                                            </c:if>
-                                            <c:if test="${requestScope.status eq 'accept'}">
-<!--                                                <div style="margin-left: 30rem">
-                                                    <input type="button" value="Ẩn tất cả" />
-                                                </div>-->
-                                            </c:if>
-                                            <c:if test="${requestScope.status eq 'reject'}">
-<!--                                                <div style="margin-left: 30rem">
-                                                    <input type="button" value="Hiển thị tất cả" />
-                                                    <input type="button" value="Xóa tất cả" />
-                                                </div>-->
+                                        <div class="QA_table mb_30">
+                                            <div class="filterFeedback">
+                                                <a href="feedbacklist?page=1&status=pending&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'pending' ?'active':''}">Chờ duyệt (${requestScope.totalPending})</a>
+                                                <a href="feedbacklist?page=1&status=accept&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị (${requestScope.totalAccept})</a>
+                                                <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn (${requestScope.totalReject})</a>
+                                                <c:if test="${requestScope.status eq 'pending'}">
+                                                    <!--                                                    <div class="submit_button text-center pt_20" style="margin-left: 30rem;">
+                                                                                                            <button type="submit" class="btn_1" name="action" value="accept_all">Chấp nhận tất cả</a>
+                                                                                                        </div>-->
+                                                </c:if>
+                                                <c:if test="${requestScope.status eq 'accept'}">
+                                                    <!--                                                <div style="margin-left: 30rem">
+                                                                                                        <input type="button" value="Ẩn tất cả" />
+                                                                                                    </div>-->
+                                                </c:if>
+                                                <c:if test="${requestScope.status eq 'reject'}">
+                                                    <!--                                                <div style="margin-left: 30rem">
+                                                                                                        <input type="button" value="Hiển thị tất cả" />
+                                                                                                        <input type="button" value="Xóa tất cả" />
+                                                                                                    </div>-->
+                                                </c:if>
+                                            </div>
+                                                <c:if test="${requestScope.listFeedback.size()==0}"> <div class="text-center" style="margin-top: 1rem"><h4>Chưa có lượt đánh giá nào</h4></div></c:if>
+                                            <c:if test="${requestScope.listFeedback.size() != 0}">
+                                                <table class="table lms_table_active">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" style="width: 10px;padding: 5px">STT</th>
+                                                            <th scope="col" style="width: 10px">Tên tài khoản</th>
+                                                            <th scope="col" style="width: 5px">Đánh giá</th>
+                                                            <th scope="col" style="width: 250px">Bình luận</th>
+                                                            <th scope="col" style="width: 200px">Sản phẩm</th>
+                                                            <th scope="col">Ngày</th>
+                                                            <th scope="col">Trạng thái</th>
+                                                            <th scope="col">
+                                                                <c:if test="${requestScope.status eq 'pending'}">
+                                                                    <form action="feedbacklist" method="post">
+                                                                        <input type="hidden" name="page" value="${requestScope.page}">
+                                                                        <input type="hidden" name="search" value="${requestScope.searchResult}">
+                                                                        <input type="hidden" name="filter" value="${requestScope.filter}">
+                                                                        <input type="hidden" name="status" value="${requestScope.status}">
+                                                                        <button type="submit" class="btn_1" name="action" value="accept_all">Duyệt hết</a>
+                                                                    </form>
+                                                                </c:if>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${requestScope.listFeedback}" var="feedback" varStatus="loop">
+                                                            <tr>
+                                                                <td>${feedback.stt}</td>
+                                                                <td>${feedback.account.userName}</td>
+                                                                <td>
+                                                                    <div class="review-content d-flex">
+                                                                        <div class="rating text-primary">
+                                                                            <c:forEach begin="1" end="${feedback.rating}">
+                                                                                <svg class="star star-fill">
+                                                                                <use xlink:href="#star-fill" style="color: gold"></use>
+                                                                                </svg>
+                                                                            </c:forEach > 
+                                                                            <c:forEach begin="1" end="${5-feedback.rating}">
+                                                                                <svg class="star star-empty">
+                                                                                <use xlink:href="#star-empty" style="stroke: gold"></use>
+                                                                                </svg>
+                                                                            </c:forEach> 
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>${feedback.comments}</td>
+                                                                <td><img src="${feedback.product.imgProduct}" width="auto" height="110px" alt="alt"/><p style="font-size: smaller; font-weight: bold">${feedback.product.name}</p>
+                                                                </td>
+                                                                <td>${feedback.feedbackDate}</td>
+                                                                <c:if test="${feedback.status == 1}"><td class="status-approved">Đã duyệt</td></c:if>
+                                                                <c:if test="${feedback.status == 0}"><td class="status-pending">Chờ duyệt</td></c:if>
+                                                                <c:if test="${feedback.status == -1}"><td class="status-rejected">Bị ẩn</td></c:if>
+
+                                                                    <td>
+                                                                        <form action="feedbacklist" method="post">
+                                                                            <input type="hidden" name="feedbackId" value="${feedback.feedbackId}">
+                                                                        <input type="hidden" name="page" value="${requestScope.page}">
+                                                                        <input type="hidden" name="search" value="${requestScope.searchResult}">
+                                                                        <input type="hidden" name="filter" value="${requestScope.filter}">
+                                                                        <input type="hidden" name="status" value="${requestScope.status}">
+                                                                        <c:choose>
+                                                                            <c:when test="${feedback.status == 0}">
+                                                                                <!--Duyet feedback moi-->
+                                                                                <div class="btn edit-btn">
+                                                                                    <button type="submit" name="action" value="displayElement" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                        <i class="fas fa-check-circle"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="btn delete-btn">
+                                                                                    <button type="submit" name="action" value="hidden" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                        <i class="fas fa-ban"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <c:if test="${feedback.status == 1}">
+                                                                                    <!--Ẩn feedback-->
+                                                                                    <div class="btn edit-btn">
+                                                                                        <button type="submit" name="action" value="hidden" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                            <i class="fas fa-eye-slash"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </c:if>
+                                                                                <c:if test="${feedback.status == -1}">
+                                                                                    <!--Xóa hoặc hiển thị lại feedback-->
+                                                                                    <div class="btn edit-btn">
+                                                                                        <button type="submit" name="action" value="displayElement" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                            <i class="fas fa-eye"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="btn delete-btn">
+                                                                                        <button type="submit" name="action" value="delete" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                                            <i class="fas fa-trash-alt"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </c:if>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
                                             </c:if>
                                         </div>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col" style="width: 10px;padding: 5px">STT</th>
-                                                    <th scope="col">Tên tài khoản</th>
-                                                    <th scope="col" style="width: 7px">Đánh giá</th>
-                                                    <th scope="col" style="width: 300px">Bình luận</th>
-                                                    <th scope="col">Sản phẩm</th>
-                                                    <th scope="col">Ngày</th>
-                                                    <th scope="col">Trạng thái</th>
-                                                    <th scope="col"> </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${requestScope.listFeedback}" var="feedback" varStatus="loop">
-                                                    <tr>
-                                                        <td>${loop.index+1}</td>
-                                                        <td>${feedback.account.userName}</td>
-                                                        <td>
-                                                            <div class="review-content d-flex">
-                                                                <div class="rating text-primary">
-                                                                    <c:forEach begin="1" end="${feedback.rating}">
-                                                                        <svg class="star star-fill">
-                                                                        <use xlink:href="#star-fill" style="color: gold"></use>
-                                                                        </svg>
-                                                                    </c:forEach > 
-                                                                    <c:forEach begin="1" end="${5-feedback.rating}">
-                                                                        <svg class="star star-empty">
-                                                                        <use xlink:href="#star-empty" style="stroke: gold"></use>
-                                                                        </svg>
-                                                                    </c:forEach> 
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>${feedback.comments}</td>
-                                                        <td><img src="${feedback.product.imgProduct}" width="auto" height="110px" alt="alt"/></td>
-                                                        <td>${feedback.feedbackDate}</td>
-                                                        <c:if test="${feedback.status == 1}"><td class="status-approved">Đã duyệt</td></c:if>
-                                                        <c:if test="${feedback.status == 0}"><td class="status-pending">Chờ duyệt</td></c:if>
-                                                        <c:if test="${feedback.status == -1}"><td class="status-rejected">Bị ẩn</td></c:if>
-
-                                                            <td>
-                                                                <form action="feedbacklist" method="post">
-                                                                    <input type="hidden" name="feedbackId" value="${feedback.feedbackId}">
-                                                                <input type="hidden" name="page" value="${requestScope.page}">
-                                                                <input type="hidden" name="search" value="${requestScope.searchResult}">
-                                                                <input type="hidden" name="filter" value="${requestScope.filter}">
-                                                                <input type="hidden" name="status" value="${requestScope.status}">
-                                                                <c:choose>
-                                                                    <c:when test="${feedback.status == 0}">
-                                                                        <!--Duyet feedback moi-->
-                                                                        <div class="btn edit-btn">
-                                                                            <button type="submit" name="action" value="display" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                                                <i class="fas fa-check" style="color: white"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="btn delete-btn">
-                                                                            <button type="submit" name="action" value="hidden" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                                                <i class="fas fa-ban" style="color: white"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <c:if test="${feedback.status == 1}">
-                                                                            <!--Ẩn feedback-->
-                                                                            <div class="btn edit-btn">
-                                                                                <button type="submit" name="action" value="hidden" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                                                    <i class="fas fa-eye-slash" style="color: white"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </c:if>
-                                                                        <c:if test="${feedback.status == -1}">
-                                                                            <!--Xóa hoặc hiển thị lại feedback-->
-                                                                            <div class="btn edit-btn">
-                                                                                <button type="submit" name="action" value="displayElement" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                                                    <i class="fas fa-eye" style="color: white"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="btn delete-btn">
-                                                                                <button type="submit" name="action" value="delete" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                                                    <i class="fas fa-trash-alt" style="color: white"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </c:if>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                        <!--endPage,page,listFeedback-->
+                                        <c:set var="total" value="${requestScope.endPage}" />
+                                        <c:set var="page" value="${requestScope.page}" />
+                                        <c:if test="${requestScope.listFeedback != null}">
+                                            <nav class="pt-5 border-top" aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center gap-5">
+                                                    <li class="page-item">
+                                                        <c:if test="${page > 1}">
+                                                            <a class="page-link" href="feedbacklist?page=${page-1}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}">   <   </a>
+                                                        </c:if>
+                                                    </li>
+                                                    <c:if test="${total <= 5}">
+                                                        <c:forEach begin="1" end="${total}" var="pageNum">
+                                                            <li class="page-item ${page == pageNum ? 'active' : ''}">
+                                                                <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                    <c:if test="${total > 5}">
+                                                        <li class="page-item ${page == 1 ? 'active' : ''}">
+                                                            <a class="page-link" href="feedbacklist?page=1&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}"  ${page == 1 ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>1</a>
+                                                        </li>
+                                                        <c:if test="${page > 3}">
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                        </c:if>
+                                                        <c:forEach begin="${page > 2 ? page - 1 : 2}" end="${page < total - 1 ? page + 1 : total - 1}" var="pageNum">
+                                                            <li class="page-item ${page == pageNum ? 'active' : ''}">
+                                                                <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}"  ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
+                                                            </li>
+                                                        </c:forEach>
+                                                        <c:if test="${page < total - 2}">
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                        </c:if>
+                                                        <li class="page-item ${page == total ? 'active' : ''}">
+                                                            <a class="page-link" href="feedbacklist?page=${total}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == total ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
+                                                        </li>
+                                                    </c:if>
+                                                    <li class="page-item">
+                                                        <c:if test="${page < total}">
+                                                            <a class="page-link" href="feedbacklist?page=${page+1}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" > > </a>
+                                                        </c:if>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </c:if>
                                     </div>
-                                    <!--endPage,page,listFeedback-->
-                                    <c:set var="total" value="${requestScope.endPage}" />
-                                    <c:set var="page" value="${requestScope.page}" />
-                                    <c:if test="${requestScope.listFeedback != null}">
-                                        <nav class="pt-5 border-top" aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center gap-5">
-                                                <li class="page-item">
-                                                    <c:if test="${page > 1}">
-                                                        <a class="page-link" href="feedbacklist?page=${page-1}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}">   <   </a>
-                                                    </c:if>
-                                                </li>
-                                                <c:if test="${total <= 5}">
-                                                    <c:forEach begin="1" end="${total}" var="pageNum">
-                                                        <li class="page-item ${page == pageNum ? 'active' : ''}">
-                                                            <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
-                                                        </li>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <c:if test="${total > 5}">
-                                                    <li class="page-item ${page == 1 ? 'active' : ''}">
-                                                        <a class="page-link" href="feedbacklist?page=1&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}"  ${page == 1 ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>1</a>
-                                                    </li>
-                                                    <c:if test="${page > 3}">
-                                                        <li class="page-item disabled">
-                                                            <span class="page-link">...</span>
-                                                        </li>
-                                                    </c:if>
-                                                    <c:forEach begin="${page > 2 ? page - 1 : 2}" end="${page < total - 1 ? page + 1 : total - 1}" var="pageNum">
-                                                        <li class="page-item ${page == pageNum ? 'active' : ''}">
-                                                            <a class="page-link" href="feedbacklist?page=${pageNum}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}"  ${page == pageNum ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${pageNum}</a>
-                                                        </li>
-                                                    </c:forEach>
-                                                    <c:if test="${page < total - 2}">
-                                                        <li class="page-item disabled">
-                                                            <span class="page-link">...</span>
-                                                        </li>
-                                                    </c:if>
-                                                    <li class="page-item ${page == total ? 'active' : ''}">
-                                                        <a class="page-link" href="feedbacklist?page=${total}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" ${page == total ? 'style="background-color: #2d1967; padding: 8px 16px; border-radius: 10px; color: white"' : ''}>${total}</a>
-                                                    </li>
-                                                </c:if>
-                                                <li class="page-item">
-                                                    <c:if test="${page < total}">
-                                                        <a class="page-link" href="feedbacklist?page=${page+1}&status=${requestScope.status}&search=${requestScope.searchResult}&filter=${requestScope.filter}" > > </a>
-                                                    </c:if>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </c:if>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 
-    <script src="js/jquery1-3.4.1.min.js"></script>
+        <script src="js/jquery1-3.4.1.min.js"></script>
 
-    <script src="js/popper1.min.js"></script>
+        <script src="js/popper1.min.js"></script>
 
-    <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 
-    <script src="js/metisMenu.js"></script>
+        <script src="js/metisMenu.js"></script>
 
-    <script src="vendors/datatable/js/jquery.dataTables.min.js"></script>
-    <script src="vendors/datatable/js/dataTables.responsive.min.js"></script>
-    <script src="vendors/datatable/js/dataTables.buttons.min.js"></script>
-    <script src="vendors/datatable/js/buttons.flash.min.js"></script>
-    <script src="vendors/datatable/js/jszip.min.js"></script>
-    <script src="vendors/datatable/js/pdfmake.min.js"></script>
-    <script src="vendors/datatable/js/vfs_fonts.js"></script>
-    <script src="vendors/datatable/js/buttons.html5.min.js"></script>
-    <script src="vendors/datatable/js/buttons.print.min.js"></script>
+        <script src="vendors/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="vendors/datatable/js/dataTables.responsive.min.js"></script>
+        <script src="vendors/datatable/js/dataTables.buttons.min.js"></script>
+        <script src="vendors/datatable/js/buttons.flash.min.js"></script>
+        <script src="vendors/datatable/js/jszip.min.js"></script>
+        <script src="vendors/datatable/js/pdfmake.min.js"></script>
+        <script src="vendors/datatable/js/vfs_fonts.js"></script>
+        <script src="vendors/datatable/js/buttons.html5.min.js"></script>
+        <script src="vendors/datatable/js/buttons.print.min.js"></script>
 
-    <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
-    <script src="vendors/scroll/scrollable-custom.js"></script>
+        <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
+        <script src="vendors/scroll/scrollable-custom.js"></script>
 
-    <script src="js/custom.js"></script>
+        <script src="js/custom.js"></script>
 
-</body>
+    </body>
 </html>

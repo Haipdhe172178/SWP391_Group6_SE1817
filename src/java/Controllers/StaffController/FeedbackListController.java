@@ -94,6 +94,11 @@ public class FeedbackListController extends HttpServlet {
         request.setAttribute("listFeedback", listFeedback);
 
         int endPage = (quantity / 5) + (quantity % 5 == 0 ? 0 : 1);
+
+        request.setAttribute("total", quantity);
+        request.setAttribute("totalPending", fDao.getQuantityFeedbacks("pending", search, filter));
+        request.setAttribute("totalAccept", fDao.getQuantityFeedbacks("accept", search, filter));
+        request.setAttribute("totalReject", fDao.getQuantityFeedbacks("reject", search, filter));
         request.setAttribute("endPage", endPage);
         request.setAttribute("page", page);
         request.getRequestDispatcher("Views/Staff/FeedbackList.jsp").forward(request, response);
@@ -118,23 +123,31 @@ public class FeedbackListController extends HttpServlet {
         String filter = request.getParameter("filter");
         String page = request.getParameter("page");
 
-        int feedbackId = Integer.parseInt(request.getParameter("feedbackId"));
-
+        String feedbackId_raw =request.getParameter("feedbackId");
+        int feedbackId = 0;
+        if (feedbackId_raw != null && !feedbackId_raw.isEmpty()) {
+            feedbackId = Integer.parseInt(feedbackId_raw);
+        }
+        
         if (action != null && !action.isEmpty()) {
             boolean isComplete = false;
             String ms;
             switch (action) {
                 case "displayElement":
-                    isComplete = fDao.updateStatusFeedback(feedbackId, 1);
+                    isComplete = fDao.updateStatusFeedbackById(feedbackId, 1);
                     ms = "Hiển thị thành công";
                     break;
                 case "hidden":
-                    isComplete = fDao.updateStatusFeedback(feedbackId, -1);
+                    isComplete = fDao.updateStatusFeedbackById(feedbackId, -1);
                     ms = "Đã ẩn đánh giá";
                     break;
                 case "delete":
                     isComplete = fDao.deleteFeedback(feedbackId);
                     ms = "Đã xóa đánh giá";
+                    break;
+                case "accept_all":
+                    isComplete = fDao.updateStatusFeedbackByStatus(1);
+                    ms = "Chấp nhận tất cả đánh giá thành công";
                     break;
                 default:
                     ms = "Vui lòng thử lại!";
