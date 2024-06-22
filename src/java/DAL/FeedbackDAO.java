@@ -84,7 +84,7 @@ public class FeedbackDAO extends DBContext {
 
     public List<Feedback> getAllFeedbackByStatus(int index, String status, String search, String filter) {
         List<Feedback> listFeedback = new ArrayList<>();
-        String query = "SELECT * FROM Feedback f JOIN Product p ON f.ProductID = p.ProductID WHERE f.Status = ? \n";
+        String query = "SELECT ROW_NUMBER() OVER (ORDER BY FeedbackID desc) AS STT, * FROM Feedback f JOIN Product p ON f.ProductID = p.ProductID WHERE f.Status = ? \n";
 
         if (search != null && !search.isEmpty()) {
             query += "AND p.Name LIKE ?\n";
@@ -93,7 +93,7 @@ public class FeedbackDAO extends DBContext {
         if (filter != null && !filter.isEmpty()) {
             query += "AND f.Rating = ? \n ";
         }
-        query += " ORDER BY FeedbackID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        query += " ORDER BY FeedbackID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
 
         try {
             int offset = (index - 1) * ELEMENTS_PER_PAGE;
@@ -131,6 +131,7 @@ public class FeedbackDAO extends DBContext {
 
             while (rs.next()) {
                 Feedback fb = new Feedback();
+                fb.setStt(rs.getInt("STT"));
                 fb.setFeedbackId(rs.getInt("FeedbackID"));
                 // Replace accDao.getAccountById and pDao.getProductById with your DAO methods
                 fb.setAccount(accDao.getAccountById(rs.getInt("AccountID")));
@@ -328,14 +329,29 @@ public class FeedbackDAO extends DBContext {
         return false;
     }
 
-    public boolean updateStatusFeedback(int feedbackId, int status) {
+    public boolean updateStatusFeedbackById(int feedbackId, int status) {
         String sql = "  Update Feedback\n"
-                + "  Set Status = ?\n"
-                + "  where FeedbackID=?";
+                + "  set Status = ? \n"
+                + "  where FeedbackID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, status);
             ps.setInt(2, feedbackId);
+            int rowsInserted = ps.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateStatusFeedbackByStatus(int status) {
+        String sql = "  update Feedback\n"
+                + "  set Status = ? \n"
+                + "  where Status = 0";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, status);
             int rowsInserted = ps.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -361,15 +377,6 @@ public class FeedbackDAO extends DBContext {
     //TEST FUNCTION
     public static void main(String[] args) {
         FeedbackDAO fb = new FeedbackDAO();
-        List<Feedback> listF = fb.getAllFeedbackByStatus(5, "pending", "", "5");
-        for (Feedback feedback : listF) {
-            System.out.println(feedback.getFeedbackId());
-        }
-        System.out.println(fb.getQuantityFeedbacks("pending", "", "5"));
-//        List<Feedback> list = fb.getFeedbackByProductId(1);
-//        for (Feedback feedback : list) {
-//            System.out.println(feedback.getComments());
-//        }
-//        System.out.println(fb.avgRating(1));
+        System.out.println(fb.updateStatusFeedbackById(ELEMENTS_PER_PAGE, ELEMENTS_PER_PAGE));
     }
 }
