@@ -318,7 +318,7 @@
                                                                 </c:choose>
                                                             </td>
                                                             <td>
-                                                                <a href="updatea?id=${a.authorID}" title="Update"><i class="fas fa-edit"></i></a>
+                                                                <a href="updatea?id=${a.authorID}" title="Update"></a>
                                                                 <a href="hidea?id=${a.authorID}" title="Hide"><i class="fas fa-ban"></i></a>
                                                             </td>
                                                         </tr>

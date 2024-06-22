@@ -57,11 +57,20 @@ public class CategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       
-        CategoryDao dal = new CategoryDao();
+       if(request.getParameter("c")!=null){
+            String text = request.getParameter("s");
+            
+           CategoryDao dal = new CategoryDao();
+          List<Category> category = dal.getallCategorys(text);
+        request.setAttribute("category", category);
+        request.getRequestDispatcher("Views/Admin/Category.jsp").forward(request, response);
+       }else{
+            CategoryDao dal = new CategoryDao();
           List<Category> category = dal.getallCategorys();
         request.setAttribute("category", category);
         request.getRequestDispatcher("Views/Admin/Category.jsp").forward(request, response);
+       }
+        
     } 
 
     /** 

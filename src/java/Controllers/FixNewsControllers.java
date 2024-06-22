@@ -42,8 +42,19 @@ public class FixNewsControllers extends HttpServlet {
             Part img1Part = request.getPart("img1");
             Part img2Part = request.getPart("img2");
 
-            String img1Filename = uploadFile(img1Part, request);
-            String img2Filename = uploadFile(img2Part, request);
+            String img1Filename = validateAndUploadFile(img1Part, request);
+            String img2Filename = validateAndUploadFile(img2Part, request);
+
+            if (img1Filename == null || img2Filename == null) {
+                News news = newsDao.getNewsById(id);
+                List<Topic> topics = newsDao.getTopic();
+                request.setAttribute("news", news);
+                request.setAttribute("topics", topics);
+                request.setAttribute("errorMessage", "Invalid image format. Only JPG, PNG, and GIF are allowed.");
+                RequestDispatcher rd = request.getRequestDispatcher("Views/Admin/fixNews.jsp");
+                rd.forward(request, response);
+                return;
+            }
 
             Topic topic = new Topic();
             topic.setTopicId(topicId);
@@ -68,6 +79,14 @@ public class FixNewsControllers extends HttpServlet {
             request.setAttribute("message", "Đã xóa bản tin thành công");
             response.sendRedirect("upnews");
         }
+    }
+
+    private String validateAndUploadFile(Part part, HttpServletRequest request) throws IOException {
+        String contentType = part.getContentType();
+        if (contentType.equals("image/jpeg") || contentType.equals("image/png") || contentType.equals("image/gif") || contentType.equals("image/webp")) {
+            return uploadFile(part, request);
+        }
+        return null;
     }
 
     private String uploadFile(Part part, HttpServletRequest request) throws IOException {

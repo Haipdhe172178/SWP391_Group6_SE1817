@@ -30,6 +30,27 @@
             height: auto;
         }
     </style>
+    <script>
+        function validateForm() {
+            var title = document.getElementById("title").value.trim();
+            var content = document.getElementById("content").value.trim();
+            var source = document.getElementById("source").value.trim();
+            
+            if (title === "") {
+                alert("Title không được phép chưa toàn dấu cách.");
+                return false;
+            }
+            if (content === "") {
+                alert("Content không được phép chứa toàn dấu cách.");
+                return false;
+            }
+            if (source === "") {
+                alert("Source không được phép chứa toàn dấu cách.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body class="crm_body_bg">
     <nav class="sidebar vertical-scroll ps-container ps-theme-default ps-active-y">
@@ -89,7 +110,7 @@
                         Add News
                     </div>
                     <div class="card-body">
-                        <form action="AddNewsController" method="POST" enctype="multipart/form-data" class="row g-3">
+                        <form action="AddNewsController" method="POST" enctype="multipart/form-data" class="row g-3" onsubmit="return validateForm()">
                             <div class="col-md-6">
                                 <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" required>
@@ -104,11 +125,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="img1" class="form-label">Image 1</label>
-                                <input type="file" class="form-control" id="img1" name="img1" required>
+                                <input type="file" class="form-control" id="img1" name="img1" accept="image/jpeg, image/png, image/gif, image/webp" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="img2" class="form-label">Image 2</label>
-                                <input type="file" class="form-control" id="img2" name="img2" required>
+                                <input type="file" class="form-control" id="img2" name="img2" accept="image/jpeg, image/png, image/gif, image/webp" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="source" class="form-label">Source</label>

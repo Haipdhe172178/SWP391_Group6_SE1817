@@ -569,9 +569,11 @@
                                                 const urlParams = new URLSearchParams(window.location.search);
                                                 const indexParam = urlParams.get('index');
                                                 const successParam = urlParams.get('success');
+                                                const rating = urlParams.get('rating');
+                                                const page = urlParams.get('page');
 
                                                 // Nếu có tham số index và phần feedback có sẵn
-                                                if (indexParam && document.getElementById('feedback-section')) {
+                                                if ((indexParam || rating || page) && document.getElementById('feedback-section')) {
                                                     // Cuộn trang đến vị trí của phần feedback
                                                     document.getElementById('feedback-section').scrollIntoView({
                                                         behavior: 'smooth', // Cuộn mượt

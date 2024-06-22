@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Reset Password</title>
+    <title>Đặt lại mật khẩu</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -12,6 +12,16 @@
     <style type="text/css">
         .form-gap {
             padding-top: 70px;
+        }
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+              text-align: left; /* Để căn lề trái */
+            display: block;
+        }
+        .input-group-addon {
+            min-width: 42px;
+            text-align: center;
         }
     </style>
     <script>
@@ -45,18 +55,18 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
-                            <h2 class="text-center">Reset Password</h2>
+                            <h2 class="text-center">Đặt lại mật khẩu</h2>
                             <c:if test="${not empty status}">
                                 <div class="alert alert-info">
                                     <c:choose>
                                         <c:when test="${status == 'resetSuccess'}">
-                                            Password reset successfully. You can now log in with your new password.
+                                            Đặt lại mật khẩu thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới của mình.
                                         </c:when>
                                         <c:when test="${status == 'resetFailed'}">
-                                            Password reset failed. Please try again.
+                                            Đặt lại mật khẩu không thành công. Vui lòng thử lại.
                                         </c:when>
                                         <c:when test="${status == 'passwordMismatch'}">
-                                            Passwords do not match. Please try again.
+                                            Mật khẩu không khớp. Vui lòng thử lại.
                                         </c:when>
                                     </c:choose>
                                 </div>
@@ -64,23 +74,25 @@
                             <div class="panel-body">
                                 <form id="reset-form" action="newPassword" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
+                                        <label for="password" class="form-label">Nhập mật khẩu: </label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key color-blue"></i></span>
-                                            <input type="password" name="password" placeholder="New Password" class="form-control" required="required">
+                                            <input type="password" id="password" name="password" placeholder="Mật khẩu mới" class="form-control" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="confPassword" class="form-label">Xác nhận lại mật khẩu: </label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key color-blue"></i></span>
-                                            <input type="password" name="confPassword" placeholder="Confirm New Password" class="form-control" required="required">
+                                            <input type="password" id="confPassword" name="confPassword" placeholder="Nhập lại mật khẩu mới" class="form-control" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset" type="submit">
+                                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Đặt mật khẩu" type="submit">
                                     </div>
                                 </form>
                             </div>
-                            <h5>Don't have an Account? <a href="#" class="text-danger">Register Now!</a></h5>
+                            <h5>Bạn chưa có tài khoản? <a href="register" class="text-danger">Đăng ký!</a></h5>
                         </div>
                     </div>
                 </div>

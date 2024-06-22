@@ -15,8 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
 
-
-        <link rel="stylesheet" href="css/bootstrap1.min.css" />
+  <link rel="stylesheet" href="css/bootstrap1.min.css" />
 
         <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
 
@@ -27,7 +26,7 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
 
@@ -264,11 +263,11 @@
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
-                                                        <form action="data" method="GET">
+                                                        <form action="category" method="GET">
                                                             <div class="search_field">
                                                                 <input name="s" type="text" placeholder="Search here...">
                                                             </div>
-                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                            <button type="submit" name="c"> <img src="img/icon/icon_search.svg" alt> </button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -295,7 +294,7 @@
                                                             <td>${p.categoryName}</td>
                                                            
                                                           
-                                                          <td><a href="updatecategory?id=${p.categoryId}">UPDATE</td>
+                                                          <td><a href="updatecategory?id=${p.categoryId}"><i class="fas fa-edit"></i></td>
                                                         </tr>
 
                                                     </c:forEach>
