@@ -117,7 +117,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body text-center">
-                        <h5>OK</h5>   
+                        <h5>${requestScope.messageSuccess}</h5>   
                     </div>
                 </div>
             </div>

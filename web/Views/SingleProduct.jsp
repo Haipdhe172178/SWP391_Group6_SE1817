@@ -116,22 +116,6 @@
                 display: none; /* Hidden by default, will be shown when needed */
             }
 
-            /* Styles for the notification */
-            .notification {
-                padding: 15px;
-                margin-bottom: 10px;
-                border-radius: 4px;
-                color: #fff;
-                font-size: 16px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                animation: fadein 0.5s, fadeout 0.5s 4.5s; /* Fade in and fade out animations */
-            }
-
-            /* Success notification style */
-            .notification.success {
-                background-color: #4caf50; /* Green background */
-            }
-
             /* Keyframes for fade in and fade out animations */
             @keyframes fadein {
                 from {
@@ -373,12 +357,12 @@
         </section>
         <!--modal-->
         <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" >
-                    <div class="modal-header">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none">
                     </div>
-                    <div class="modal-body" style="align-items: center">
-                        <h4>Đánh giá của bạn sẽ được kiểm duyệt trước khi hiển thị</h4> 
+                    <div class="modal-body d-flex justify-content-center align-items-center" style="text-align: center">
+                        <h4>Đánh giá của bạn sẽ được kiểm duyệt trước khi hiển thị</h4>
                     </div>
                 </div>
             </div>
@@ -429,7 +413,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div class="add-review margin-small col-md-6 text-md-right" style="display: inline-block; text-align: center;">
-                                        <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post" onsubmit="return show()">
+                                        <form id="form" class="d-flex gap-3 flex-wrap" action="feedback" method="post" onsubmit="return validateForm()">
                                             <input type="hidden" name="productID" value="${requestScope.product.productId}">
                                             <input type="hidden" name="index" value="1">
                                             <input type="hidden" name="success" value="1">
@@ -446,30 +430,56 @@
                                                     <input type="radio" name="star" id="star4" value="1"/>
                                                     <label class="star" for="star4"></label>
                                                 </div>
+
                                             </div>
                                             <div class="w-100 d-flex align-items-start">
-                                                <textarea placeholder="Viết đánh giá của bạn" class="form-control mr-2" name="feedbackText" ></textarea></br>
+                                                <textarea  id="textArea" placeholder="Viết đánh giá của bạn" class="form-control feedback-textarea" name="feedbackText" oninput="validateTextarea(this)" style="font-size: 16px; height: 9rem"></textarea>
+                                            </div>
+                                            <div>
+                                                <span class="validation-message" id="validationMessage" style="color: red;display: none">
+                                                    Vui lòng điền ít nhất 100 kí tự.
+                                                </span>
+                                            </div></br>
+                                            <div style="margin-top: auto; margin-left: auto;">
+                                                <button type="submit" name="submit" style="background-color: #007bff;
+                                                        color: white;
+                                                        border: none;
+                                                        padding: 10px 15px;
+                                                        border-radius: 4px;
+                                                        cursor: pointer;
+                                                        font-size: 14px;">Gửi đánh giá</button>
                                             </div>
 
-                                            <button type="submit" name="submit" style="background-color: #007bff;
-                                                    color: white;
-                                                    border: none;
-                                                    padding: 10px 15px;
-                                                    border-radius: 4px;
-                                                    cursor: pointer;
-                                                    font-size: 14px;">Gửi đánh giá</button>
                                         </form>
                                     </div>
+                                    <script>
+                                        function validateTextarea(textarea) {
+                                            var message = document.getElementById('validationMessage');
+                                            var inputValue = textarea.value.trim();
+
+                                            if (inputValue.length < 100) {
+                                                message.style.display = 'block';
+                                                return false;
+                                            } else {
+                                                message.style.display = 'none';
+                                                return true;
+                                            }
+                                        }
+                                        function validateForm() {
+                                            var textarea = document.getElementsByName('feedbackText')[0];
+                                            return validateTextarea(textarea);
+                                        }
+                                    </script>
                                 </c:otherwise>
                             </c:choose>
                             <c:if test="${requestScope.listFeedback != null}">
                                 <div class="filterFeedback col-lg-6">
-                                    <a href="single?page=1&productID=${requestScope.product.productId}" class="filter  ${requestScope.rating eq null ?'active':''}" style="margin-bottom: 10px" >Mới nhất</a>
-                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=5" class="filter ${requestScope.rating eq "5" ?'active':''}" style="margin-bottom: 10px">5 Sao</a>
-                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=4" class="filter ${requestScope.rating eq "4" ?'active':''}"" style="margin-bottom: 10px">4 Sao</a>
-                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=3" class="filter ${requestScope.rating eq "3" ?'active':''}"" style="margin-bottom: 10px">3 Sao</a>
-                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=2" class="filter ${requestScope.rating eq "2" ?'active':''}"" style="margin-bottom: 10px">2 Sao</a>
-                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=1" class="filter ${requestScope.rating eq "1" ?'active':''}"" style="margin-bottom: 10px">1 Sao</a>
+                                    <a href="single?page=1&productID=${requestScope.product.productId}&index=1" class="filter  ${requestScope.rating eq null ?'active':''}" style="margin-bottom: 10px" >Mới nhất</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=5&index=1" class="filter ${requestScope.rating eq "5" ?'active':''}" style="margin-bottom: 10px">5 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=4&index=1" class="filter ${requestScope.rating eq "4" ?'active':''}"" style="margin-bottom: 10px">4 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=3&index=1" class="filter ${requestScope.rating eq "3" ?'active':''}"" style="margin-bottom: 10px">3 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=2&index=1" class="filter ${requestScope.rating eq "2" ?'active':''}"" style="margin-bottom: 10px">2 Sao</a>
+                                    <a href="single?page=${pageNum}&productID=${requestScope.product.productId}&rating=1&index=1" class="filter ${requestScope.rating eq "1" ?'active':''}"" style="margin-bottom: 10px">1 Sao</a>
                                 </div>
                             </c:if>
                         </div>
@@ -479,11 +489,20 @@
                             <div class="tab-pane fade  active show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                                 <div class="review-box review-style d-flex gap-3 flex-column">
                                     <c:forEach var="feedback" items="${requestScope.listFeedback}">
-                                        <div class="review-item d-flex">
-                                            <div class="image-holder me-2">
-                                                <img src="${feedback.account.imgAccount}" alt="review" class="img-fluid rounded-3" style="width:  5em">
+                                        <div class="review-item d-flex row">
+                                            <div class="col-md-3">
+                                                <div class="image-holder me-2" style="display: flex">
+                                                    <img src="${feedback.account.imgAccount}" alt="review" class="img-fluid rounded-3" style="width:4rem; margin-right: 1rem">
+                                                    <div style="display: flex;
+                                                         flex-direction: column;">
+                                                        <span class="author-name" style="font-weight: bold">${feedback.account.fullName}</span>
+                                                        <span class="review-date" style="font-size: 15px">${feedback.feedbackDate}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="review-content">
+                                                </div>
                                             </div>
-                                            <div class="review-content">
+                                            <div class="col-md-9">
                                                 <div class="rating text-primary">
                                                     <c:forEach begin="1" end="${feedback.rating}">
                                                         <svg class="star star-fill">
@@ -496,12 +515,9 @@
                                                         </svg>
                                                     </c:forEach> 
                                                 </div>
-                                                <div class="review-header">
-                                                    <span class="author-name fw-medium">${feedback.account.fullName}</span>
-                                                    <span class="review-date"> / ${feedback.feedbackDate}</span>
-                                                </div>
-                                                <p>${feedback.comments}</p>
+                                                <p style="font-size: 16px; font-weight: 400">${feedback.comments}</p>
                                             </div>
+
                                         </div>
                                     </c:forEach>
                                     <!--endPage,page,listFeedback-->
@@ -563,28 +579,28 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
-                                            // Hàm kiểm tra nếu URL chứa tham số index
-                                            function scrollToFeedbackSection() {
-                                                // Lấy giá trị của tham số index từ URL
-                                                const urlParams = new URLSearchParams(window.location.search);
-                                                const indexParam = urlParams.get('index');
-                                                const successParam = urlParams.get('success');
+                                        // Hàm kiểm tra nếu URL chứa tham số index
+                                        function scrollToFeedbackSection() {
+                                            // Lấy giá trị của tham số index từ URL
+                                            const urlParams = new URLSearchParams(window.location.search);
+                                            const indexParam = urlParams.get('index');
+                                            const successParam = urlParams.get('success');
 
-                                                // Nếu có tham số index và phần feedback có sẵn
-                                                if (indexParam && document.getElementById('feedback-section')) {
-                                                    // Cuộn trang đến vị trí của phần feedback
-                                                    document.getElementById('feedback-section').scrollIntoView({
-                                                        behavior: 'smooth', // Cuộn mượt
-                                                        block: 'start' // Đặt phần tử đến vị trí đầu của viewport
-                                                    });
-                                                    if (successParam) {
-                                                        $('#feedbackModal').modal('show');
-                                                    }
-                                                    // Hiển thị modal nếu notification là 'display'
+                                            // Nếu có tham số index và phần feedback có sẵn
+                                            if (indexParam && document.getElementById('feedback-section')) {
+                                                // Cuộn trang đến vị trí của phần feedback
+                                                document.getElementById('feedback-section').scrollIntoView({
+                                                    behavior: 'smooth', // Cuộn mượt
+                                                    block: 'start' // Đặt phần tử đến vị trí đầu của viewport
+                                                });
+                                                if (successParam) {
+                                                    $('#feedbackModal').modal('show');
                                                 }
+                                                // Hiển thị modal nếu notification là 'display'
                                             }
-                                            // Gọi hàm này khi trang đã load hoàn toàn
-                                            window.onload = scrollToFeedbackSection;
+                                        }
+                                        // Gọi hàm này khi trang đã load hoàn toàn
+                                        window.onload = scrollToFeedbackSection;
         </script>
         <jsp:include page="../common/footer.jsp"></jsp:include>
         <script src="js/jquery-1.11.0.min.js"></script>
