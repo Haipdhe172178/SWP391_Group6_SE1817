@@ -395,7 +395,7 @@
                                                                     <c:when test="${feedback.status == 0}">
                                                                         <!--Duyet feedback moi-->
                                                                         <div class="btn edit-btn">
-                                                                            <button type="submit" name="action" value="displayElement" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                            <button type="submit" name="action" value="display" style="background: none; border: none; padding: 0; cursor: pointer;">
                                                                                 <i class="fas fa-check" style="color: white"></i>
                                                                             </button>
                                                                         </div>

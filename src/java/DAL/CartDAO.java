@@ -101,7 +101,7 @@ public class CartDAO extends DBContext {
         return cart;
     }
      public void removeCartItem(int accountId, int productId) {
-        String sql = "DELETE FROM Cart WHERE AccountId = ? AND ProductId = ?";
+        String sql = "DELETE FROM CartItems WHERE account_id = ? AND product_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, accountId);
             ps.setInt(2, productId);

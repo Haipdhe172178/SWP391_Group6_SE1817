@@ -99,34 +99,4 @@ public class CategoryDao extends DBContext {
         }
 
     }
-
-    public List<Category> getallCategorys(String text) {
-       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-      List<Category> categories = new ArrayList<>();
-String query = "SELECT [CategoryID], [CategoryName] FROM [ShopBook88].[dbo].[Category] WHERE CategoryName LIKE ?";
-       
-       try {
-        
-        // Kết hợp dấu % vào tham số tìm kiếm
-        String searchPattern = "%" + text + "%";
-
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, searchPattern);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            Category category = new Category();
-            category.setCategoryId(rs.getInt("CategoryID")); // Sử dụng đúng tên cột như trong truy vấn
-            category.setCategoryName(rs.getString("CategoryName")); // Sử dụng đúng tên cột như trong truy vấn
-            categories.add(category);
-        }
-
-        rs.close();
-        ps.close();
-    } catch (Exception ex) {
-           ex.printStackTrace();
-    }
-    return categories;
 }
-    }
-

@@ -258,7 +258,7 @@
                                                     <tr>
                                                         <td>${news.newId}</td>
                                                         <td>${news.title}</td>
-                                                        <td>${fn:substring(news.content, 0 , 50)}...</td>
+                                                        <td>${news.content}</td>
                                                         <td>${news.dateUpload}</td>
                                                         <td>${news.topic.topicName}</td>
                                                         <td>${news.source}</td>

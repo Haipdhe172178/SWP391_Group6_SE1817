@@ -176,10 +176,6 @@
         <servlet-name>AddNewsController</servlet-name>
         <servlet-class>AdminControllers.AddNewsController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>RegisterControllers</servlet-name>
-        <servlet-class>Controllers.RegisterControllers</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -220,7 +216,10 @@
         <servlet-name>Logoutservlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-   
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
         <url-pattern>/profile</url-pattern>
@@ -352,10 +351,6 @@
     <servlet-mapping>
         <servlet-name>AddNewsController</servlet-name>
         <url-pattern>/addnews</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RegisterControllers</servlet-name>
-        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
