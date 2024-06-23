@@ -5,7 +5,6 @@
     background: -o-linear-gradient(left, #7C32FF 0%, #A235EC 70%, #C738D8 100%);
     background: linear-gradient(90deg, #7C32FF 0%, #A235EC 70%, #C738D8 100%)
 }
-
 .profile_info .profile_info_iner .profile_author_name {
     background-image: linear-gradient(to bottom right, #863ee2, #571f9e)
 }

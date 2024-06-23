@@ -68,8 +68,13 @@ public class AuthorControllers extends HttpServlet {
 
         List<Author> authors;
         int count;
+        String statusFilter = request.getParameter("statusFilter");
         String searchKeyword = request.getParameter("s");
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+        if (statusFilter != null && !statusFilter.isEmpty()) {
+            int status = Integer.parseInt(statusFilter);
+            authors = ad.getAuthorByStatus(status, index);
+            count = ad.getTotalBySatus(status);
+        } else if (searchKeyword != null && !searchKeyword.isEmpty()) {
             authors = ad.pagingSearchAuthor(index, searchKeyword);
             count = ad.getTotalAuthorsByKeyword(searchKeyword);
         } else {
@@ -84,6 +89,9 @@ public class AuthorControllers extends HttpServlet {
         String query = "";
         if (searchKeyword != null) {
             query += "&s=" + searchKeyword;
+        }
+        if (statusFilter != null) {
+            query += "&&statusFilter=" + statusFilter;
         }
         request.setAttribute("query", query);
         request.setAttribute("author", authors);

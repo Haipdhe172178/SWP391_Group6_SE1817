@@ -157,6 +157,10 @@
         <servlet-class>Controllers.DeleteCartControllers</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddAcountControllers</servlet-name>
+        <servlet-class>AdminControllers.AddAcountControllers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FeedbackListController</servlet-name>
         <servlet-class>Controllers.StaffController.FeedbackListController</servlet-class>
     </servlet>
@@ -281,7 +285,10 @@
         <url-pattern>/addimage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
+        <servlet-name>AddAcountControllers</servlet-name>
+        <url-pattern>/addac</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UpdateCodeController</servlet-name>
         <url-pattern>/updatecode</url-pattern>
     </servlet-mapping>

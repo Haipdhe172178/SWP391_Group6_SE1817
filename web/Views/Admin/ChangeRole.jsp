@@ -94,7 +94,7 @@
                         <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
+                        <li><a class="" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -135,7 +135,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                <li class>
+                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -144,6 +144,7 @@
                     </a>
                     <ul>
                         <li><a href="account">Tài Khoản</a></li>
+                        <li><a class="active" href="manages">Quản lý</a></li>
                     </ul>
                 </li>
             </ul>
@@ -311,7 +312,7 @@
                                             <label for="accountRole">Vai trò</label>
                                             <select class="form-control" id="accountRole" name="roleID" required>
                                                 <c:forEach items="${role}" var="role">
-                                                    <c:if test="${role.roleId != 1}">
+                                                    <c:if test="${role.roleId != 1 && role.roleId!=3}">
                                                         <option value="${role.roleId}" ${role.roleId == acc.roleId ? 'selected' : ''}>${role.roleName}</option>
                                                     </c:if>
                                                 </c:forEach>

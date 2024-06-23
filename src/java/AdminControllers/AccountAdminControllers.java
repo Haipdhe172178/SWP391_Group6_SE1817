@@ -71,23 +71,39 @@ public class AccountAdminControllers extends HttpServlet {
             index = 1;
         }
 
+        final int roleId = 3;
         List<Account> account;
-        int count = accountDAO.getTotalAccount();
+        int count;
         int endPage;
-        account = accountDAO.pagingAccounts(index);
+
+        String statusFilter = request.getParameter("statusFilter");
         String searchKeyword = request.getParameter("s");
-        if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            account = accountDAO.searchAccounts(searchKeyword, index);
-            count = accountDAO.getTotalAccountsByKeyword(searchKeyword);
+
+        if (statusFilter != null && !statusFilter.isEmpty()) {
+            int status = Integer.parseInt(statusFilter);
+            account = accountDAO.getAccountsByStatus(status, index, roleId);
+            count = accountDAO.getTotalAccountsByStatus(status, roleId);
+        } else if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            account = accountDAO.searchAccounts(searchKeyword, index, roleId);
+            count = accountDAO.getTotalAccountsByKeyword(searchKeyword, roleId);
+        } else {
+            account = accountDAO.pagingAccounts(index, roleId);
+            count = accountDAO.getTotalAccounts(roleId);
         }
+
         endPage = count / 5;
         if (count % 5 != 0) {
             endPage++;
         }
+
         String query = "";
         if (searchKeyword != null) {
             query += "&&s=" + searchKeyword;
         }
+        if (statusFilter != null) {
+            query += "&&statusFilter=" + statusFilter;
+        }
+
         request.setAttribute("query", query);
         request.setAttribute("endP", endPage);
         request.setAttribute("account", account);

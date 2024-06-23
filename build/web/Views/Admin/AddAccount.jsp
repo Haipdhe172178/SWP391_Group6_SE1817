@@ -27,48 +27,8 @@
         <style>
             .error {
                 color: red;
-                font-size: 0.8em;
-            }
-            .notification-container {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-                display: none;
-                z-index: 1000;
-                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
-            }
-            .notification {
-                background-color: #4CAF50;
-                color: white;
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-            .notification.success {
-                background-color: #4CAF50;
-                color: white;
-            }
-            .notification.error {
-                background-color: #f44336;
-                color: white;
-            }
-
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                }
-                to {
-                    transform: translateX(0);
-                }
-            }
-
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                }
-                to {
-                    transform: translateX(100%);
-                }
+                font-size: 14px;
+                margin-top: 5px;
             }
         </style>
     </head>
@@ -91,7 +51,7 @@
                         <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
+                        <li><a href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -140,7 +100,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a class="active" href="account">Tài Khoản</a></li>
+                        <li><a href="manages">Quản lý</a></li>
                     </ul>
                 </li>
             </ul>
@@ -298,64 +259,55 @@
                                     <div class="white_card_body">
                                         <div class="mb-3">
                                             <label for="fullName">Họ và tên</label>
-                                            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nhập họ và tên" value="${sessionScope.fullName}" required>
+                                            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nhập họ và tên" value="${requestScope.fullName}" required>
                                             <div id="fullNameError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="userName">Tên tài khoản</label>
-                                            <input type="text" class="form-control" id="userName" name="userName" placeholder="nhập tên tài khoản" value="${sessionScope.userName}" required>
-                                            <div id="userNameError" class="error">${sessionScope.userNameError}</div>
+                                            <input type="text" class="form-control" id="userName" name="userName" placeholder="nhập tên tài khoản" value="${requestScope.userName}" required>
+                                            <div id="userNameError" class="error">${requestScope.userNameError}</div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="passWord">Mật khẩu</label>
-                                            <input type="password" class="form-control" id="passWord" name="passWord" placeholder="nhập mật khẩu" value="${sessionScope.passWord}" required>
+                                            <input type="password" class="form-control" id="passWord" name="passWord" placeholder="nhập mật khẩu" value="${requestScope.passWord}" required>
                                             <div id="passWordError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="confirmPassWord">Nhập lại mật khẩu</label>
-                                            <input type="password" class="form-control" id="confirmPassWord" name="confirmPassWord" placeholder="nhập lại mật khẩu" value="${sessionScope.confirmPassWord}" required>
+                                            <input type="password" class="form-control" id="confirmPassWord" name="confirmPassWord" placeholder="nhập lại mật khẩu" value="${requestScope.confirmPassWord}" required>
                                             <div id="confirmPassWordError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="gender">Giới tính</label><br>
-                                            <input type="radio" id="male" name="gender" value="male" ${sessionScope.gender == 'male' ? 'checked' : ''} required>
+                                            <input type="radio" id="male" name="gender" value="male" ${requestScope.gender == 'male' ? 'checked' : ''} required>
                                             <label for="male">Nam</label><br>
-                                            <input type="radio" id="female" name="gender" value="female" ${sessionScope.gender == 'female' ? 'checked' : ''} required>
+                                            <input type="radio" id="female" name="gender" value="female" ${requestScope.gender == 'female' ? 'checked' : ''} required>
                                             <label for="female">Nữ</label>
                                             <div id="genderError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="email">Email</label>
-                                            <input type="text" class="form-control" id="email" name="email" placeholder="Nhập Email" value="${sessionScope.email}" required>
-                                            <div id="emailError" class="error">${sessionScope.emailError}</div>
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Nhập Email" value="${requestScope.email}" required>
+                                            <div id="emailError" class="error">${requestScope.emailError}</div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="phoneNumber">Số điện thoại</label>
-                                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Nhập số điện thoại" value="${sessionScope.phoneNumber}" required>
+                                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Nhập số điện thoại" value="${requestScope.phoneNumber}" required>
                                             <div id="phoneNumberError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="address">Địa chỉ</label>
-                                            <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ" value="${sessionScope.address}" required>
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ" value="${requestScope.address}" required>
                                             <div id="addressError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="imgAccount" class="form-label">Ảnh</label>
                                             <input type="file" class="form-control" id="imgAccount" name="imgAccount">
                                             <div id="imgAccountError" class="error"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="roleId">Vai trò</label>
-                                            <select class="form-control" id="roleId" name="roleId" required>
-                                                <c:forEach items="${role}" var="ro">
-                                                    <option value="${ro.roleId}" ${sessionScope.roleId == ro.roleId ? 'selected' : ''}>${ro.roleName}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <div id="roleIdError" class="error"></div>
-                                        </div>
+                                        </div> 
                                         <div>
                                             <button type="submit" class="btn btn-primary">Thêm tài khoản</button>
-                                            <a href="account" class="btn btn-warning">Trở lại</a>
+                                            <a href="manages" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
                                 </form>
@@ -514,7 +466,6 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
         <!--kiem tra validation-->
         <script>
-            // JavaScript for form validation
             document.getElementById('accountForm').addEventListener('submit', function (event) {
                 var fullName = document.getElementById('fullName').value.trim();
                 var userName = document.getElementById('userName').value.trim();
@@ -524,7 +475,7 @@
                 var email = document.getElementById('email').value.trim();
                 var phoneNumber = document.getElementById('phoneNumber').value.trim();
                 var address = document.getElementById('address').value.trim();
-                var imgAccount = document.getElementById('imgAccount').value.trim();
+                var imgAccount = document.getElementById('imgAccount').files[0]; // Use files[0] to access the file input
 
                 var fullNameError = document.getElementById('fullNameError');
                 var userNameError = document.getElementById('userNameError');
@@ -535,7 +486,6 @@
                 var phoneNumberError = document.getElementById('phoneNumberError');
                 var addressError = document.getElementById('addressError');
                 var imgAccountError = document.getElementById('imgAccountError');
-                var roleIdError = document.getElementById('roleIdError');
 
                 var isValid = true;
 
@@ -549,7 +499,6 @@
                 phoneNumberError.textContent = '';
                 addressError.textContent = '';
                 imgAccountError.textContent = '';
-                roleIdError.textContent = '';
 
                 if (fullName === '') {
                     fullNameError.textContent = 'Vui lòng nhập họ và tên.';
@@ -595,21 +544,16 @@
                     addressError.textContent = 'Vui lòng nhập địa chỉ.';
                     isValid = false;
                 }
-                if (imgAccount === '') {
-                    imgAccountError.textContent = 'Vui lòng nhập ảnh.';
-                    isValid = false;
-                }
-                if (!document.getElementById('roleId').value) {
-                    roleIdError.textContent = 'Vui lòng chọn vai trò.';
+                if (!imgAccount) {
+                    imgAccountError.textContent = 'Vui lòng chọn ảnh.';
                     isValid = false;
                 }
 
                 if (!isValid) {
-                    event.preventDefault();
+                    event.preventDefault(); // Prevent form submission if validation fails
                 }
             });
         </script>
-        <!--hien thi thong bao-->
         <script>
             function showNotificationAndRedirect() {
                 var notification = '<%= session.getAttribute("notification") %>';
@@ -618,22 +562,33 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tài khoản thành công!';
+                        notificationElement.textContent = 'Thêm tác giả thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
                             notificationContainer.style.display = 'none';
-                            window.location.href = '<%= request.getContextPath() %>/account';
+                            window.location.href = '<%= request.getContextPath() %>/manages';
                         }, 5000);
                     }
-                } 
+                } else if (notification === 'error') {
+                    var errorMessage = '<%= session.getAttribute("errorMessage") %>';
+                    var notificationContainer = document.getElementById('notification-container');
+                    if (notificationContainer) {
+                        var notificationElement = document.createElement('div');
+                        notificationElement.classList.add('notification', 'error');
+                        notificationElement.textContent = 'Lỗi: ' + errorMessage;
+                        notificationContainer.appendChild(notificationElement);
+                        notificationContainer.style.display = 'block';
+                        setTimeout(function () {
+                            notificationContainer.style.display = 'none';
+                        }, 5000);
+                    }
+                }
             <% session.removeAttribute("notification"); %>
-         
+            <% session.removeAttribute("errorMessage"); %>
             }
             window.onload = showNotificationAndRedirect;
         </script>
-
-
     </body>
 </html>
 

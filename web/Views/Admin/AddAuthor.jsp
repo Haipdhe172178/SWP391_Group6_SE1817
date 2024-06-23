@@ -27,65 +27,22 @@
         <style>
             .error {
                 color: red;
-                font-size: 0.8em;
-            }
-            /* CSS for notification */
-            .notification-container {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-                display: none;
-                z-index: 1000;
-                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
-            }
-
-            .notification {
-                background-color: #4CAF50;
-                color: white;
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-            .notification.success {
-                background-color: #4CAF50;
-                color: white;
-            }
-
-            .notification.error {
-                background-color: #f44336;
-                color: white;
-            }
-
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                }
-                to {
-                    transform: translateX(0);
-                }
-            }
-
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                }
-                to {
-                    transform: translateX(100%);
-                }
+                font-size: 14px;
+                margin-top: 5px;
             }
         </style>
     </head>
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
             </div>
-             <ul id="sidebar_menu">
+            <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -94,7 +51,7 @@
                         <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
+                        <li><a class="" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -117,13 +74,10 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -135,6 +89,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
+                        <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                        <li><a class="active" href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -303,23 +260,24 @@
                                     <div class="white_card_body">
                                         <div class="mb-3">
                                             <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
-                                            <div id="authorNameError" class="error"></div>
+                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" value="${requestScope.authorName}" required>
+                                            <div id="authorNameError" class="error">
+                                                <c:if test="${not empty errorMessage}">
+                                                    <p class="error">${errorMessage}</p>
+                                                </c:if>
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
+                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required>${requestScope.description}</textarea>
                                             <div id="authorDescriptionError" class="error"></div>
                                         </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Add Account</button>
-                                            <a href="data" class="btn btn-warning">Back</a>
+                                            <button type="submit" class="btn btn-primary">Add Author</button>
+                                            <a href="author" class="btn btn-warning">Back</a>
                                         </div>
                                     </div>
                                 </form>
-
-
-
                             </div>
                         </div>
                     </div>
@@ -478,17 +436,20 @@
             // JavaScript for form validation
             document.getElementById('myForm').addEventListener('submit', function (event) {
                 var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authortDescription').value.trim();
+                var authorDescription = document.getElementById('authorDescription').value.trim();
                 var authorNameError = document.getElementById('authorNameError');
                 var authorDescriptionError = document.getElementById('authorDescriptionError');
                 var isValid = true;
+
                 // Reset previous error messages
                 authorNameError.textContent = '';
                 authorDescriptionError.textContent = '';
+
                 if (authorName === '') {
                     authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
                     isValid = false;
                 }
+
                 if (authorDescription === '') {
                     authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
                     isValid = false;
@@ -498,6 +459,7 @@
                     event.preventDefault();
                 }
             });
+
         </script>
         <!--hien thi thong bao-->
         <script>
@@ -538,12 +500,3 @@
     </body>
 </html>
 
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="author">Tác Giả</a></li>
-=======
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53

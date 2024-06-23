@@ -58,15 +58,21 @@ public class ActiveControllers extends HttpServlet {
             throws ServletException, IOException {
         AccountDAO accountDao = new AccountDAO();
         String action = request.getParameter("action");
-         if (action != null && !action.isEmpty()) {
-                int accountId = Integer.parseInt(request.getParameter("accountId"));
-                if ("hideacc".equals(action)) {
-                    accountDao.hideAccount(accountId);
-                } else if ("showacc".equals(action)) {
-                    accountDao.showAccount(accountId);
-                } 
+        String type = request.getParameter("type");
+
+        if (action != null && !action.isEmpty()) {
+            int accountId = Integer.parseInt(request.getParameter("accountId"));
+            if ("hideacc".equals(action)) {
+                accountDao.hideAccount(accountId);
+            } else if ("showacc".equals(action)) {
+                accountDao.showAccount(accountId);
+            }
+            if ("staff".equals(type)) {
+                response.sendRedirect(request.getContextPath() + "/manages");
+            } else {
                 response.sendRedirect(request.getContextPath() + "/account");
-    }
+            }
+        }
     }
 
     /**

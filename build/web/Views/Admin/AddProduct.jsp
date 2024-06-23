@@ -94,7 +94,7 @@
                         <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
+                        <li><a class="" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -117,13 +117,11 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
+
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -135,20 +133,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a class="active" href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
                          <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Tài Khoản</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -368,7 +355,7 @@
                                             <a href="data" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
-                                </form>
+                                    </form>
 
                             </div>
                         </div>
