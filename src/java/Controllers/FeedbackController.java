@@ -78,7 +78,8 @@ public class FeedbackController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDao pDao = new ProductDao();
-
+        String index = request.getParameter("index");
+        String success = request.getParameter("success");
         //get cmt
         String comment = request.getParameter("feedbackText");
 
@@ -106,7 +107,8 @@ public class FeedbackController extends HttpServlet {
         Feedback newFeedback = new Feedback(acc, p, star, comment);
         boolean isAddComplete = fb.addFeedback(newFeedback);
         if (isAddComplete) {
-            response.sendRedirect("single?productID=" + productID);
+            request.getSession().setAttribute("notification", "display");
+            response.sendRedirect("single?productID=" + productID+"&index="+index+"&success="+success);
         }
     }
 

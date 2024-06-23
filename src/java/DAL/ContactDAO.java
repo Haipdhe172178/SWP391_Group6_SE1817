@@ -1,21 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAL;
 
 import Models.Contact;
-import com.sun.jdi.connect.spi.Connection;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author admin
- */
-public class ContactDAO extends DBContext{
+public class ContactDAO extends DBContext {
     public List<Contact> getAll() {
         List<Contact> contacts = new ArrayList<>();
         String query = "Select * From Contact";
@@ -36,23 +29,21 @@ public class ContactDAO extends DBContext{
         }
         return contacts;
     }
-     public boolean insertContact(Contact contact) {
-    String query = "INSERT INTO Contact (userName, email, phoneNumber, topic, message) VALUES (?, ?, ?, ?, ?)";
-    try {
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, contact.getUserName());
-        ps.setString(2, contact.getEmail());
-        ps.setString(3, contact.getPhoneNumber());
-        ps.setString(4, contact.getTopic());
-        ps.setString(5, contact.getMessage());
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0;
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        return false;
+
+    public boolean insertContact(Contact contact) {
+        String query = "INSERT INTO Contact (userName, email, phoneNumber, topic, message) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, contact.getUserName());
+            ps.setString(2, contact.getEmail());
+            ps.setString(3, contact.getPhoneNumber());
+            ps.setString(4, contact.getTopic());
+            ps.setString(5, contact.getMessage());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
-}
-
-   
-
 }

@@ -190,7 +190,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="images/anh456.png" class="logo">
+                    <img src="images/anh456.png" class="logo" style="width: 12rem; height: auto">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -289,11 +289,6 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <li class="wishlist-dropdown dropdown pe-3">
-                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-                                        <svg class="wishlist">
-                                        <use xlink:href="#heart"></use>
-                                        </svg>
-                                    </a>
                                     <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                                             <span class="text-primary">Your wishlist</span>
@@ -380,9 +375,10 @@
         </nav>
 
     </header>
-  
-    
-    
+
+<!-- Thông báo thành công -->
+
+
 <!-- Cart -->
 <div class="container">
     <div class="row">
@@ -395,8 +391,9 @@
                     <h4 class="col-lg-4 py-3 m-0">Tổng phụ</h4>
                 </div>
             </div>
+          
             <c:forEach items="${cart.items}" var="item">
-                <div class="cart-item border-bottom padding-small">
+                <div class="cart-item border-bottom padding-small" data-product-id="${item.product.productId}">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1">
                             <input type="checkbox" class="product-select" data-quantity="${item.quantity}" data-price="${item.quantity * item.price}" />
@@ -432,7 +429,7 @@
                                                     </svg>
                                                 </button>
                                             </span>
-                                            <input type="text" id="quantity" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required>
+                                            <input type="text" id="quantity-${item.product.productId}" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required data-price="${item.product.price}">
                                             <span class="input-group-btn">
                                                 <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
                                                     <svg width="16" height="16">
@@ -448,26 +445,26 @@
                                         <fmt:setLocale value="vi_VN" />
                                         <fmt:setBundle basename="resources.application" />
                                         <fmt:formatNumber var="totalPrice" value="${item.quantity * item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                        <span class="money fs-2 fw-light text-primary">${totalPrice}</span>
+                                        <span class="money fs-2 fw-light text-primary" id="total-price-${item.product.productId}">${totalPrice}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-2">
-                            <!-- Remove from cart -->
+                            <!-- Xoa gio hang -->
                             <form action="deletecart" method="post">
-                                <div class="cart-cross-outline">
-                                    <a href="#" onclick="removeItem(${item.product.productId})">
-                                        <svg class="cart-cross-outline" width="38" height="38">
-                                            <use xlink:href="#cart-cross-outline"></use>
-                                        </svg>
-                                    </a>
-                                </div>
+                                <input type="hidden" name="productId" value="${item.product.productId}">
+                                <button type="submit" class="cart-cross-outline">
+                                    <svg width="38" height="38">
+                                        <use xlink:href="#cart-cross-outline"></use>
+                                    </svg>
+                                </button>
                             </form>
                         </div>
                     </div>
                 </div>
             </c:forEach>
+
         </div>
         <div class="cart-totals padding-medium pb-0">
             <h3 class="mb-3">Tổng thanh toán</h3>
@@ -504,59 +501,100 @@
     </div>
 </div>
 
-
-
-
-<!-- JavaScript to update total -->
-
-<script>
-function removeItem(productId) {
-    fetch('/cart', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `action=remove&productId=${productId}`
-    }).then(response => {
-        if (response.ok) {
-            location.reload(); // Reload the page to reflect changes
-        } else {
-            console.error('Failed to remove item');
-        }
-    }).catch(error => {
-        console.error('Error:', error);
-    });
-}
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const productSelects = document.querySelectorAll('.product-select');
-        const selectedTotal = document.getElementById('selected-total');
-        const selectedQuantity = document.getElementById('selected-quantity');
+        const updateCart = (productId, quantity) => {
+            fetch('/updateCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `productId=${productId}&quantity=${quantity}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector(`#total-price-${productId}`).textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(quantity * price);
+                    document.querySelector('#selected-total').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.cartTotal);
+                    document.querySelector('#selected-quantity').textContent = data.totalQuantity;
+                } else {
+                    alert('Cập nhật giỏ hàng thất bại!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        };
 
-        function updateTotals() {
-            let totalAmount = 0;
-            let totalQuantity = 0;
+        document.querySelectorAll('.quantity-left-minus, .quantity-right-plus').forEach(button => {
+            button.addEventListener('click', function () {
+                const input = this.closest('.product-qty').querySelector('.input-number');
+                let quantity = parseInt(input.value);
+                const productId = this.closest('.cart-item').dataset.productId;
+
+                if (this.classList.contains('quantity-left-minus') && quantity > 1) {
+                    quantity--;
+                } else if (this.classList.contains('quantity-right-plus')) {
+                    quantity++;
+                }
+
+                input.value = quantity;
+
+                const price = parseInt(input.dataset.price);
+                const totalPriceElement = this.closest('.cart-item').querySelector('.total-price span');
+
+                totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(quantity * price);
+
+                updateCart(productId, quantity);
+            });
+        });
+    });
+
+        function removeItem(productId) {
+            fetch('/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=remove&productId=${productId}`
+            }).then(response => {
+                if (response.ok) {
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    console.error('Failed to remove item');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productSelects = document.querySelectorAll('.product-select');
+            const selectedTotal = document.getElementById('selected-total');
+            const selectedQuantity = document.getElementById('selected-quantity');
+
+            function updateTotals() {
+                let totalAmount = 0;
+                let totalQuantity = 0;
+
+                productSelects.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        totalAmount += parseFloat(checkbox.dataset.price);
+                        totalQuantity += parseInt(checkbox.dataset.quantity, 10);
+                    }
+                });
+
+                selectedTotal.textContent = totalAmount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}).replace('VND', '₫');
+                selectedQuantity.textContent = totalQuantity;
+            }
 
             productSelects.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    totalAmount += parseFloat(checkbox.dataset.price);
-                    totalQuantity += parseInt(checkbox.dataset.quantity, 10);
-                }
+                checkbox.addEventListener('change', updateTotals);
             });
 
-            selectedTotal.textContent = totalAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('VND', '₫');
-            selectedQuantity.textContent = totalQuantity;
-        }
-
-        productSelects.forEach(function (checkbox) {
-            checkbox.addEventListener('change', updateTotals);
+            // Initial calculation in case some checkboxes are pre-checked
+            updateTotals();
         });
-
-        // Initial calculation in case some checkboxes are pre-checked
-        updateTotals();
-    });
-</script>
+    </script>
 
 
 
@@ -571,14 +609,14 @@ function removeItem(productId) {
                                 <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
                                 <p>
                                     "Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
-                               
+
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-6 pb-3">
                             <div class="footer-menu text-capitalize">
                                 <h5 class="widget-title pb-2">Trang chính</h5>
                                 <ul class="menu-list list-unstyled text-capitalize">
-                                     <li class="menu-item mb-1">
+                                    <li class="menu-item mb-1">
                                         <a href="home">Trang chủ</a>
                                     </li>
                                     <li class="menu-item mb-1">

@@ -11277,3 +11277,32 @@ a.pswp__share--download:hover {
     display: inline-block;
     margin-right: 8px
 }
+
+.cbo_filter {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.cbo_filter label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.cbo_filter select {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.cbo_filter select:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+.cbo_filter input[type="hidden"] {
+    display: none;
+}

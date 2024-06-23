@@ -175,7 +175,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="images/anh456.png" class="logo">
+                    <img src="images/anh456.png" class="logo" style="width: 12rem; height: auto">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -375,11 +375,6 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <li class="wishlist-dropdown dropdown pe-3">
-                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-                                        <svg class="wishlist">
-                                        <use xlink:href="#heart"></use>
-                                        </svg>
-                                    </a>
                                     <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                                             <span class="text-primary">Your wishlist</span>
@@ -536,30 +531,31 @@
                     <h3>HÃY ĐỂ LẠI LỜI NHẮN CHO CHÚNG TÔI</h3>
                     <p class="mb-5">Vui lòng liên hệ theo biểu mẫu dưới. 
                         ShopBook88 sẽ hồi âm trong thời gian nhanh nhất.</p>
+                    <c:set var="acc" value="${sessionScope.account}"/>
+<form id="form" class="d-flex gap-3 flex-wrap" method="post" action="${pageContext.request.contextPath}/contact">
+    <div class="w-100 d-flex gap-3">
+        <div class="w-50">
+            <input type="text" name="name" pattern="^(?! ).*$" placeholder="Họ và tên *" class="form-control w-100" required value="${acc.fullName}">
+        </div>
+        <div class="w-50">
+            <input type="email" name="email" placeholder="Email *" class="form-control w-100" required value="${acc.email}" >
+        </div>
+    </div>
+    <div class="w-100">
+        <input type="text" name="phoneNumber" pattern="[0-9]*" placeholder="Số điện thoại" class="form-control w-100" value="${acc.phoneNumber}" >
+    </div>
+    <div class="w-100">
+        <input type="text" name="topic" pattern="^(?! ).*$" placeholder="Chủ đề" class="form-control w-100">
+    </div>
+    <div class="w-100">
+        <textarea name="message" pattern="^(?! ).*$" placeholder="Nội dung *" class="form-control w-100" required></textarea>
+    </div>
+    <button type="submit" name="submit" class="btn my-3">Gửi liên hệ của bạn</button>
+</form>
+<div>
+    ${requestScope.message}
+</div>
 
-                    <form id="form" class="d-flex gap-3 flex-wrap" method="post" action="${pageContext.request.contextPath}/contact">
-                        <div class="w-100 d-flex gap-3">
-                            <div class="w-50">
-                                <input type="text" name="name" pattern="^(?! ).*$" placeholder="Họ và tên *" class="form-control w-100" required>
-                            </div>
-                            <div class="w-50">
-                                <input type="email" name="email"  placeholder="Email *" class="form-control w-100" required>
-                            </div>
-                        </div>
-                        <div class="w-100">
-                            <input type="text" name="phoneNumber" pattern="[0-9]*" placeholder="Số điện thoại" class="form-control w-100">
-                        </div>
-                        <div class="w-100">
-                            <input type="text" name="topic" pattern="^(?! ).*$" placeholder="Chủ đề" class="form-control w-100">
-                        </div>
-                        <div class="w-100">
-                            <textarea name="message" pattern="^(?! ).*$" placeholder="Nội dung *" class="form-control w-100" required></textarea>
-                        </div>
-                        <button type="submit" name="submit" class="btn my-3">Gửi liên hệ của bạn</button>
-                    </form>
-                    <div>
-                        ${requestScope.message}
-                    </div>
 
                 </div>
             </div>

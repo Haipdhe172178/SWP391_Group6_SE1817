@@ -62,7 +62,7 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-                        <li><a href="mail">Liên hệ</a></li>
+                        <li><a href="contactAdmin">Liên hệ</a></li>
                         <li><a href="chat">Tin nhắn</a></li>
                     </ul>
                 </li>

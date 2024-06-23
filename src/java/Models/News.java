@@ -13,6 +13,7 @@ public class News {
     private Date dateUpload;
     private String source;
     private List<String> tags;
+    private boolean status;
 
     // Getters and setters for all fields
     public int getNewId() {
@@ -85,5 +86,13 @@ public class News {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

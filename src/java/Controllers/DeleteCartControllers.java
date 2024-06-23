@@ -1,51 +1,53 @@
 package Controllers;
 
+import DAL.CartDAO;
 import DAL.ProductDao;
+import Models.Account;
 import Models.Cart;
-import Models.Item;
 import Models.Product;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class DeleteCartControllers extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        int productId = Integer.parseInt(request.getParameter("productId"));
+
+        String cartData = getCartDataFromCookie(request);
         ProductDao productDao = new ProductDao();
         List<Product> productList = productDao.getAllProducts();
-        String cartData = getCartDataFromCookie(request);
-        Map<Integer, Integer> cartItems = parseCartData(cartData);
+        Cart cart = new Cart(cartData, productList);
 
-        String idRaw = request.getParameter("id");
-        String numRaw = request.getParameter("num");
-        int productId = Integer.parseInt(idRaw);
-        int num = Integer.parseInt(numRaw);
+        cart.removeItem(productId);
 
-        if (cartItems.containsKey(productId)) {
-            int newQuantity = cartItems.get(productId) + num;
-            if (newQuantity <= 0) {
-                cartItems.remove(productId);
-            } else {
-                cartItems.put(productId, newQuantity);
-            }
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            CartDAO cartDao = new CartDAO();
+            cart.setAccountId(account.getAccountId());
+            // Xóa mặt hàng khỏi cơ sở dữ liệu
+            cartDao.removeCartItem(account.getAccountId(), productId);
         }
 
-        String newCartData = encodeCartData(cartItems);
-        updateCartCookie(response, newCartData);
+        updateCartCookie(response, cart);
 
-        request.setAttribute("cart", new Cart(newCartData, productList));
-        request.getRequestDispatcher("Views/Cart.jsp").forward(request, response);
+        // Cập nhật giỏ hàng trong session
+        session.setAttribute("cart", cart);
+
+        // Chuyển hướng đến trang giỏ hàng
+        response.sendRedirect(request.getContextPath() + "/cart");
     }
 
     private String getCartDataFromCookie(HttpServletRequest request) {
@@ -62,39 +64,15 @@ public class DeleteCartControllers extends HttpServlet {
         return cartData;
     }
 
-    private Map<Integer, Integer> parseCartData(String cartData) {
-        Map<Integer, Integer> cartItems = new HashMap<>();
-        if (cartData != null && !cartData.isEmpty()) {
-            String[] items = cartData.split(",");
-            for (String item : items) {
-                String[] parts = item.split(":");
-                int productId = Integer.parseInt(parts[0]);
-                int quantity = Integer.parseInt(parts[1]);
-                cartItems.put(productId, quantity);
-            }
-        }
-        return cartItems;
-    }
-
-    private String encodeCartData(Map<Integer, Integer> cartItems) {
-        StringBuilder cartData = new StringBuilder();
-        for (Map.Entry<Integer, Integer> entry : cartItems.entrySet()) {
-            if (cartData.length() > 0) {
-                cartData.append(",");
-            }
-            cartData.append(entry.getKey()).append(":").append(entry.getValue());
-        }
-        return URLEncoder.encode(cartData.toString(), StandardCharsets.UTF_8);
-    }
-
-    private void updateCartCookie(HttpServletResponse response, String cartData) throws IOException {
-        Cookie cartCookie = new Cookie("cart", cartData);
-        cartCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week
+    private void updateCartCookie(HttpServletResponse response, Cart cart) throws IOException {
+        String sanitizedValue = URLEncoder.encode(cart.toString(), StandardCharsets.UTF_8.toString());
+        Cookie cartCookie = new Cookie("cart", sanitizedValue);
+        cartCookie.setMaxAge(60 * 60 * 24 * 7); // Hết hạn sau 1 tuần
         response.addCookie(cartCookie);
     }
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Đây là Servlet xóa sản phẩm khỏi giỏ hàng";
     }
 }
