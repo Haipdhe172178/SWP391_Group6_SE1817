@@ -80,7 +80,6 @@
                     </a>
                     <ul>
                         <li><a href="contactAdmin">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
                     </ul>
                 </li>
                 <li class>

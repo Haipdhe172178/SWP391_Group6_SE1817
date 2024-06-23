@@ -180,6 +180,10 @@
         <servlet-name>ContactByAdminControllers</servlet-name>
         <servlet-class>AdminControllers.ContactByAdminControllers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReplyContact</servlet-name>
+        <servlet-class>AdminControllers.ReplyContact</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -359,6 +363,10 @@
     <servlet-mapping>
         <servlet-name>ContactByAdminControllers</servlet-name>
         <url-pattern>/contactAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReplyContact</servlet-name>
+        <url-pattern>/reply</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

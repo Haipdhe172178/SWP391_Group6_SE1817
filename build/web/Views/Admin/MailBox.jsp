@@ -96,13 +96,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-                        <<<<<<< HEAD (0a2d68f) - them phan quan ly accou
-                        <li><a href="image">Image BackGround</a></li>
-                        <li><a href="discount">Discount</a></li>
-                        =======
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
-                        >>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -324,6 +319,7 @@
                                 <td>${c.phoneNumber}</td>
                                 <td>${c.topic}</td>
                                 <td>${c.message}</td>
+                                 <td><a href="reply">Trả Lời</td>
                             </tr>
                         </c:forEach>
                     </tbody>
