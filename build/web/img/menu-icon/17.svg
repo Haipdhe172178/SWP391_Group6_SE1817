@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <g id="user" transform="translate(0 -2)">
-    <circle id="circle" cx="12" cy="8" r="4" fill="#47b181"/>
-    <path id="path" d="M12,14c-5.523,0-10,2.238-10,5v1H22V19C22,16.238,17.523,14,12,14Z" fill="#47b181"/>
+  <g id="news" transform="translate(0 -2)">
+    <rect id="background" x="2" y="4" width="20" height="16" fill="#47b181"/>
+    <rect id="title" x="4" y="6" width="8" height="2" fill="#ffffff"/>
+    <rect id="line1" x="4" y="10" width="14" height="1.5" fill="#ffffff"/>
+    <rect id="line2" x="4" y="13" width="14" height="1.5" fill="#ffffff"/>
+    <rect id="line3" x="4" y="16" width="14" height="1.5" fill="#ffffff"/>
   </g>
 </svg>
