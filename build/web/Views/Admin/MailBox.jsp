@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -56,14 +57,14 @@
     <body class="crm_body_bg">
 
 
-       <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
             </div>
-             <ul id="sidebar_menu">
+            <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -95,13 +96,13 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
+                        <<<<<<< HEAD (0a2d68f) - them phan quan ly accou
                         <li><a href="image">Image BackGround</a></li>
                         <li><a href="discount">Discount</a></li>
-=======
+                        =======
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
+                        >>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -283,332 +284,54 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="email-sidebar">
-                                <button class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="icon-pencil"></i>COMPOSE</button>
-                                <ul class="text-start mt-2">
-                                    <li class="active"><a href="#"><i class="fas fa-inbox"></i> Primary (31)</a></li>
-                                    <li><a href="#"><i class="ti-user"></i> Social (17)</a></li>
-                                    <li><a href="#"><i class="ti-crown"></i> Promotions (53)</a></li>
-                                    <li><a href="#"><i class="ti-star"></i> Started</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Send Mails</a></li>
-                                    <li><a href="#"><i class="ti-announcement"></i> Drafts</a></li>
-                                    <li class="text-start"><a href="#"><i class="ti-pin2"></i>Spam</a></li>
-                                    <li><a href="#"><i class="ti-trash"></i>Trash</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="white_box QA_section mb_30">
-                                <div class="white_box_tittle list_header">
-                                    <h4>Andrew Symn</h4>
-                                    <div class="box_right d-flex lms_block">
-                                        <div class="serach_field_2">
-                                            <div class="search_inner">
-                                                <form Active="#">
-                                                    <div class="search_field">
-                                                        <input type="text" placeholder="Search content here...">
-                                                    </div>
-                                                    <button type="submit"> <i class="ti-search"></i> </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="QA_table ">
 
-                                    <table class="table lms_table_active">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <th scope="col"></th>
-                                                <th scope="col">name</th>
-                                                <th scope="col">status</th>
-                                                <th scope="col">details</th>
-                                                <th scope="col">Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <label class="form-label primary_checkbox d-flex me-12 ">
-                                                        <input type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label></th>
-                                                <td> <i class="far fa-star"></i> </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0">
-                                                            <img class="circle-rounded me-3" src="img/messages/1.png" alt width="30" height="30">
-                                                        </div>
-                                                        <div class="flex-grow-1">
-                                                            <p>Mark Wiyns</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p> Money Receipt</p>
-                                                </td>
-                                                <td>
-                                                    <p class="nowrap">Lorem ipsum dolor sit amet, consectetur adipsicing elit, se... </p>
-                                                </td>
-                                                <td>
-                                                    12:22 PM
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                      <div class="col-md-12">
+        <div class="white_box QA_section mb_30">
+            <div class="white_box_tittle list_header">
+                <h4>Liên hệ qua Email với khách hàng</h4>
+                <div class="box_right d-flex lms_block">
+                    <div class="serach_field_2">
+                        <div class="search_inner">
+                            <form action="contactAdmin" method="GET">
+                                <div class="search_field">
+                                    <input type="text" placeholder="Search content here...">
                                 </div>
-                            </div>
+                                <button type="submit"> <i class="ti-search"></i> </button>
+                            </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="QA_table">
+                <table class="table lms_table_active">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Chủ đề</th>
+                            <th scope="col">Nội dung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${contact}" var="c">
+                            <tr>
+                                <td></td>
+                                <td>${c.userName}</td>
+                                <td>${c.email}</td>
+                                <td>${c.phoneNumber}</td>
+                                <td>${c.topic}</td>
+                                <td>${c.message}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
                     </div>
                 </div>
             </div>
@@ -787,11 +510,11 @@
 
 </html>
 <<<<<<< HEAD (0a2d68f) - them phan quan ly accou
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="author">Tác Giả</a></li>
+<li><a href="data">Sản phẩm</a></li>
+<li><a href="">Thể Loại</a></li>
+<li><a href="author">Tác Giả</a></li>
 =======
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+<li><a href="data">Sản Phẩm</a></li>
+<li><a href="category">Thể Loại</a></li>                    
+<li><a href="author">Tác Giả</a></li>
 >>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53

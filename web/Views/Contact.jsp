@@ -535,16 +535,14 @@
 <form id="form" class="d-flex gap-3 flex-wrap" method="post" action="${pageContext.request.contextPath}/contact">
     <div class="w-100 d-flex gap-3">
         <div class="w-50">
-            <input type="text" name="name" pattern="^(?! ).*$" placeholder="Họ và tên *" class="form-control w-100" required value="${acc.fullName}" ${acc != null ? 'disabled' : ''} >
+            <input type="text" name="name" pattern="^(?! ).*$" placeholder="Họ và tên *" class="form-control w-100" required value="${acc.fullName}">
         </div>
         <div class="w-50">
-            <input type="email" name="email" placeholder="Email *" class="form-control w-100" required value="${acc.email}" 
-                ${acc != null ? 'disabled' : ''}>
+            <input type="email" name="email" placeholder="Email *" class="form-control w-100" required value="${acc.email}" >
         </div>
     </div>
     <div class="w-100">
-        <input type="text" name="phoneNumber" pattern="[0-9]*" placeholder="Số điện thoại" class="form-control w-100" value="${acc.phoneNumber}" 
-            ${acc != null ? 'disabled' : ''}>
+        <input type="text" name="phoneNumber" pattern="[0-9]*" placeholder="Số điện thoại" class="form-control w-100" value="${acc.phoneNumber}" >
     </div>
     <div class="w-100">
         <input type="text" name="topic" pattern="^(?! ).*$" placeholder="Chủ đề" class="form-control w-100">
