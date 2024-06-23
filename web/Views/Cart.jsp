@@ -504,7 +504,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const updateCart = (productId, quantity) => {
-            fetch('/updateCart', {
+            fetch('/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -557,7 +557,7 @@
                 body: `action=remove&productId=${productId}`
             }).then(response => {
                 if (response.ok) {
-                    location.reload(); // Reload the page to reflect changes
+                    location.reload();
                 } else {
                     console.error('Failed to remove item');
                 }

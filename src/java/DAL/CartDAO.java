@@ -23,7 +23,6 @@ public class CartDAO extends DBContext {
                 if (rs.next()) {
                     int newQuantity = rs.getInt("Quantity") + item.getQuantity();
                     item.setQuantity(newQuantity); 
-
                     updateCartItem(cart, item); 
                 } else {
                     insertCartItem(cart, item);
