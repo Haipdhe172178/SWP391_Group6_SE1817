@@ -70,7 +70,7 @@
                     <span>Apps</span>
                 </a>
                 <ul>
-                    <li><a href="mail_box.html">Mail Box</a></li>
+                    <li><a href="contactAdmin">Liên hệ</a></li>
                     <li><a href="chat.html">Chat</a></li>
                 </ul>
             </li>

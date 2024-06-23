@@ -79,14 +79,8 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
-                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="contactAdmin">Liên hệ</a></li>
                         <li><a href="chat">Chat</a></li>
-=======
-                        <li><a href="mail">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
-                    </ul>
                 </li>
                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">

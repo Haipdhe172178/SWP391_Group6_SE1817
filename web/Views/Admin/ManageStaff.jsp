@@ -74,7 +74,7 @@
                         <span>Ứng dụng</span>
                     </a>
                     <ul>
-                        <li><a href="mail">Mail Box</a></li>
+                        <li><a href="contactAdmin">Liên hệ</a></li>
                         <li><a href="chat">Chat</a></li>
                     </ul>
                 </li>
