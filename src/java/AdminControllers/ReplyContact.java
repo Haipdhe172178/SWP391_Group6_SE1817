@@ -78,7 +78,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         Transport.send(message);
         System.out.println("Message sent successfully");
 
-        request.setAttribute("message", "Email sent successfully");
+        request.setAttribute("message", "Gửi thành công");
     } catch (MessagingException e) {
         e.printStackTrace();
         request.setAttribute("message", "Failed to send email");

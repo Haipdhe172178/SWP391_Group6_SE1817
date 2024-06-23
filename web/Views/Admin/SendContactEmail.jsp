@@ -321,7 +321,7 @@
     </form>
 
 <c:if test="${not empty message}">
-        <div class="alert ${message.contains('success') ? 'alert-success' : 'alert-danger'}">
+        <div class="alert ${message.contains('success') ? 'alert-success' : 'alert-success'}">
             ${message}
         </div>
     </c:if>
