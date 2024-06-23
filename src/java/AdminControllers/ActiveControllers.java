@@ -61,7 +61,7 @@ public class ActiveControllers extends HttpServlet {
         String type = request.getParameter("type");
 
         if (action != null && !action.isEmpty()) {
-            int accountId = Integer.parseInt(request.getParameter("accountId"));
+           int accountId = Integer.parseInt(request.getParameter("accountId"));
             if ("hideacc".equals(action)) {
                 accountDao.hideAccount(accountId);
             } else if ("showacc".equals(action)) {

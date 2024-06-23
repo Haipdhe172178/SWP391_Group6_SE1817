@@ -60,7 +60,6 @@ public class AccountDAO extends DBContext {
 //        }
 //        return null;
 //    }
-
     public Account check(String username, String password) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Username=? AND Password=?";
         try {
@@ -302,6 +301,7 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     public void hideAccount(int accountId) {
         String query = "UPDATE Account Set Status = 0 Where AccountID =?";
         try {
@@ -326,12 +326,16 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public boolean updateRole(int accountId, int roleId) {
-        String query = "UPDATE Account SET RoleID = ? WHERE AccountID = ?";
+    public boolean updateStaff(int accountId, String email, String phoneNumber, String address, String imgAccount) {
+        String query = "UPDATE Account SET Email = ?, PhoneNumber = ?, Address = ?, ImgAccount = ? WHERE AccountID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, roleId);
-            ps.setInt(2, accountId);
+            ps.setString(1, email);
+            ps.setString(2, phoneNumber);
+            ps.setString(3, address);
+            ps.setString(4, imgAccount);
+            ps.setInt(5, accountId);
+
             int result = ps.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -479,5 +483,4 @@ public class AccountDAO extends DBContext {
         }
         return total;
     }
-
 }

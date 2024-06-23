@@ -104,7 +104,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                <li class>
+                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -112,8 +112,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Quản lý người dùng</a></li>
-                        <li><a href="manages">Quản lý nhân viên</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -336,6 +336,7 @@
                                                                 </c:choose>
                                                             </td>
                                                             <td>
+                                                                <a href="accdetail?id=${ac.accountId}" title="View"><i class="fas fa-eye"></i></a>
                                                                 <a href="change?accountId=${ac.accountId}" title="Update"><i class="fas fa-edit"></i></a>
                                                                 <a href="active?action=hideacc&accountId=${ac.accountId}&type=staff" title="Hide" onclick="return confirmAction('hide');"><i class="fas fa-ban"></i></a>
                                                                 <a href="active?action=showacc&accountId=${ac.accountId}&type=staff" title="Show" onclick="return confirmAction('show');"><i class="fas fa-check-circle"></i></a>

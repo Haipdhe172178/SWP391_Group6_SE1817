@@ -23,13 +23,12 @@
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
         <link rel="stylesheet" href="css/metisMenu.css">
         <link rel="stylesheet" href="css/style1.css" />
-        <title> Thêm Tác Giả</title>
+        <title> Thêm Quản Lý</title>
         <style>
             .error {
                 color: red;
                 font-size: 0.8em;
             }
-            /* CSS for notification */
             .notification-container {
                 position: fixed;
                 top: 10px;
@@ -143,8 +142,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
-                        <li><a class="active" href="manages">Quản lý</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -298,7 +297,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form action="change" method="POST" id="myForm">
+                                <form action="change" method="POST" id="myForm" enctype="multipart/form-data">
                                     <div class="white_card_body">
                                         <input type="hidden" id="accountID" name="id" value="${acc.accountId}">
 
@@ -310,18 +309,55 @@
 
                                         <div class="mb-3">
                                             <label for="accountRole">Vai trò</label>
-                                            <select class="form-control" id="accountRole" name="roleID" required>
-                                                <c:forEach items="${role}" var="role">
-                                                    <c:if test="${role.roleId != 1 && role.roleId!=3}">
-                                                        <option value="${role.roleId}" ${role.roleId == acc.roleId ? 'selected' : ''}>${role.roleName}</option>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </select>
+                                            <input type="text" class="form-control" id="accountRole" name="roleID" value="${empty acc.roleId ? '' : acc.roleId}" readonly>
                                             <div id="accountRoleError" class="error"></div>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <label for="userName">Tên người dùng</label>
+                                            <input type="text" class="form-control" id="userName" name="userName" placeholder="Nhập tên người dùng" value="${acc.userName}" readonly>
+                                            <div id="userNameError" class="error"></div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Giới tính</label><br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" id="maleRadio" name="gender" value="male" ${acc.gender.toLowerCase() == 'male' ? 'checked' : ''} disabled>
+                                                <label class="form-check-label" for="maleRadio">Nam</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" id="femaleRadio" name="gender" value="female" ${acc.gender.toLowerCase() == 'female' ? 'checked' : ''} disabled>
+                                                <label class="form-check-label" for="femaleRadio">Nữ</label>
+                                            </div>
+                                            <div id="genderError" class="error"></div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" value="${empty sessionScope.email ? acc.email : sessionScope.email}">
+                                            <div id="emailError" class="error">${empty sessionScope.emailError ? '' : sessionScope.emailError}</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="phoneNumber">Số điện thoại</label>
+                                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Nhập số điện thoại" value="${empty sessionScope.phoneNumber ? acc.phoneNumber : sessionScope.phoneNumber}">
+                                            <div id="phoneNumberError" class="error"></div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="address">Địa chỉ</label>
+                                            <textarea class="form-control" id="address" name="address" placeholder="Nhập địa chỉ">${empty sessionScope.address ? acc.address : sessionScope.address}</textarea>
+                                            <div id="addressError" class="error"></div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="imgAccount" class="form-label">Ảnh đại diện mới</label>
+                                            <input type="file" class="form-control" id="imgAccount" name="imgAccount">
+                                            <img id="currentImage" src="${acc.imgAccount}" alt="Current Image" style="max-width: 200px; margin-top: 10px;">
+                                        </div>
+
                                         <div>
-                                            <a href="author" class="btn btn-warning">Trở lại</a>
+                                            <a href="manages" class="btn btn-warning">Trở lại</a>
                                             <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                         </div>
                                     </div>
@@ -483,23 +519,38 @@
         <!--kiem tra validation-->
         <script>
             document.getElementById('myForm').addEventListener('submit', function (event) {
-                var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authorDescription').value.trim();
-                var authorNameError = document.getElementById('authorNameError');
-                var authorDescriptionError = document.getElementById('authorDescriptionError');
+                var email = document.getElementById('email').value.trim();
+                var phoneNumber = document.getElementById('phoneNumber').value.trim();
+                var address = document.getElementById('address').value.trim();
+
+                var emailError = document.getElementById('emailError');
+                var phoneNumberError = document.getElementById('phoneNumberError');
+                var addressError = document.getElementById('addressError');
+
                 var isValid = true;
 
-                // Reset previous error messages
-                authorNameError.textContent = '';
-                authorDescriptionError.textContent = '';
+                emailError.textContent = '';
+                phoneNumberError.textContent = '';
+                addressError.textContent = '';
 
-                if (authorName === '') {
-                    authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
+                if (email === '') {
+                    emailError.textContent = 'Vui lòng nhập email.';
+                    isValid = false;
+                } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                    emailError.textContent = 'Email không đúng định dạng.';
                     isValid = false;
                 }
 
-                if (authorDescription === '') {
-                    authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                if (phoneNumber === '') {
+                    phoneNumberError.textContent = 'Vui lòng nhập số điện thoại.';
+                    isValid = false;
+                } else if (!/^0\d{9}$/.test(phoneNumber)) {
+                    phoneNumberError.textContent = 'Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0.';
+                    isValid = false;
+                }
+
+                if (address === '') {
+                    addressError.textContent = 'Vui lòng nhập địa chỉ.';
                     isValid = false;
                 }
 
@@ -508,7 +559,19 @@
                 }
             });
 
+            document.getElementById('imgAccount').addEventListener('change', function () {
+                var imgAccount = this.files[0];
+                if (imgAccount) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('currentImage').src = e.target.result;
+                    };
+                    reader.readAsDataURL(imgAccount);
+                }
+            });
         </script>
+
+
         <!--hien thi thong bao-->
         <script>
             function showNotificationAndRedirect() {

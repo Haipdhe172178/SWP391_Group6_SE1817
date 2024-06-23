@@ -104,7 +104,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                <li class>
+                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -112,8 +112,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
-                        <li><a href="manages">Quản lý nhân viên</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -263,14 +263,14 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Sản phẩm</h3>
+                                            <h3 class="m-0">Tác Giả</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Bảng dữ liệu của sản phẩm</h4>
+                                            <h4>Bảng dữ liệu của tác giả</h4>
 
 
                                             <div class="box_right d-flex lms_block">
