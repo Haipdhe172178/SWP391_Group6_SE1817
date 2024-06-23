@@ -11,16 +11,21 @@ import Models.Role;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
  *
  * @author huyca
  */
+@MultipartConfig
 public class ChangeRoleControllers extends HttpServlet {
 
     /**
@@ -89,12 +94,55 @@ public class ChangeRoleControllers extends HttpServlet {
         String roleId = request.getParameter("roleID");
         int accountIds = Integer.parseInt(accountId);
         int roleIds = Integer.parseInt(roleId);
-        AccountDAO accountDAO = new AccountDAO();
-        boolean isUpdated = accountDAO.updateRole(accountIds, roleIds);
-        
-        session.setAttribute("notification", "success" );
-        response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
+        String userName = request.getParameter("userName");
+        String gender = request.getParameter("gender");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String address = request.getParameter("address");
+        Part part = request.getPart("imgAccount");
 
+        String imgProduct = null;
+        if (part != null && part.getSize() > 0) {
+            String path = request.getServletContext().getRealPath("/img");
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            File image = new File(dir, fileName);
+            part.write(image.getAbsolutePath());
+            imgProduct = request.getContextPath() + "/img/" + fileName;
+        } else {
+            AccountDAO accountDAO = new AccountDAO();
+            Account account = accountDAO.getAccountByid(accountIds);
+            imgProduct = account.getImgAccount();
+        }
+        AccountDAO accountDAO = new AccountDAO();
+        Account oldAccount = accountDAO.getAccountByid(accountIds);
+        String oldEmail = oldAccount.getEmail();
+
+        if (email == null || email.isEmpty()) {
+            email = oldEmail;
+        } else {
+            if (!email.equals(oldEmail)) {
+                boolean emailExists = accountDAO.checkEmailExists(email);
+                if (emailExists) {
+
+                    session.setAttribute("emailError", "Email đã tồn tại.");
+                    session.setAttribute("email", email);
+                    session.setAttribute("phoneNumber", phoneNumber);
+                    session.setAttribute("address", address);
+                    response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
+                    return;
+                }
+            }
+        }
+
+        boolean isUpdated = accountDAO.updateStaff(accountIds, email, phoneNumber, address, imgProduct);
+
+        session.removeAttribute("emailError");
+        session.setAttribute("notification", "success");
+        response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
     }
 
     /**

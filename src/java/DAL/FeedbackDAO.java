@@ -33,7 +33,7 @@ public class FeedbackDAO extends DBContext {
             while (rs.next()) {
                 Feedback fb = new Feedback();
                 fb.setFeedbackId(rs.getInt(1));
-                fb.setAccount(accDao.getAccountById(rs.getInt(2)));
+                fb.setAccount(accDao.getAccountByid(rs.getInt(2)));
                 fb.setProduct(pDao.getProductById(rs.getInt(3)));
                 fb.setRating(rs.getInt(4));
                 fb.setComments(rs.getString(5));
@@ -65,7 +65,7 @@ public class FeedbackDAO extends DBContext {
             while (rs.next()) {
                 Feedback fb = new Feedback();
                 fb.setFeedbackId(rs.getInt(1));
-                fb.setAccount(accDao.getAccountById(rs.getInt(2)));
+                fb.setAccount(accDao.getAccountByid(rs.getInt(2)));
                 fb.setProduct(pDao.getProductById(rs.getInt(3)));
                 fb.setRating(rs.getInt(4));
                 fb.setComments(rs.getString(5));
@@ -134,7 +134,7 @@ public class FeedbackDAO extends DBContext {
                 fb.setStt(rs.getInt("STT"));
                 fb.setFeedbackId(rs.getInt("FeedbackID"));
                 // Replace accDao.getAccountById and pDao.getProductById with your DAO methods
-                fb.setAccount(accDao.getAccountById(rs.getInt("AccountID")));
+                fb.setAccount(accDao.getAccountByid(rs.getInt("AccountID")));
                 fb.setProduct(pDao.getProductById(rs.getInt("ProductID")));
                 fb.setRating(rs.getInt("Rating"));
                 fb.setComments(rs.getString("Comments"));
@@ -167,7 +167,7 @@ public class FeedbackDAO extends DBContext {
             while (rs.next()) {
                 Feedback fb = new Feedback();
                 fb.setFeedbackId(rs.getInt(1));
-                fb.setAccount(accDao.getAccountById(rs.getInt(2)));
+                fb.setAccount(accDao.getAccountByid(rs.getInt(2)));
                 fb.setProduct(pDao.getProductById(rs.getInt(3)));
                 fb.setRating(rs.getInt(4));
                 fb.setComments(rs.getString(5));
@@ -262,7 +262,7 @@ public class FeedbackDAO extends DBContext {
             while (rs.next()) {
                 Feedback fb = new Feedback();
                 fb.setFeedbackId(rs.getInt(1));
-                fb.setAccount(accDao.getAccountById(rs.getInt(2)));
+                fb.setAccount(accDao.getAccountByid(rs.getInt(2)));
                 fb.setProduct(pDao.getProductById(rs.getInt(3)));
                 fb.setRating(rs.getInt(4));
                 fb.setComments(rs.getString(5));

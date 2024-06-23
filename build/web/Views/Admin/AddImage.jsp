@@ -75,13 +75,8 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
-                        <li><a href="image">Image BackGround</a></li>
-                        <li><a href="discount">Discount</a></li>
-=======
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
 
                     </ul>
                 </li>        
@@ -103,7 +98,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>

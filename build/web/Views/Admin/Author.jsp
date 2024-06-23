@@ -54,7 +54,7 @@
                     <i class="ti-close"></i>
                 </div>
             </div>
-             <ul id="sidebar_menu">
+            <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -99,12 +99,12 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                <li class>
+                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -112,8 +112,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
-                        <li><a href="manages">Quản lý nhân viên</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -263,14 +263,14 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Sản phẩm</h3>
+                                            <h3 class="m-0">Tác Giả</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Bảng dữ liệu của sản phẩm</h4>
+                                            <h4>Bảng dữ liệu của tác giả</h4>
 
 
                                             <div class="box_right d-flex lms_block">
@@ -290,14 +290,28 @@
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
-
+                                            <form action="author" method="GET" id="sortForm">
+                                                <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
+                                            </form>
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">ID</th>
                                                         <th scope="col">Tên tác giả</th>
                                                         <th scope="col">Tiểu sử</th>
-                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#57ccb7">
+                                                                    Trạng thái
+                                                                    <i class=""></i>
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="author">All</a>
+                                                                    <a class="dropdown-item" href="author?statusFilter=1">Active</a>
+                                                                    <a class="dropdown-item" href="author?statusFilter=0">Inactive</a>
+                                                                </div>
+                                                            </div>
+                                                        </th>
                                                         <th scope="col">Hành Động</th>
                                                     </tr>
                                                 </thead>
@@ -522,8 +536,17 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="js/custom.js"></script>
+        <script>
+            function filterStatus(status) {
+                const statusFilter = document.getElementById('statusFilter');
+                statusFilter.value = status;
+                document.getElementById('sortForm').submit();
+            }
+
+        </script>
     </body>
 
 </html>

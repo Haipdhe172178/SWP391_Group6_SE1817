@@ -210,17 +210,42 @@ public class AuthorDao extends DBContext {
         return total;
     }
 
-    public static void main(String[] args) {
-        AuthorDao authorDao = new AuthorDao();
-        int index = 1; // Page index
-        String keyword = "n"; // Keyword to search
-
-        List<Author> authors = authorDao.pagingSearchAuthor(index, keyword);
-
-        // In ra kết quả
-        for (Author author : authors) {
-            System.out.println(author.getAuthorID() + ", " + author.getAuthorName() + ", " + author.getDescription() + ", " + author.getStatus());
+    public List<Author> getAuthorByStatus(int status, int index) {
+        List<Author> authors = new ArrayList<>();
+        String query = "Select * From Author Where Status = ?"
+                + " Order By AuthorID OFFSET ? Rows Fetch Next 8 Rows Only";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, (index - 1) * 8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                author.setStatus(rs.getInt("status"));
+                authors.add(author);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
+        return authors;
+    }
+
+    public int getTotalBySatus(int status) {
+         int total = 0;
+         String query ="Select Count(*) From Author Where Status = ?";
+         try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, status);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }

@@ -78,14 +78,14 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
             </div>
-             <ul id="sidebar_menu">
+            <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -117,14 +117,9 @@
                         <span>Bán hàng</span>
                     </a>
                     <ul>
-<<<<<<< HEAD (0a2d68f) - them phan quan ly accou
-                        <li><a href="image">Image BackGround</a></li>
-                        <li><a href="discount">Discount</a></li>
-=======
+                      
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
->>>>>>> bfc5758c0eb9ed2ec03d7a221323412fbbfe1f53
-
                     </ul>
                 </li>        
                 <li class>
@@ -135,9 +130,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -159,7 +154,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -315,18 +311,17 @@
                                 </div>
                                 <form action="updatea" method="POST" id="myForm">
                                     <div class="white_card_body">
-                                        <!-- Trường hidden để giữ giá trị ID của tác giả -->
                                         <input type="hidden" id="authorID" name="id" value="${author.authorID}">
 
                                         <div class="mb-3">
                                             <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" value="${empty author.authorName ? '' : author.authorName}" required>
-                                            <div id="authorNameError" class="error"></div>
+                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" value="${empty sessionScope.authorName ? author.authorName : sessionScope.authorName}" required>
+                                            <div id="authorNameError" class="error">${empty sessionScope.errorMessage ? '' : sessionScope.errorMessage}</div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required>${empty author.description ? '' : author.description}</textarea>
+                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required>${empty sessionScope.description ? author.description : sessionScope.description}</textarea>
                                             <div id="authorDescriptionError" class="error"></div>
                                         </div>
 
@@ -345,6 +340,7 @@
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>

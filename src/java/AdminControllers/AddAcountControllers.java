@@ -97,7 +97,7 @@ public class AddAcountControllers extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
+        int roleId = 2;
         Part part = request.getPart("imgAccount");
 
         // Handle file upload
@@ -114,34 +114,34 @@ public class AddAcountControllers extends HttpServlet {
             imgProduct = request.getContextPath() + "/img/" + fileName;
         }
 
-        // Check if username or email already exists
+      
         AccountDAO accountDAO = new AccountDAO();
         boolean userNameExists = accountDAO.checkUserNameExists(userName);
         boolean emailExists = accountDAO.checkEmailExists(email);
 
         if (userNameExists || emailExists) {
-            // Set error messages
+           
             if (userNameExists) {
-                session.setAttribute("userNameError", "Tên đăng nhập đã tồn tại.");
+                request.setAttribute("userNameError", "Tên đăng nhập đã tồn tại.");
             }
             if (emailExists) {
-                session.setAttribute("emailError", "Email đã tồn tại.");
+                request.setAttribute("emailError", "Email đã tồn tại.");
             }
 
-            session.setAttribute("fullName", fullName);
-            session.setAttribute("userName", userName);
-            session.setAttribute("passWord", passWord);
-            session.setAttribute("confirmPassWord", confirmPassWord);
-            session.setAttribute("gender", gender);
-            session.setAttribute("email", email);
-            session.setAttribute("phoneNumber", phoneNumber);
-            session.setAttribute("address", address);
-            session.setAttribute("roleId", roleId);
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("userName", userName);
+            request.setAttribute("passWord", passWord);
+            request.setAttribute("confirmPassWord", confirmPassWord);
+            request.setAttribute("gender", gender);
+            request.setAttribute("email", email);
+            request.setAttribute("phoneNumber", phoneNumber);
+            request.setAttribute("address", address);
+            request.setAttribute("roleId", roleId);
 
-            response.sendRedirect(request.getContextPath() + "/addac");
+            request.getRequestDispatcher("Views/Admin/AddAccount.jsp").forward(request, response);
             return;
         }
-        boolean accountCreated = accountDAO.createAccount(fullName, userName, passWord, gender, email, phoneNumber, address, roleId, imgProduct);                   
+        boolean accountCreated = accountDAO.createAccount(fullName, userName, passWord, gender, email, phoneNumber, address, roleId, imgProduct);
         session.setAttribute("notification", "success");
         response.sendRedirect(request.getContextPath() + "/addac");
     }

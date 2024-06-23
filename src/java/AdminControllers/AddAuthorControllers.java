@@ -73,35 +73,38 @@ public class AddAuthorControllers extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            String authorName = request.getParameter("name");
-            String description = request.getParameter("description");
-            AuthorDao authorDao = new AuthorDao();
+        throws ServletException, IOException {
+    try {
+        HttpSession session = request.getSession();
+        String authorName = request.getParameter("name");
+        String description = request.getParameter("description");
+        AuthorDao authorDao = new AuthorDao();
 
-            Author existingAuthor = authorDao.getAuthorByName(authorName);
-            if (existingAuthor != null) {
-                session.setAttribute("notification", "error");
-                session.setAttribute("errorMessage", "Tác giả đã tồn tại: " + authorName);
-                response.sendRedirect(request.getContextPath() + "/adda");
-                return;
-            }
-            Author author = new Author();
-            author.setAuthorName(authorName);
-            author.setDescription(description);
-            author.setStatus(1);
-
-            authorDao.insertAuthor(author);
-            session.setAttribute("notification", "success" );
-            
-            response.sendRedirect(request.getContextPath() + "/updatea");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-
+        Author existingAuthor = authorDao.getAuthorByName(authorName);
+        if (existingAuthor != null) {
+            request.setAttribute("description", description);
+            request.setAttribute("authorName", authorName);
+            session.setAttribute("notification", "error");
+            session.setAttribute("errorMessage", "Tác giả đã tồn tại: " + authorName);          
+              request.getRequestDispatcher("Views/Admin/AddAuthor.jsp").forward(request, response);
+            return;
         }
+
+        Author author = new Author();
+        author.setAuthorName(authorName);
+        author.setDescription(description);
+        author.setStatus(1);
+
+        authorDao.insertAuthor(author);
+        session.setAttribute("notification", "success" );
+        
+        response.sendRedirect(request.getContextPath() + "/adda");
+
+    } catch (IOException ex) {
+        ex.printStackTrace();
     }
+}
+
 
     /**
      * Returns a short description of the servlet.

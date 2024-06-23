@@ -116,8 +116,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
-                        <li><a href="manages">Quản lý</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>

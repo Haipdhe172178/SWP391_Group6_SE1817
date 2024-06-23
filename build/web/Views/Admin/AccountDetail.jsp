@@ -32,10 +32,12 @@
         <link rel="stylesheet" href="css/metisMenu.css">
         <link rel="stylesheet" href="css/style1.css" />
         <style>
-
             body {
                 background-color: #f2f3f8;
                 font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
 
             .main_content_iner {
@@ -73,6 +75,8 @@
             .labels {
                 font-weight: bold;
                 color: #555;
+                display: block;
+                margin-bottom: 5px;
             }
 
             .form-control {
@@ -82,13 +86,83 @@
                 border-radius: 4px;
                 border: 1px solid #ccc;
                 background-color: #fff;
+                margin-bottom: 10px;
             }
+
+            .profile-container .row {
+                margin-bottom: 15px;
+            }
+
+            .profile-container .col-md-6 {
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .btn-primary {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+            .btn-secondary {
+                background-color: #6c757d;
+                color: #fff;
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+            .btn-outline-info {
+                border: 1px solid #17a2b8;
+                color: #17a2b8;
+                background-color: #fff;
+            }
+
+            .btn-outline-info:hover {
+                background-color: #17a2b8;
+                color: #fff;
+            }
+
+            #personalInfoBtn,
+            #orderHistoryBtn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            #profile h4 {
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            #profile #personalInfoSection,
+            #profile #orderHistorySection {
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+            }
+
+            #profile #orderHistorySection {
+                display: none;
+            }
+
         </style>
     </head>
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -145,7 +219,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                <li class>
+                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -153,7 +227,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -313,60 +388,79 @@
                                             <div class="col-md-4 border-right">
                                                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                                                     <img class="mt-5" width="150px" src="${acc.imgAccount}" alt="Avatar">
+                                                    <button class="btn btn-primary mt-3" id="personalInfoBtn">Thông tin cá nhân</button>
+                                                    <c:if test="${acc.roleId != 1 && acc.roleId != 2}">
+                                                        <button class="btn btn-secondary mt-2" id="orderHistoryBtn">Lịch sử đơn hàng</button>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="p-3 py-5" id="profile">
                                                     <h4 class="text-right mb-4">Hồ Sơ Của ID: ${acc.accountId}</h4>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-6">
-                                                            <label for="fullname" class="labels">Họ và tên: ${acc.fullName}</label>
-
+                                                    <!-- Personal Info Section -->
+                                                    <div id="personalInfoSection">
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-6">
+                                                                <label for="fullname" class="labels">Họ và tên:</label>
+                                                                <div class="form-control">${acc.fullName}</div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="username" class="labels">Tên đăng nhập:</label>
+                                                                <div class="form-control">${acc.userName}</div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <label for="username" class="labels">Tên đăng nhập: ${acc.userName}</label>
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-6">
+                                                                <label class="labels">Giới tính:</label>
+                                                                <div class="form-control">${acc.gender}</div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="phonenumber" class="labels">Số điện thoại:</label>
+                                                                <div class="form-control">${acc.phoneNumber}</div>
+                                                            </div>
                                                         </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-6">
+                                                                <label for="address" class="labels">Địa chỉ:</label>
+                                                                <div class="form-control">${acc.address}</div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="email" class="labels">Email:</label>
+                                                                <div class="form-control">${acc.email}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-6">
+                                                                <label for="status" class="labels">Trạng thái:</label>
+                                                                <div class="form-control">
+                                                                    <c:choose>
+                                                                        <c:when test="${acc.status == 1}">
+                                                                            <span style="color: green;">Active</span>
+                                                                        </c:when>
+                                                                        <c:when test="${acc.status == 0}">
+                                                                            <span style="color: red;">Inactive</span>
+                                                                        </c:when>
+                                                                    </c:choose>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="role" class="labels">Chức vụ:</label>
+                                                                <div class="form-control">
+                                                                    <c:forEach items="${role}" var="ro">
+                                                                        <c:if test="${acc.roleId == ro.roleId}">
+                                                                            ${ro.roleName}
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a href="account" class="btn btn-outline-info">Trở lại</a>
                                                     </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-6">
-                                                            <label class="labels">Giới tính: ${acc.gender}</label>
-
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="phonenumber" class="labels">Số điện thoại: ${acc.phoneNumber}</label>
-
-                                                        </div>
+                                                    <!-- Order History Section -->
+                                                    <div id="orderHistorySection">
+                                                        <h4 class="text-right mb-4">Lịch Sử Đơn Hàng</h4>                                                      
+                                                        <p>Chưa có đơn hàng nào.</p>
                                                     </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-6">
-                                                            <label for="address" class="labels">Địa chỉ: ${acc.address}</label>
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <label for="email" class="labels">Email: ${acc.email}</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-6">
-                                                            <label for="status" class="labels">Trạng thái:  <c:choose>
-                                                                    <c:when test="${acc.status == 1}">
-                                                                        <span style="color: green;">Active</span>
-                                                                    </c:when>
-                                                                    <c:when test="${acc.status == 0}">
-                                                                        <span style="color: red;">Inactive</span>
-                                                                    </c:when>
-                                                                </c:choose></label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                             <label for="role" class="labels">Chức vụ: 
-                                                            <c:forEach items="${role}" var="ro">
-                                                                <c:if test="${acc.roleId == ro.roleId}">
-                                                                    ${ro.roleName}
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </div>
-                                                    </div>
-                                                         <a href="account" class="btn btn-outline-info">Trở lại</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -527,6 +621,17 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
 
         <script src="js/custom.js"></script>
+        <script>
+            document.getElementById("personalInfoBtn").addEventListener("click", function () {
+                document.getElementById("personalInfoSection").style.display = "block";
+                document.getElementById("orderHistorySection").style.display = "none";
+            });
+
+            document.getElementById("orderHistoryBtn").addEventListener("click", function () {
+                document.getElementById("personalInfoSection").style.display = "none";
+                document.getElementById("orderHistorySection").style.display = "block";
+            });
+        </script>
     </body>
 
 </html>

@@ -18,49 +18,48 @@ import java.util.List;
  */
 public class AccountDAO extends DBContext {
 
-    public Account getAccountById(int id) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            String sql = "Select * From Account Where AccountID =?";
-            ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Account acc = new Account();
-                acc.setAccountId(rs.getInt(1));
-                acc.setFullName(rs.getString(2));
-                acc.setUserName(rs.getString(3));
-                acc.setPassWord(rs.getString(4));
-                acc.setGender(rs.getString(5));
-                acc.setEmail(rs.getString(6));
-                acc.setPhoneNumber(rs.getString(7));
-                acc.setAddress(rs.getString(8));
-                acc.setRoleId(rs.getInt(9));
-                acc.setImgAccount(rs.getString(10));
-
-                return acc;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
+//    public Account getAccountById(int id) {
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//
+//        try {
+//            String sql = "Select * From Account Where AccountID =?";
+//            ps = connection.prepareStatement(sql);
+//            ps.setInt(1, id);
+//            rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                Account acc = new Account();
+//                acc.setAccountId(rs.getInt(1));
+//                acc.setFullName(rs.getString(2));
+//                acc.setUserName(rs.getString(3));
+//                acc.setPassWord(rs.getString(4));
+//                acc.setGender(rs.getString(5));
+//                acc.setEmail(rs.getString(6));
+//                acc.setPhoneNumber(rs.getString(7));
+//                acc.setAddress(rs.getString(8));
+//                acc.setRoleId(rs.getInt(9));
+//                acc.setImgAccount(rs.getString(10));
+//
+//                return acc;
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
+//    }
     public Account check(String username, String password) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Username=? AND Password=?";
         try {
@@ -255,53 +254,6 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    public List<Account> pagingAccounts(int index) {
-        List<Account> list = new ArrayList<>();
-        String query = "  select * from Account order"
-                + " by AccountID "
-                + "offset ? rows fetch next 5 rows only ";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, (index - 1) * 5);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Account acc = new Account();
-                acc.setAccountId(rs.getInt(1));
-                acc.setFullName(rs.getString(2));
-                acc.setUserName(rs.getString(3));
-                acc.setPassWord(rs.getString(4));
-                acc.setGender(rs.getString(5));
-                acc.setEmail(rs.getString(6));
-                acc.setPhoneNumber(rs.getString(7));
-                acc.setAddress(rs.getString(8));
-                acc.setRoleId(rs.getInt(9));
-                acc.setImgAccount(rs.getString(10));
-                acc.setStatus(rs.getInt(11));
-
-                list.add(acc);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public int getTotalAccount() {
-        int total = 0;
-        String query = " Select count(*) from Account";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return total;
-    }
-
     public boolean createAccount(String fullName, String username, String password, String gender, String email, String phoneNumber, String address, int roleId, String imgAccount) {
         String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Gender, Email, PhoneNumber, Address, RoleID, ImgAccount, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -374,58 +326,16 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public List<Account> pagingStaff(int index) {
-        List<Account> list = new ArrayList<>();
-        String query = "SELECT * FROM Account WHERE RoleID = 2 Or RoleID = 3"
-                + "ORDER BY AccountID "
-                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+    public boolean updateStaff(int accountId, String email, String phoneNumber, String address, String imgAccount) {
+        String query = "UPDATE Account SET Email = ?, PhoneNumber = ?, Address = ?, ImgAccount = ? WHERE AccountID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, (index - 1) * 5);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Account acc = new Account();
-                acc.setAccountId(rs.getInt(1));
-                acc.setFullName(rs.getString(2));
-                acc.setUserName(rs.getString(3));
-                acc.setPassWord(rs.getString(4));
-                acc.setGender(rs.getString(5));
-                acc.setEmail(rs.getString(6));
-                acc.setPhoneNumber(rs.getString(7));
-                acc.setAddress(rs.getString(8));
-                acc.setRoleId(rs.getInt(9));
-                acc.setImgAccount(rs.getString(10));
-                acc.setStatus(rs.getInt(11));
+            ps.setString(1, email);
+            ps.setString(2, phoneNumber);
+            ps.setString(3, address);
+            ps.setString(4, imgAccount);
+            ps.setInt(5, accountId);
 
-                list.add(acc);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public int getTotalAccountWithRole() {
-        int total = 0;
-        String query = "SELECT COUNT(*) FROM Account WHERE RoleID = 2 OR RoleID = 3";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return total;
-    }
-
-    public boolean updateRole(int accountId, int roleId) {
-        String query = "UPDATE Account SET RoleID = ? WHERE AccountID = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, roleId);
-            ps.setInt(2, accountId);
             int result = ps.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -434,26 +344,30 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
-    public List<Account> searchAccounts(String keyword, int index) {
+    public List<Account> pagingAccounts(int index, int roleId) {
         List<Account> list = new ArrayList<>();
-        String query = "SELECT * FROM Account WHERE fullName LIKE ? ORDER BY AccountID OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, "%" + keyword + "%");
+        String query = "SELECT * FROM Account WHERE RoleID = ? "
+                + "ORDER BY AccountID "
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, roleId);
             ps.setInt(2, (index - 1) * 5);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Account acc = new Account();
-                acc.setAccountId(rs.getInt(1));
-                acc.setFullName(rs.getString(2));
-                acc.setUserName(rs.getString(3));
-                acc.setPassWord(rs.getString(4));
-                acc.setGender(rs.getString(5));
-                acc.setEmail(rs.getString(6));
-                acc.setPhoneNumber(rs.getString(7));
-                acc.setAddress(rs.getString(8));
-                acc.setRoleId(rs.getInt(9));
-                acc.setImgAccount(rs.getString(10));
-                acc.setStatus(rs.getInt(11));
+                acc.setAccountId(rs.getInt("accountId"));
+                acc.setFullName(rs.getString("fullName"));
+                acc.setUserName(rs.getString("userName"));
+                acc.setPassWord(rs.getString("passWord"));
+                acc.setGender(rs.getString("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setImgAccount(rs.getString("imgAccount"));
+                acc.setStatus(rs.getInt("status"));
+
                 list.add(acc);
             }
         } catch (SQLException e) {
@@ -462,11 +376,12 @@ public class AccountDAO extends DBContext {
         return list;
     }
 
-    public int getTotalAccountsByKeyword(String keyword) {
+    public int getTotalAccounts(int roleId) {
         int total = 0;
-        String query = "SELECT COUNT(*) FROM Account WHERE fullName LIKE ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, "%" + keyword + "%");
+        String query = "SELECT COUNT(*) FROM Account WHERE RoleID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, roleId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total = rs.getInt(1);
@@ -477,26 +392,28 @@ public class AccountDAO extends DBContext {
         return total;
     }
 
-    public List<Account> searchAccountRole(int index, String keyword) {
+    public List<Account> searchAccounts(String keyword, int index, int roleId) {
         List<Account> list = new ArrayList<>();
-        String query = "SELECT * FROM Account WHERE fullName LIKE ? AND (RoleID = 2 OR RoleID = 3) ORDER BY AccountID OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        String query = "SELECT * FROM Account WHERE fullName LIKE ? AND RoleID = ? "
+                + "ORDER BY AccountID OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, "%" + keyword + "%");
-            ps.setInt(2, (index - 1) * 5);
+            ps.setInt(2, roleId);
+            ps.setInt(3, (index - 1) * 5);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Account acc = new Account();
-                acc.setAccountId(rs.getInt(1));
-                acc.setFullName(rs.getString(2));
-                acc.setUserName(rs.getString(3));
-                acc.setPassWord(rs.getString(4));
-                acc.setGender(rs.getString(5));
-                acc.setEmail(rs.getString(6));
-                acc.setPhoneNumber(rs.getString(7));
-                acc.setAddress(rs.getString(8));
-                acc.setRoleId(rs.getInt(9));
-                acc.setImgAccount(rs.getString(10));
-                acc.setStatus(rs.getInt(11));
+                acc.setAccountId(rs.getInt("accountId"));
+                acc.setFullName(rs.getString("fullName"));
+                acc.setUserName(rs.getString("userName"));
+                acc.setPassWord(rs.getString("passWord"));
+                acc.setGender(rs.getString("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setImgAccount(rs.getString("imgAccount"));
+                acc.setStatus(rs.getInt("status"));
                 list.add(acc);
             }
         } catch (SQLException e) {
@@ -505,11 +422,58 @@ public class AccountDAO extends DBContext {
         return list;
     }
 
-    public int getTotalAccountsByKeywordWithRole(String keyword) {
+    public int getTotalAccountsByKeyword(String keyword, int roleId) {
         int total = 0;
-        String query = "SELECT COUNT(*) FROM Account WHERE fullName LIKE ? AND (RoleID = 2 OR RoleID = 3)";
+        String query = "SELECT COUNT(*) FROM Account WHERE fullName LIKE ? AND RoleID = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, roleId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public List<Account> getAccountsByStatus(int status, int index, int roleId) {
+        List<Account> list = new ArrayList<>();
+        String query = "SELECT * FROM Account WHERE status = ? AND RoleID = ? "
+                + "ORDER BY AccountID OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, status);
+            ps.setInt(2, roleId);
+            ps.setInt(3, (index - 1) * 5);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt("accountId"));
+                acc.setFullName(rs.getString("fullName"));
+                acc.setUserName(rs.getString("userName"));
+                acc.setPassWord(rs.getString("passWord"));
+                acc.setGender(rs.getString("gender"));
+                acc.setEmail(rs.getString("email"));
+                acc.setPhoneNumber(rs.getString("phoneNumber"));
+                acc.setAddress(rs.getString("address"));
+                acc.setRoleId(rs.getInt("roleId"));
+                acc.setImgAccount(rs.getString("imgAccount"));
+                acc.setStatus(rs.getInt("status"));
+                list.add(acc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotalAccountsByStatus(int status, int roleId) {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Account WHERE status = ? AND RoleID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, status);
+            ps.setInt(2, roleId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total = rs.getInt(1);

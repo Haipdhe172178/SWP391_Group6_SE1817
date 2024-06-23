@@ -75,18 +75,26 @@ public class UpdateAuthorControllers extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         HttpSession session = request.getSession();
-         int authorID = Integer.parseInt(request.getParameter("id"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int authorID = Integer.parseInt(request.getParameter("id"));
         String authorName = request.getParameter("name");
         String authorDescription = request.getParameter("description");
         int authorStatus = Integer.parseInt(request.getParameter("status"));
         AuthorDao authorDao = new AuthorDao();
+        Author existingAuthor = authorDao.getAuthorByName(authorName);
+        if (existingAuthor != null) {
+            session.setAttribute("description", authorDescription);
+            session.setAttribute("authorName", authorName);
+            session.setAttribute("notification", "error");
+            session.setAttribute("errorMessage", "Tác giả đã tồn tại: " + authorName);
+            response.sendRedirect(request.getContextPath() + "/updatea?id=" + authorID);
+            return;
+        }
         Author author = new Author(authorID, authorName, authorDescription, authorStatus);
         authorDao.updateAuthor(author);
-        
-        
-        session.setAttribute("notification", "success" );
+        session.removeAttribute("errorMessage");
+        session.setAttribute("notification", "success");
 
         response.sendRedirect(request.getContextPath() + "/updatea?id=" + authorID);
     }

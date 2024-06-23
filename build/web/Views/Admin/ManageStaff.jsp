@@ -47,7 +47,7 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -104,7 +104,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                <li class>
+                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -112,8 +112,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
-                         <li><a href="manages">Quản lý vai trò</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -270,7 +270,7 @@
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Bảng dữ liệu của tài khoản</h4>
+                                            <h4>Bảng dữ liệu của người nhân viên</h4>
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
@@ -282,37 +282,51 @@
                                                         </form>
                                                     </div>
                                                 </div>
-<!--                                                <div class="add_button ms-2">
-                                                    <a href="" class="btn_1"></a>
-                                                </div>-->
+                                                 <div class="add_button ms-2">
+                                                    <a href="addac" class="btn_1">Thêm quản lý</a>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
+                                            <form action="manages" method="Post" id="sortForm">
+                                                <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
+                                            </form>
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">ID</th>
                                                         <th scope="col">Tên</th>
                                                         <th scope="col">Vai trò</th>
-                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#57ccb7">
+                                                                    Trạng thái
+                                                                    <i class=""></i>
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="manages">All</a>
+                                                                    <a class="dropdown-item" href="manages?statusFilter=1">Active</a>
+                                                                    <a class="dropdown-item" href="manages?statusFilter=0">Inactive</a>
+                                                                </div>
+                                                            </div>
+                                                        </th>
                                                         <th scope="col">Hành Động</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach items="${account}" var="ac">
-                                                      
-                                                            <tr class="${ac.status == 1 ? 'active-row' : 'inactive-row'}">
-                                                                <td>${ac.accountId}</td>
-                                                                <td>${ac.fullName}</td>
-                                                                <td>
-                                                                    <c:forEach items="${role}" var="ro">
-                                                                        <c:if test="${ac.roleId == ro.roleId}">
-                                                                            ${ro.roleName}
-                                                                        </c:if>
-                                                                    </c:forEach>
-                                                                </td>
-                                                                <td>
-                                                                     <c:choose>
+                                                        <tr class="${ac.status == 1 ? 'active-row' : 'inactive-row'}">
+                                                            <td>${ac.accountId}</td>
+                                                            <td>${ac.fullName}</td>
+                                                            <td>
+                                                                <c:forEach items="${role}" var="ro">
+                                                                    <c:if test="${ac.roleId == ro.roleId}">
+                                                                        ${ro.roleName}
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </td>
+                                                            <td>
+                                                                <c:choose>
                                                                     <c:when test="${ac.status == 1}">
                                                                         <span style="color: green;">Active</span>
                                                                     </c:when>
@@ -320,17 +334,19 @@
                                                                         <span style="color: red;">Inactive</span>
                                                                     </c:when>
                                                                 </c:choose>
-                                                                </td>
-                                                                <<td>
-                                                                    <a href="change?accountId=${ac.accountId}" title="Update"><i class="fas fa-edit"></i></a>                                                        
-                                                                </td>
-                                                            </tr>
-                                                        
+                                                            </td>
+                                                            <td>
+                                                                <a href="accdetail?id=${ac.accountId}" title="View"><i class="fas fa-eye"></i></a>
+                                                                <a href="change?accountId=${ac.accountId}" title="Update"><i class="fas fa-edit"></i></a>
+                                                                <a href="active?action=hideacc&accountId=${ac.accountId}&type=staff" title="Hide" onclick="return confirmAction('hide');"><i class="fas fa-ban"></i></a>
+                                                                <a href="active?action=showacc&accountId=${ac.accountId}&type=staff" title="Show" onclick="return confirmAction('show');"><i class="fas fa-check-circle"></i></a>
+                                                            </td>
+                                                        </tr>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
-
                                         </div>
+
                                         <nav class="py-5" aria-label="Page navigation">
                                             <ul class="pagination justify-content-center gap-4">
                                                 <!-- Xác định phạm vi các trang hiển thị -->
@@ -525,6 +541,24 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
 
         <script src="js/custom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function filterStatus(status) {
+                const statusFilter = document.getElementById('statusFilter');
+                statusFilter.value = status;
+                document.getElementById('sortForm').submit();
+            }
+            function confirmAction(action) {
+                if (action === 'hide') {
+                    return confirm('Bạn có chắc chắn muốn ẩn tài khoản này không?');
+                } else if (action === 'show') {
+                    return confirm('Bạn có chắc chắn muốn hiển thị tài khoản này không?');
+                }
+                return false;
+            }
+
+        </script>
     </body>
 
 </html>

@@ -47,14 +47,14 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
             </div>
-           <ul id="sidebar_menu">
+            <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -99,9 +99,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -112,8 +112,8 @@
                         <span>Xác thực</span>
                     </a>
                     <ul>
-                        <li><a href="account">Tài Khoản</a></li>
-                         <li><a href="manages">Quản lý nhân viên</a></li>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
             </ul>
@@ -282,21 +282,38 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div class="add_button ms-2">
+<!--                                                <div class="add_button ms-2">
                                                     <a href="addac" class="btn_1">Thêm Tài Khoản</a>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
+                                            <!-- Sorting Form -->
+                                            <form action="account" method="GET" id="sortForm">
+                                                <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
+                                            </form>
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">ID</th>
-                                                        <th scope="col">Tên người dùng</th>                                                      
+                                                        <th scope="col">Tên người dùng
+                                                        </th>
                                                         <th scope="col">Email</th>
-                                                        <th scope="col">Số điện thoại</th>                                                                                                           
+                                                        <th scope="col">Số điện thoại</th>
                                                         <th scope="col">Ảnh</th>
-                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#57ccb7">
+                                                                    Trạng thái
+                                                                    <i class=""></i>
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="account">All</a>
+                                                                    <a class="dropdown-item" href="account?statusFilter=1">Active</a>
+                                                                    <a class="dropdown-item" href="account?statusFilter=0">Inactive</a>
+                                                                </div>
+                                                            </div>
+                                                        </th>
                                                         <th scope="col">Hành Động</th>
                                                     </tr>
                                                 </thead>
@@ -304,10 +321,10 @@
                                                     <c:forEach items="${account}" var="ac">
                                                         <tr class="${ac.status == 1 ? 'active-row' : 'inactive-row'}">
                                                             <td>${ac.accountId}</td>
-                                                            <td>${ac.fullName}</td>                                                                                                                                                                                   
-                                                            <td>${ac.email}</td> 
+                                                            <td>${ac.fullName}</td>
+                                                            <td>${ac.email}</td>
                                                             <td>${ac.phoneNumber}</td>
-                                                            <td><img src="${ac.imgAccount}" alt="Product Image" style="width:100px;height:auto;"></td>
+                                                            <td><img src="${ac.imgAccount}" alt="ảnh tài khoản" style="width:100px;height:auto;"></td>
                                                             <td>
                                                                 <c:choose>
                                                                     <c:when test="${ac.status == 1}">
@@ -320,43 +337,36 @@
                                                             </td>
                                                             <td>
                                                                 <a href="accdetail?id=${ac.accountId}" title="View"><i class="fas fa-eye"></i></a>
-                                                                <a href="active?action=hideacc&accountId=${ac.accountId}" title="Hide"><i class="fas fa-ban"></i></a>
-                                                                <a href="active?action=showacc&accountId=${ac.accountId}" title="Show"><i class="fas fa-check-circle"></i></a>
+                                                                <a href="active?action=hideacc&accountId=${ac.accountId}&type=user" title="Hide" onclick="return confirmAction('hide');"><i class="fas fa-ban"></i></a>
+                                                                <a href="active?action=showacc&accountId=${ac.accountId}&type=user" title="Show" onclick="return confirmAction('show');"><i class="fas fa-check-circle"></i></a>
 
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
-
                                         </div>
+
                                         <nav class="py-5" aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center gap-4">
-                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                            <ul class="pagination justify-content-center gap-4">                                              
                                                 <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
                                                 <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
                                                 <c:if test="${end > endP}">
                                                     <c:set var="end" value="${endP}" />
                                                     <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
-                                                </c:if>
-
-                                                <!-- Nút Previous -->
+                                                </c:if>                                              
                                                 <c:if test="${tag > 1}">
                                                     <li class="page-item">
                                                         <a class="page-link" href="account?index=${tag - 1}${query}" aria-label="Previous">
                                                             <span aria-hidden="true">Previous</span>
                                                         </a>
                                                     </li>
-                                                </c:if>
-
-                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                </c:if>                                            
                                                 <c:forEach begin="${start}" end="${end}" var="i">
                                                     <li class="page-item ${tag == i ? 'active' : ''}">
                                                         <a class="page-link" href="account?index=${i}${query}">${i}</a>
                                                     </li>
-                                                </c:forEach>
-
-                                                <!-- Nút Next -->
+                                                </c:forEach>                                              
                                                 <c:if test="${tag < endP}">
                                                     <li class="page-item">
                                                         <a class="page-link" href="account?index=${tag + 1}${query}" aria-label="Next">
@@ -524,6 +534,26 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
 
         <script src="js/custom.js"></script>
+        <!-- jQuery, Popper.js, Bootstrap JS -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <script>
+                function filterStatus(status) {
+                    const statusFilter = document.getElementById('statusFilter');
+                    statusFilter.value = status;
+                    document.getElementById('sortForm').submit();
+                }
+                function confirmAction(action) {
+                    if (action === 'hide') {
+                        return confirm('Bạn có chắc chắn muốn ẩn tài khoản này không?');
+                    } else if (action === 'show') {
+                        return confirm('Bạn có chắc chắn muốn hiển thị tài khoản này không?');
+                    }
+                    return false;
+                }
+        </script>
     </body>
 
 </html>

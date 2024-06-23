@@ -157,6 +157,10 @@
         <servlet-class>Controllers.DeleteCartControllers</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddAcountControllers</servlet-name>
+        <servlet-class>AdminControllers.AddAcountControllers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FeedbackListController</servlet-name>
         <servlet-class>Controllers.StaffController.FeedbackListController</servlet-class>
     </servlet>
