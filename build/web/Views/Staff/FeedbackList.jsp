@@ -272,97 +272,7 @@
                                 <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
                             </div>
                             <div class="header_right d-flex justify-content-between align-items-center">
-                                <div class="header_notification_warp d-flex align-items-center">
-                                    <li>
-                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img src="img/icon/bell.svg" alt>
-                                        </a>
 
-                                        <div class="Menu_NOtification_Wrap">
-                                            <div class="notification_Header">
-                                                <h4>Thông báo</h4>
-                                            </div>
-                                            <div class="Notification_body">
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="nofity_footer">
-                                                <div class="submit_button text-center pt_20">
-                                                    <a href="#" class="btn_1">See More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </div>
                                 <div class="profile_info">
                                     <img src="${sessionScope.account.imgAccount}">
                                     <div class="profile_info_iner">
@@ -495,24 +405,8 @@
                                                 <a href="feedbacklist?page=1&status=pending&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'pending' ?'active':''}">Chờ duyệt (${requestScope.totalPending})</a>
                                                 <a href="feedbacklist?page=1&status=accept&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị (${requestScope.totalAccept})</a>
                                                 <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn (${requestScope.totalReject})</a>
-                                                <c:if test="${requestScope.status eq 'pending'}">
-                                                    <!--                                                    <div class="submit_button text-center pt_20" style="margin-left: 30rem;">
-                                                                                                            <button type="submit" class="btn_1" name="action" value="accept_all">Chấp nhận tất cả</a>
-                                                                                                        </div>-->
-                                                </c:if>
-                                                <c:if test="${requestScope.status eq 'accept'}">
-                                                    <!--                                                <div style="margin-left: 30rem">
-                                                                                                        <input type="button" value="Ẩn tất cả" />
-                                                                                                    </div>-->
-                                                </c:if>
-                                                <c:if test="${requestScope.status eq 'reject'}">
-                                                    <!--                                                <div style="margin-left: 30rem">
-                                                                                                        <input type="button" value="Hiển thị tất cả" />
-                                                                                                        <input type="button" value="Xóa tất cả" />
-                                                                                                    </div>-->
-                                                </c:if>
                                             </div>
-                                                <c:if test="${requestScope.listFeedback.size()==0}"> <div class="text-center" style="margin-top: 1rem"><h4>Chưa có lượt đánh giá nào</h4></div></c:if>
+                                            <c:if test="${requestScope.listFeedback.size()==0}"> <div class="text-center" style="margin-top: 1rem"><h4>Chưa có lượt đánh giá nào</h4></div></c:if>
                                             <c:if test="${requestScope.listFeedback.size() != 0}">
                                                 <table class="table lms_table_active">
                                                     <thead>
@@ -526,14 +420,20 @@
                                                             <th scope="col">Trạng thái</th>
                                                             <th scope="col">
                                                                 <c:if test="${requestScope.status eq 'pending'}">
-                                                                    <form action="feedbacklist" method="post">
+                                                                    <form action="feedbacklist" method="post" onsubmit="return confirmAction()">
                                                                         <input type="hidden" name="page" value="${requestScope.page}">
                                                                         <input type="hidden" name="search" value="${requestScope.searchResult}">
                                                                         <input type="hidden" name="filter" value="${requestScope.filter}">
                                                                         <input type="hidden" name="status" value="${requestScope.status}">
-                                                                        <button type="submit" class="btn_1" name="action" value="accept_all">Duyệt hết</a>
+                                                                        <button type="submit" class="btn_1" name="action" value="accept_all" style="font-size: 10px;padding: 5px 10px;">Duyệt hết</button>
                                                                     </form>
                                                                 </c:if>
+                                                                <script>
+                                                                    function confirmAction() {
+                                                                        return confirm("Bạn có chắc chắn muốn duyệt hết không?");
+                                                                    }
+                                                                </script>
+
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -542,26 +442,32 @@
                                                             <tr>
                                                                 <td>${feedback.stt}</td>
                                                                 <td>${feedback.account.userName}</td>
-                                                                <td>
+                                                                <td style="width: 100px">
                                                                     <div class="review-content d-flex">
                                                                         <div class="rating text-primary">
                                                                             <c:forEach begin="1" end="${feedback.rating}">
-                                                                                <svg class="star star-fill">
+                                                                                <svg class="star star-fill" style="width: 15px; height: auto">
                                                                                 <use xlink:href="#star-fill" style="color: gold"></use>
                                                                                 </svg>
                                                                             </c:forEach > 
                                                                             <c:forEach begin="1" end="${5-feedback.rating}">
-                                                                                <svg class="star star-empty">
+                                                                                <svg class="star star-empty" style="width: 15px; height: auto">
                                                                                 <use xlink:href="#star-empty" style="stroke: gold"></use>
                                                                                 </svg>
                                                                             </c:forEach> 
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td>${feedback.comments}</td>
-                                                                <td><img src="${feedback.product.imgProduct}" width="auto" height="110px" alt="alt"/><p style="font-size: smaller; font-weight: bold">${feedback.product.name}</p>
+                                                                <td>
+                                                                    <p style="width: 300px; /* Chiều rộng cố định */
+                                                                       height: 150px; /* Chiều cao cố định hợp lý */
+                                                                       overflow: auto;
+                                                                       color: black">${feedback.comments}</p>
                                                                 </td>
-                                                                <td>${feedback.feedbackDate}</td>
+
+                                                                <td><img src="${feedback.product.imgProduct}" width="auto" height="110px" alt="alt"/><p style="font-size: 10px; font-weight: bold">${feedback.product.name}</p>
+                                                                </td>
+                                                                <td style="font-size: 12px">${feedback.feedbackDate}</td>
                                                                 <c:if test="${feedback.status == 1}"><td class="status-approved">Đã duyệt</td></c:if>
                                                                 <c:if test="${feedback.status == 0}"><td class="status-pending">Chờ duyệt</td></c:if>
                                                                 <c:if test="${feedback.status == -1}"><td class="status-rejected">Bị ẩn</td></c:if>
@@ -608,6 +514,7 @@
                                                                                             <i class="fas fa-trash-alt"></i>
                                                                                         </button>
                                                                                     </div>
+                                                                                    
                                                                                 </c:if>
                                                                             </c:otherwise>
                                                                         </c:choose>

@@ -178,7 +178,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="images/anh456.png" class="logo">
+                    <img src="images/anh456.png" class="logo" style="width: 12rem; height: auto">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -271,11 +271,6 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <li class="wishlist-dropdown dropdown pe-3">
-                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-                                        <svg class="wishlist">
-                                        <use xlink:href="#heart"></use>
-                                        </svg>
-                                    </a>
                                     <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                                             <span class="text-primary">Your wishlist</span>
@@ -471,10 +466,10 @@
             <div class="swiper testimonial-swiper">
                 <div class="swiper-wrapper">
                     <c:forEach var="feedback" items="${requestScope.listMostRating}">
-                        <div class="swiper-slide d-flex justify-content-center">
+                        <div class="swiper-slide d-flex justify-content-center" style="height:300px">
                             <div class="card position-relative text-left p-5 border rounded-3 d-flex flex-row" style="width: 90%; max-width: 900px;">
                                 <div class="col-lg-8">
-                                    <blockquote>"${feedback.comments}"</blockquote>
+                                    <blockquote style="height:150px; overflow: auto">"${feedback.comments}"</blockquote>
                                     <div class="rating text-warning d-flex align-items-center">
                                         <svg class="star star-fill">
                                         <use xlink:href="#star-fill"></use>
@@ -495,7 +490,7 @@
                                     <h5 class="mt-1 fw-normal">${feedback.account.fullName}</h5>
                                 </div>
                                 <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
-                                    <a href="single?productID=${feedback.product.productId}" style="margin-left: 30px"><img src="${feedback.product.imgProduct}" width="75%" height="auto" alt="Product Image" /></a>
+                                    <a href="single?productID=${feedback.product.productId}" style="margin-left: 30px"><img src="${feedback.product.imgProduct}" width="75%" height="auto" alt="Product Image" /><h6 style="font-size: 10px; margin-top: 5px">${feedback.product.name}</h6></a>
                                 </div>
                             </div>
                         </div>

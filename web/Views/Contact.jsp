@@ -175,7 +175,7 @@
         <nav id="header-nav" class="navbar navbar-expand-lg py-3">
             <div class="container">
                 <a class="navbar-brand" href="home">
-                    <img src="images/anh456.png" class="logo">
+                    <img src="images/anh456.png" class="logo" style="width: 12rem; height: auto">
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <svg class="navbar-icon">
@@ -375,11 +375,6 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <li class="wishlist-dropdown dropdown pe-3">
-                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-                                        <svg class="wishlist">
-                                        <use xlink:href="#heart"></use>
-                                        </svg>
-                                    </a>
                                     <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                                             <span class="text-primary">Your wishlist</span>
