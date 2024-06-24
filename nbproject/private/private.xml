@@ -29,6 +29,14 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/CategoryController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DiscountDAO.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateCode.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/ChangeRole.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/UpdateAuthorControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/ChangeRoleControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Models/Account.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/Account.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/AccountDAO.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/AuthorDao.java</file>
         </group>
     </open-files>
 </project-private>

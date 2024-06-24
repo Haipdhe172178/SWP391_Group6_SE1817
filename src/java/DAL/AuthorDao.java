@@ -96,6 +96,19 @@ public class AuthorDao extends DBContext {
         }
         return null;
     }
+    
+     public boolean getAuthor(String name) {
+        String query = "SELECT 1 FROM Author WHERE AuthorName = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     public List<Author> pagingAuthors(int index) {
         List<Author> list = new ArrayList<>();

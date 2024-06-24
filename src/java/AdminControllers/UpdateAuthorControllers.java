@@ -77,13 +77,18 @@ public class UpdateAuthorControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
         int authorID = Integer.parseInt(request.getParameter("id"));
         String authorName = request.getParameter("name");
         String authorDescription = request.getParameter("description");
         int authorStatus = Integer.parseInt(request.getParameter("status"));
         AuthorDao authorDao = new AuthorDao();
-        Author existingAuthor = authorDao.getAuthorByName(authorName);
-        if (existingAuthor != null) {
+        Author oldAuthor = authorDao.getAuthorById(authorID);
+        String oldName = oldAuthor.getAuthorName();
+        
+        boolean authorNameExists = authorDao.getAuthor(authorName);
+        
+        if (authorNameExists && !authorName.contains(oldName)) {
             session.setAttribute("description", authorDescription);
             session.setAttribute("authorName", authorName);
             session.setAttribute("notification", "error");
