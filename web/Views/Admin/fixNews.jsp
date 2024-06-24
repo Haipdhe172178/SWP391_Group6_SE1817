@@ -201,58 +201,61 @@
                             </div>
                         </c:if>
                         <form action="fixnews" method="POST" class="row g-3" enctype="multipart/form-data">
-                            <input type="hidden" name="action" value="update">
-                            <input type="hidden" name="newsId" value="${news.newId}">
+    <input type="hidden" name="action" value="update">
+    <input type="hidden" name="newsId" value="${news.newId}">
 
-                            <div class="col-md-6">
-                                <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" value="${news.title}" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="dateUpload" class="form-label">Date Upload</label>
-                                <input type="date" class="form-control" id="dateUpload" name="dateUpload" value="${news.dateUpload}" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="content" class="form-label">Content</label>
-                                <textarea class="form-control" id="content" name="content" rows="4" required>${news.content}</textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="img1" class="form-label">Image 1</label>
-                                <input type="file" class="form-control" id="img1" name="img1" required>
-                                <c:if test="${not empty news.imgNews1}">
-                                    <img src="${news.imgNews1}" alt="Image 1" style="max-width: 200px; max-height: 200px;">
-                                </c:if>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="img2" class="form-label">Image 2</label>
-                                <input type="file" class="form-control" id="img2" name="img2" required>
-                                <c:if test="${not empty news.imgNews2}">
-                                    <img src="${news.imgNews2}" alt="Image 2" style="max-width: 200px; max-height: 200px;">
-                                </c:if>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="source" class="form-label">Source</label>
-                                <input type="text" class="form-control" id="source" name="source" value="${news.source}" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="topicId" class="form-label">Topic</label>
-                                <select class="form-select" id="topicId" name="topicId" required>
-                                    <c:forEach var="topic" items="${topics}">
-                                        <option value="${topic.topicId}" ${topic.topicId == news.topic.topicId ? 'selected' : ''}>${topic.topicName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-select" id="status" name="status" required>
-                                    <option value="true" ${news.status ? 'selected' : ''}>Active</option>
-                                    <option value="false" ${!news.status ? 'selected' : ''}>Inactive</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Update News</button>
-                            </div>
-                        </form>
+    <div class="col-md-6">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="${news.title}" required>
+    </div>
+    <div class="col-md-6">
+        <label for="dateUpload" class="form-label">Date Upload</label>
+        <input type="date" class="form-control" id="dateUpload" name="dateUpload" value="${news.dateUpload}" required>
+    </div>
+    <div class="col-12">
+        <label for="content" class="form-label">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="4" required>${news.content}</textarea>
+    </div>
+    <div class="col-md-6">
+        <label for="img1" class="form-label">Image 1</label>
+        <input type="file" class="form-control" id="img1" name="img1">
+        <c:if test="${not empty news.imgNews1}">
+            <img src="${news.imgNews1}" alt="Image 1" style="max-width: 200px; max-height: 200px;">
+            <input type="hidden" name="currentImg1" value="${news.imgNews1}">
+        </c:if>
+    </div>
+    <div class="col-md-6">
+        <label for="img2" class="form-label">Image 2</label>
+        <input type="file" class="form-control" id="img2" name="img2">
+        <c:if test="${not empty news.imgNews2}">
+            <img src="${news.imgNews2}" alt="Image 2" style="max-width: 200px; max-height: 200px;">
+            <input type="hidden" name="currentImg2" value="${news.imgNews2}">
+        </c:if>
+    </div>
+    <div class="col-md-6">
+        <label for="source" class="form-label">Source</label>
+        <input type="text" class="form-control" id="source" name="source" value="${news.source}" required>
+    </div>
+    <div class="col-md-6">
+        <label for="topicId" class="form-label">Topic</label>
+        <select class="form-select" id="topicId" name="topicId" required>
+            <c:forEach var="topic" items="${topics}">
+                <option value="${topic.topicId}" ${topic.topicId == news.topic.topicId ? 'selected' : ''}>${topic.topicName}</option>
+            </c:forEach>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="true" ${news.status ? 'selected' : ''}>Active</option>
+            <option value="false" ${!news.status ? 'selected' : ''}>Inactive</option>
+        </select>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Update News</button>
+    </div>
+</form>
+
                     </div>
                 </div>
             </div>

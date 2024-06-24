@@ -19,67 +19,68 @@ public class FixNewsControllers extends HttpServlet {
     private NewsDao newsDao = new NewsDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
+        throws ServletException, IOException {
+    String action = request.getParameter("action");
 
-        if ("edit".equals(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
+    if ("edit".equals(action)) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        News news = newsDao.getNewsById(id);
+        List<Topic> topics = newsDao.getTopic();
+        request.setAttribute("news", news);
+        request.setAttribute("topics", topics);
+        RequestDispatcher rd = request.getRequestDispatcher("Views/Admin/fixNews.jsp");
+        rd.forward(request, response);
+    } else if ("update".equals(action)) {
+        int id = Integer.parseInt(request.getParameter("newsId"));
+        String title = request.getParameter("title");
+        String dateUpload = request.getParameter("dateUpload");
+        String content = request.getParameter("content");
+        String source = request.getParameter("source");
+        int topicId = Integer.parseInt(request.getParameter("topicId"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+
+        Part img1Part = request.getPart("img1");
+        Part img2Part = request.getPart("img2");
+
+        String img1Filename = (img1Part != null && img1Part.getSize() > 0) ? validateAndUploadFile(img1Part, request) : request.getParameter("currentImg1");
+        String img2Filename = (img2Part != null && img2Part.getSize() > 0) ? validateAndUploadFile(img2Part, request) : request.getParameter("currentImg2");
+
+        if ((img1Part != null && img1Part.getSize() > 0 && img1Filename == null) || 
+            (img2Part != null && img2Part.getSize() > 0 && img2Filename == null)) {
             News news = newsDao.getNewsById(id);
             List<Topic> topics = newsDao.getTopic();
             request.setAttribute("news", news);
             request.setAttribute("topics", topics);
+            request.setAttribute("errorMessage", "Định dạng hình ảnh không hợp lệ. Chỉ cho phép JPG, PNG, WEBP và GIF.");
             RequestDispatcher rd = request.getRequestDispatcher("Views/Admin/fixNews.jsp");
             rd.forward(request, response);
-        } else if ("update".equals(action)) {
-            int id = Integer.parseInt(request.getParameter("newsId"));
-            String title = request.getParameter("title");
-            String dateUpload = request.getParameter("dateUpload");
-            String content = request.getParameter("content");
-            String source = request.getParameter("source");
-            int topicId = Integer.parseInt(request.getParameter("topicId"));
-            boolean status = Boolean.parseBoolean(request.getParameter("status"));
-
-            Part img1Part = request.getPart("img1");
-            Part img2Part = request.getPart("img2");
-
-            String img1Filename = validateAndUploadFile(img1Part, request);
-            String img2Filename = validateAndUploadFile(img2Part, request);
-
-            if (img1Filename == null || img2Filename == null) {
-                News news = newsDao.getNewsById(id);
-                List<Topic> topics = newsDao.getTopic();
-                request.setAttribute("news", news);
-                request.setAttribute("topics", topics);
-                request.setAttribute("errorMessage", "Định dạng hình ảnh không hợp lệ. Chỉ cho phép JPG, PNG, WEBP và GIF.");
-                RequestDispatcher rd = request.getRequestDispatcher("Views/Admin/fixNews.jsp");
-                rd.forward(request, response);
-                return;
-            }
-
-            Topic topic = new Topic();
-            topic.setTopicId(topicId);
-            News news = new News();
-            news.setNewId(id);
-            news.setTopic(topic);
-            news.setTitle(title);
-            news.setContent(content);
-            news.setImgNews1(img1Filename);
-            news.setImgNews2(img2Filename);
-            news.setDateUpload(java.sql.Date.valueOf(dateUpload));
-            news.setSource(source);
-            news.setStatus(status);
-
-            newsDao.updateNews(news);
-
-            request.setAttribute("message", "Cập nhật tin tức thành công");
-            response.sendRedirect("upnews");
-        } else if ("delete".equals(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            newsDao.deleteNews(id);
-            request.setAttribute("message", "Đã xóa bản tin thành công");
-            response.sendRedirect("upnews");
+            return;
         }
+
+        Topic topic = new Topic();
+        topic.setTopicId(topicId);
+        News news = new News();
+        news.setNewId(id);
+        news.setTopic(topic);
+        news.setTitle(title);
+        news.setContent(content);
+        news.setImgNews1(img1Filename);
+        news.setImgNews2(img2Filename);
+        news.setDateUpload(java.sql.Date.valueOf(dateUpload));
+        news.setSource(source);
+        news.setStatus(status);
+
+        newsDao.updateNews(news);
+
+        request.setAttribute("message", "Cập nhật tin tức thành công");
+        response.sendRedirect("upnews");
+    } else if ("delete".equals(action)) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        newsDao.deleteNews(id);
+        request.setAttribute("message", "Đã xóa bản tin thành công");
+        response.sendRedirect("upnews");
     }
+}
 
     private String validateAndUploadFile(Part part, HttpServletRequest request) throws IOException {
         String contentType = part.getContentType();

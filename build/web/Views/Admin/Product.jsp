@@ -320,7 +320,7 @@
                                                             </td>
                                                             <td>
                                                                 <a href="update?id=${p.productId}" title="Update"><i class="fas fa-edit"></i></a>
-                                                                <a href="delete?id=${p.productId}" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                               
                                                             </td>
                                                         </tr>
 

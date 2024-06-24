@@ -58,6 +58,7 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         CategoryDao dal = new CategoryDao();
+        
         String searchtext = request.getParameter("s");
           String index = request.getParameter("index");
         if(request.getParameter("s")!=null){

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
     <link rel="stylesheet" href="css/metisMenu.css">
     <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .form-container {
             width: 100%;
@@ -296,10 +297,10 @@
                                                         <td><img src="${news.imgNews1}" alt="Image 1"></td>
                                                         <td><img src="${news.imgNews2}" alt="Image 2"></td>
                                                         <td>${news.status ? 'Active' : 'Inactive'}</td> <!-- Status value -->
-                                                        <td>
-                                                            <a href="fixnews?action=edit&id=${news.newId}" class="btn btn-primary btn-sm">Update</a>
-                                                            <a href="fixnews?action=delete&id=${news.newId}" class="btn btn-danger btn-sm">Delete</a>
-                                                        </td>
+                                                         <td>
+                <a href="fixnews?action=edit&id=${news.newId}" title="Update"><i class="fas fa-edit"></i></a>
+                <a href="fixnews?action=delete&id=${news.newId}" title="Delete"><i class="fas fa-trash-alt"></i></a>
+            </td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>

@@ -1,11 +1,11 @@
 <%-- 
-    Document   : AddAuthor.jsp
-    Created on : Jun 18, 2024, 10:50:22 AM
+    Document   : DataTable
+    Created on : May 27, 2024, 10:09:46 AM
     Author     : huyca
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
         <link rel="stylesheet" href="css/metisMenu.css">
         <link rel="stylesheet" href="css/style1.css" />
-        <title> Thêm Tác Giả</title>
+        <title> Thêm Sản Phẩm</title>
         <style>
             .error {
                 color: red;
@@ -94,7 +94,7 @@
                         <span>Bảng điều khiển</span>
                     </a>
                     <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
+                        <li><a class="" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -119,6 +119,7 @@
                     <ul>
                         <li><a href="image">Ảnh trang chủ</a></li>
                         <li><a href="discount">Mã Giảm giá</a></li>
+
                     </ul>
                 </li>        
                 <li class>
@@ -129,20 +130,9 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a class="active" href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
                          <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Tài Khoản</a></li>
                     </ul>
                 </li>
                 <li class>
@@ -308,25 +298,85 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form action="adda" method="POST" id="myForm">
+                                <form action="update" method="POST" enctype="multipart/form-data" id="myForm">
                                     <div class="white_card_body">
                                         <div class="mb-3">
-                                            <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" required>
-                                            <div id="authorNameError" class="error"></div>
-                                        </div>                                  
+                                            <label for="productName">Tên sản phẩm:</label>
+                                            <input type="text" class="form-control" id="productName" name="name" value="${data.name}"  required>
+                                            <div id="productNameError" class="error"></div>
+                                        </div>
+                                            <div hidden="" class="mb-3">
+                                            <label for="productName">id</label>
+                                            <input type="text" class="form-control" id="productName" name="ID" value="${data.productId}"  required>
+                                            <div id="productNameError" class="error"></div>
+                                        </div>
                                         <div class="mb-3">
-                                            <label for="authorDescription">Tiểu sử</label>
-                                            <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required></textarea>
-                                            <div id="authorDescriptionError" class="error"></div>
-                                        </div>                                                                                                                                                              
+                                            <label for="productPrice">Giá:</label>
+                                            <input type="number" class="form-control" id="productPrice" value="${data.price}"  name="price" required>
+                                            <div id="productPriceError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productQuantity">Số lượng:</label>
+                                            <input type="number" class="form-control" id="productQuantity" value="${data.quantity}"  name="quantity" required>
+                                            <div id="productQuantityError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productDescription">Mô tả sản phẩm:</label>
+                                            <textarea class="form-control" id="productDescription"   name="description"   required>${data.description}</textarea>
+                                           
+                                            <div id="productDescriptionError" class="error"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productCategory" class="form-label">Thể loại</label>
+                                            <select class="form-select" id="productCategory" name="categoryId" required>
+                                                <c:forEach items="${category}" var="c">
+                                                    <option ${c.categoryId == data.category.categoryId ? "selected" : ""} value="${c.categoryId}">${c.categoryName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productAuthor" class="form-label">Tác giả</label>
+                                            <select class="form-select" id="productAuthor" name="author" required>
+                                                <c:forEach items="${author}" var="au">
+                                                    <option ${au.authorID == data.author.authorID ? "selected" : ""} value="${au.authorID}">${au.authorName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control"  name="imgProduct" >
+                                            <img height="200px" width="200px" src="${data.imgProduct}" alt="alt"/>
+                                        </div>
+                                        <div hidden class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="text" class="form-control" value="${data.imgProduct}"  name="imgProduct12" >
+                                            <img height="200px" width="200px"  alt="alt"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productAgeSelect" class="form-label">Độ tuổi</label>
+                                            <select class="form-select" id="productAgeSelect" name="ageId" required>
+                                                <c:forEach items="${obage}" var="o">
+                                                    <option ${o.ageId == data.oage.ageId ? "selected" : ""} value="${o.ageId}">${o.age}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                          <div class="mb-3">
+                                            <label for="productCategory" class="form-label">Trạng thái hoạt động</label>
+                                            <select class="form-select" id="" name="status" required>
+
+
+                                                <option value="1" ${data.status == 1 ? 'selected':''}  >Sử dụng</option>
+                                                <option value="0"${data.status == 0 ? 'selected':'' } >Không sử dụng</option>
+
+
+                                            </select>
+                                        </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Thêm Tác Giả</button>
+                                            <button type="submit" name="submit" class="btn btn-primary">Sửa sản phẩm</button>
                                             <a href="data" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
-                                </form>
-
+                                    </form>
 
                             </div>
                         </div>
@@ -483,29 +533,60 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
         <!--kiem tra validation-->
         <script>
-            // JavaScript for form validation
+                                                // JavaScript for form validation
             document.getElementById('myForm').addEventListener('submit', function (event) {
-                var authorName = document.getElementById('authorName').value.trim();
-                var authorDescription = document.getElementById('authortDescription').value.trim();
-                var authorNameError = document.getElementById('authorNameError');
-                var authorDescriptionError = document.getElementById('authorDescriptionError');
-                var isValid = true;
-                // Reset previous error messages
-                authorNameError.textContent = '';
-                authorDescriptionError.textContent = '';
-                if (authorName === '') {
-                    authorNameError.textContent = 'Vui lòng nhập tên tác giả.';
-                    isValid = false;
-                }
-                if (authorDescription === '') {
-                    authorDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
-                    isValid = false;
-                }
+                    var productName = document.getElementById('productName').value.trim();
+                    var productPrice = document.getElementById('productPrice').value.trim();
+                    var productQuantity = document.getElementById('productQuantity').value.trim();
+                    var productDescription = document.getElementById('productDescription').value.trim();
+                    var productImage = document.getElementById('productImage').value.trim();
 
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
+                    var productNameError = document.getElementById('productNameError');
+                    var productPriceError = document.getElementById('productPriceError');
+                    var productQuantityError = document.getElementById('productQuantityError');
+                    var productDescriptionError = document.getElementById('productDescriptionError');
+
+                    var isValid = true;
+
+                    // Reset previous error messages
+                    productNameError.textContent = '';
+                    productPriceError.textContent = '';
+                    productQuantityError.textContent = '';
+                    productDescriptionError.textContent = '';
+
+                    if (productName === '') {
+                        productNameError.textContent = 'Vui lòng nhập tên sản phẩm.';
+                        isValid = false;
+                    }
+                    if (productPrice === '') {
+                        productPriceError.textContent = 'Vui lòng nhập giá sản phẩm.';
+                        isValid = false;
+                    } else if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
+                        productPriceError.textContent = 'Giá sản phẩm phải là một số dương.';
+                        isValid = false;
+                    }
+
+                    if (productQuantity === '') {
+                        productQuantityError.textContent = 'Vui lòng nhập số lượng sản phẩm.';
+                        isValid = false;
+                    } else if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
+                        productQuantityError.textContent = 'Số lượng sản phẩm phải là một số nguyên dương.';
+                        isValid = false;
+                    }
+
+                    if (productDescription === '') {
+                        productDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                        isValid = false;
+                    }
+                    if (productImage === '') {
+                        alert('Vui lòng chọn một ảnh cho sản phẩm.');
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault();
+                    }
+                    });
         </script>
         <!--hien thi thong bao-->
         <script>
@@ -516,12 +597,12 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tác giả thành công!';
+                        notificationElement.textContent = 'Thêm Sản Phẩm thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
                             notificationContainer.style.display = 'none';
-                            window.location.href = '<%= request.getContextPath() %>/author';
+                            window.location.href = '<%= request.getContextPath() %>/data';
                         }, 5000);
                     }
                 } else if (notification === 'error') {
@@ -543,6 +624,7 @@
             }
             window.onload = showNotificationAndRedirect;
         </script>
-    </body>
-</html>
 
+</body>
+
+</html>
