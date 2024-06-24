@@ -32,6 +32,36 @@
         <link rel="stylesheet" href="css/metisMenu.css">
 
         <link rel="stylesheet" href="css/style1.css" />
+
+        <style>
+            .pagination a {
+                color: #000;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+                border: 1px solid #ddd; /* Gray border */
+                margin: 0 4px; /* Add some space between links */
+            }
+
+            .pagination a.active {
+                background-color: #4B0082;
+                color: white;
+                border: 1px solid #4B0082;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+            .pagination a.disabled {
+                pointer-events: none;
+                color: #ccc;
+                border-color: #ddd;
+            }
+        </style>
+
+
     </head>
 
     <body class="crm_body_bg">
@@ -43,7 +73,7 @@
                     <i class="ti-close"></i>
                 </div>
             </div>
-             <ul id="sidebar_menu">
+            <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
@@ -88,12 +118,12 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                 <li class>
+                <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -260,21 +290,22 @@
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
                                             <h4>Table</h4>
-                                            
+
 
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
-                                                        <form action="data" method="GET">
+                                                        <form action="category" method="get">
                                                             <div class="search_field">
-                                                                <input name="s" type="text" placeholder="Search here...">
+                                                                <input name="s" type="text" value="${s}" placeholder="Search here...">
+                                                                <input hidden="" name="s" type="text" value="${s}" placeholder="Search here...">
                                                             </div>
                                                             <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
                                                         </form>
                                                     </div>
                                                 </div>
                                                 <div class="add_button ms-2">
-                                                    <a href="addcategory" class="btn_1">Add Category</a>
+                                                    <a href="addcategory" class="btn_1">Thêm thể loại</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -285,8 +316,8 @@
                                                     <tr>
                                                         <th scope="col">ID</th>
                                                         <th scope="col">Tên tác giả</th>
-                                                         <th scope="col">Hoạt đông</th>
-                                                       
+                                                        <th scope="col">Hoạt đông</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -294,19 +325,25 @@
                                                         <tr>
                                                             <td>${p.categoryId}</td>
                                                             <td>${p.categoryName}</td>
-                                                           
-                                                          
-                                                          <td><a href="updatecategory?id=${p.categoryId}">UPDATE</td>
+
+
+                                                            <td><a href="updatecategory?id=${p.categoryId}">UPDATE</td>
                                                         </tr>
 
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+
                                         </div>
-                                        <nav class="py-5" aria-label="Page navigation">
-                                           
-                                           
-                                        </nav>
+                                        <form method="get" action="category">
+                                            <nav class="pagination" aria-label="Page navigation">
+                                                <a href="category?index=${tag - 1}&&s=${s}" class="${tag == 1 ? 'disabled' : ''}">Previous</a>
+                                                <c:forEach begin="1" end="${endP}" var="i">
+                                                    <a href="category?index=${i}&&s=${s}" class="${tag == i ? 'active' : ''}">${i}</a>
+                                                </c:forEach>
+                                                <a href="category?index=${tag + 1}&&s=${s}" class="${tag == endP ? 'disabled' : ''}">Next</a>
+                                            </nav>
+                                        </form>
 
                                     </div>
                                 </div>

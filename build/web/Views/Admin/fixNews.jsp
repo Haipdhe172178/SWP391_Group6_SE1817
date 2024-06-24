@@ -176,13 +176,18 @@
             </div>
         </div>
 
-        <div class="main_content_iner">
+         <div class="main_content_iner">
             <div class="container mt-5">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         Update News
                     </div>
                     <div class="card-body">
+                        <c:if test="${not empty errorMessage}">
+                            <div class="alert alert-danger" role="alert">
+                                ${errorMessage}
+                            </div>
+                        </c:if>
                         <form action="fixnews" method="POST" class="row g-3" enctype="multipart/form-data">
                             <input type="hidden" name="action" value="update">
                             <input type="hidden" name="newsId" value="${news.newId}">
@@ -202,10 +207,16 @@
                             <div class="col-md-6">
                                 <label for="img1" class="form-label">Image 1</label>
                                 <input type="file" class="form-control" id="img1" name="img1" required>
+                                <c:if test="${not empty news.imgNews1}">
+                                    <img src="${news.imgNews1}" alt="Image 1" style="max-width: 200px; max-height: 200px;">
+                                </c:if>
                             </div>
                             <div class="col-md-6">
                                 <label for="img2" class="form-label">Image 2</label>
                                 <input type="file" class="form-control" id="img2" name="img2" required>
+                                <c:if test="${not empty news.imgNews2}">
+                                    <img src="${news.imgNews2}" alt="Image 2" style="max-width: 200px; max-height: 200px;">
+                                </c:if>
                             </div>
                             <div class="col-md-6">
                                 <label for="source" class="form-label">Source</label>
@@ -217,6 +228,13 @@
                                     <c:forEach var="topic" items="${topics}">
                                         <option value="${topic.topicId}" ${topic.topicId == news.topic.topicId ? 'selected' : ''}>${topic.topicName}</option>
                                     </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="true" ${news.status ? 'selected' : ''}>Active</option>
+                                    <option value="false" ${!news.status ? 'selected' : ''}>Inactive</option>
                                 </select>
                             </div>
                             <div class="col-12">

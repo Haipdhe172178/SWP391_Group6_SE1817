@@ -185,5 +185,158 @@ public class DiscountDAO extends DBContext {
 
     }
 
-}
+    public int getToralDiscount() {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "  select count(*) from Used_coupon";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
 
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+
+        return 0;
+
+    }
+
+    public int getToralDiscountbyname(String searchtext) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "  select count(*) from Used_coupon where Used_coupon.Coupon_type like ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + searchtext + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+
+        return 0;
+
+    }
+
+    public ArrayList<UsedCoupon> listcodepage(int indexx) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<UsedCoupon> data = new ArrayList<UsedCoupon>();
+        try {
+            String sql = "SELECT [CodeID]\n"
+                    + "                        ,[CodeName]\n"
+                    + "                   ,[Discount]\n"
+                    + "                , [Coupon_type]\n"
+                    + "                   ,[Quantity]\n"
+                    + "                  ,[status]\n"
+                    + "                  FROM [dbo].[Used_coupon]  order by CodeID\n"
+                    + "  offset ?  rows fetch next 3 rows only";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, (indexx - 1) * 3);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String codename = rs.getString(2);
+                float discout = rs.getFloat(3);
+                String Coupon_type = rs.getString(4);
+                int Quantity = rs.getInt(5);
+
+                int status = rs.getInt(6);
+
+                data.add(new UsedCoupon(id, codename, discout, Coupon_type, Quantity, status));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+
+    }
+
+    public ArrayList<UsedCoupon> listcodepageseachbytype(int indexx, String searchtext) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<UsedCoupon> data = new ArrayList<UsedCoupon>();
+        try {
+            String sql = "SELECT [CodeID]\n"
+                    + "                        ,[CodeName]\n"
+                    + "                   ,[Discount]\n"
+                    + "                , [Coupon_type]\n"
+                    + "                   ,[Quantity]\n"
+                    + "                  ,[status]\n"
+                    + "                  FROM [dbo].[Used_coupon]  where Used_coupon.Coupon_type like ?\n"
+                    + "				  order by CodeID\n"
+                    + "  offset ?  rows fetch next 3 rows only";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, "%" + searchtext + "%");
+            stm.setInt(2, (indexx - 1) * 3);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String codename = rs.getString(2);
+                float discout = rs.getFloat(3);
+                String Coupon_type = rs.getString(4);
+                int Quantity = rs.getInt(5);
+
+                int status = rs.getInt(6);
+
+                data.add(new UsedCoupon(id, codename, discout, Coupon_type, Quantity, status));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+
+    public int getToralDiscountbystatus(String status) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "   select count(*) from Used_coupon where Used_coupon.status = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, status);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+
+        return 0;
+
+    }
+
+    public ArrayList<UsedCoupon> listcodepageseachbystatus(int indexx, String status1) {
+        ArrayList<UsedCoupon> data = new ArrayList<UsedCoupon>();
+        try {
+            String sql = "SELECT [CodeID]\n"
+                    + "                        ,[CodeName]\n"
+                    + "                   ,[Discount]\n"
+                    + "                , [Coupon_type]\n"
+                    + "                   ,[Quantity]\n"
+                    + "                  ,[status]\n"
+                    + "                  FROM [dbo].[Used_coupon]  where Used_coupon.status = ?\n"
+                    + "				  order by CodeID\n"
+                    + "  offset ?  rows fetch next 3 rows only";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, status1 );
+            stm.setInt(2, (indexx - 1) * 3);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String codename = rs.getString(2);
+                float discout = rs.getFloat(3);
+                String Coupon_type = rs.getString(4);
+                int Quantity = rs.getInt(5);
+
+                int status = rs.getInt(6);
+
+                data.add(new UsedCoupon(id, codename, discout, Coupon_type, Quantity, status));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+
+}
