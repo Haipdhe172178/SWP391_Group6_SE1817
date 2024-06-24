@@ -54,41 +54,50 @@ public class CartControllers extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    HttpSession session = request.getSession();
 
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+    int productId = Integer.parseInt(request.getParameter("productId"));
+    int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        String cartData = getCartDataFromCookie(request);
-        ProductDao productDao = new ProductDao();
-        List<Product> productList = productDao.getAllProducts();
-        Cart cart = new Cart(cartData, productList);
+    // Check if the quantity is greater than zero
+    if (quantity <= 0) {
+        session.setAttribute("message", "Số lượng sản phẩm phải lớn hơn 0");
+        response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+        return;
+    }
 
-        Product product = cart.getProductById(productId, productList);
-        if (product != null) {
+    String cartData = getCartDataFromCookie(request);
+    ProductDao productDao = new ProductDao();
+    List<Product> productList = productDao.getAllProducts();
+    Cart cart = new Cart(cartData, productList);
+
+    Product product = cart.getProductById(productId, productList);
+    if (product != null) {
+        int currentCartQuantity = cart.getQuantityByProductId(productId);
+        if (currentCartQuantity + quantity > product.getQuantity()) {
+            session.setAttribute("message", "Số lượng thêm vào vượt quá số lượng sản phẩm");
+        } else {
             Item newItem = new Item(product, quantity, product.getPrice());
             cart.addItem(newItem);
-          
-      
-        
-        } else {
-            System.out.println("Không tìm thấy sản phẩm!");
+            session.setAttribute("message", "Thêm vào giỏ hàng thành công");
         }
-
-        updateCartCookie(response, cart);
-
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        if (a != null) {
-            CartDAO cartDao = new CartDAO();
-            cart.setAccountId(a.getAccountId());
-            cartDao.addCartItem(cart);
-        }
-
-        session.setAttribute("cart", cart);
-        response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+    } else {
+        System.out.println("Không tìm thấy sản phẩm!");
     }
+
+    updateCartCookie(response, cart);
+    Account a = (Account) session.getAttribute("account");
+    if (a != null) {
+        CartDAO cartDao = new CartDAO();
+        cart.setAccountId(a.getAccountId());
+        cartDao.addCartItem(cart);
+    }
+
+    session.setAttribute("cart", cart);
+    response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+}
 
     @Override
     public String getServletInfo() {
