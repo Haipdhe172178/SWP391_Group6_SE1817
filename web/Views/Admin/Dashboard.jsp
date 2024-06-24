@@ -120,6 +120,17 @@
                         <li><a href="manages">nhân Viên</a></li>
                     </ul>
                 </li>
+                <li class="mm-active">
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <div class="icon_menu">
+                        <img src="img/menu-icon/18.svg" alt="Up News">
+                    </div>
+                    <span>Quản lý tin tức</span>
+                </a>
+                <ul>
+                    <li><a class="active" href="upnews">Tin tức</a></li>
+                </ul>
+            </li>
             </ul>
         </nav>
 

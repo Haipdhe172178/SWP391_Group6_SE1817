@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="news" transform="translate(0 -2)">
+    <rect id="background" x="2" y="4" width="20" height="16" fill="#47b181"/>
+    <rect id="title" x="4" y="6" width="8" height="2" fill="#ffffff"/>
+    <rect id="line1" x="4" y="10" width="14" height="1.5" fill="#ffffff"/>
+    <rect id="line2" x="4" y="13" width="14" height="1.5" fill="#ffffff"/>
+    <rect id="line3" x="4" y="16" width="14" height="1.5" fill="#ffffff"/>
+  </g>
+</svg>

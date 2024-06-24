@@ -292,6 +292,10 @@
         <servlet-name>ImaBGController</servlet-name>
         <url-pattern>/image</url-pattern>
     </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>AddAcountControllers</servlet-name>
+        <url-pattern>/addac</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddImage</servlet-name>
         <url-pattern>/addimage</url-pattern>

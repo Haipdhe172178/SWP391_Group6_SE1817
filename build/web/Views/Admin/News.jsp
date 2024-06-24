@@ -61,75 +61,87 @@
     </style>
 </head>
 <body class="crm_body_bg">
-    <nav class="sidebar vertical-scroll ps-container ps-theme-default ps-active-y">
-        <div class="logo d-flex justify-content-between">
-            <a href="dash"><img src="images/anh456.png" alt="Logo"></a>
-            <div class="sidebar_close_icon d-lg-none">
-                <i class="ti-close"></i>
+    <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+            <div class="logo d-flex justify-content-between">
+                <a href="dash"><img src="images/anh456.png" alt></a>
+                <div class="sidebar_close_icon d-lg-none">
+                    <i class="ti-close"></i>
+                </div>
             </div>
-        </div>
-        <ul id="sidebar_menu">
-            <li class="mm-active">
+             <ul id="sidebar_menu">
+                <li class="mm-active">
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/dashboard.svg" alt>
+                        </div>
+                        <span>Bảng điều khiển</span>
+                    </a>
+                    <ul>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/2.svg" alt>
+                        </div>
+                        <span>Ứng dụng</span>
+                    </a>
+                    <ul>
+                        <li><a href="contactAdmin">Liên hệ</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/8.svg" alt>
+                        </div>
+                        <span>Bán hàng</span>
+                    </a>
+                    <ul>
+                        <li><a href="image">Ảnh trang chủ</a></li>
+                        <li><a href="discount">Mã Giảm giá</a></li>
+
+                    </ul>
+                </li>        
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/11.svg" alt>
+                        </div>
+                        <span>Bảng dữ liệu</span>
+                    </a>
+                    <ul>
+                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
+                    </ul>
+                </li>
+                <li class="mm-active">
                 <a class="has-arrow" href="#" aria-expanded="false">
                     <div class="icon_menu">
-                        <img src="img/menu-icon/dashboard.svg" alt="Dashboard">
+                        <img src="img/menu-icon/18.svg" alt="Up News">
                     </div>
-                    <span>Dashboard</span>
+                    <span>Quản lý tin tức</span>
                 </a>
                 <ul>
-                    <li><a class="active" href="index.html">Sales</a></li>
+                    <li><a class="active" href="upnews">Tin tức</a></li>
                 </ul>
             </li>
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/2.svg" alt="Apps">
-                    </div>
-                    <span>Apps</span>
-                </a>
-                <ul>
-                    <li><a href="contactAdmin">Liên hệ</a></li>
-                    <li><a href="chat.html">Chat</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/8.svg" alt="Sale">
-                    </div>
-                    <span>Sale</span>
-                </a>
-                <ul>
-                    <li><a href="image">Image Background</a></li>
-                    <li><a href="discount">Discount</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/11.svg" alt="Table">
-                    </div>
-                    <span>Table</span>
-                </a>
-                <ul>
-                    <li><a href="data">Sản phẩm</a></li>
-                    <li><a href="#">Thể Loại</a></li>
-                    <li><a href="#">Tác Giả</a></li>
-                </ul>
-            </li>
-            <li class="mm-active">
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/17.svg" alt="Up News">
-                    </div>
-                    <span>Up News</span>
-                </a>
-                <ul>
-                    <li><a class="active" href="upnews">News</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+            </ul>
+        </nav>
 
    <section class="main_content dashboard_part large_header_bg">
         <div class="container-fluid g-0">
@@ -232,14 +244,14 @@
                             <div class="white_card_header">
                                 <div class="box_header m-0">
                                     <div class="main-title">
-                                        <h3 class="m-0">News Management</h3>
+                                        <h3 class="m-0">Quản lý tin tức</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="white_card_body">
                                 <div class="QA_section">
                                     <div class="white_box_tittle list_header">
-                                        <h4>Table</h4>
+                                        <h4>Tin tức</h4>
                                         <div class="box_right d-flex lms_block">
                                             <div class="serach_field_2">
                                                 <div class="search_inner">
@@ -261,15 +273,15 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Title</th>
-                                                    <th>Content</th>
-                                                    <th>Date Upload</th>
-                                                    <th>Topic</th>
-                                                    <th>Source</th>
-                                                    <th>Image 1</th>
-                                                    <th>Image 2</th>
-                                                    <th>Status</th> <!-- New Status column -->
-                                                    <th>Actions</th>
+                                                    <th>Tiêu Đề</th>
+                                                    <th>Nội Dung</th>
+                                                    <th>Ngày Đăng Tải</th>
+                                                    <th>Chủ Đề</th>
+                                                    <th>Nguồn</th>
+                                                    <th>Ảnh 1</th>
+                                                    <th>Ảnh 2</th>
+                                                    <th>Trạng Thái</th> 
+                                                    <th>Hành Động</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
