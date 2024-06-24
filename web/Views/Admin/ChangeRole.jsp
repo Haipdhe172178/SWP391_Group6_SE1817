@@ -134,7 +134,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                 <li class>
+                <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -300,33 +300,42 @@
                                 <form action="change" method="POST" id="myForm" enctype="multipart/form-data">
                                     <div class="white_card_body">
                                         <input type="hidden" id="accountID" name="id" value="${acc.accountId}">
-
                                         <div class="mb-3">
                                             <label for="accountName">Tên</label>
-                                            <input type="text" class="form-control" id="accountName" name="name" placeholder="Nhập tên" value="${empty acc.fullName ? '' : acc.fullName}" readonly>
+                                            <input type="text" class="form-control" id="accountName" name="name" placeholder="Nhập tên" value="${empty sessionScope.fullName ? acc.fullName : sessionScope.fullName}">
                                             <div id="accountNameError" class="error"></div>
                                         </div>
-
+                                        <div class="mb-3">
+                                            <label for="userName">Tên người dùng</label>
+                                            <input type="text" class="form-control" id="userName" name="userName" value="${empty sessionScope.userName ? acc.userName : sessionScope.userName}" placeholder="Nhập tên người dùng">
+                                            <div id="userNameError" class="error">${empty sessionScope.userNameError ? '' : sessionScope.userNameError}</div>
+                                        </div>
                                         <div class="mb-3">
                                             <label for="accountRole">Vai trò</label>
-                                            <input type="text" class="form-control" id="accountRole" name="roleID" value="${empty acc.roleId ? '' : acc.roleId}" readonly>
+                                            <select class="form-control" id="accountRole" name="roleID">
+                                                <c:if test="${acc.roleId == 2}">
+                                                    <option value="2" selected>Staff</option>
+                                                </c:if>
+                                            </select>
                                             <div id="accountRoleError" class="error"></div>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="userName">Tên người dùng</label>
-                                            <input type="text" class="form-control" id="userName" name="userName" placeholder="Nhập tên người dùng" value="${acc.userName}" readonly>
-                                            <div id="userNameError" class="error"></div>
+                                            <label for="passWord">Mật khẩu</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control" id="passWord" name="passWord" placeholder="Nhập mật khẩu" value="${empty sessionScope.passWord ? acc.passWord : sessionScope.passWord}">
+                                            </div>
+                                            <div id="passWordError" class="error"></div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label>Giới tính</label><br>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" id="maleRadio" name="gender" value="male" ${acc.gender.toLowerCase() == 'male' ? 'checked' : ''} disabled>
+                                                <input class="form-check-input" type="radio" id="maleRadio" name="gender" value="male" ${acc.gender.toLowerCase() == 'male' ? 'checked' : ''}>
                                                 <label class="form-check-label" for="maleRadio">Nam</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" id="femaleRadio" name="gender" value="female" ${acc.gender.toLowerCase() == 'female' ? 'checked' : ''} disabled>
+                                                <input class="form-check-input" type="radio" id="femaleRadio" name="gender" value="female" ${acc.gender.toLowerCase() == 'female' ? 'checked' : ''}>
                                                 <label class="form-check-label" for="femaleRadio">Nữ</label>
                                             </div>
                                             <div id="genderError" class="error"></div>
@@ -354,6 +363,23 @@
                                             <label for="imgAccount" class="form-label">Ảnh đại diện mới</label>
                                             <input type="file" class="form-control" id="imgAccount" name="imgAccount">
                                             <img id="currentImage" src="${acc.imgAccount}" alt="Current Image" style="max-width: 200px; margin-top: 10px;">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="status">Trạng thái</label>
+                                            <select class="form-control" id="status" name="status">
+                                                <c:choose>
+                                                    <c:when test="${acc.status == 1}">
+                                                        <option value="1" selected>Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="1">Active</option>
+                                                        <option value="0" selected>Inactive</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
+                                            <div id="statusError" class="error"></div>
                                         </div>
 
                                         <div>
@@ -516,22 +542,62 @@
 
         <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
         <script src="vendors/scroll/scrollable-custom.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <!--kiem tra validation-->
         <script>
+            document.getElementById('togglePassword').addEventListener('click', function (e) {
+                const passwordInput = document.getElementById('passWord');
+                const toggleIcon = document.getElementById('toggleIcon');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            });
+
             document.getElementById('myForm').addEventListener('submit', function (event) {
+                var accountName = document.getElementById('accountName').value.trim();
+                var accountRole = document.getElementById('accountRole').value.trim();
+                var userName = document.getElementById('userName').value.trim();
                 var email = document.getElementById('email').value.trim();
                 var phoneNumber = document.getElementById('phoneNumber').value.trim();
                 var address = document.getElementById('address').value.trim();
+                var password = document.getElementById('passWord').value.trim();
+                var gender = document.querySelector('input[name="gender"]:checked');
 
+                var accountNameError = document.getElementById('accountNameError');
+                var accountRoleError = document.getElementById('accountRoleError');
+                var userNameError = document.getElementById('userNameError');
                 var emailError = document.getElementById('emailError');
                 var phoneNumberError = document.getElementById('phoneNumberError');
                 var addressError = document.getElementById('addressError');
+                var passWordError = document.getElementById('passWordError');
+                var genderError = document.getElementById('genderError');
 
                 var isValid = true;
 
+                accountNameError.textContent = '';
+                accountRoleError.textContent = '';
+                userNameError.textContent = '';
                 emailError.textContent = '';
                 phoneNumberError.textContent = '';
                 addressError.textContent = '';
+                passWordError.textContent = '';
+                genderError.textContent = '';
+
+                if (accountName === '') {
+                    accountNameError.textContent = 'Vui lòng nhập tên tài khoản.';
+                    isValid = false;
+                }
+
+                if (accountRole === '') {
+                    accountRoleError.textContent = 'Vui lòng nhập vai trò.';
+                    isValid = false;
+                }
+
+                if (userName === '') {
+                    userNameError.textContent = 'Vui lòng nhập tên người dùng.';
+                    isValid = false;
+                }
 
                 if (email === '') {
                     emailError.textContent = 'Vui lòng nhập email.';
@@ -551,6 +617,16 @@
 
                 if (address === '') {
                     addressError.textContent = 'Vui lòng nhập địa chỉ.';
+                    isValid = false;
+                }
+
+                if (password === '') {
+                    passWordError.textContent = 'Vui lòng nhập mật khẩu.';
+                    isValid = false;
+                }
+
+                if (!gender) {
+                    genderError.textContent = 'Vui lòng chọn giới tính.';
                     isValid = false;
                 }
 
@@ -593,6 +669,15 @@
             <% session.removeAttribute("notification"); %>
             }
             window.onload = showNotificationAndRedirect;
+
+            document.getElementById('togglePassword').addEventListener('click', function (e) {
+                const passwordInput = document.getElementById('passWord');
+                const toggleIcon = document.getElementById('toggleIcon');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            });
         </script>
     </body>
 </html>

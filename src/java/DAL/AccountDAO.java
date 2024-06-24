@@ -326,15 +326,21 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public boolean updateStaff(int accountId, String email, String phoneNumber, String address, String imgAccount) {
-        String query = "UPDATE Account SET Email = ?, PhoneNumber = ?, Address = ?, ImgAccount = ? WHERE AccountID = ?";
+    public boolean updateStaff(int accountId, String fullName, String userName, String passWord, String gender, String email, String phoneNumber, String address, int roleId, String imgAccount, int status) {
+        String query = "UPDATE Account SET FullName=?, Username=?, Password=?, Gender=?, Email=?, PhoneNumber=?, Address=?, RoleID=?, ImgAccount=?, Status=? WHERE AccountID=?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, email);
-            ps.setString(2, phoneNumber);
-            ps.setString(3, address);
-            ps.setString(4, imgAccount);
-            ps.setInt(5, accountId);
+            ps.setString(1, fullName);
+            ps.setString(2, userName);
+            ps.setString(3, passWord);
+            ps.setString(4, gender);
+            ps.setString(5, email);
+            ps.setString(6, phoneNumber);
+            ps.setString(7, address);
+            ps.setInt(8, roleId);
+            ps.setString(9, imgAccount);
+            ps.setInt(10, status);
+            ps.setInt(11, accountId);
 
             int result = ps.executeUpdate();
             return result > 0;

@@ -90,18 +90,22 @@ public class ChangeRoleControllers extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String accountId = request.getParameter("id");
-        String roleId = request.getParameter("roleID");
-        int accountIds = Integer.parseInt(accountId);
-        int roleIds = Integer.parseInt(roleId);
+
+        int accountId = Integer.parseInt(request.getParameter("id"));
+        String fullName = request.getParameter("name");
+        int roleId = Integer.parseInt(request.getParameter("roleID"));
         String userName = request.getParameter("userName");
+        String password = request.getParameter("passWord");
         String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
-        Part part = request.getPart("imgAccount");
+        String statusStr = request.getParameter("status");
+        int status = Integer.parseInt(statusStr);
 
+        Part part = request.getPart("imgAccount");
         String imgProduct = null;
+
         if (part != null && part.getSize() > 0) {
             String path = request.getServletContext().getRealPath("/img");
             File dir = new File(path);
@@ -114,34 +118,44 @@ public class ChangeRoleControllers extends HttpServlet {
             imgProduct = request.getContextPath() + "/img/" + fileName;
         } else {
             AccountDAO accountDAO = new AccountDAO();
-            Account account = accountDAO.getAccountByid(accountIds);
+            Account account = accountDAO.getAccountByid(accountId);
             imgProduct = account.getImgAccount();
         }
+
         AccountDAO accountDAO = new AccountDAO();
-        Account oldAccount = accountDAO.getAccountByid(accountIds);
+        Account oldAccount = accountDAO.getAccountByid(accountId);
         String oldEmail = oldAccount.getEmail();
+        String oldUserName = oldAccount.getUserName();
 
-        if (email == null || email.isEmpty()) {
-            email = oldEmail;
-        } else {
-            if (!email.equals(oldEmail)) {
-                boolean emailExists = accountDAO.checkEmailExists(email);
-                if (emailExists) {
+        boolean emailExists = accountDAO.checkEmailExists(email);
+        boolean userNameExists = accountDAO.checkUserNameExists(userName);
 
-                    session.setAttribute("emailError", "Email đã tồn tại.");
-                    session.setAttribute("email", email);
-                    session.setAttribute("phoneNumber", phoneNumber);
-                    session.setAttribute("address", address);
-                    response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
-                    return;
-                }
+        if ((emailExists && !email.equals(oldEmail)) || (userNameExists && !userName.equals(oldUserName))) {
+            if (emailExists && !email.equals(oldEmail)) {
+                session.setAttribute("emailError", "Email đã tồn tại.");
             }
+            if (userNameExists && !userName.equals(oldUserName)) {
+                session.setAttribute("userNameError", "Tên đăng nhập đã tồn tại");
+            }
+            session.setAttribute("fullName", fullName);
+            session.setAttribute("roleId", roleId);
+            session.setAttribute("userName", userName);
+            session.setAttribute("password", password);
+            session.setAttribute("gender", gender);
+            session.setAttribute("email", email);
+            session.setAttribute("phoneNumber", phoneNumber);
+            session.setAttribute("address",address);
+            session.setAttribute("status", status);
+            response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
+            return;
         }
 
-        boolean isUpdated = accountDAO.updateStaff(accountIds, email, phoneNumber, address, imgProduct);
-
+        boolean isUpdated = accountDAO.updateStaff(accountId, fullName, userName, password, gender, email, phoneNumber, address, roleId, imgProduct, status);
         session.removeAttribute("emailError");
+        session.removeAttribute("userNameError");
+
         session.setAttribute("notification", "success");
+
         response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
     }
 
