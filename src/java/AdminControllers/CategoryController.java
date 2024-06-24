@@ -57,12 +57,63 @@ public class CategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       
         CategoryDao dal = new CategoryDao();
-          List<Category> category = dal.getallCategorys();
+        String searchtext = request.getParameter("s");
+          String index = request.getParameter("index");
+        if(request.getParameter("s")!=null){
+            int indexx;
+             if(request.getParameter("index")==null)
+       {
+           indexx = 1;
+       }else{
+         indexx = Integer.parseInt(index);
+        }
+        String a = "";
+          if(searchtext.isBlank()){
+               a = "";
+          }else{
+              a = searchtext;
+              a= a.trim();
+          }
+      
+        int count = dal.getToralCategorybyname(a);
+        int endpage = count/3;
+        if(count%3==0){           
+        }else{
+            endpage++;
+        }
+          
+         
+           List<Category> category = dal.getallCategorypseachbyname(indexx,a);
+           request.setAttribute("endP", endpage);
+          request.setAttribute("tag", indexx);
+           request.setAttribute("s", searchtext);
+         request.setAttribute("category", category);
+         request.getRequestDispatcher("Views/Admin/Category.jsp").forward(request, response);
+        }else{
+      
+      int indexx;
+        if(request.getParameter("index")==null)
+       {
+           indexx = 1;
+       }else{
+         indexx = Integer.parseInt(index);
+        }
+      
+      
+        int count = dal.getToralCategory();
+        int endpage = count/3;
+        if(count%3==0){           
+        }else{
+            endpage++;
+        }
+          request.setAttribute("endP", endpage);
+          request.setAttribute("tag", indexx);
+          List<Category> category = dal.getallCategorypage(indexx);
         request.setAttribute("category", category);
         request.getRequestDispatcher("Views/Admin/Category.jsp").forward(request, response);
-    } 
+        }
+        } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -74,7 +125,8 @@ public class CategoryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       String text = request.getParameter("s");
+       
     }
 
     /** 

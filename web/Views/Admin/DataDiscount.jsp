@@ -10,7 +10,78 @@
 <html lang="zxx">
 
     <head>
+        <style>
+            .white_box_tittle {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .list_header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .search_inner {
+                display: flex;
+                align-items: center;
+            }
+            .search_field {
+                margin-right: 10px;
+            }
+            .form-control {
+                padding: 5px 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+            .btn {
+                padding: 5px 10px;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+            }
+            .btn_1 {
+                background-color: #28a745;
+                color: #fff;
+            }
+            .btn_1:hover, .btn:hover {
+                background-color: #0056b3;
+                color: #fff;
+            }
+            .form-select {
+                padding: 5px 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+        </style>
+        <style>
+            .pagination a {
+                color: #000;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+                border: 1px solid #ddd; /* Gray border */
+                margin: 0 4px; /* Add some space between links */
+            }
 
+            .pagination a.active {
+                background-color: #4B0082;
+                color: white;
+                border: 1px solid #4B0082;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+            .pagination a.disabled {
+                pointer-events: none;
+                color: #ccc;
+                border-color: #ddd;
+            }
+        </style>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
@@ -36,7 +107,7 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
                 <a href="dash"><img src="images/anh456.png" alt></a>
                 <div class="sidebar_close_icon d-lg-none">
@@ -88,13 +159,13 @@
                         <span>Bảng dữ liệu</span>
                     </a>
                     <ul>
-                             <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="data">Sản Phẩm</a></li>
                         <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
+                        <li><a href="author">Tác Giả</a></li>
 
                     </ul>
                 </li>
-                 <li class>
+                <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -260,24 +331,42 @@
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Table  ${error}</h4>
-                                            
+
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
-                                                    
+                                                        <!-- Search Form -->
+                                                        <form action="discount" method="get" class="d-flex">
+                                                            <div class="search_field">
+                                                                <input name="s" type="text" value="${s}" placeholder="Search here..." class="form-control">
+                                                            </div>
+                                                            <button type="submit" name="submit" class="btn btn-primary">
+                                                                <img src="img/icon/icon_search.svg" alt="Search">
+                                                            </button>
+                                                        </form>
+
+                                                        <!-- Filter Form -->
+                                                        <form id="frm" action="discount" method="get" class="d-flex ms-2">
+                                                            <select name="op" class="form-select" onchange="document.getElementById('frm').submit()">
+                                                                <option ${n == 2 ? 'selected' : ''} value="2">Tất cả</option>
+                                                                <option ${n == 0 ? 'selected' : ''} value="0">Không được sử dụng</option>
+                                                                <option ${n == 1 ? 'selected' : ''} value="1">Được sử dụng</option>
+                                                            </select>
+                                                        </form>
                                                     </div>
                                                 </div>
+
+                                                <!-- Add Button -->
                                                 <div class="add_button ms-2">
-                                                    <a href="addcode" class="btn_1">Add code</a>
+                                                    <a href="addcode" class="btn btn_1">Add code</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
-                                             <%
-                                          int count=1;
-                                    %>
-                                 
+                                            <%
+                                         int count=1;
+                                            %>
+
                                             <table class="table lms_table_active ">
                                                 <thead>
                                                     <tr>
@@ -286,10 +375,10 @@
                                                         <th scope="col">Giảm giá bao nhiêu phần trăm</th>
                                                         <th scope="col">Giảm giá nhân dịp</th>
                                                         <th scope="col">Số lượng mã phát ra</th>
-                                                        
+
                                                         <th scope="col">Hoạt động</th>
-                                                       
-                                                       
+
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -300,7 +389,7 @@
                                                             <td>${p.discount}</td>
                                                             <td>${p.couponType}</td>
                                                             <td>${p.quantity}</td>
-                                                               
+
                                                             <td>
                                                                 <c:choose>
 
@@ -311,17 +400,51 @@
                                                                         Không được sử dụng
                                                                     </c:when>
                                                                 </c:choose>
-                                                               
+
                                                             </td>
-                                                              <td><a href="updatecode?id=${p.codeId}">UPDATE</td>
-                                                              </tr>
+                                                            <td><a href="updatecode?id=${p.codeId}">UPDATE</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        <c:choose>
+                                            <c:when test="${empty n}">
+                                              <form method="get" action="discount">
+                                            <nav class="pagination" aria-label="Page navigation">
+                                                <a href="discount?index=${tag - 1}&&s=${s}" class="${tag == 1 ? 'disabled' : ''}">Previous</a>
+                                                <c:forEach begin="1" end="${endP}" var="i">
+                                                    <a href="discount?index=${i}&&s=${s}" class="${tag == i ? 'active' : ''}">${i}</a>
                                                 </c:forEach>
-                                            </ul>
+                                                <a href="discount?index=${tag + 1}&&s=${s}" class="${tag == endP ? 'disabled' : ''}">Next</a>
+                                            </nav>
+                                        </form>  
+                                            </c:when>
+                                            <c:otherwise>
+                                               <form method="get" action="discount">
+                                            <nav class="pagination" aria-label="Page navigation">
+                                                <a href="discount?index=${tag - 1}&&op=${n}" class="${tag == 1 ? 'disabled' : ''}">Previous</a>
+                                                <c:forEach begin="1" end="${endP}" var="i">
+                                                    <a href="discount?index=${i}&&op=${n}" class="${tag == i ? 'active' : ''}">${i}</a>
+                                                </c:forEach>
+                                                <a href="discount?index=${tag + 1}&&op=${n}" class="${tag == endP ? 'disabled' : ''}">Next</a>
+                                            </nav>
+                                        </form>  
+                                            </c:otherwise>
+                                        </c:choose>   
+
+                                       
+
+
+                                        </ul>
                                         </nav>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-12">
                         </div>
                     </div>

@@ -107,9 +107,72 @@ public class NewsDao extends DBContext {
         return listNews;
     }
 
-    public List<News> getNewsPagination(int index, String sort) {
+      public List<News> searchNews(String searchTerm, int page, String sort) {
         List<News> listNews = new ArrayList<>();
-        String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source " +
+        String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source, n.Status " +
+                       "FROM News n JOIN Topic t ON n.TopicID = t.TopicID " +
+                       "WHERE n.Title LIKE ? OR n.Content LIKE ? ORDER BY ";
+        switch (sort) {
+            case "decrease":
+                query += "n.DateUpload DESC ";
+                break;
+            case "increase":
+                query += "n.DateUpload ASC ";
+                break;
+            default:
+                query += "n.DateUpload DESC ";
+                break;
+        }
+        query += "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            String searchPattern = "%" + searchTerm + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            int offset = (page - 1) * ELEMENTS_PER_PAGE;
+            ps.setInt(3, offset);
+            ps.setInt(4, ELEMENTS_PER_PAGE);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    News n = new News();
+                    n.setNewId(rs.getInt("NewID"));
+                    Topic topic = new Topic(rs.getInt("TopicID"), rs.getString("TopicName"));
+                    n.setTopic(topic);
+                    n.setTitle(rs.getString("Title"));
+                    n.setContent(rs.getString("Content"));
+                    n.setImgNews1(rs.getString("Img1"));
+                    n.setImgNews2(rs.getString("Img2"));
+                    n.setDateUpload(rs.getDate("DateUpload"));
+                    n.setSource(rs.getString("Source"));
+                    n.setStatus(rs.getBoolean("Status")); // Set status
+                    listNews.add(n);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listNews;
+    }
+
+    public int getSearchCount(String searchTerm) {
+        String query = "SELECT COUNT(*) AS total FROM News WHERE Title LIKE ? OR Content LIKE ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            String searchPattern = "%" + searchTerm + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+     public List<News> getNewsPagination(int page, String sort) {
+        List<News> listNews = new ArrayList<>();
+        String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source, n.Status " +
                        "FROM News n JOIN Topic t ON n.TopicID = t.TopicID ORDER BY ";
         switch (sort) {
             case "decrease":
@@ -124,7 +187,7 @@ public class NewsDao extends DBContext {
         }
         query += "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            int offset = (index - 1) * ELEMENTS_PER_PAGE;
+            int offset = (page - 1) * ELEMENTS_PER_PAGE;
             ps.setInt(1, offset);
             ps.setInt(2, ELEMENTS_PER_PAGE);
             try (ResultSet rs = ps.executeQuery()) {
@@ -139,6 +202,7 @@ public class NewsDao extends DBContext {
                     n.setImgNews2(rs.getString("Img2"));
                     n.setDateUpload(rs.getDate("DateUpload"));
                     n.setSource(rs.getString("Source"));
+                    n.setStatus(rs.getBoolean("Status")); // Set status
                     listNews.add(n);
                 }
             }
@@ -148,6 +212,18 @@ public class NewsDao extends DBContext {
         return listNews;
     }
 
+    public int getNewsCount() {
+        String query = "SELECT COUNT(*) AS total FROM News";
+        try (PreparedStatement ps = connection.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
     public List<News> getNewsPaginationByTopic(int index, int tid, String sort) {
         List<News> listNews = new ArrayList<>();
         String query = "SELECT n.NewID, n.TopicID, t.TopicName, n.Title, n.Content, n.Img1, n.Img2, n.DateUpload, n.Source " +
@@ -285,4 +361,5 @@ public class NewsDao extends DBContext {
     }
     return false;
 }
-}
+    
+                }

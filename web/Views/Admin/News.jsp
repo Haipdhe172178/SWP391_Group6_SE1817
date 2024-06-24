@@ -3,7 +3,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -39,81 +38,112 @@
             max-width: 1200px;
             margin: 20px auto;
         }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+        .pagination li {
+            margin: 0 5px;
+        }
+        .pagination a {
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            color: #007bff;
+        }
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
     </style>
 </head>
-
 <body class="crm_body_bg">
-    <nav class="sidebar vertical-scroll ps-container ps-theme-default ps-active-y">
-        <div class="logo d-flex justify-content-between">
-            <a href="dash"><img src="images/anh456.png" alt="Logo"></a>
-            <div class="sidebar_close_icon d-lg-none">
-                <i class="ti-close"></i>
+    <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+            <div class="logo d-flex justify-content-between">
+                <a href="dash"><img src="images/anh456.png" alt></a>
+                <div class="sidebar_close_icon d-lg-none">
+                    <i class="ti-close"></i>
+                </div>
             </div>
-        </div>
-        <ul id="sidebar_menu">
-            <li class="mm-active">
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/dashboard.svg" alt="Dashboard">
-                    </div>
-                    <span>Dashboard</span>
-                </a>
-                <ul>
-                    <li><a class="active" href="index.html">Sales</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/2.svg" alt="Apps">
-                    </div>
-                    <span>Apps</span>
-                </a>
-                <ul>
-                    <li><a href="contactAdmin">Liên hệ</a></li>
-                    <li><a href="chat.html">Chat</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/8.svg" alt="Sale">
-                    </div>
-                    <span>Sale</span>
-                </a>
-                <ul>
-                    <li><a href="image">Image Background</a></li>
-                    <li><a href="discount">Discount</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/11.svg" alt="Table">
-                    </div>
-                    <span>Table</span>
-                </a>
-                <ul>
-                    <li><a href="data">Sản phẩm</a></li>
-                    <li><a href="#">Thể Loại</a></li>
-                    <li><a href="#">Tác Giả</a></li>
-                </ul>
-            </li>
-            <li class="mm-active">
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="img/menu-icon/17.svg" alt="Up News">
-                    </div>
-                    <span>Up News</span>
-                </a>
-                <ul>
-                    <li><a class="active" href="upnews">News</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+             <ul id="sidebar_menu">
+                <li class="mm-active">
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/dashboard.svg" alt>
+                        </div>
+                        <span>Bảng điều khiển</span>
+                    </a>
+                    <ul>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/2.svg" alt>
+                        </div>
+                        <span>Ứng dụng</span>
+                    </a>
+                    <ul>
+                        <li><a href="contactAdmin">Liên hệ</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/8.svg" alt>
+                        </div>
+                        <span>Bán hàng</span>
+                    </a>
+                    <ul>
+                        <li><a href="image">Ảnh trang chủ</a></li>
+                        <li><a href="discount">Mã Giảm giá</a></li>
 
-    <section class="main_content dashboard_part large_header_bg">
+                    </ul>
+                </li>        
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/11.svg" alt>
+                        </div>
+                        <span>Bảng dữ liệu</span>
+                    </a>
+                    <ul>
+                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
+                    </ul>
+                </li>
+                <li class="mm-active">
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <div class="icon_menu">
+                        <img src="img/menu-icon/18.svg" alt="Up News">
+                    </div>
+                    <span>Quản lý tin tức</span>
+                </a>
+                <ul>
+                    <li><a class="active" href="upnews">Tin tức</a></li>
+                </ul>
+            </li>
+            </ul>
+        </nav>
+
+   <section class="main_content dashboard_part large_header_bg">
         <div class="container-fluid g-0">
             <div class="row">
                 <div class="col-lg-12 p-0">
@@ -206,7 +236,7 @@
             </div>
         </div>
 
-        <div class="main_content_iner">
+          <div class="main_content_iner">
             <div class="container-fluid p-0">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -214,18 +244,18 @@
                             <div class="white_card_header">
                                 <div class="box_header m-0">
                                     <div class="main-title">
-                                        <h3 class="m-0">News Management</h3>
+                                        <h3 class="m-0">Quản lý tin tức</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="white_card_body">
                                 <div class="QA_section">
                                     <div class="white_box_tittle list_header">
-                                        <h4>Table</h4>
+                                        <h4>Tin tức</h4>
                                         <div class="box_right d-flex lms_block">
                                             <div class="serach_field_2">
                                                 <div class="search_inner">
-                                                    <form action="data" method="GET">
+                                                    <form action="upnews" method="GET">
                                                         <div class="search_field">
                                                             <input name="s" type="text" placeholder="Search here...">
                                                         </div>
@@ -243,14 +273,15 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Title</th>
-                                                    <th>Content</th>
-                                                    <th>Date Upload</th>
-                                                    <th>Topic</th>
-                                                    <th>Source</th>
-                                                    <th>Image 1</th>
-                                                    <th>Image 2</th>
-                                                    <th>Actions</th>
+                                                    <th>Tiêu Đề</th>
+                                                    <th>Nội Dung</th>
+                                                    <th>Ngày Đăng Tải</th>
+                                                    <th>Chủ Đề</th>
+                                                    <th>Nguồn</th>
+                                                    <th>Ảnh 1</th>
+                                                    <th>Ảnh 2</th>
+                                                    <th>Trạng Thái</th> 
+                                                    <th>Hành Động</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -258,12 +289,13 @@
                                                     <tr>
                                                         <td>${news.newId}</td>
                                                         <td>${news.title}</td>
-                                                        <td>${news.content}</td>
+                                                        <td>${fn:substring(news.content, 0, 50)}...</td>
                                                         <td>${news.dateUpload}</td>
                                                         <td>${news.topic.topicName}</td>
                                                         <td>${news.source}</td>
                                                         <td><img src="${news.imgNews1}" alt="Image 1"></td>
                                                         <td><img src="${news.imgNews2}" alt="Image 2"></td>
+                                                        <td>${news.status ? 'Active' : 'Inactive'}</td> <!-- Status value -->
                                                         <td>
                                                             <a href="fixnews?action=edit&id=${news.newId}" class="btn btn-primary btn-sm">Update</a>
                                                             <a href="fixnews?action=delete&id=${news.newId}" class="btn btn-danger btn-sm">Delete</a>
@@ -272,6 +304,44 @@
                                                 </c:forEach>
                                             </tbody>
                                         </table>
+
+                                        <!-- Pagination -->
+                                        <nav class="py-5" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Determine the range of pages to display -->
+                                                <c:set var="start" value="${currentPage > 3 ? currentPage - 2 : 1}" />
+                                                <c:set var="end" value="${currentPage > 3 ? currentPage + 2 : 5}" />
+                                                <c:if test="${end > totalPages}">
+                                                    <c:set var="end" value="${totalPages}" />
+                                                    <c:set var="start" value="${totalPages - 4 > 0 ? totalPages - 4 : 1}" />
+                                                </c:if>
+
+                                                <!-- Previous Button -->
+                                                <c:if test="${currentPage > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="upnews?page=${currentPage - 1}&s=${searchTerm}&sortOrder=${sortOrder}" aria-label="Previous">
+                                                            <span aria-hidden="true">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+
+                                                <!-- Page Number Links -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
+                                                    <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                                        <a class="page-link" href="upnews?page=${i}&s=${searchTerm}&sortOrder=${sortOrder}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
+
+                                                <!-- Next Button -->
+                                                <c:if test="${currentPage < totalPages}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="upnews?page=${currentPage + 1}&s=${searchTerm}&sortOrder=${sortOrder}" aria-label="Next">
+                                                            <span aria-hidden="true">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
                                     </div>   
                                 </div>
                             </div>
@@ -318,5 +388,4 @@
     <script src="vendors/scroll/scrollable-custom.js"></script>
     <script src="js/custom.js"></script>
 </body>
-
 </html>

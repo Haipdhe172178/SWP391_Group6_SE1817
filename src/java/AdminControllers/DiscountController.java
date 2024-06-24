@@ -56,12 +56,126 @@ public class DiscountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       //request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response);
-       DiscountDAO dal = new DiscountDAO();
-        ArrayList<UsedCoupon> data = new ArrayList<>();
-        data = dal.listcode();
-        request.setAttribute("data", data);
-        request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response);    
+       ArrayList<UsedCoupon> data = new ArrayList<>();
+          DiscountDAO dal = new DiscountDAO();
+          String status = request.getParameter("op");
+            int status1 = 3;
+          if(status==null){
+                
+            }else{
+                 status1 = Integer.parseInt(status);
+            }
+          
+         
+     
+         
+          
+          
+        String searchtext = request.getParameter("s");
+          String index = request.getParameter("index");
+          
+          
+        if(request.getParameter("submit")!=null || searchtext != null){
+            
+            
+            int indexx;
+             if(request.getParameter("index")==null)
+       {
+           indexx = 1;
+       }else{
+                 
+                 
+         indexx = Integer.parseInt(index);
+        }
+           String a = "";
+          if(searchtext.isBlank()){
+               a = "";
+          }else{
+              a = searchtext;
+              a= a.trim();
+          }
+      
+        int count = dal.getToralDiscountbyname(a);
+        int endpage = count/3;
+        if(count%3==0){           
+        }
+        
+        
+        else{
+            endpage++;
+        }
+                  
+             data = dal.listcodepageseachbytype(indexx,a);
+              request.setAttribute("endP", endpage);
+          request.setAttribute("tag", indexx);    
+           request.setAttribute("s", searchtext);
+           request.setAttribute("n", status);
+       request.setAttribute("data", data);
+      
+           request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
+        }
+        else if (status1 == 0 || status1 == 1 && searchtext ==null){
+          int indexx;
+        if(request.getParameter("index")==null)
+       {
+           indexx = 1;
+       }else{
+         indexx = Integer.parseInt(index);
+        }
+            
+            
+            int count = dal.getToralDiscountbystatus(status);
+        int endpage = count/3;
+        if(count%3==0){           
+        }
+        
+        
+        else{
+            endpage++;
+        }
+                  
+             data = dal.listcodepageseachbystatus(indexx,status);
+              request.setAttribute("endP", endpage);
+          request.setAttribute("tag", indexx);    
+           request.setAttribute("s", searchtext);
+       request.setAttribute("data", data);
+       request.setAttribute("n", status);
+           request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
+        }
+        
+        
+        else{
+      
+    
+            
+            
+            
+            int indexx;
+        if(request.getParameter("index")==null)
+       {
+           indexx = 1;
+       }else{
+         indexx = Integer.parseInt(index);
+        }
+      
+         int count = dal.getToralDiscount();
+      
+        int endpage = count/3;
+        if(count%3==0){           
+        }else{
+            endpage++;
+        }
+          request.setAttribute("endP", endpage);
+          request.setAttribute("tag", indexx);
+               data = dal.listcodepage(indexx);
+               request.setAttribute("data", data);
+             request.setAttribute("n", status);
+           request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
+        }
+      
+       
+       
+   
     
     } 
 

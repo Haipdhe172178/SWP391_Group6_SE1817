@@ -30,30 +30,110 @@
             height: auto;
         }
     </style>
+    <script>
+        function validateForm() {
+            var title = document.getElementById("title").value.trim();
+            var content = document.getElementById("content").value.trim();
+            var source = document.getElementById("source").value.trim();
+            
+            if (title === "") {
+                alert("Title không được phép chứa toàn dấu cách.");
+                return false;
+            }
+            if (content === "") {
+                alert("Content không được phép chứa toàn dấu cách.");
+                return false;
+            }
+            if (source === "") {
+                alert("Source không được phép chứa toàn dấu cách.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body class="crm_body_bg">
-    <nav class="sidebar vertical-scroll ps-container ps-theme-default ps-active-y">
-        <div class="logo d-flex justify-content-between">
-            <a href="dash"><img src="images/anh456.png" alt="Logo"></a>
-            <div class="sidebar_close_icon d-lg-none">
-                <i class="ti-close"></i>
+    <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
+            <div class="logo d-flex justify-content-between">
+                <a href="dash"><img src="images/anh456.png" alt></a>
+                <div class="sidebar_close_icon d-lg-none">
+                    <i class="ti-close"></i>
+                </div>
             </div>
-        </div>
-        <ul id="sidebar_menu">
-            <li class="mm-active">
+             <ul id="sidebar_menu">
+                <li class="mm-active">
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/dashboard.svg" alt>
+                        </div>
+                        <span>Bảng điều khiển</span>
+                    </a>
+                    <ul>
+                        <li><a class="active" href="index.html">Doanh số</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/2.svg" alt>
+                        </div>
+                        <span>Ứng dụng</span>
+                    </a>
+                    <ul>
+                        <li><a href="contactAdmin">Liên hệ</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/8.svg" alt>
+                        </div>
+                        <span>Bán hàng</span>
+                    </a>
+                    <ul>
+                        <li><a href="image">Ảnh trang chủ</a></li>
+                        <li><a href="discount">Mã Giảm giá</a></li>
+
+                    </ul>
+                </li>        
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/11.svg" alt>
+                        </div>
+                        <span>Bảng dữ liệu</span>
+                    </a>
+                    <ul>
+                       <li><a href="data">Sản Phẩm</a></li>
+                        <li><a href="category">Thể Loại</a></li>                    
+                         <li><a href="author">Tác Giả</a></li>
+                    </ul>
+                </li>
+                <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/17.svg" alt>
+                        </div>
+                        <span>Xác thực</span>
+                    </a>
+                    <ul>
+                        <li><a href="account">Người Dùng</a></li>
+                        <li><a href="manages">nhân Viên</a></li>
+                    </ul>
+                </li>
+                <li class="mm-active">
                 <a class="has-arrow" href="#" aria-expanded="false">
                     <div class="icon_menu">
-                        <img src="img/menu-icon/dashboard.svg" alt="Dashboard">
+                        <img src="img/menu-icon/18.svg" alt="Up News">
                     </div>
-                    <span>Dashboard</span>
+                    <span>Quản lý tin tức</span>
                 </a>
                 <ul>
-                    <li><a class="active" href="index.html">Sales</a></li>
+                    <li><a class="active" href="upnews">Tin tức</a></li>
                 </ul>
             </li>
-            <!-- other menu items -->
-        </ul>
-    </nav>
+            </ul>
+        </nav>
 
     <section class="main_content dashboard_part large_header_bg">
         <div class="container-fluid g-0">
@@ -65,7 +145,7 @@
                         </div>
                         <div class="serach_field-area d-flex align-items-center">
                             <div class="search_inner">
-                                <form action="UpdateNewsControllers?action=list" method="GET">
+                                <form action="data" method="GET">
                                     <div class="search_field">
                                         <input name="s" type="text" placeholder="Search here...">
                                     </div>
@@ -75,7 +155,52 @@
                             <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
                         </div>
                         <div class="header_right d-flex justify-content-between align-items-center">
-                            <!-- notification and profile sections -->
+                            <div class="header_notification_warp d-flex align-items-center">
+                                <li>
+                                    <a class="bell_notification_clicker nav-link-notify" href="#"><img src="img/icon/bell.svg" alt="Notifications"></a>
+                                    <div class="Menu_NOtification_Wrap">
+                                        <div class="notification_Header">
+                                            <h4>Notifications</h4>
+                                        </div>
+                                        <div class="Notification_body">
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/2.png" alt="Notification"></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>Cool Marketing</h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <!-- More notifications here -->
+                                        </div>
+                                        <div class="nofity_footer">
+                                            <div class="submit_button text-center pt_20">
+                                                <a href="#" class="btn_1">See More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="CHATBOX_open nav-link-notify" href="#"><img src="img/icon/msg.svg" alt="Messages"></a>
+                                </li>
+                            </div>
+                            <div class="profile_info">
+                                <img src="img/client_img.png" alt="Profile">
+                                <div class="profile_info_iner">
+                                    <div class="profile_author_name">
+                                        <p>Neurologist</p>
+                                        <h5>Dr. Robar Smith</h5>
+                                    </div>
+                                    <div class="profile_info_details">
+                                        <a href="#">My Profile</a>
+                                        <a href="#">Settings</a>
+                                        <a href="#">Log Out</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +214,7 @@
                         Add News
                     </div>
                     <div class="card-body">
-                        <form action="AddNewsController" method="POST" enctype="multipart/form-data" class="row g-3">
+                        <form action="AddNewsController" method="POST" enctype="multipart/form-data" class="row g-3" onsubmit="return validateForm()">
                             <div class="col-md-6">
                                 <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" required>
@@ -104,11 +229,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="img1" class="form-label">Image 1</label>
-                                <input type="file" class="form-control" id="img1" name="img1" required>
+                                <input type="file" class="form-control" id="img1" name="img1" accept="image/jpeg, image/png, image/gif, image/webp" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="img2" class="form-label">Image 2</label>
-                                <input type="file" class="form-control" id="img2" name="img2" required>
+                                <input type="file" class="form-control" id="img2" name="img2" accept="image/jpeg, image/png, image/gif, image/webp" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="source" class="form-label">Source</label>

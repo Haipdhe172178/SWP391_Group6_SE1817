@@ -83,18 +83,23 @@
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
 
-        <div class="post-wrap padding-large overflow-hidden">
-            <div class="container">
-                <div class="row">
-                    <main class="post-grid col-12">
-                        <article class="post-item">
-                            <div class="post-content">
-                                <div class="post-meta mt-4 text-center">
-                                    <span class="post-category">${news.dateUpload}</span> - <span class="meta-date"><a href="blog?id=${news.topic.topicId}">${news.topic.topicName}</a></span>
+            <div class="post-wrap padding-large overflow-hidden">
+                <div class="container">
+                    <div class="row">
+                        <main class="post-grid col-12">
+                            <article class="post-item">
+                                <div class="post-content">
+                                    <div class="post-meta mt-4 text-center">
+                                        <span class="post-category">${news.dateUpload}</span> - <span class="meta-date"><a href="blog?id=${news.topic.topicId}">${news.topic.topicName}</a></span>
                                 </div>
                                 <h1 class="post-title my-4 text-center">${news.title}</h1>
                                 <div class="hero-image col-lg-12 mb-4 text-center">
-                                    <img src="${news.imgNews1}" alt="${news.title}" class="img-fluid rounded">
+                                    <div class="mb-3">
+                                        <img src="${news.imgNews1}" alt="${news.title}" class="img-fluid rounded d-block mx-auto">
+                                    </div>
+                                    <div>
+                                        <img src="${news.imgNews2}" alt="${news.title}" class="img-fluid rounded d-block mx-auto">
+                                    </div>
                                 </div>
                                 <div class="text-center mb-4">
                                     <small class="text-muted author-note">Bài đăng được up bởi ShopBook88</small>
@@ -117,7 +122,7 @@
                                     <div class="social-links d-flex">
                                         <div class="element-title pe-2">Chia sẻ:</div>
                                         <ul class="d-flex list-unstyled">
-                                            
+
                                             <li>
                                                 <a href="https://twitter.com/intent/tweet?url=${pageContext.request.requestURL}&text=${news.title}" target="_blank">
                                                     <svg class="twitter">
@@ -160,24 +165,24 @@
 
         <jsp:include page="../common/footer.jsp"></jsp:include>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script>
-            function sharePost(event) {
-                event.preventDefault();
-                if (navigator.share) {
-                    navigator.share({
-                        title: '${news.title}',
-                        text: '${news.title}',
-                        url: window.location.href
-                    }).then(() => {
-                        console.log('Cảm ơn bạn đã chia sẻ!');
-                    }).catch(err => {
-                        console.error('Không thể chia sẻ bài đăng', err);
-                    });
-                } else {
-                    alert('Trình duyệt này không hỗ trợ chia sẻ. Vui lòng sử dụng các nút chia sẻ.');
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script>
+                function sharePost(event) {
+                    event.preventDefault();
+                    if (navigator.share) {
+                        navigator.share({
+                            title: '${news.title}',
+                            text: '${news.title}',
+                            url: window.location.href
+                        }).then(() => {
+                            console.log('Cảm ơn bạn đã chia sẻ!');
+                        }).catch(err => {
+                            console.error('Không thể chia sẻ bài đăng', err);
+                        });
+                    } else {
+                        alert('Trình duyệt này không hỗ trợ chia sẻ. Vui lòng sử dụng các nút chia sẻ.');
+                    }
                 }
-            }
         </script>
     </body>
 </html>

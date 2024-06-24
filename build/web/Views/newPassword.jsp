@@ -36,7 +36,7 @@
         });
     </script>
 </head>
-<body class="bg-info">
+<body>
     <div class="form-gap"></div>
     <div class="container">
         <div class="row">
@@ -45,7 +45,7 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
-                            <h2 class="text-center">Reset Password</h2>
+                            <h2 class="text-center">Đặt lại mật khẩu</h2>
                             <c:if test="${not empty status}">
                                 <div class="alert alert-info">
                                     <c:choose>
@@ -63,24 +63,26 @@
                             </c:if>
                             <div class="panel-body">
                                 <form id="reset-form" action="newPassword" role="form" autocomplete="off" class="form" method="post">
+                                    <label style="text-align: left; display: block;">Mật khẩu mới: </label>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key color-blue"></i></span>
-                                            <input type="password" name="password" placeholder="New Password" class="form-control" required="required">
+                                            <input type="password" name="password" placeholder="Nhập mật khẩu mới" class="form-control" required="required">
                                         </div>
                                     </div>
+                                      <label style="text-align: left; display: block;">Nhập lại mật khẩu mới:</label>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-key color-blue"></i></span>
-                                            <input type="password" name="confPassword" placeholder="Confirm New Password" class="form-control" required="required">
+                                            <input type="password" name="confPassword" placeholder="Nhập lại mật khẩu" class="form-control" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset" type="submit">
+                                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Cài lại" type="submit">
                                     </div>
                                 </form>
                             </div>
-                            <h5>Don't have an Account? <a href="#" class="text-danger">Register Now!</a></h5>
+                            <h5>Bạn chưa có tài khoản? <a href="#" class="text-danger">Đăng Ký!</a></h5>
                         </div>
                     </div>
                 </div>

@@ -53,17 +53,28 @@ public class CategoryDao extends DBContext {
         }
         return null;
     }
+    //dem so luon category trong database
+
+    public int getToralCategory() {
+        String query = " select count(*) from Category";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+
+        return 0;
+    }
 
     public static void main(String[] args) {
         CategoryDao categoryDao = new CategoryDao();
-        List<Category> categorys = categoryDao.getallCategorys();
-        for (Category category : categorys) {
-            System.out.println("CategoryId: " + category.getCategoryId());
-            System.out.println("CategoryName: " + category.getCategoryName());
-        }
-
-        Category c = categoryDao.getCategoryByID(1);
-        System.out.println(c.getCategoryName());
+        int count = categoryDao.getToralCategory();
+        System.out.println(count);
     }
 
     public void addCategory(String name) {
@@ -79,6 +90,27 @@ public class CategoryDao extends DBContext {
             System.out.println("addcategory" + e.getMessage());
         }
 
+    }
+
+    public List<Category> getallCategorypage(int index) {
+        List<Category> categorys = new ArrayList<>();
+        String query = " select * from Category\n"
+                + "  order by CategoryID\n"
+                + "  offset ? rows fetch next 3 rows only";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 3);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                categorys.add(category);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return categorys;
     }
 
     public void updateCategory(String id, String name) {
@@ -98,5 +130,45 @@ public class CategoryDao extends DBContext {
             System.out.println("updateCategory" + e.getMessage());
         }
 
+    }
+
+    public List<Category> getallCategorypseachbyname(int index, String searchtext) {
+        List<Category> categories = new ArrayList<>();
+        String query = "select * from Category where CategoryName like ? "
+                + "order by CategoryID "
+                + "offset ? rows fetch next 3 rows only";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + searchtext + "%"); 
+            ps.setInt(2, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                categories.add(category);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return categories;
+    }
+
+    public int getToralCategorybyname(String searchtext) {
+         String query = "  select count(*) from Category where CategoryName like  ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, "%" + searchtext + "%"); 
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+
+        return 0;
     }
 }
