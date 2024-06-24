@@ -489,7 +489,7 @@
         <div class="swiper-wrapper">
 
             <c:forEach items="${imageBG}" var="d">
-                <div class="swiper-slide" style="background-image: url('${d.url}');">
+                <div class="swiper-slide" style="background-image: url('${d.url}')">
 
                 </div>
             </c:forEach>
