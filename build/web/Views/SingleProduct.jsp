@@ -232,7 +232,7 @@
                                                         <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
                                                     </button>
                                                 </span>
-                                                <input type="text" id="quantity" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="1" min="1" max="100" required>
+                                                <input type="text" id="quantity" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="1" min="1" max="${requestScope.product.quantity}" required>
                                                 <span class="input-group-btn">
                                                     <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
                                                         <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
@@ -246,9 +246,57 @@
                                     <a href="#" class="btn">Mua ngay</a>
                                     <form action="cart" method="post">
                                         <input type="hidden" name="productId" value="${product.productId}">
-                                        <input type="hidden" name="quantity" value="1"> 
+                                        <input type="hidden" name="quantity" value="1" id="hidden-quantity">
                                         <button type="submit" class="btn btn-dark">Thêm vào giỏ hàng</button>
                                     </form>
+                                </div>
+                                <c:if test="${message ne null}">
+                                    <div id="alert" class="alert-box ${type}">
+                                        ${message}
+                                    </div>
+                                </c:if>
+
+                                <% 
+                                    if (session.getAttribute("message") != null) {
+                                        session.removeAttribute("message");
+                                    }
+                                %>
+
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const quantityInput = document.getElementById('quantity');
+                                        const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+
+                                        document.querySelector('.quantity-left-minus').addEventListener('click', function () {
+                                            let currentValue = parseInt(quantityInput.value);
+                                            if (currentValue > 1) {
+                                                quantityInput.value = currentValue;
+                                            }
+                                        });
+
+                                        document.querySelector('.quantity-right-plus').addEventListener('click', function () {
+                                            let currentValue = parseInt(quantityInput.value);
+                                            if (currentValue < maxQuantity) {
+                                                quantityInput.value = currentValue;
+                                            }
+                                        });
+
+                                        quantityInput.addEventListener('input', function () {
+                                            let currentValue = parseInt(quantityInput.value);
+                                            if (isNaN(currentValue) || currentValue < 1) {
+                                                quantityInput.value = 1;
+                                            } else if (currentValue > maxQuantity) {
+                                                quantityInput.value = maxQuantity;
+                                            }
+                                        });
+
+
+                                        document.querySelector('form[action="cart"]').addEventListener('submit', function () {
+                                            document.getElementById('hidden-quantity').value = quantityInput.value;
+                                        });
+                                    });
+                                </script>
 
                                 </div>
                             </div>

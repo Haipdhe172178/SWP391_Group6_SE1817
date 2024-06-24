@@ -79,7 +79,14 @@ public class Cart {
         }
         items.add(t);
     }
-
+public int getQuantityByProductId(int productId) {
+        for (Item item : items) {
+            if (item.getProduct().getProductId() == productId) {
+                return item.getQuantity();
+            }
+        }
+        return 0;
+    }
     public Cart(String txt, List<Product> list) {
         items = new ArrayList<>();
         try {
