@@ -30,7 +30,7 @@ import java.util.List;
  * @author USER
  */
 @MultipartConfig
-public class UpdateControlle extends HttpServlet {
+public class UpdateController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -132,7 +132,7 @@ public class UpdateControlle extends HttpServlet {
             request.setAttribute("status", status);
             // Xử lý ảnh
              String imgProduct = null;
-              imgProduct = request.getParameter("imgProduct12");
+              
             Part part = request.getPart("imgProduct");
             if(part != null && part.getSize() > 0){
                  

@@ -320,7 +320,7 @@
                                                             </td>
                                                             <td>
                                                                 <a href="update?id=${p.productId}" title="Update"><i class="fas fa-edit"></i></a>
-              
+                                                               
                                                             </td>
                                                         </tr>
 
