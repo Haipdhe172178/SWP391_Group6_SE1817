@@ -282,14 +282,14 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Data table</h3>
+                                           
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Table</h4>
+                                            
 
 
                                             <div class="box_right d-flex lms_block">
@@ -301,7 +301,7 @@
                                                                 <input hidden="" name="s" type="text" value="${s}" placeholder="Search here...">
                                                             </div>
                                                             <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                        </form>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="add_button ms-2">
@@ -315,7 +315,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">ID</th>
-                                                        <th scope="col">Tên tác giả</th>
+                                                        <th scope="col">Thể loại</th>
                                                         <th scope="col">Hoạt đông</th>
 
                                                     </tr>

@@ -59,35 +59,39 @@
                     <i class="ti-close"></i>
                 </div>
             </div>
+            
+            
+            
+            
              <ul id="sidebar_menu">
                 <li class="mm-active">
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
-                        <span>Bảng điều khiển</span>
+                        <span>Thông kê</span>
                     </a>
                     <ul>
                         <li><a class="active" href="index.html">Doanh số</a></li>
                     </ul>
                 </li>
                 <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="contactAdmin" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/2.svg" alt>
                         </div>
-                        <span>Ứng dụng</span>
+                        <span >Liên hệ</span>
                     </a>
-                    <ul>
+<!--                    <ul>
                         <li><a href="contactAdmin">Liên hệ</a></li>
-                    </ul>
+                    </ul>-->
                 </li>
                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/8.svg" alt>
                         </div>
-                        <span>Bán hàng</span>
+                        <span>Mã giảm giá </span>
                     </a>
                     <ul>
                         <li><a href="image">Ảnh trang chủ</a></li>
@@ -100,7 +104,7 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/11.svg" alt>
                         </div>
-                        <span>Bảng dữ liệu</span>
+                        <span>Quản lý sản phẩm</span>
                     </a>
                     <ul>
                        <li><a href="data">Sản Phẩm</a></li>
@@ -113,7 +117,7 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
                         </div>
-                        <span>Xác thực</span>
+                        <span>Quản lý tài khoản</span>
                     </a>
                     <ul>
                         <li><a href="account">Người Dùng</a></li>
@@ -121,17 +125,25 @@
                     </ul>
                 </li>
                 <li class="mm-active">
-                <a class="has-arrow" href="#" aria-expanded="false">
+                <a class="has-arrow" href="upnews" aria-expanded="false">
                     <div class="icon_menu">
                         <img src="img/menu-icon/18.svg" alt="Up News">
                     </div>
-                    <span>Quản lý tin tức</span>
+                    <span >Quản lý tin tức</span>
                 </a>
-                <ul>
+<!--                <ul>
                     <li><a class="active" href="upnews">Tin tức</a></li>
-                </ul>
+                </ul>-->
             </li>
             </ul>
+        
+        
+        
+        
+        
+        
+        
+        
         </nav>
 
         <section class="main_content dashboard_part large_header_bg">

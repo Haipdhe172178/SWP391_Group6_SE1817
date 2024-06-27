@@ -45,6 +45,7 @@
                 background-repeat: no-repeat;
                 background-position: center;
                 height: auto;
+                width: 10000px;
             }
             .swiper-button-next, .swiper-button-prev {
                 color: #fff;
