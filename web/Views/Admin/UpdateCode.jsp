@@ -36,235 +36,33 @@
 
     <body class="crm_body_bg">
 
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
-            <div class="logo d-flex justify-content-between">
-                <a href="dash"><img src="images/anh456.png" alt></a>
-                <div class="sidebar_close_icon d-lg-none">
-                    <i class="ti-close"></i>
-                </div>
-            </div>
-             <ul id="sidebar_menu">
-                <li class="mm-active">
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/dashboard.svg" alt>
-                        </div>
-                        <span>Bảng điều khiển</span>
-                    </a>
-                    <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/2.svg" alt>
-                        </div>
-                        <span>Ứng dụng</span>
-                    </a>
-                    <ul>
-                        <li><a href="contactAdmin">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/8.svg" alt>
-                        </div>
-                        <span>Bán hàng</span>
-                    </a>
-                    <ul>
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                        <li><a href="discount">Mã Giảm giá</a></li>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-                    </ul>
-                </li>        
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/11.svg" alt>
-                        </div>
-                        <span>Bảng dữ liệu</span>
-                    </a>
-                    <ul>
-                       <li><a href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                 <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Người Dùng</a></li>
-                        <li><a href="manages">nhân Viên</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+            <section class="main_content dashboard_part large_header_bg">
 
-        <section class="main_content dashboard_part large_header_bg">
+            <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
-            <div class="container-fluid g-0">
-                <div class="row">
-                    <div class="col-lg-12 p-0 ">
-                        <div class="header_iner d-flex justify-content-between align-items-center">
-                            <div class="sidebar_icon d-lg-none">
-                                <i class="ti-menu"></i>
-                            </div>
-                            <div class="serach_field-area d-flex align-items-center">
-                                <div class="search_inner">
-                                    <form action="data" method="GET">
-                                        <div class="search_field">
-                                            <input name="s" type="text" placeholder="Search here...">
-                                        </div>
-                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                    </form>
-                                </div>
-                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                            </div>
-                            <div class="header_right d-flex justify-content-between align-items-center">
-                                <div class="header_notification_warp d-flex align-items-center">
-                                    <li>
-                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img src="img/icon/bell.svg" alt>
-                                        </a>
-
-                                        <div class="Menu_NOtification_Wrap">
-                                            <div class="notification_Header">
-                                                <h4>Notifications</h4>
+                <div class="main_content_iner ">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Data code</h3>
                                             </div>
-                                            <div class="Notification_body">
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="nofity_footer">
-                                                <div class="submit_button text-center pt_20">
-                                                    <a href="#" class="btn_1">See More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <a class="CHATBOX_open nav-link-notify" href="#"> <img src="img/icon/msg.svg" alt> </a>
-                                    </li>
-                                </div>
-                                <div class="profile_info">
-                                    <img src="img/client_img.png" alt="#">
-                                    <div class="profile_info_iner">
-                                        <div class="profile_author_name">
-                                            <p>Neurologist </p>
-                                            <h5>Dr. Robar Smith</h5>
-                                        </div>
-                                        <div class="profile_info_details">
-                                            <a href="#">My Profile </a>
-                                            <a href="#">Settings</a>
-                                            <a href="#">Log Out </a>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                    <div class="white_card_body">
 
-            <div class="main_content_iner ">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Data code</h3>
+
+                                        <form action="updatecode" method="post" >
+                                            <div hidden="" class="mb-3">
+
+                                                <input type="text" class="form-control"  name="id" value="${code.codeId}" required>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="white_card_body">
-                                   
-                                    
-                                    <form action="updatecode" method="post" >
-                                        <div hidden="" class="mb-3">
-                                           
-                                            <input type="text" class="form-control"  name="id" value="${code.codeId}" required>
-                                        </div>
-                                       
+
                                         <div class="mb-3">
                                             <label for="productName">Mã Code</label>
                                             <input type="text" class="form-control"  name="meomeo" value="${code.codeName}" required>
@@ -273,7 +71,7 @@
                                             <label for="productPrice">Giảm giá bao nhiêu phần trăm</label>
                                             <input type="text" class="form-control"  name="discount1" value="${code.discount}" required>
                                         </div>
-                                        
+
                                         <div class="mb-3">
                                             <label for="productQuantity">Giảm giá nhân dịp</label>
                                             <input type="text" class="form-control"  name="theloai" value="${code.couponType}" required>
@@ -281,22 +79,22 @@
                                         <div class="mb-3">
                                             <label for="productName">Số lượng mã phát ra</label>
                                             <input type="text" class="form-control"  name="soluong"  value="${code.quantity}" required>
-                                        <div class="mb-3">
-                                            <label for="productCategory" class="form-label">Trạng thái hoạt động</label>
-                                            <select class="form-select" id="" name="status" required>
+                                            <div class="mb-3">
+                                                <label for="productCategory" class="form-label">Trạng thái hoạt động</label>
+                                                <select class="form-select" id="" name="status" required>
 
 
-                                                <option value="1" ${code.status == 1 ? 'selected':''}  >Sử dụng</option>
-                                                <option value="0"${code.status == 0 ? 'selected':'' } >Không sử dụng</option>
+                                                    <option value="1" ${code.status == 1 ? 'selected':''}  >Sử dụng</option>
+                                                    <option value="0"${code.status == 0 ? 'selected':'' } >Không sử dụng</option>
 
 
-                                            </select>
-                                        </div>
-                                            
+                                                </select>
+                                            </div>
+
                                             <button type="submit" class="btn btn-primary" name="submit">Update</button>
                                         </div>
                                     </form>
-                                     <h3>${error}</h3>
+                                    <h3>${error}</h3>
                                 </div>
 
                             </div>

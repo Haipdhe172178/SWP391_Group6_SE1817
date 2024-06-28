@@ -47,249 +47,47 @@
 
     <body class="crm_body_bg">
 
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
-            <div class="logo d-flex justify-content-between">
-                <a href="dash"><img src="images/anh456.png" alt></a>
-                <div class="sidebar_close_icon d-lg-none">
-                    <i class="ti-close"></i>
-                </div>
-            </div>
-            <ul id="sidebar_menu">
-                <li class="mm-active">
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/dashboard.svg" alt>
-                        </div>
-                        <span>Bảng điều khiển</span>
-                    </a>
-                    <ul>
-                        <li><a class="active" href="index.html">Doanh số</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/2.svg" alt>
-                        </div>
-                        <span>Ứng dụng</span>
-                    </a>
-                    <ul>
-                        <li><a href="contactAdmin">Liên hệ</a></li>
-                        <li><a href="chat">Chat</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/8.svg" alt>
-                        </div>
-                        <span>Bán hàng</span>
-                    </a>
-                    <ul>
-                        <li><a href="image">Image BackGround</a></li>
-                        <li><a href="discount">Discount</a></li>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-                    </ul>
-                </li>        
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/11.svg" alt>
-                        </div>
-                        <span>Bảng dữ liệu</span>
-                    </a>
-                    <ul>
-                        <li><a href="data">Sản phẩm</a></li>
-                        <li><a href="">Thể Loại</a></li>
-                        <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                 <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Người Dùng</a></li>
-                        <li><a href="manages">nhân Viên</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+            <section class="main_content dashboard_part large_header_bg">
 
-        <section class="main_content dashboard_part large_header_bg">
+            <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
-            <div class="container-fluid g-0">
-                <div class="row">
-                    <div class="col-lg-12 p-0 ">
-                        <div class="header_iner d-flex justify-content-between align-items-center">
-                            <div class="sidebar_icon d-lg-none">
-                                <i class="ti-menu"></i>
-                            </div>
-                            <div class="serach_field-area d-flex align-items-center">
-                                <div class="search_inner">
-                                    <form action="manages" method="GET">
-                                        <div class="search_field">
-                                            <input name="s" type="text" placeholder="Search here...">
-                                        </div>
-                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                    </form>
-                                </div>
-                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                            </div>
-                            <div class="header_right d-flex justify-content-between align-items-center">
-                                <div class="header_notification_warp d-flex align-items-center">
-                                    <li>
-                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img src="img/icon/bell.svg" alt>
-                                        </a>
-
-                                        <div class="Menu_NOtification_Wrap">
-                                            <div class="notification_Header">
-                                                <h4>Notifications</h4>
+                <div class="main_content_iner ">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Tài Khoản</h3>
                                             </div>
-                                            <div class="Notification_body">
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="nofity_footer">
-                                                <div class="submit_button text-center pt_20">
-                                                    <a href="#" class="btn_1">See More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <a class="CHATBOX_open nav-link-notify" href="#"> <img src="img/icon/msg.svg" alt> </a>
-                                    </li>
-                                </div>
-                                <div class="profile_info">
-                                    <img src="img/client_img.png" alt="#">
-                                    <div class="profile_info_iner">
-                                        <div class="profile_author_name">
-                                            <p>Neurologist </p>
-                                            <h5>Dr. Robar Smith</h5>
-                                        </div>
-                                        <div class="profile_info_details">
-                                            <a href="#">My Profile </a>
-                                            <a href="#">Settings</a>
-                                            <a href="#">Log Out </a>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="main_content_iner ">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Tài Khoản</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="white_card_body">
-                                    <div class="QA_section">
-                                        <div class="white_box_tittle list_header">
-                                            <h4>Bảng dữ liệu của người nhân viên</h4>
-                                            <div class="box_right d-flex lms_block">
-                                                <div class="serach_field_2">
-                                                    <div class="search_inner">
-                                                        <form action="manages" method="GET">
-                                                            <div class="search_field">
-                                                                <input name="s" type="text" placeholder="Tìm kiếm....">
-                                                            </div>
-                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                        </form>
+                                    <div class="white_card_body">
+                                        <div class="QA_section">
+                                            <div class="white_box_tittle list_header">
+                                                <h4>Bảng dữ liệu của người nhân viên</h4>
+                                                <div class="box_right d-flex lms_block">
+                                                    <div class="serach_field_2">
+                                                        <div class="search_inner">
+                                                            <form action="manages" method="GET">
+                                                                <div class="search_field">
+                                                                    <input name="s" type="text" placeholder="Tìm kiếm....">
+                                                                </div>
+                                                                <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="add_button ms-2">
+                                                        <a href="addac" class="btn_1">Thêm quản lý</a>
                                                     </div>
                                                 </div>
-                                                 <div class="add_button ms-2">
-                                                    <a href="addac" class="btn_1">Thêm quản lý</a>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="QA_table mb_30">
-                                            <form action="manages" method="Post" id="sortForm">
-                                                <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
+                                            <div class="QA_table mb_30">
+                                                <form action="manages" method="Post" id="sortForm">
+                                                    <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
                                             </form>
                                             <table class="table lms_table_active">
                                                 <thead>
@@ -544,19 +342,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script>
-            function filterStatus(status) {
-                const statusFilter = document.getElementById('statusFilter');
-                statusFilter.value = status;
-                document.getElementById('sortForm').submit();
-            }
-            function confirmAction(action) {
-                if (action === 'hide') {
-                    return confirm('Bạn có chắc chắn muốn ẩn tài khoản này không?');
-                } else if (action === 'show') {
-                    return confirm('Bạn có chắc chắn muốn hiển thị tài khoản này không?');
-                }
-                return false;
-            }
+                                                                    function filterStatus(status) {
+                                                                        const statusFilter = document.getElementById('statusFilter');
+                                                                        statusFilter.value = status;
+                                                                        document.getElementById('sortForm').submit();
+                                                                    }
+                                                                    function confirmAction(action) {
+                                                                        if (action === 'hide') {
+                                                                            return confirm('Bạn có chắc chắn muốn ẩn tài khoản này không?');
+                                                                        } else if (action === 'show') {
+                                                                            return confirm('Bạn có chắc chắn muốn hiển thị tài khoản này không?');
+                                                                        }
+                                                                        return false;
+                                                                    }
 
         </script>
     </body>
