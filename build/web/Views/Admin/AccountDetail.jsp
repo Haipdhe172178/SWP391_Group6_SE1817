@@ -161,8 +161,6 @@
     </head>
 
     <body class="crm_body_bg">
-
-
         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
         <section class="main_content dashboard_part large_header_bg">
