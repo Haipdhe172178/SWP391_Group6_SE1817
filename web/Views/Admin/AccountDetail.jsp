@@ -219,7 +219,7 @@
                         <li><a href="author">Tác Giả</a></li>
                     </ul>
                 </li>
-                 <li class>
+                <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>
@@ -396,71 +396,66 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="p-3 py-5" id="profile">
-                                                    <h4 class="text-right mb-4">Hồ Sơ Của ID: ${acc.accountId}</h4>
+                                                    <h4 class="text-right mb-4">Hồ Sơ Của: ${acc.fullName}</h4>
                                                     <!-- Personal Info Section -->
                                                     <div id="personalInfoSection">
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
-                                                                <label for="fullname" class="labels">Họ và tên:</label>
-                                                                <div class="form-control">${acc.fullName}</div>
+                                                                <label for="fullname" class="labels">Họ và tên: ${acc.fullName}</label>
+
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="username" class="labels">Tên đăng nhập:</label>
-                                                                <div class="form-control">${acc.userName}</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-3">
-                                                            <div class="col-md-6">
-                                                                <label class="labels">Giới tính:</label>
-                                                                <div class="form-control">${acc.gender}</div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="phonenumber" class="labels">Số điện thoại:</label>
-                                                                <div class="form-control">${acc.phoneNumber}</div>
+                                                                <label for="username" class="labels">Tên đăng nhập: ${acc.userName}</label>
+
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
-                                                                <label for="address" class="labels">Địa chỉ:</label>
-                                                                <div class="form-control">${acc.address}</div>
+                                                                <label class="labels">Giới tính: ${acc.gender}</label>
+
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="email" class="labels">Email:</label>
-                                                                <div class="form-control">${acc.email}</div>
+                                                                <label for="phonenumber" class="labels">Số điện thoại:${acc.phoneNumber}</label>
+
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
-                                                                <label for="status" class="labels">Trạng thái:</label>
-                                                                <div class="form-control">
-                                                                    <c:choose>
+                                                                <label for="address" class="labels">Địa chỉ: ${acc.address}</label>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="email" class="labels">Email: ${acc.email}</label>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-6">
+                                                                <label for="status" class="labels">Trạng thái:  <c:choose>
                                                                         <c:when test="${acc.status == 1}">
                                                                             <span style="color: green;">Active</span>
                                                                         </c:when>
                                                                         <c:when test="${acc.status == 0}">
                                                                             <span style="color: red;">Inactive</span>
                                                                         </c:when>
-                                                                    </c:choose>
-                                                                </div>
+                                                                    </c:choose></label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="role" class="labels">Chức vụ:</label>
-                                                                <div class="form-control">
-                                                                    <c:forEach items="${role}" var="ro">
+                                                                <label for="role" class="labels">Chức vụ:  <c:forEach items="${role}" var="ro">
                                                                         <c:if test="${acc.roleId == ro.roleId}">
                                                                             ${ro.roleName}
                                                                         </c:if>
-                                                                    </c:forEach>
-                                                                </div>
+                                                                    </c:forEach></label>
                                                             </div>
                                                         </div>
-                                                        <a href="account" class="btn btn-outline-info">Trở lại</a>
+                                                       
                                                     </div>
                                                     <!-- Order History Section -->
                                                     <div id="orderHistorySection">
                                                         <h4 class="text-right mb-4">Lịch Sử Đơn Hàng</h4>                                                      
                                                         <p>Chưa có đơn hàng nào.</p>
                                                     </div>
+                                                     <a href="account" class="btn btn-outline-info" style="margin-top: 10px">Trở lại</a>
                                                 </div>
                                             </div>
                                         </div>
