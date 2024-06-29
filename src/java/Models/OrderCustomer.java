@@ -5,43 +5,45 @@
 package Models;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author huyca
  */
 public class OrderCustomer {
-    private int orderCId;
-    private int accountId;
+    private List<OrderDetailCustomer> orderDetails;
+    private Account account;
     private float totalPrice;
     private Date date;
-    private int statusId;
+     private Status status;
 
-    public OrderCustomer() {
-    }
-
-    public OrderCustomer(int orderCId, int accountId, float totalPrice, Date date, int statusId) {
-        this.orderCId = orderCId;
-        this.accountId = accountId;
+    public OrderCustomer(List<OrderDetailCustomer> orderDetails, Account account, float totalPrice, Date date, Status status) {
+        this.orderDetails = orderDetails;
+        this.account = account;
         this.totalPrice = totalPrice;
         this.date = date;
-        this.statusId = statusId;
+        this.status = status;
+    }
+ 
+    public Status getStatus() {
+        return status;
     }
 
-    public int getOrderCId() {
-        return orderCId;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public void setOrderCId(int orderCId) {
-        this.orderCId = orderCId;
+    public List<OrderDetailCustomer> getOrderDetails() {
+        return orderDetails;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public float getTotalPrice() {
@@ -60,12 +62,4 @@ public class OrderCustomer {
         this.date = date;
     }
 
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-    
 }

@@ -5,41 +5,37 @@
 package Models;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author huyca
  */
 public class OrderGuest {
-    private int orderGId;
+    private List<OrderDetailGuest> orderDetails;
     private String fullName;
     private String email;
     private String phoneNumber;
     private String address;
     private float totalPrice;
     private Date date;
-    private int statusId;
+    private Status status;
 
-    public OrderGuest() {
-    }
-
-    public OrderGuest(int orderGId, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, int statusId) {
-        this.orderGId = orderGId;
+    public OrderGuest(List<OrderDetailGuest> orderDetails, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, Status status) {
+        this.orderDetails = orderDetails;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.totalPrice = totalPrice;
         this.date = date;
-        this.statusId = statusId;
+        this.status = status;
     }
 
-    public int getOrderGId() {
-        return orderGId;
-    }
+   
 
-    public void setOrderGId(int orderGId) {
-        this.orderGId = orderGId;
+    public List<OrderDetailGuest> getOrderDetails() {
+        return orderDetails;
     }
 
     public String getFullName() {
@@ -90,12 +86,11 @@ public class OrderGuest {
         this.date = date;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(Status statusId) {
+        this.status = status;
     }
-    
 }

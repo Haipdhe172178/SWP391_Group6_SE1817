@@ -10,16 +10,16 @@ package Models;
  */
 public class OrderDetailCustomer {
     private int orderCId;
-    private int ProductId;
+    private int productId;
     private int quantity;
     private float unitPrice;
 
     public OrderDetailCustomer() {
     }
 
-    public OrderDetailCustomer(int orderCId, int ProductId, int quantity, float unitPrice) {
+    public OrderDetailCustomer(int orderCId, int productId, int quantity, float unitPrice) {
         this.orderCId = orderCId;
-        this.ProductId = ProductId;
+        this.productId = productId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
@@ -33,11 +33,11 @@ public class OrderDetailCustomer {
     }
 
     public int getProductId() {
-        return ProductId;
+        return productId;
     }
 
-    public void setProductId(int ProductId) {
-        this.ProductId = ProductId;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getQuantity() {
