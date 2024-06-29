@@ -31,22 +31,10 @@ public class CartControllers extends HttpServlet {
         List<Product> productList = productDao.getAllProducts();
 
         Cart cart;
-        if (account != null) {
-            CartDAO cartDao = new CartDAO();
-            cart = cartDao.getCartByUserId(account.getAccountId());
-
-            // Merge cart from cookie if exists
-            String cartData = getCartDataFromCookie(request);
-            Cart cookieCart = new Cart(cartData, productList);
-            mergeCarts(cart, cookieCart);
-
-            // Update database and cookie
-            cartDao.addCartItem(cart);
-            updateCartCookie(response, cart);
-        } else {
+        
             String cartData = getCartDataFromCookie(request);
             cart = new Cart(cartData, productList);
-        }
+        
 
         request.setAttribute("cart", cart);
         request.setAttribute("cartSize", cart.getItems().size());
