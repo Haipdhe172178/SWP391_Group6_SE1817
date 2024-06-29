@@ -457,7 +457,7 @@
 
 
                                         </span>
-                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+<!--                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
                                             <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
                                                 <svg class="cart">
                                                 <use xlink:href="#cart"></use>
@@ -470,7 +470,7 @@
                                                     </svg>
                                                 </span>
                                             </a>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </a>
                             </div>
