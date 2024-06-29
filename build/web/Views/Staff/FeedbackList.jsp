@@ -229,127 +229,70 @@
     </svg>
 
     <body class="crm_body_bg">
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
-            <div class="logo d-flex justify-content-between">
-                <a href="staffdashboard"><img src="images/anh456.png" alt></a>
-                <div class="sidebar_close_icon d-lg-none">
-                    <i class="ti-close"></i>
-                </div>
-            </div>
-            <ul id="sidebar_menu">
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/8.svg" alt>
-                        </div>
-                        <span>Đơn đặt hàng</span>
-                    </a>
-                </li>        
-                <li class>
-                    <a class="has-arrow" href="feedbacklist" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/11.svg" alt>
-                        </div>
-                        <span>Đánh giá từ khách hàng</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-        <section class="main_content dashboard_part large_header_bg">
+            <section class="main_content dashboard_part large_header_bg">
+            <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
-            <div class="container-fluid g-0">
-                <div class="row">
-                    <div class="col-lg-12 p-0">
-                        <div class="header_iner d-flex justify-content-between align-items-center">
-                            <div class="sidebar_icon d-lg-none">
-                                <i class="ti-menu"></i>
-                            </div>
-                            <div class="serach_field-area d-flex align-items-center">
-                                <div class="search_inner">
-                                    <h3 style="margin-left: 20px">Đánh giá sản phẩm </h3>
-                                </div>
-                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                            </div>
-                            <div class="header_right d-flex justify-content-between align-items-center">
-
-                                <div class="profile_info">
-                                    <img src="${sessionScope.account.imgAccount}">
-                                    <div class="profile_info_iner">
-                                        <div class="profile_author_name">
-                                            <p>Nhân viên</p>
-                                            <h5>${sessionScope.account.fullName}</h5>
-                                        </div>
-                                        <div class="profile_info_details">
-                                            <a href="logout">Đăng xuất </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="notification-container" class="notification-container"></div>
-            <script>
-                function showNotification() {
-                    var notification = '<%= session.getAttribute("notification") %>';
-                    if (notification === 'displayElement') {
-                        var notificationContainer = document.getElementById('notification-container');
-                        if (notificationContainer) {
-                            var notificationElement = document.createElement('div');
-                            notificationElement.classList.add('notification', 'success');
-                            notificationElement.textContent = 'Hiển thị thành công';
-                            notificationContainer.appendChild(notificationElement);
-                            notificationContainer.style.display = 'block';
-                            setTimeout(function () {
-                                notificationContainer.style.display = 'none';
-                            }, 5000);
+                <div id="notification-container" class="notification-container"></div>
+                <script>
+                    function showNotification() {
+                        var notification = '<%= session.getAttribute("notification") %>';
+                        if (notification === 'displayElement') {
+                            var notificationContainer = document.getElementById('notification-container');
+                            if (notificationContainer) {
+                                var notificationElement = document.createElement('div');
+                                notificationElement.classList.add('notification', 'success');
+                                notificationElement.textContent = 'Hiển thị thành công';
+                                notificationContainer.appendChild(notificationElement);
+                                notificationContainer.style.display = 'block';
+                                setTimeout(function () {
+                                    notificationContainer.style.display = 'none';
+                                }, 5000);
+                            }
                         }
-                    }
-                    if (notification === 'hidden') {
-                        var notificationContainer = document.getElementById('notification-container');
-                        if (notificationContainer) {
-                            var notificationElement = document.createElement('div');
-                            notificationElement.classList.add('notification', 'success');
-                            notificationElement.textContent = 'Đã ẩn đánh giá';
-                            notificationContainer.appendChild(notificationElement);
-                            notificationContainer.style.display = 'block';
-                            setTimeout(function () {
-                                notificationContainer.style.display = 'none';
-                            }, 5000);
+                        if (notification === 'hidden') {
+                            var notificationContainer = document.getElementById('notification-container');
+                            if (notificationContainer) {
+                                var notificationElement = document.createElement('div');
+                                notificationElement.classList.add('notification', 'success');
+                                notificationElement.textContent = 'Đã ẩn đánh giá';
+                                notificationContainer.appendChild(notificationElement);
+                                notificationContainer.style.display = 'block';
+                                setTimeout(function () {
+                                    notificationContainer.style.display = 'none';
+                                }, 5000);
+                            }
                         }
-                    }
-                    if (notification === 'delete') {
-                        var notificationContainer = document.getElementById('notification-container');
-                        if (notificationContainer) {
-                            var notificationElement = document.createElement('div');
-                            notificationElement.classList.add('notification', 'success');
-                            notificationElement.textContent = 'Đã xóa đánh giá';
-                            notificationContainer.appendChild(notificationElement);
-                            notificationContainer.style.display = 'block';
-                            setTimeout(function () {
-                                notificationContainer.style.display = 'none';
-                            }, 5000);
+                        if (notification === 'delete') {
+                            var notificationContainer = document.getElementById('notification-container');
+                            if (notificationContainer) {
+                                var notificationElement = document.createElement('div');
+                                notificationElement.classList.add('notification', 'success');
+                                notificationElement.textContent = 'Đã xóa đánh giá';
+                                notificationContainer.appendChild(notificationElement);
+                                notificationContainer.style.display = 'block';
+                                setTimeout(function () {
+                                    notificationContainer.style.display = 'none';
+                                }, 5000);
+                            }
                         }
-                    }
-                    if (notification === 'accept_all') {
-                        var notificationContainer = document.getElementById('notification-container');
-                        if (notificationContainer) {
-                            var notificationElement = document.createElement('div');
-                            notificationElement.classList.add('notification', 'success');
-                            notificationElement.textContent = 'Đã chấp nhận tất cả đánh giá mới';
-                            notificationContainer.appendChild(notificationElement);
-                            notificationContainer.style.display = 'block';
-                            setTimeout(function () {
-                                notificationContainer.style.display = 'none';
-                            }, 5000);
+                        if (notification === 'accept_all') {
+                            var notificationContainer = document.getElementById('notification-container');
+                            if (notificationContainer) {
+                                var notificationElement = document.createElement('div');
+                                notificationElement.classList.add('notification', 'success');
+                                notificationElement.textContent = 'Đã chấp nhận tất cả đánh giá mới';
+                                notificationContainer.appendChild(notificationElement);
+                                notificationContainer.style.display = 'block';
+                                setTimeout(function () {
+                                    notificationContainer.style.display = 'none';
+                                }, 5000);
+                            }
                         }
-                    }
                 <% session.removeAttribute("notification"); %>
-                }
-                window.onload = showNotification;
+                    }
+                    window.onload = showNotification;
             </script>
             <div class="main_content_iner ">
                 <div class="container-fluid p-0">
@@ -514,7 +457,7 @@
                                                                                             <i class="fas fa-trash-alt"></i>
                                                                                         </button>
                                                                                     </div>
-                                                                                    
+
                                                                                 </c:if>
                                                                             </c:otherwise>
                                                                         </c:choose>

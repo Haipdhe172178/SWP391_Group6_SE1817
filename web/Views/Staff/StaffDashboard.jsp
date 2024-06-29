@@ -51,57 +51,32 @@
     </head>
 
     <body class="crm_body_bg">
-        <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
-            <div class="logo d-flex justify-content-between">
-                <a href="staffdashboard"><img src="images/anh456.png" alt></a>
-                <div class="sidebar_close_icon d-lg-none">
-                    <i class="ti-close"></i>
-                </div>
-            </div>
-            <ul id="sidebar_menu">
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/8.svg" alt>
-                        </div>
-                        <span>Đơn đặt hàng</span>
-                    </a>
-                </li>        
-                <li class>
-                    <a class="has-arrow" href="feedbacklist" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/11.svg" alt>
-                        </div>
-                        <span>Đánh giá từ khách hàng</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-        <section class="main_content dashboard_part large_header_bg">
-
-            <div class="container-fluid g-0">
-                <div class="row">
-                    <div class="col-lg-12 p-0">
-                        <div class="header_iner d-flex justify-content-between align-items-center">
-                            <div class="sidebar_icon d-lg-none">
-                                <i class="ti-menu"></i>
-                            </div>
-                            <div class="serach_field-area d-flex align-items-center">
-                                <div class="search_inner">
-                                    <!--                            <form action="#">
-                                                                    <div class="search_field">
-                                                                        <input type="text" placeholder="Search here...">
-                                                                    </div>
-                                                                    <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                                </form>-->
-                                    <h3 style="margin-left: 20px"></h3>
+            <section class="main_content dashboard_part large_header_bg">
+            <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
+                <div class="container-fluid g-0">
+                    <div class="row">
+                        <div class="col-lg-12 p-0">
+                            <div class="header_iner d-flex justify-content-between align-items-center">
+                                <div class="sidebar_icon d-lg-none">
+                                    <i class="ti-menu"></i>
                                 </div>
-                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                            </div>
-                            <div class="header_right d-flex justify-content-between align-items-center">
-                                 <div class="profile_info">
-                                    <img src="${sessionScope.account.imgAccount}">
+                                <div class="serach_field-area d-flex align-items-center">
+                                    <div class="search_inner">
+                                        <!--                            <form action="#">
+                                                                        <div class="search_field">
+                                                                            <input type="text" placeholder="Search here...">
+                                                                        </div>
+                                                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                                    </form>-->
+                                        <h3 style="margin-left: 20px"></h3>
+                                    </div>
+                                    <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
+                                </div>
+                                <div class="header_right d-flex justify-content-between align-items-center">
+                                    <div class="profile_info">
+                                        <img src="${sessionScope.account.imgAccount}">
                                     <div class="profile_info_iner">
                                         <div class="profile_author_name">
                                             <p>Nhân viên</p>

@@ -78,251 +78,49 @@
 
     <body class="crm_body_bg">
 
-         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
-            <div class="logo d-flex justify-content-between">
-                <a href="dash"><img src="images/anh456.png" alt></a>
-                <div class="sidebar_close_icon d-lg-none">
-                    <i class="ti-close"></i>
-                </div>
-            </div>
-            <ul id="sidebar_menu">
-                <li class="mm-active">
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/dashboard.svg" alt>
-                        </div>
-                        <span>Bảng điều khiển</span>
-                    </a>
-                    <ul>
-                        <li><a class="" href="index.html">Doanh số</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/2.svg" alt>
-                        </div>
-                        <span>Ứng dụng</span>
-                    </a>
-                    <ul>
-                        <li><a href="contactAdmin">Liên hệ</a></li>
-                        <li><a href="chat">Tin nhắn</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/8.svg" alt>
-                        </div>
-                        <span>Bán hàng</span>
-                    </a>
-                    <ul>
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                        <li><a href="discount">Mã Giảm giá</a></li>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-                    </ul>
-                </li>        
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/11.svg" alt>
-                        </div>
-                        <span>Bảng dữ liệu</span>
-                    </a>
-                    <ul>
-                        <li><a class="active" href="data">Sản Phẩm</a></li>
-                        <li><a href="category">Thể Loại</a></li>                    
-                         <li><a href="author">Tác Giả</a></li>
-                    </ul>
-                </li>
-                <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <div class="icon_menu">
-                            <img src="img/menu-icon/17.svg" alt>
-                        </div>
-                        <span>Xác thực</span>
-                    </a>
-                    <ul>
-                        <li><a href="account">Người Dùng</a></li>
-                        <li><a href="manages">nhân Viên</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+            <section class="main_content dashboard_part large_header_bg">
 
-        <section class="main_content dashboard_part large_header_bg">
-
-            <div class="container-fluid g-0">
-                <div class="row">
-                    <div class="col-lg-12 p-0 ">
-                        <div class="header_iner d-flex justify-content-between align-items-center">
-                            <div class="sidebar_icon d-lg-none">
-                                <i class="ti-menu"></i>
-                            </div>
-                            <div class="serach_field-area d-flex align-items-center">
-                                <div class="search_inner">
-                                    <form action="data" method="GET">
-                                        <div class="search_field">
-                                            <input name="s" type="text" placeholder="Search here...">
-                                        </div>
-                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                    </form>
-                                </div>
-                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                            </div>
-                            <div class="header_right d-flex justify-content-between align-items-center">
-                                <div class="header_notification_warp d-flex align-items-center">
-                                    <li>
-                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img src="img/icon/bell.svg" alt>
-                                        </a>
-
-                                        <div class="Menu_NOtification_Wrap">
-                                            <div class="notification_Header">
-                                                <h4>Notifications</h4>
+            <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
+                <div id="notification-container" class="notification-container"></div>
+                <div class="main_content_iner">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Thêm sản phẩm</h3>
                                             </div>
-                                            <div class="Notification_body">
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/2.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Marketing </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/4.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="img/staf/3.png" alt></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>what a packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="nofity_footer">
-                                                <div class="submit_button text-center pt_20">
-                                                    <a href="#" class="btn_1">See More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <a class="CHATBOX_open nav-link-notify" href="#"> <img src="img/icon/msg.svg" alt> </a>
-                                    </li>
-                                </div>
-                                <div class="profile_info">
-                                    <img src="img/client_img.png" alt="#">
-                                    <div class="profile_info_iner">
-                                        <div class="profile_author_name">
-                                            <p>Neurologist </p>
-                                            <h5>Dr. Robar Smith</h5>
-                                        </div>
-                                        <div class="profile_info_details">
-                                            <a href="#">My Profile </a>
-                                            <a href="#">Settings</a>
-                                            <a href="#">Log Out </a>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="notification-container" class="notification-container"></div>
-            <div class="main_content_iner">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Thêm sản phẩm</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form action="add" method="POST" enctype="multipart/form-data" id="myForm">
-                                    <div class="white_card_body">
-                                        <div class="mb-3">
-                                            <label for="productName">Tên sản phẩm:</label>
-                                            <input type="text" class="form-control" id="productName" name="name" placeholder="nhập tên sản phẩm" required>
-                                            <div id="productNameError" class="error"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productPrice">Giá:</label>
-                                            <input type="number" class="form-control" id="productPrice" placeholder="nhập giá" name="price" required>
-                                            <div id="productPriceError" class="error"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productQuantity">Số lượng:</label>
-                                            <input type="number" class="form-control" id="productQuantity" placeholder="nhập số lượng" name="quantity" required>
-                                            <div id="productQuantityError" class="error"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productDescription">Mô tả sản phẩm:</label>
-                                            <textarea class="form-control" id="productDescription" name="description" placeholder="nhập mô tả" required></textarea>
-                                            <div id="productDescriptionError" class="error"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="productCategory" class="form-label">Thể loại</label>
-                                            <select class="form-select" id="productCategory" name="categoryId" required>
+                                    <form action="add" method="POST" enctype="multipart/form-data" id="myForm">
+                                        <div class="white_card_body">
+                                            <div class="mb-3">
+                                                <label for="productName">Tên sản phẩm:</label>
+                                                <input type="text" class="form-control" id="productName" name="name" placeholder="nhập tên sản phẩm" required>
+                                                <div id="productNameError" class="error"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="productPrice">Giá:</label>
+                                                <input type="number" class="form-control" id="productPrice" placeholder="nhập giá" name="price" required>
+                                                <div id="productPriceError" class="error"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="productQuantity">Số lượng:</label>
+                                                <input type="number" class="form-control" id="productQuantity" placeholder="nhập số lượng" name="quantity" required>
+                                                <div id="productQuantityError" class="error"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="productDescription">Mô tả sản phẩm:</label>
+                                                <textarea class="form-control" id="productDescription" name="description" placeholder="nhập mô tả" required></textarea>
+                                                <div id="productDescriptionError" class="error"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="productCategory" class="form-label">Thể loại</label>
+                                                <select class="form-select" id="productCategory" name="categoryId" required>
                                                 <c:forEach items="${category}" var="c">
                                                     <option value="${c.categoryId}">${c.categoryName}</option>
                                                 </c:forEach>
@@ -353,7 +151,7 @@
                                             <a href="data" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
-                                    </form>
+                                </form>
 
                             </div>
                         </div>
@@ -510,60 +308,60 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
         <!--kiem tra validation-->
         <script>
-                                                // JavaScript for form validation
+            // JavaScript for form validation
             document.getElementById('myForm').addEventListener('submit', function (event) {
-                    var productName = document.getElementById('productName').value.trim();
-                    var productPrice = document.getElementById('productPrice').value.trim();
-                    var productQuantity = document.getElementById('productQuantity').value.trim();
-                    var productDescription = document.getElementById('productDescription').value.trim();
-                    var productImage = document.getElementById('productImage').value.trim();
+                var productName = document.getElementById('productName').value.trim();
+                var productPrice = document.getElementById('productPrice').value.trim();
+                var productQuantity = document.getElementById('productQuantity').value.trim();
+                var productDescription = document.getElementById('productDescription').value.trim();
+                var productImage = document.getElementById('productImage').value.trim();
 
-                    var productNameError = document.getElementById('productNameError');
-                    var productPriceError = document.getElementById('productPriceError');
-                    var productQuantityError = document.getElementById('productQuantityError');
-                    var productDescriptionError = document.getElementById('productDescriptionError');
+                var productNameError = document.getElementById('productNameError');
+                var productPriceError = document.getElementById('productPriceError');
+                var productQuantityError = document.getElementById('productQuantityError');
+                var productDescriptionError = document.getElementById('productDescriptionError');
 
-                    var isValid = true;
+                var isValid = true;
 
-                    // Reset previous error messages
-                    productNameError.textContent = '';
-                    productPriceError.textContent = '';
-                    productQuantityError.textContent = '';
-                    productDescriptionError.textContent = '';
+                // Reset previous error messages
+                productNameError.textContent = '';
+                productPriceError.textContent = '';
+                productQuantityError.textContent = '';
+                productDescriptionError.textContent = '';
 
-                    if (productName === '') {
-                        productNameError.textContent = 'Vui lòng nhập tên sản phẩm.';
-                        isValid = false;
-                    }
-                    if (productPrice === '') {
-                        productPriceError.textContent = 'Vui lòng nhập giá sản phẩm.';
-                        isValid = false;
-                    } else if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
-                        productPriceError.textContent = 'Giá sản phẩm phải là một số dương.';
-                        isValid = false;
-                    }
+                if (productName === '') {
+                    productNameError.textContent = 'Vui lòng nhập tên sản phẩm.';
+                    isValid = false;
+                }
+                if (productPrice === '') {
+                    productPriceError.textContent = 'Vui lòng nhập giá sản phẩm.';
+                    isValid = false;
+                } else if (isNaN(productPrice) || parseFloat(productPrice) <= 0) {
+                    productPriceError.textContent = 'Giá sản phẩm phải là một số dương.';
+                    isValid = false;
+                }
 
-                    if (productQuantity === '') {
-                        productQuantityError.textContent = 'Vui lòng nhập số lượng sản phẩm.';
-                        isValid = false;
-                    } else if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
-                        productQuantityError.textContent = 'Số lượng sản phẩm phải là một số nguyên dương.';
-                        isValid = false;
-                    }
+                if (productQuantity === '') {
+                    productQuantityError.textContent = 'Vui lòng nhập số lượng sản phẩm.';
+                    isValid = false;
+                } else if (isNaN(productQuantity) || parseInt(productQuantity) <= 0) {
+                    productQuantityError.textContent = 'Số lượng sản phẩm phải là một số nguyên dương.';
+                    isValid = false;
+                }
 
-                    if (productDescription === '') {
-                        productDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
-                        isValid = false;
-                    }
-                    if (productImage === '') {
-                        alert('Vui lòng chọn một ảnh cho sản phẩm.');
-                        isValid = false;
-                    }
+                if (productDescription === '') {
+                    productDescriptionError.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+                    isValid = false;
+                }
+                if (productImage === '') {
+                    alert('Vui lòng chọn một ảnh cho sản phẩm.');
+                    isValid = false;
+                }
 
-                    if (!isValid) {
-                        event.preventDefault();
-                    }
-                    });
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
         </script>
         <!--hien thi thong bao-->
         <script>
@@ -602,6 +400,6 @@
             window.onload = showNotificationAndRedirect;
         </script>
 
-</body>
+    </body>
 
 </html>
