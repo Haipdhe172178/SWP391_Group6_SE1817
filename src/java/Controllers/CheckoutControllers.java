@@ -98,7 +98,7 @@ public class CheckoutControllers extends HttpServlet {
             }
 
         } else if (action.equals("singleToCheckout")) {
-            int productID = Integer.parseInt(request.getParameter("productID"));
+            int productID = Integer.parseInt(request.getParameter("productId"));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             Product p = pDao.getProductById(productID);
             Item i = new Item(p, quantity, p.getPrice());

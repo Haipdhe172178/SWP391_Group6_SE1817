@@ -227,8 +227,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <!--form cho checkout-->
-                                <form action="check" method="post">
+                                <form id="formSubmit">
                                     <div class="product-quantity my-3">
                                         <div class="item-title">
                                             <l>${requestScope.product.quantity} sách có sẵn</l>
@@ -252,19 +251,12 @@
                                         </div>
                                     </div>
                                     <div class="action-buttons my-3 d-flex flex-wrap gap-3">
-                                        <button type="submit" class="btn" name="action" value="singleToCheckout">Mua ngay</button>
-                                        <input type="hidden" name="productID" value="${requestScope.product.productId}">
-                                        <!--form cho cart-->
-                                        <form action="cart" method="post">
-                                            <input type="hidden" name="productId" value="${product.productId}">
-                                            <input type="hidden" name="quantity" value="1" id="hidden-quantity">
-                                            <button type="submit" class="btn btn-dark">Thêm vào giỏ hàng</button>
-                                        </form>
-                                        <!--form cho cart-->
+                                        <input type="hidden" name="action" value="singleToCheckout">
+                                        <button type="button" class="btn" onclick="buyNow()">Mua ngay</button>
+                                        <input type="hidden" name="productId" value="${requestScope.product.productId}">
+                                        <button type="button" formaction="cart"  onclick="addToCart()" formmethod="post" class="btn btn-dark">Thêm vào giỏ hàng</button>
                                     </div>
                                 </form>
-                                <!--form cho checkout-->
-
                                 <c:if test="${message ne null}">
                                     <div id="alert" class="alert-box ${type}">
                                         ${message}
@@ -279,6 +271,20 @@
 
 
                                 <script>
+//                                    xử lí form
+                                    function buyNow() {
+                                        var form = document.getElementById('formSubmit');
+                                        form.action = 'check';
+                                        form.method = 'post';
+                                        form.submit();
+                                    }
+                                     function addToCart() {
+                                        var form = document.getElementById('formSubmit');
+                                        form.action = 'cart';
+                                        form.method = 'post';
+                                        form.submit();
+                                    }
+                                    
                                     function decreaseQuantity() {
                                         let quantityInput = document.getElementById('quantity');
                                         let currentValue = parseInt(quantityInput.value);
@@ -654,28 +660,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-                                // Hàm kiểm tra nếu URL chứa tham số index
-                                function scrollToFeedbackSection() {
-                                    // Lấy giá trị của tham số index từ URL
-                                    const urlParams = new URLSearchParams(window.location.search);
-                                    const indexParam = urlParams.get('index');
-                                    const successParam = urlParams.get('success');
+                                    // Hàm kiểm tra nếu URL chứa tham số index
+                                    function scrollToFeedbackSection() {
+                                        // Lấy giá trị của tham số index từ URL
+                                        const urlParams = new URLSearchParams(window.location.search);
+                                        const indexParam = urlParams.get('index');
+                                        const successParam = urlParams.get('success');
 
-                                    // Nếu có tham số index và phần feedback có sẵn
-                                    if (indexParam && document.getElementById('feedback-section')) {
-                                        // Cuộn trang đến vị trí của phần feedback
-                                        document.getElementById('feedback-section').scrollIntoView({
-                                            behavior: 'smooth', // Cuộn mượt
-                                            block: 'start' // Đặt phần tử đến vị trí đầu của viewport
-                                        });
-                                        if (successParam) {
-                                            $('#feedbackModal').modal('show');
+                                        // Nếu có tham số index và phần feedback có sẵn
+                                        if (indexParam && document.getElementById('feedback-section')) {
+                                            // Cuộn trang đến vị trí của phần feedback
+                                            document.getElementById('feedback-section').scrollIntoView({
+                                                behavior: 'smooth', // Cuộn mượt
+                                                block: 'start' // Đặt phần tử đến vị trí đầu của viewport
+                                            });
+                                            if (successParam) {
+                                                $('#feedbackModal').modal('show');
+                                            }
+                                            // Hiển thị modal nếu notification là 'display'
                                         }
-                                        // Hiển thị modal nếu notification là 'display'
                                     }
-                                }
-                                // Gọi hàm này khi trang đã load hoàn toàn
-                                window.onload = scrollToFeedbackSection;
+                                    // Gọi hàm này khi trang đã load hoàn toàn
+                                    window.onload = scrollToFeedbackSection;
     </script>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     <script src="js/jquery-1.11.0.min.js"></script>

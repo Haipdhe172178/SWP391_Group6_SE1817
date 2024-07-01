@@ -269,12 +269,12 @@
                                         </td>
                                     </tr>
                                     <tr class="order-total pt-2 pb-2 border-bottom">
-                                        <th>Phí giao hàng</th>
+                                        <th>Phí giao hàng (tiêu chuẩn)</th>
                                         <td data-title="Ship">
                                             <span class="price-amount amount text-primary ps-5 fw-light">
                                                 <bdi>
                                                     <span class="price-currency-symbol">
-                                                        <fmt:formatNumber value="${30000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                                        <fmt:formatNumber value="${20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
                                                     </span>
                                             </span>
                                         </td>
@@ -285,7 +285,7 @@
                                             <span class="price-amount amount text-primary ps-5 fw-light">
                                                 <bdi>
                                                     <span class="price-currency-symbol">
-                                                        <fmt:formatNumber value="${totalAmount + 30000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                                        <fmt:formatNumber value="${totalAmount + 20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
                                                     </span>
                                             </span>
                                         </td>
