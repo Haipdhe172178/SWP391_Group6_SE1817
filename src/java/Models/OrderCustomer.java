@@ -12,11 +12,14 @@ import java.util.List;
  * @author huyca
  */
 public class OrderCustomer {
+
     private List<OrderDetailCustomer> orderDetails;
     private Account account;
     private float totalPrice;
     private Date date;
-     private Status status;
+    private Status status;
+    private int paymentStatus;
+    private ShippingAddress shipAddress;
 
     public OrderCustomer(List<OrderDetailCustomer> orderDetails, Account account, float totalPrice, Date date, Status status) {
         this.orderDetails = orderDetails;
@@ -25,7 +28,23 @@ public class OrderCustomer {
         this.date = date;
         this.status = status;
     }
- 
+
+    public ShippingAddress getShipaddress() {
+        return shipAddress;
+    }
+
+    public void setShipaddress(ShippingAddress shipAddress) {
+        this.shipAddress = shipAddress;
+    }
+    
+    public int getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(int paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+    
     public Status getStatus() {
         return status;
     }

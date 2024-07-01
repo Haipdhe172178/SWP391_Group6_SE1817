@@ -188,6 +188,10 @@
         <servlet-name>UpdateController</servlet-name>
         <servlet-class>AdminControllers.UpdateController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProcessCheckoutController</servlet-name>
+        <servlet-class>Controllers.ProcessCheckoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -288,12 +292,10 @@
         <servlet-name>ImaBGController</servlet-name>
         <url-pattern>/image</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AddAcountControllers</servlet-name>
         <url-pattern>/addac</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AddImage</servlet-name>
         <url-pattern>/addimage</url-pattern>
@@ -314,32 +316,26 @@
         <servlet-name>UpdateCategory</servlet-name>
         <url-pattern>/updatecategory</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AuthorControllers</servlet-name>
         <url-pattern>/author</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AddAuthorControllers</servlet-name>
         <url-pattern>/adda</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>UpdateAuthorControllers</servlet-name>
         <url-pattern>/updatea</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>HideAuthorControllers</servlet-name>
         <url-pattern>/hidea</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AccountAdminControllers</servlet-name>
         <url-pattern>/account</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>MailBoxController</servlet-name>
         <url-pattern>/mail</url-pattern>
@@ -380,12 +376,14 @@
         <servlet-name>ReplyContact</servlet-name>
         <url-pattern>/reply</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>UpdateController</servlet-name>
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>ProcessCheckoutController</servlet-name>
+        <url-pattern>/processCheckout</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
