@@ -31,10 +31,9 @@ public class CartControllers extends HttpServlet {
         List<Product> productList = productDao.getAllProducts();
 
         Cart cart;
-        
-            String cartData = getCartDataFromCookie(request);
-            cart = new Cart(cartData, productList);
-        
+
+        String cartData = getCartDataFromCookie(request);
+        cart = new Cart(cartData, productList);
 
         request.setAttribute("cart", cart);
         request.setAttribute("cartSize", cart.getItems().size());
@@ -42,50 +41,50 @@ public class CartControllers extends HttpServlet {
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    HttpSession session = request.getSession();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
-    int productId = Integer.parseInt(request.getParameter("productId"));
-    int quantity = Integer.parseInt(request.getParameter("quantity"));
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-    // Check if the quantity is greater than zero
-    if (quantity <= 0) {
-        session.setAttribute("message", "Số lượng sản phẩm phải lớn hơn 0");
-        response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
-        return;
-    }
-
-    String cartData = getCartDataFromCookie(request);
-    ProductDao productDao = new ProductDao();
-    List<Product> productList = productDao.getAllProducts();
-    Cart cart = new Cart(cartData, productList);
-
-    Product product = cart.getProductById(productId, productList);
-    if (product != null) {
-        int currentCartQuantity = cart.getQuantityByProductId(productId);
-        if (currentCartQuantity + quantity > product.getQuantity()) {
-            session.setAttribute("message", "Số lượng thêm vào vượt quá số lượng sản phẩm");
-        } else {
-            Item newItem = new Item(product, quantity, product.getPrice());
-            cart.addItem(newItem);
-            session.setAttribute("message", "Thêm vào giỏ hàng thành công");
+        // Check if the quantity is greater than zero
+        if (quantity <= 0) {
+            session.setAttribute("message", "Số lượng sản phẩm phải lớn hơn 0");
+            response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+            return;
         }
-    } else {
-        System.out.println("Không tìm thấy sản phẩm!");
-    }
 
-    updateCartCookie(response, cart);
-    Account a = (Account) session.getAttribute("account");
-    if (a != null) {
-        CartDAO cartDao = new CartDAO();
-        cart.setAccountId(a.getAccountId());
-        cartDao.addCartItem(cart);
-    }
+        String cartData = getCartDataFromCookie(request);
+        ProductDao productDao = new ProductDao();
+        List<Product> productList = productDao.getAllProducts();
+        Cart cart = new Cart(cartData, productList);
 
-    session.setAttribute("cart", cart);
-    response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
-}
+        Product product = cart.getProductById(productId, productList);
+        if (product != null) {
+            int currentCartQuantity = cart.getQuantityByProductId(productId);
+            if (currentCartQuantity + quantity > product.getQuantity()) {
+                session.setAttribute("message", "Số lượng thêm vào vượt quá số lượng sản phẩm");
+            } else {
+                Item newItem = new Item(product, quantity, product.getPrice());
+                cart.addItem(newItem);
+                session.setAttribute("message", "Thêm vào giỏ hàng thành công");
+            }
+        } else {
+            System.out.println("Không tìm thấy sản phẩm!");
+        }
+
+        updateCartCookie(response, cart);
+        Account a = (Account) session.getAttribute("account");
+        if (a != null) {
+            CartDAO cartDao = new CartDAO();
+            cart.setAccountId(a.getAccountId());
+            cartDao.addCartItem(cart);
+        }
+
+        session.setAttribute("cart", cart);
+        response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+    }
 
     @Override
     public String getServletInfo() {

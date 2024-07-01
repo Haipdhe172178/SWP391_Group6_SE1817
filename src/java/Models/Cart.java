@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
+
     private List<Item> items;
-    private int accountId; 
-    
+    private int accountId;
+
     public Cart() {
         items = new ArrayList<>();
     }
@@ -14,6 +15,7 @@ public class Cart {
     public int getAccountId() {
         return accountId;
     }
+
     public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
@@ -59,7 +61,6 @@ public class Cart {
         }
         return total;
     }
-    
 
     public Product getProductById(int id, List<Product> list) {
         for (Product i : list) {
@@ -69,8 +70,8 @@ public class Cart {
         }
         return null;
     }
-    
-     public void updateItem(Item t) {
+
+    public void updateItem(Item t) {
         for (Item i : items) {
             if (i.getProduct().getProductId() == t.getProduct().getProductId()) {
                 i.setQuantity(t.getQuantity());
@@ -79,7 +80,8 @@ public class Cart {
         }
         items.add(t);
     }
-public int getQuantityByProductId(int productId) {
+
+    public int getQuantityByProductId(int productId) {
         for (Item item : items) {
             if (item.getProduct().getProductId() == productId) {
                 return item.getQuantity();
@@ -87,6 +89,7 @@ public int getQuantityByProductId(int productId) {
         }
         return 0;
     }
+
     public Cart(String txt, List<Product> list) {
         items = new ArrayList<>();
         try {
