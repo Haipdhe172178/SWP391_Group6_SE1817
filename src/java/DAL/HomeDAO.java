@@ -59,13 +59,12 @@ public class HomeDAO extends DBContext {
                 product.setOage(oage);
 
                 product.setImgProduct(rs.getString("imgProduct"));
-               
-                
+
                 product.setStatus(rs.getInt("status"));
-                 if(product.getStatus()==1){
-                     data.add(product);
-                 }
-                
+                if (product.getStatus() == 1) {
+                    data.add(product);
+                }
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(HomeDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,18 +85,18 @@ public class HomeDAO extends DBContext {
         // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         ArrayList<Product> data = new ArrayList<>();
         try {
-            String sql = "SELECT top 3*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription\n" +
-"                FROM Product p\n" +
-"                INNER JOIN Category c ON c.CategoryID = p.CategoryID\n" +
-"                INNER JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n" +
-"                INNER JOIN Author a ON a.AuthorID = p.AuthorID\n" +
-"			\n" +
-"				Where p.CategoryID = "+ i+"\n" +
-"				order by p.ProductID desc";
+            String sql = "SELECT top 3*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription\n"
+                    + "                FROM Product p\n"
+                    + "                INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
+                    + "                INNER JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                    + "                INNER JOIN Author a ON a.AuthorID = p.AuthorID\n"
+                    + "			\n"
+                    + "				Where p.CategoryID = " + i + "\n"
+                    + "				order by p.ProductID desc";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-           while (rs.next()) {
+            while (rs.next()) {
                 Product product = new Product();
                 product.setProductId(rs.getInt("productId"));
                 product.setName(rs.getString("name"));
@@ -119,13 +118,12 @@ public class HomeDAO extends DBContext {
                 product.setOage(oage);
 
                 product.setImgProduct(rs.getString("imgProduct"));
-               
-                
+
                 product.setStatus(rs.getInt("status"));
-                 if(product.getStatus()==1){
-                     data.add(product);
-                 }
-           }
+                if (product.getStatus() == 1) {
+                    data.add(product);
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(HomeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,5 +217,28 @@ public class HomeDAO extends DBContext {
             System.out.println("addcode" + e.getMessage());
         }
 
+    }
+
+    public String getTime() {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       String date="";
+        try {
+            String sql = "SELECT [date]\n"
+                    + "  FROM [ShopBook88].[dbo].[Time] ";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return date= rs.getString(1);
+            }
+               
+               
+                
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

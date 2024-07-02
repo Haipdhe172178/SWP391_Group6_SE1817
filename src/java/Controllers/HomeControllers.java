@@ -85,13 +85,14 @@ public class HomeControllers extends HttpServlet {
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
         HomeDAO dal = new HomeDAO();
+        String date = dal.getTime();
         dataVanHoc = dal.get3addnew(2);
          dataNuocNgoai = dal.get3addnew(3);
           dataChuyenThong = dal.get3addnew(4);
            dataKhoaHoc= dal.get3addnew(5);
         imageBackground = dal.getImageBackground();
         Sellmany = dal.get6sellmany();
-
+        
         //Them list, news, feedback cho homepage
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
@@ -110,6 +111,7 @@ public class HomeControllers extends HttpServlet {
         request.setAttribute("data03", dataChuyenThong);
         request.setAttribute("data04", dataKhoaHoc);
         request.setAttribute("codediscount", codename);
+        request.setAttribute("date", date);
         request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
 
     }
