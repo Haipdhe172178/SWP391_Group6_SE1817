@@ -277,39 +277,40 @@ public class OrderDao extends DBContext {
         return topBuyers;
     }
 
-    public boolean AddOrderCustomer(OrderCustomer oc) {
+    public int AddOrderCustomer(int accID, int addressID, float totalPrice, int statusID, int paymentStatus) {
         String sql = "INSERT INTO OrderCustomer (AccountID,AddressID, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?)";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, oc.getAccount().getAccountId());
-            ps.setInt(2, oc.getShipaddress().getAddressID());
-            ps.setFloat(3, oc.getTotalPrice());
-            ps.setInt(4, oc.getStatus().getStatusId());
-            ps.setInt(5, oc.getPaymentStatus());
+            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, accID);
+            ps.setInt(2, addressID);
+            ps.setFloat(3, totalPrice);
+            ps.setInt(4, statusID);
+            ps.setInt(5, paymentStatus);
             int rowsInserted = ps.executeUpdate();
+            int orderCID = -1;
             if (rowsInserted > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    AddOrderCustomerDetails(rs.getInt(1), oc.getOrderDetails());
+                   orderCID = rs.getInt(1);
                 }
             }
             ps.close();
-            return rowsInserted > 0;
+            return orderCID;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
-    public void AddOrderCustomerDetails(int orderCID, List<OrderDetailCustomer> listOdc ) {
+    public void AddOrderCustomerDetails(int orderCID, List<Item> listItem) {
         String sql = "INSERT INTO OrderDetailCustomer(OrderCID, ProductID, Quantity, UnitPrice) values (?,?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            for (OrderDetailCustomer odc : listOdc) {
+            for (Item item : listItem) {
                 ps.setInt(1, orderCID);
-                ps.setInt(2, odc.getProductId());
-                ps.setInt(3, odc.getQuantity());
-                ps.setFloat(4, odc.getUnitPrice());
+                ps.setInt(2, item.getProduct().getProductId());
+                ps.setInt(3, item.getQuantity());
+                ps.setDouble(4, item.getPrice());
                 ps.execute();
             }
             ps.close();
@@ -321,7 +322,7 @@ public class OrderDao extends DBContext {
     public int AddOrderGuest(String fullname, String email, String phoneNumber, String address, Float totalPrice, int statusID, int paymentStatus) {
         String sql = "INSERT INTO OrderGuest(FullName, Email, PhoneNumber, Address, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?,?,?)";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, fullname);
             ps.setString(2, email);
             ps.setString(3, phoneNumber);
@@ -330,13 +331,15 @@ public class OrderDao extends DBContext {
             ps.setInt(6, statusID);
             ps.setInt(7, paymentStatus);
             int rowsInserted = ps.executeUpdate();
+            int orderGID = -1;
             if (rowsInserted > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    return rs.getInt(1);
+                    orderGID = rs.getInt(1);
                 }
             }
             ps.close();
+            return orderGID;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -359,9 +362,19 @@ public class OrderDao extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public boolean AddOrderGuest() {
 
         return false;
+    }
+
+    public static void main(String[] args) {
+        OrderDao od = new OrderDao();
+        List<Item> listItem = new ArrayList<>();
+        ProductDao pd = new ProductDao();
+        Product p = pd.getProductById(1);
+        listItem.add(new Item(p, 1, p.getPrice()));
+        int orderGID = od.AddOrderGuest("hai", "haitesst", "0123123", "213231", Float.parseFloat("10"), 1, 1);
+        od.AddOrderGuestDetails(orderGID, listItem);
     }
 }

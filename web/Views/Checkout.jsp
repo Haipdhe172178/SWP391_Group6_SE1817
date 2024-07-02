@@ -59,7 +59,7 @@
 
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
-        <form id="formCheckout" method="post">
+            <form id="formCheckout" method="post">
                 <section class="checkout-wrap padding-large p-1">
                     <div class="container">
                         <div class="row d-flex flex-wrap">
@@ -116,7 +116,7 @@
                                         </div>
                                         <label class="list-group-item d-flex gap-2 border-0 mt-3">
                                             <input class="form-check-input flex-shrink-0" type="radio" name="address"
-                                                   id="listGroupRadios1" value="" required>
+                                                   id="listGroupRadios1" value="1" required>
                                             <span class="address-container">
                                                 <div class="row">
                                                     <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
@@ -159,36 +159,39 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="row">
+                                                            <!-- Họ và tên, Số điện thoại -->
                                                             <div class="col-lg-6">
                                                                 <label for="fname">Họ và tên</label>
                                                                 <input type="text" id="fname" name="firstname" class="form-control mt-1 mb-4 ps-3">
                                                             </div>
                                                             <div class="col-lg-6">
+                                                                <label for="phone">Số điện thoại</label>
+                                                                <input type="text" id="phone" name="phone" class="form-control mt-1 ps-3 mb-4">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- Tỉnh thành, Quận huyện, Phường xã -->
+                                                            <div class="col-lg-4">
                                                                 <label for="city">Tỉnh thành</label>
                                                                 <select class="form-select form-select-sm form-control mt-1 mb-4" id="city" aria-label=".form-select-sm">
                                                                     <option value="" selected>Chọn tỉnh thành</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-lg-6">
-                                                                <label for="email">Email</label>
-                                                                <input type="text" id="email" name="email" class="form-control mt-1 ps-3 mb-3">
-                                                            </div>
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <label for="district">Quận huyện</label>
                                                                 <select class="form-select form-select-sm form-control mt-1 mb-4" id="district" aria-label=".form-select-sm">
                                                                     <option value="" selected>Chọn quận huyện</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-lg-6">
-                                                                <label for="phone">Số điện thoại</label>
-                                                                <input type="text" id="phone" name="phone" class="form-control mt-1 ps-3 mb-4">
-                                                            </div>
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <label for="ward">Phường xã</label>
                                                                 <select class="form-select form-select-sm form-control mt-1 mb-4" id="ward" aria-label=".form-select-sm">
                                                                     <option value="" selected>Chọn phường xã</option>
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- Địa chỉ -->
                                                             <div class="col-lg-12">
                                                                 <label for="address">Địa chỉ</label>
                                                                 <input type="text" id="address" name="address" class="form-control mt-1 ps-3 mb-4">
@@ -238,7 +241,7 @@
                                         radio.addEventListener('change', function () {
                                             if (this.checked) {
                                                 if (this.value === 'VNPAY') {
-                                                    paymentForm.action = 'vnpay_payment_url';
+                                                    paymentForm.action = 'ajaxServlet';
                                                 } else if (this.value === 'COD') {
                                                     paymentForm.action = 'processCheckout';
                                                 }
@@ -258,11 +261,12 @@
                                 padding: 0;
                                 list-style: none;">
                                 <c:forEach items="${requestScope.listItem}" var="item">
+                                    <input type="hidden" name="items" value="${item.product.productId},${item.quantity}">
                                     <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
                                         <div class="d-flex align-items-center">
                                             <img src="${pageContext.request.contextPath}/${item.product.imgProduct}" width="50" height="auto" alt="Thermometer"/>
                                             <div class="ml-3" style="margin-left: 10px; width: 65%">
-                                                <h6 class="my-0" style="font-size: 13px">${item.product.name}</h6><span>x${item.quantity}</span>
+                                                <h6 class="my-0" style="font-size: 13px">${item.product.name}</h6><span>Số lượng: ${item.quantity}</span>
                                             </div>
                                         </div>
                                         <fmt:setLocale value="vi_VN" />
@@ -305,7 +309,7 @@
                                                     <bdi>
                                                         <span class="price-currency-symbol" style="font-weight: bold; font-size: 22px">
                                                             <fmt:formatNumber value="${totalAmount + 20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                                            <input type="hidden" name="totalAmount" value="${totalAmount + 20000}">
+                                                            <input type="hidden" name="totalPrice" value="${totalAmount + 20000}">
                                                         </span>
                                                 </span>
                                             </td>
@@ -314,14 +318,14 @@
                                 </table>
                             </div>
                             <div class="button-wrap mt-3">
-                                <button type="submit" name="submit" class="btn">ĐẶT HÀNG</button>
+                                <button type="submit" class="btn">ĐẶT HÀNG</button>
                                 <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js" onload="console.log('vnpay script loaded')"></script>
                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                                 <script type="text/javascript">
-                                $("#frmCreateOrder").submit(function () {
+                                $("#formCheckout").submit(function () {
                                     console.log("Form submitted");
-                                    var postData = $("#frmCreateOrder").serialize();
-                                    var submitUrl = $("#frmCreateOrder").attr("action");
+                                    var postData = $("#formCheckout").serialize();
+                                    var submitUrl = $("#formCheckout").attr("action");
                                     console.log("Post data:", postData);
                                     console.log("Submit URL:", submitUrl);
                                     $.ajax({
