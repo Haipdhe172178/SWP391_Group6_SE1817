@@ -340,24 +340,24 @@ public class DiscountDAO extends DBContext {
     }
 
     public boolean UpdateTime(String date_rawid, String date_rawup) {
-    boolean isUpdated = false;
-    try {
-        String stSQL = "UPDATE [dbo].[Time]\n"
-                     + "SET [date] = ?\n"
-                     + "WHERE [date] = ?";
-        PreparedStatement stm = connection.prepareStatement(stSQL);
+        boolean isUpdated = false;
+        try {
+            String stSQL = "UPDATE [dbo].[Time]\n"
+                    + "SET [date] = ?\n"
+                    + "WHERE [date] = ?";
+            PreparedStatement stm = connection.prepareStatement(stSQL);
 
-        stm.setString(1, date_rawup);
-        stm.setString(2, date_rawid);
-        int rowsUpdated = stm.executeUpdate();
+            stm.setString(1, date_rawup);
+            stm.setString(2, date_rawid);
+            int rowsUpdated = stm.executeUpdate();
 
-        if (rowsUpdated > 0) {
-            isUpdated = true;
+            if (rowsUpdated > 0) {
+                isUpdated = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error during update: " + e.getMessage());
         }
-
-    } catch (Exception e) {
-        System.out.println("Error during update: " + e.getMessage());
+        return isUpdated;
     }
-    return isUpdated;
-}
 }

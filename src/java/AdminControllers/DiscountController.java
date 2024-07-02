@@ -114,7 +114,7 @@ public class DiscountController extends HttpServlet {
           request.setAttribute("tag", indexx);    
            request.setAttribute("s", searchtext);
            request.setAttribute("n", status);
-       request.setAttribute("date", data);
+        request.setAttribute("data", data);
         request.setAttribute("date1", date);
       
            request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
@@ -145,6 +145,7 @@ public class DiscountController extends HttpServlet {
            request.setAttribute("s", searchtext);
        request.setAttribute("data", data);
        request.setAttribute("n", status);
+        
        request.setAttribute("date1", date);
            request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
         }
@@ -199,7 +200,7 @@ public class DiscountController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */
