@@ -40,6 +40,54 @@
                 padding-top: 10px;
             }
 
+            .progress-bar {
+                transition: width 0.6s ease;
+            }
+
+            .progress-bar-striped {
+                background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+                background-size: 1rem 1rem;
+            }
+
+            .progress-bar-animated {
+                animation: progress-bar-stripes 1s linear infinite;
+            }
+
+            @keyframes progress-bar-stripes {
+                from {
+                    background-position: 1rem 0;
+                }
+
+                to {
+                    background-position: 0 0;
+                }
+            }
+
+            .progress-bar.confirmation {
+                background-color: #17a2b8;
+            }
+
+            .progress-bar.verified {
+                background-color: #28a745;
+            }
+
+            .progress-bar.shipping {
+                background-color: #ffc107;
+            }
+
+            .progress-bar.completed {
+                background-color: #007bff;
+            }
+
+            .progress-bar.cancelled {
+                background-color: #dc3545;
+            }
+
+            .QA_table table tbody tr td {
+                padding: 8px 10px;
+            }
+
+
         </style>
     </head>
 
@@ -93,17 +141,18 @@
                                 </div>
                                 <div class="white_card_body">
                                     <h2 class="crm_number" id="revenue">
-                                        <fmt:formatNumber type="currency" currencySymbol="VND" value="${totalRevenue}"/>
+                                        <fmt:formatNumber value="${totalRevenue}" type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/> VND
                                     </h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12 mb_20">
-                        <div class="white_card card_height_100 mb_20">
-                            <div class="white_card_header">
-                                <div class="box_header m-0">
-                                    <div class="main-title">
-                                        <h3 class="m-0">Tỷ lệ trạng thái đơn hàng</h3>
+                            <div class="white_card card_height_100 mb_20">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">Trạng thái đơn hàng</h3>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
@@ -118,7 +167,7 @@
                                             <tbody>
                                                 <c:forEach var="entry" items="${orderStatusPercentage}">
                                                     <tr>
-                                                        <td>${entry.key}</td>
+                                                        <td><a href="orderstatus?status=${entry.key}">${statusIdToName[entry.key]}</a></td>
                                                         <td>
                                                             <div class="progress" style="height: 20px;">
                                                                 <div class="progress-bar" role="progressbar" style="width: ${entry.value}%;" aria-valuenow="${entry.value}" aria-valuemin="0" aria-valuemax="100">${entry.value}%</div>
@@ -132,7 +181,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                         <div class="col-lg-12 mb_20">
                             <div class="white_card card_height_100 mb_20">
                                 <div class="white_card_header">
@@ -309,70 +357,70 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer_part">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="footer_iner text-center">
-                                    <p>2024 © Influence - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#"> Dashboard</a></p>
-                                </div>
+
+            </div>
+            <div class="footer_part">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="footer_iner text-center">
+                                <p>2024 © Influence - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#"> Dashboard</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <div id="back-top" style="display: none;">
+            <a title="Go to Top" href="#">
+                <i class="ti-angle-up"></i>
+            </a>
         </div>
-    </section>
 
-    <div id="back-top" style="display: none;">
-        <a title="Go to Top" href="#">
-            <i class="ti-angle-up"></i>
-        </a>
-    </div>
+        <script src="js/jquery1-3.4.1.min.js"></script>
+        <script src="js/popper1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/metisMenu.js"></script>
+        <script src="vendors/count_up/jquery.waypoints.min.js"></script>
+        <script src="vendors/chartlist/Chart.min.js"></script>
+        <script src="vendors/count_up/jquery.counterup.min.js"></script>
+        <script src="vendors/niceselect/js/jquery.nice-select.min.js"></script>
+        <script src="vendors/owl_carousel/js/owl.carousel.min.js"></script>
+        <script src="vendors/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="vendors/datatable/js/dataTables.responsive.min.js"></script>
+        <script src="vendors/datatable/js/dataTables.buttons.min.js"></script>
+        <script src="vendors/datatable/js/buttons.flash.min.js"></script>
+        <script src="vendors/datatable/js/jszip.min.js"></script>
+        <script src="vendors/datatable/js/pdfmake.min.js"></script>
+        <script src="vendors/datatable/js/vfs_fonts.js"></script>
+        <script src="vendors/datatable/js/buttons.html5.min.js"></script>
+        <script src="vendors/datatable/js/buttons.print.min.js"></script>
+        <script src="vendors/datepicker/datepicker.js"></script>
+        <script src="vendors/datepicker/datepicker.en.js"></script>
+        <script src="vendors/datepicker/datepicker.custom.js"></script>
+        <script src="js/chart.min.js"></script>
+        <script src="vendors/chartjs/roundedBar.min.js"></script>
+        <script src="vendors/progressbar/jquery.barfiller.js"></script>
+        <script src="vendors/tagsinput/tagsinput.js"></script>
+        <script src="vendors/text_editor/summernote-bs4.js"></script>
+        <script src="vendors/am_chart/amcharts.js"></script>
+        <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
+        <script src="vendors/scroll/scrollable-custom.js"></script>
+        <script src="vendors/vectormap-home/vectormap-2.0.2.min.js"></script>
+        <script src="vendors/vectormap-home/vectormap-world-mill-en.js"></script>
+        <script src="vendors/apex_chart/apex-chart2.js"></script>
+        <script src="vendors/apex_chart/apex_dashboard.js"></script>
+        <script src="vendors/echart/echarts.min.js"></script>
+        <script src="vendors/chart_am/core.js"></script>
+        <script src="vendors/chart_am/charts.js"></script>
+        <script src="vendors/chart_am/animated.js"></script>
+        <script src="vendors/chart_am/kelly.js"></script>
+        <script src="vendors/chart_am/chart-custom.js"></script>
+        <script src="js/dashboard_init.js"></script>
+        <script src="js/custom.js"></script>
 
-    <script src="js/jquery1-3.4.1.min.js"></script>
-    <script src="js/popper1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/metisMenu.js"></script>
-    <script src="vendors/count_up/jquery.waypoints.min.js"></script>
-    <script src="vendors/chartlist/Chart.min.js"></script>
-    <script src="vendors/count_up/jquery.counterup.min.js"></script>
-    <script src="vendors/niceselect/js/jquery.nice-select.min.js"></script>
-    <script src="vendors/owl_carousel/js/owl.carousel.min.js"></script>
-    <script src="vendors/datatable/js/jquery.dataTables.min.js"></script>
-    <script src="vendors/datatable/js/dataTables.responsive.min.js"></script>
-    <script src="vendors/datatable/js/dataTables.buttons.min.js"></script>
-    <script src="vendors/datatable/js/buttons.flash.min.js"></script>
-    <script src="vendors/datatable/js/jszip.min.js"></script>
-    <script src="vendors/datatable/js/pdfmake.min.js"></script>
-    <script src="vendors/datatable/js/vfs_fonts.js"></script>
-    <script src="vendors/datatable/js/buttons.html5.min.js"></script>
-    <script src="vendors/datatable/js/buttons.print.min.js"></script>
-    <script src="vendors/datepicker/datepicker.js"></script>
-    <script src="vendors/datepicker/datepicker.en.js"></script>
-    <script src="vendors/datepicker/datepicker.custom.js"></script>
-    <script src="js/chart.min.js"></script>
-    <script src="vendors/chartjs/roundedBar.min.js"></script>
-    <script src="vendors/progressbar/jquery.barfiller.js"></script>
-    <script src="vendors/tagsinput/tagsinput.js"></script>
-    <script src="vendors/text_editor/summernote-bs4.js"></script>
-    <script src="vendors/am_chart/amcharts.js"></script>
-    <script src="vendors/scroll/perfect-scrollbar.min.js"></script>
-    <script src="vendors/scroll/scrollable-custom.js"></script>
-    <script src="vendors/vectormap-home/vectormap-2.0.2.min.js"></script>
-    <script src="vendors/vectormap-home/vectormap-world-mill-en.js"></script>
-    <script src="vendors/apex_chart/apex-chart2.js"></script>
-    <script src="vendors/apex_chart/apex_dashboard.js"></script>
-    <script src="vendors/echart/echarts.min.js"></script>
-    <script src="vendors/chart_am/core.js"></script>
-    <script src="vendors/chart_am/charts.js"></script>
-    <script src="vendors/chart_am/animated.js"></script>
-    <script src="vendors/chart_am/kelly.js"></script>
-    <script src="vendors/chart_am/chart-custom.js"></script>
-    <script src="js/dashboard_init.js"></script>
-    <script src="js/custom.js"></script>
-
-</body>
+    </body>
 
 </html>
 
