@@ -485,16 +485,26 @@
     </header>
 
 
-
+       <br> <br> <br><br><br>
     <div class="swiper-container">
         <div class="swiper-wrapper">
-
-            <c:forEach items="${imageBG}" var="d">
-                <div class="swiper-slide" style="background-image: url('${d.url}')">
+               <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1036')">
 
                 </div>
-            </c:forEach>
+          
+              <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=1036')">
 
+                </div>
+               <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=1036')">
+
+                </div>
+                <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img5.jpg?v=1036')">
+
+                </div>
+                 <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=1036')">
+
+                </div>
+                 
 
 
 
