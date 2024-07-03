@@ -242,6 +242,36 @@
                                             if (this.checked) {
                                                 if (this.value === 'VNPAY') {
                                                     paymentForm.action = 'ajaxServlet';
+                                                    $("#formCheckout").submit(function () {
+                                                        console.log("Form submitted");
+                                                        var postData = $("#formCheckout").serialize();
+                                                        var submitUrl = $("#formCheckout").attr("action");
+                                                        console.log("Post data:", postData);
+                                                        console.log("Submit URL:", submitUrl);
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: submitUrl,
+                                                            data: postData,
+                                                            dataType: 'JSON',
+                                                            success: function (x) {
+                                                                console.log("Response received:", x);
+                                                                if (x.code === '00') {
+                                                                    if (window.vnpay) {
+                                                                        vnpay.open({width: 768, height: 600, url: x.data});
+                                                                    } else {
+                                                                        location.href = x.data;
+                                                                    }
+                                                                    return false;
+                                                                } else {
+                                                                    alert(x.Message);
+                                                                }
+                                                            },
+                                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                                console.error("AJAX Error:", textStatus, errorThrown);
+                                                            }
+                                                        });
+                                                        return false;
+                                                    });
                                                 } else if (this.value === 'COD') {
                                                     paymentForm.action = 'processCheckout';
                                                 }
@@ -321,38 +351,6 @@
                                 <button type="submit" class="btn">ĐẶT HÀNG</button>
                                 <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js" onload="console.log('vnpay script loaded')"></script>
                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                                <script type="text/javascript">
-                                $("#formCheckout").submit(function () {
-                                    console.log("Form submitted");
-                                    var postData = $("#formCheckout").serialize();
-                                    var submitUrl = $("#formCheckout").attr("action");
-                                    console.log("Post data:", postData);
-                                    console.log("Submit URL:", submitUrl);
-                                    $.ajax({
-                                        type: "POST",
-                                        url: submitUrl,
-                                        data: postData,
-                                        dataType: 'JSON',
-                                        success: function (x) {
-                                            console.log("Response received:", x);
-                                            if (x.code === '00') {
-                                                if (window.vnpay) {
-                                                    vnpay.open({width: 768, height: 600, url: x.data});
-                                                } else {
-                                                    location.href = x.data;
-                                                }
-                                                return false;
-                                            } else {
-                                                alert(x.Message);
-                                            }
-                                        },
-                                        error: function (jqXHR, textStatus, errorThrown) {
-                                            console.error("AJAX Error:", textStatus, errorThrown);
-                                        }
-                                    });
-                                    return false;
-                                });
-                                </script> 
                             </div>
                         </div>
                     </div>
