@@ -109,6 +109,10 @@
         <servlet-class>AdminControllers.UpdateCodeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddressServlet</servlet-name>
+        <servlet-class>Controllers.AddressServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CategoryController</servlet-name>
         <servlet-class>AdminControllers.CategoryController</servlet-class>
     </servlet>
@@ -311,6 +315,10 @@
     <servlet-mapping>
         <servlet-name>UpdateCodeController</servlet-name>
         <url-pattern>/updatecode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddressServlet</servlet-name>
+        <url-pattern>/address</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CategoryController</servlet-name>
