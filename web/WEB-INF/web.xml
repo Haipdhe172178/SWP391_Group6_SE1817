@@ -189,6 +189,14 @@
         <servlet-class>AdminControllers.UpdateController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ProcessCheckoutController</servlet-name>
+        <servlet-class>Controllers.ProcessCheckoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>VNPay.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DatetimeDiscount</servlet-name>
         <servlet-class>AdminControllers.DatetimeDiscount</servlet-class>
     </servlet>
@@ -379,6 +387,15 @@
     <servlet-mapping>
         <servlet-name>UpdateController</servlet-name>
         <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+
+        <servlet-name>ProcessCheckoutController</servlet-name>
+        <url-pattern>/processCheckout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DatetimeDiscount</servlet-name>

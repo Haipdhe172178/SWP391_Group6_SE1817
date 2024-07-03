@@ -4,31 +4,27 @@
  */
 package Controllers;
 
-import DAL.CategoryDao;
+import DAL.OrderDao;
 import DAL.ProductDao;
 import Models.Account;
-import Models.Cart;
-import Models.Category;
 import Models.Item;
+import Models.OrderCustomer;
+import Models.OrderGuest;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author huyca
+ * @author Hai Pham
  */
-public class CheckoutControllers extends HttpServlet {
+public class ProcessCheckoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,10 +43,10 @@ public class CheckoutControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckoutControllers</title>");
+            out.println("<title>Servlet ProcessCheckoutController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckoutControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProcessCheckoutController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,7 +64,7 @@ public class CheckoutControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**
@@ -82,35 +78,41 @@ public class CheckoutControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Item> listToCheckout = new ArrayList<>();
-        ProductDao pDao = new ProductDao();
-        String action = request.getParameter("action");
-
-        if (action.equals("cartToCheckout")) {
-            String[] selectedProduct = request.getParameterValues("selectedItem");
-            if (selectedProduct != null) {
-                for (String selectedP : selectedProduct) {
-                    String[] product = selectedP.split(",");
-                    Product p = pDao.getProductById(Integer.parseInt(product[0]));
-                    Item i = new Item(p, Integer.parseInt(product[1]), p.getPrice());
-                    listToCheckout.add(i);
-                }
-            }
-
-        } else if (action.equals("singleToCheckout")) {
-            int productID = Integer.parseInt(request.getParameter("productId"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            Product p = pDao.getProductById(productID);
-            Item i = new Item(p, quantity, p.getPrice());
-            listToCheckout.add(i);
+        Account acc = (Account) request.getSession().getAttribute("account");
+        OrderDao od = new OrderDao();
+        ProductDao pd = new ProductDao();
+        String[] items = request.getParameterValues("items");
+        
+        //Get item list to buy
+        List<Item> listItem = new ArrayList<>();
+        for (String item : items) {
+            String[] i = item.split(",");
+            Product p = pd.getProductById(Integer.parseInt(i[0]));
+            int quantity = Integer.parseInt(i[1]);
+            listItem.add(new Item(p, quantity, p.getPrice()));
         }
+        String totalPriceStr = request.getParameter("totalPrice");
+        Float totalPrice = Float.parseFloat(totalPriceStr);
 
-        request.setAttribute("listItem", listToCheckout);
-        request.setAttribute("totalAmount", getTotalAmount(listToCheckout));
-        CategoryDao categoryDao = new CategoryDao();
-        List<Category> categorys = categoryDao.getallCategorys();
-        request.setAttribute("category", categorys);
-        request.getRequestDispatcher("Views/Checkout.jsp").forward(request, response);
+        if (acc == null) {
+            //Guest Process
+            String fullName = request.getParameter("fullname");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phone");
+            String address = request.getParameter("address");
+            address += ", " + request.getParameter("ward") + ", " + request.getParameter("district") + ", " + request.getParameter("city");
+
+            int orderGID = od.AddOrderGuest(fullName, email, phoneNumber, address, totalPrice, 1, 1);
+            od.AddOrderGuestDetails(orderGID, listItem);
+        } else {
+            //Customer Process
+            String addressIdStr = request.getParameter("address");
+            int addressID = Integer.parseInt(addressIdStr);
+            int orderCID = od.AddOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, 0);
+            od.AddOrderCustomerDetails(orderCID, listItem);
+        }
+        request.setAttribute("message", "success");
+        request.getRequestDispatcher("Views/thanks.jsp").forward(request, response);
     }
 
     /**
@@ -123,25 +125,4 @@ public class CheckoutControllers extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private double getTotalAmount(List<Item> listItem) {
-        double total = 0;
-        for (Item item : listItem) {
-            total += item.getPrice() * item.getQuantity();
-        }
-        return total;
-    }
-
-    private String getCartDataFromCookie(HttpServletRequest request) {
-        String cartData = "";
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("cart")) {
-                    cartData = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
-                    break;
-                }
-            }
-        }
-        return cartData;
-    }
 }

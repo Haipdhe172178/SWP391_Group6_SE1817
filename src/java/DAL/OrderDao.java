@@ -5,6 +5,7 @@
 package DAL;
 
 import Models.Account;
+import Models.Item;
 import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.OrderDetailGuest;
@@ -13,6 +14,7 @@ import Models.Product;
 import Models.Status;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -248,30 +250,131 @@ public class OrderDao extends DBContext {
         }
         return products;
     }
-    public List<Map<String, Object>> getTopBuyers() {
-    List<Map<String, Object>> topBuyers = new ArrayList<>();
-    String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
-                 + "FROM Account a "
-                 + "JOIN OrderCustomer oc ON a.AccountID = oc.AccountID "
-                 + "GROUP BY a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address "
-                 + "ORDER BY TotalSpent DESC";
-    try {
-        PreparedStatement ps = connection.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Map<String, Object> buyer = new HashMap<>();
-            buyer.put("accountId", rs.getInt("AccountID"));
-            buyer.put("fullName", rs.getString("FullName"));
-            buyer.put("email", rs.getString("Email"));
-            buyer.put("phoneNumber", rs.getString("PhoneNumber"));
-            buyer.put("address", rs.getString("Address"));
-            buyer.put("totalSpent", rs.getFloat("TotalSpent"));
-            topBuyers.add(buyer);
-        }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-    return topBuyers;
-}
 
+    public List<Map<String, Object>> getTopBuyers() {
+        List<Map<String, Object>> topBuyers = new ArrayList<>();
+        String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
+                + "FROM Account a "
+                + "JOIN OrderCustomer oc ON a.AccountID = oc.AccountID "
+                + "GROUP BY a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address "
+                + "ORDER BY TotalSpent DESC";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> buyer = new HashMap<>();
+                buyer.put("accountId", rs.getInt("AccountID"));
+                buyer.put("fullName", rs.getString("FullName"));
+                buyer.put("email", rs.getString("Email"));
+                buyer.put("phoneNumber", rs.getString("PhoneNumber"));
+                buyer.put("address", rs.getString("Address"));
+                buyer.put("totalSpent", rs.getFloat("TotalSpent"));
+                topBuyers.add(buyer);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return topBuyers;
+    }
+
+    public int AddOrderCustomer(int accID, int addressID, float totalPrice, int statusID, int paymentStatus) {
+        String sql = "INSERT INTO OrderCustomer (AccountID,AddressID, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, accID);
+            ps.setInt(2, addressID);
+            ps.setFloat(3, totalPrice);
+            ps.setInt(4, statusID);
+            ps.setInt(5, paymentStatus);
+            int rowsInserted = ps.executeUpdate();
+            int orderCID = -1;
+            if (rowsInserted > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                   orderCID = rs.getInt(1);
+                }
+            }
+            ps.close();
+            return orderCID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void AddOrderCustomerDetails(int orderCID, List<Item> listItem) {
+        String sql = "INSERT INTO OrderDetailCustomer(OrderCID, ProductID, Quantity, UnitPrice) values (?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Item item : listItem) {
+                ps.setInt(1, orderCID);
+                ps.setInt(2, item.getProduct().getProductId());
+                ps.setInt(3, item.getQuantity());
+                ps.setDouble(4, item.getPrice());
+                ps.execute();
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int AddOrderGuest(String fullname, String email, String phoneNumber, String address, Float totalPrice, int statusID, int paymentStatus) {
+        String sql = "INSERT INTO OrderGuest(FullName, Email, PhoneNumber, Address, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, fullname);
+            ps.setString(2, email);
+            ps.setString(3, phoneNumber);
+            ps.setString(4, address);
+            ps.setFloat(5, totalPrice);
+            ps.setInt(6, statusID);
+            ps.setInt(7, paymentStatus);
+            int rowsInserted = ps.executeUpdate();
+            int orderGID = -1;
+            if (rowsInserted > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    orderGID = rs.getInt(1);
+                }
+            }
+            ps.close();
+            return orderGID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void AddOrderGuestDetails(int orderGID, List<Item> listItem) {
+        String sql = "INSERT INTO OrderDetailGuest(OrderGID, ProductID, Quantity, UnitPrice) values (?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Item item : listItem) {
+                ps.setInt(1, orderGID);
+                ps.setInt(2, item.getProduct().getProductId());
+                ps.setInt(3, item.getQuantity());
+                ps.setDouble(4, item.getPrice());
+                ps.execute();
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean AddOrderGuest() {
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        OrderDao od = new OrderDao();
+        List<Item> listItem = new ArrayList<>();
+        ProductDao pd = new ProductDao();
+        Product p = pd.getProductById(1);
+        listItem.add(new Item(p, 1, p.getPrice()));
+        int orderGID = od.AddOrderGuest("hai", "haitesst", "0123123", "213231", Float.parseFloat("10"), 1, 1);
+        od.AddOrderGuestDetails(orderGID, listItem);
+    }
 }
