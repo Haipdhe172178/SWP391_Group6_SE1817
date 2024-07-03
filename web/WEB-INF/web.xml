@@ -196,6 +196,10 @@
         <servlet-name>ajaxServlet</servlet-name>
         <servlet-class>VNPay.ajaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DatetimeDiscount</servlet-name>
+        <servlet-class>AdminControllers.DatetimeDiscount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -385,12 +389,17 @@
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>ProcessCheckoutController</servlet-name>
         <url-pattern>/processCheckout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ajaxServlet</servlet-name>
         <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DatetimeDiscount</servlet-name>
+        <url-pattern>/datetime</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

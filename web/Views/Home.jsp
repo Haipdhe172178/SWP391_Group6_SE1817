@@ -95,7 +95,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Set the date we're counting down to
-            var countDownDate = new Date("June 10, 2024 16:15:").getTime();
+            var countDownDate = new Date("${date}").getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function () {
@@ -485,16 +485,26 @@
     </header>
 
 
-
+       <br> <br> <br><br><br>
     <div class="swiper-container">
         <div class="swiper-wrapper">
-
-            <c:forEach items="${imageBG}" var="d">
-                <div class="swiper-slide" style="background-image: url('${d.url}')">
+               <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1036')">
 
                 </div>
-            </c:forEach>
+          
+              <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=1036')">
 
+                </div>
+               <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=1036')">
+
+                </div>
+                <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img5.jpg?v=1036')">
+
+                </div>
+                 <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=1036')">
+
+                </div>
+                 
 
 
 
@@ -686,7 +696,10 @@
                         </div>
                     </div>
                     <div id="promo-code">
-                        code: 123dungbansach
+                        <c:forEach items="${codediscount}" var="c">
+                            ${c.codeName}<br>
+                            
+                        </c:forEach>
                     </div>
                     <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
 

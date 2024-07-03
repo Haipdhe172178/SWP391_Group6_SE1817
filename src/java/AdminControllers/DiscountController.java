@@ -6,6 +6,7 @@
 package AdminControllers;
 
 import DAL.DiscountDAO;
+import DAL.HomeDAO;
 import Models.UsedCoupon;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,6 +58,9 @@ public class DiscountController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
        ArrayList<UsedCoupon> data = new ArrayList<>();
+       HomeDAO dal1 = new HomeDAO();
+       String date = dal1.getTime();
+       
           DiscountDAO dal = new DiscountDAO();
           String status = request.getParameter("op");
             int status1 = 3;
@@ -110,7 +114,8 @@ public class DiscountController extends HttpServlet {
           request.setAttribute("tag", indexx);    
            request.setAttribute("s", searchtext);
            request.setAttribute("n", status);
-       request.setAttribute("data", data);
+        request.setAttribute("data", data);
+        request.setAttribute("date1", date);
       
            request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
         }
@@ -140,6 +145,8 @@ public class DiscountController extends HttpServlet {
            request.setAttribute("s", searchtext);
        request.setAttribute("data", data);
        request.setAttribute("n", status);
+        
+       request.setAttribute("date1", date);
            request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
         }
         
@@ -170,6 +177,7 @@ public class DiscountController extends HttpServlet {
                data = dal.listcodepage(indexx);
                request.setAttribute("data", data);
              request.setAttribute("n", status);
+              request.setAttribute("date1", date);
            request.getRequestDispatcher("Views/Admin/DataDiscount.jsp").forward(request, response); 
         }
       
@@ -192,7 +200,7 @@ public class DiscountController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */
