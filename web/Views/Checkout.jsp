@@ -218,7 +218,7 @@
                                 <label class="list-group-item d-flex gap-2 border-0">
                                     <input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
                                            id="listGroupRadios2" value="VNPAY" required>
-                                    <img src="img/Payment/vnpay.png" height="35px" width="auto"/>
+                                    <img src="${pageContext.request.contextPath}/img/Payment/vnpay.png" height="35px" width="auto"/>
                                     <span>
                                         <p class="mb-1">VNPay</p>
                                     </span>
@@ -226,7 +226,7 @@
                                 <label class="list-group-item d-flex gap-2 border-0">
                                     <input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
                                            id="listGroupRadios3" value="COD" required>
-                                    <img src="img/Payment/cod.png" height="40px" width="auto"/>
+                                    <img src="${pageContext.request.contextPath}/img/Payment/cod.png" height="40px" width="auto"/>
                                     <span>
                                         <p class="mb-1">Thanh toán bằng tiền mặt khi nhận hàng</p>
                                     </span>
