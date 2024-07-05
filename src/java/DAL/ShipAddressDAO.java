@@ -96,19 +96,22 @@ public class ShipAddressDAO {
 
     // Update ShipAddress
     public boolean updateShipAddress(ShipAddress address) throws SQLException {
-        boolean rowUpdated;
-        String sql = "UPDATE ShippingAddress SET AccID = ?, Address = ?, PhoneNumber = ?, isDefault = ? WHERE AddressID = ?";
-        try (Connection connection = dbContext.connection;
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, address.getAccID());
-            preparedStatement.setString(2, address.getAddress());
-            preparedStatement.setString(3, address.getPhoneNumber());
-            preparedStatement.setBoolean(4, address.isDefault());
-            preparedStatement.setInt(5, address.getAddressID());
-            rowUpdated = preparedStatement.executeUpdate() > 0;
-        }
-        return rowUpdated;
+    boolean rowUpdated;
+    String sql = "UPDATE ShippingAddress SET AccID = ?, Address = ?, PhoneNumber = ?, isDefault = ? WHERE AddressID = ?";
+    try (Connection connection = dbContext.connection;
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setInt(1, address.getAccID());
+        preparedStatement.setString(2, address.getAddress());
+        preparedStatement.setString(3, address.getPhoneNumber());
+        preparedStatement.setBoolean(4, address.isDefault());
+        preparedStatement.setInt(5, address.getAddressID());
+        rowUpdated = preparedStatement.executeUpdate() > 0;
+    } catch (SQLException e) {
+        printSQLException(e);
+        rowUpdated = false;
     }
+    return rowUpdated;
+}
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

@@ -6,89 +6,120 @@
 <html>
 
     <head>
-        <title>Bookly - Bookstore eCommerce Website Template</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="author" content="">
-        <meta name="keywords" content="">
-        <meta name="description" content="">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-        <style>
-            .filter-box {
-                border: 1px solid #ddd;
-                padding: 20px;
-                border-radius: 5px;
-                background-color: white;
-                margin-bottom: 20px;
-                margin-top: 20px
-            }
+    <title>Bookly - Trang quản lý địa chỉ giao hàng</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
 
-            .filter-box h2 {
-                text-align: center;
-                margin-top: 0;
-                font-size: 20px;
-            }
-            .collapsible {
-                cursor: pointer;
-                user-select: none;
-                background-color: #f86d72;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                font-size: 14px;
-                position: relative;
-            }
-            .collapsible::after {
-                content: '\002B';
-                font-size: 14px;
-                position: absolute;
-                right: 20px;
-                color: #777;
-            }
-            .collapsible.active::after {
-                content: '\2212';
-            }
-            .content {
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-            .section-title h3 {
-                margin: 0;
-                font-size: 16px;
-                color: #fff;
-            }
-            .product-categories, .product-tags {
-                padding-left: 20px;
-            }
-            .cat-item, .tags-item {
-                margin-bottom: 10px;
-                font-size: 14px;
-            }
-            button[type="submit"] {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                background-color: #f86d72;
-                color: #fff;
-                cursor: pointer;
-            }
-            button[type="submit"]:hover {
-                background-color: #f86d72;
-            }
-        </style>
-    </head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <!-- Inline CSS for Page Specific Styling -->
+    <style>
+        .filter-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+            margin: 20px 0;
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-section h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .btn-add {
+            margin-left: 20px;
+        }
+        .section-title h2 {
+            font-size: 20px; /* Match the font size of "Manage Shipping Addresses" */
+        }
+        .modal-dialog {
+            max-width: 500px; /* Make the modal smaller */
+            margin: auto; /* Center the modal horizontally */
+        }
+        .modal-content {
+            border-radius: 5px;
+        }
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+            background-color: #f86d72;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            position: relative;
+        }
+        .collapsible::after {
+            content: '\002B';
+            font-size: 14px;
+            position: absolute;
+            right: 20px;
+            color: #777;
+        }
+        .collapsible.active::after {
+            content: '\2212';
+        }
+        .content {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .section-title h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #fff;
+        }
+        .product-categories, .product-tags {
+            padding-left: 20px;
+        }
+        .cat-item, .tags-item {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f86d72;
+            color: #fff;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #e85b5e;
+        }
+        .separator {
+            border-top: 2px solid #ddd;
+            margin: 20px 0;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -385,150 +416,218 @@
                 </div>
             </div>
         </nav>
-<body>
     
-    <!-- Button to trigger modal -->
-<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#accountModal">
-    Add/Update Address
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="accountModalLabel">Add/Update Address</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Form for adding/updating a shipping address -->
-        <form action="address" method="post">
-            <input type="hidden" name="action" value="save">
-            <input type="hidden" name="accID" value="${sessionScope.account.accountId}">
-            <div class="mb-3">
-                <label for="address" class="form-label">Full Address:</label>
-                <input type="text" class="form-control" id="address" name="address" readonly required>
+    
+   <div class="container mt-5">
+    <div class="filter-box">
+        <div class="header-section">
+            <h2>Địa chỉ của tôi</h2>
+            <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                Thêm địa chỉ
+            </button>
+        </div>
+        <div class="separator"></div>
+        <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addAddressModalLabel">Thêm địa chỉ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="address" method="post" id="addAddressForm">
+                            <input type="hidden" id="action" name="action" value="save">
+                            <input type="hidden" id="accID" name="accID" value="${sessionScope.account.accountId}">
+                            <input type="hidden" id="addressID" name="addressID" value="">
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Toàn bộ địa chỉ:</label>
+                                <input type="text" class="form-control" id="address" name="address" readonly required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">Tỉnh/Thành phố:</label>
+                                <select class="form-select form-select-sm mb-3" id="city" name="city" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Tỉnh/Thành phố</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="district" class="form-label">Quận/Huyện:</label>
+                                <select class="form-select form-select-sm mb-3" id="district" name="district" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ward" class="form-label">Phường/Xã:</label>
+                                <select class="form-select form-select-sm" id="ward" name="ward" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Phường/Xã</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="detailedAddress" class="form-label">Địa chỉ chi tiết:</label>
+                                <input type="text" class="form-control" id="detailedAddress" name="detailedAddress" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu địa chỉ</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="city" class="form-label">Province:</label>
-                <select class="form-select form-select-sm mb-3" id="city" name="city" aria-label=".form-select-sm" required>
-                    <option value="" selected>Choose province</option>
-                    <!-- Options for provinces will be dynamically populated -->
-                </select>
+        </div>
+        <div class="modal fade" id="updateAddressModal" tabindex="-1" aria-labelledby="updateAddressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateAddressModalLabel">Cập nhật địa chỉ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="address" method="post" id="updateAddressForm">
+                            <input type="hidden" id="updateAction" name="action" value="update">
+                            <input type="hidden" id="updateAccID" name="accID" value="${sessionScope.account.accountId}">
+                            <input type="hidden" id="updateAddressID" name="addressID" value="">
+                            <div class="mb-3">
+                                <label for="updateAddress" class="form-label">Toàn bộ địa chỉ:</label>
+                                <input type="text" class="form-control" id="updateAddress" name="address" readonly required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateCity" class="form-label">Tỉnh/Thành phố:</label>
+                                <select class="form-select form-select-sm mb-3" id="updateCity" name="city" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Tỉnh/Thành phố</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateDistrict" class="form-label">Quận/Huyện:</label>
+                                <select class="form-select form-select-sm mb-3" id="updateDistrict" name="district" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateWard" class="form-label">Phường/Xã:</label>
+                                <select class="form-select form-select-sm" id="updateWard" name="ward" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Phường/Xã</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateDetailedAddress" class="form-label">Địa chỉ chi tiết:</label>
+                                <input type="text" class="form-control" id="updateDetailedAddress" name="detailedAddress" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updatePhoneNumber" class="form-label">Số điện thoại:</label>
+                                <input type="text" class="form-control" id="updatePhoneNumber" name="phoneNumber" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu địa chỉ</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="district" class="form-label">District:</label>
-                <select class="form-select form-select-sm mb-3" id="district" name="district" aria-label=".form-select-sm" required>
-                    <option value="" selected>Choose district</option>
-                    <!-- Options for districts will be dynamically populated based on selected province -->
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="ward" class="form-label">Ward:</label>
-                <select class="form-select form-select-sm" id="ward" name="ward" aria-label=".form-select-sm" required>
-                    <option value="" selected>Choose ward</option>
-                    <!-- Options for wards will be dynamically populated based on selected district -->
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="detailedAddress" class="form-label">Detailed Address:</label>
-                <input type="text" class="form-control" id="detailedAddress" name="detailedAddress" required>
-            </div>
-            <div class="mb-3">
-                <label for="phoneNumber" class="form-label">Phone Number:</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="isDefault" name="isDefault">
-                <label class="form-check-label" for="isDefault">Is Default</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Address</button>
-        </form>
-      </div>
+        </div>
+        <h2 class="section-title mt-5">Địa chỉ</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Toàn bộ địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="address" items="${addresses}">
+                    <tr>
+                        <td>${address.getAddress()}</td>
+                        <td>${address.getPhoneNumber()}</td>
+                        <td>
+                            <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAddressModal" onclick="openUpdateModal(${address.getAddressID()}, '${address.getAddress()}', '${address.getPhoneNumber()}', ${address.isDefault()})">
+                                Cập nhật
+                            </button>
+                            <form action="address" method="post" style="display:inline;" onsubmit="confirmDelete(event)">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="addressID" value="${address.getAddressID()}">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </div>
-  </div>
 </div>
 
-<!-- Form for deleting a shipping address -->
-<form action="address" method="post" class="mt-4">
-    <input type="hidden" name="action" value="delete">
-    <div class="mb-3">
-        <label for="deleteAddressID" class="form-label">Address ID to Delete:</label>
-        <input type="text" class="form-control" id="deleteAddressID" name="addressID" required>
-    </div>
-    <button type="submit" class="btn btn-danger">Delete Address</button>
-</form>
-
-<!-- Display list of shipping addresses -->
-<h2 class="mt-4">Existing Shipping Addresses</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Full Address</th>
-            <th>Phone Number</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="address" items="${addresses}">
-            <tr>
-                <td>${address.getAddress()}</td>
-                <td>${address.getPhoneNumber()}</td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-
-<!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-<!-- Axios library for making HTTP requests -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <script>
     var cities = document.getElementById("city");
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
+    var updateCities = document.getElementById("updateCity");
+    var updateDistricts = document.getElementById("updateDistrict");
+    var updateWards = document.getElementById("updateWard");
     var apiUrl = "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json";
 
-    // Function to fetch and render cities
+    function openAddModal() {
+        document.getElementById('action').value = 'save';
+        document.getElementById('addressID').value = '';
+        document.getElementById('address').value = '';
+        document.getElementById('detailedAddress').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('isDefault').checked = false;
+    }
+
+    function openUpdateModal(addressID, address, phoneNumber, isDefault) {
+        document.getElementById('updateAction').value = 'update';
+        document.getElementById('updateAddressID').value = addressID;
+        document.getElementById('updateAddress').value = address;
+        document.getElementById('updateDetailedAddress').value = address.split(', ').slice(-1)[0];
+        document.getElementById('updatePhoneNumber').value = phoneNumber;
+        document.getElementById('updateIsDefault').checked = isDefault;
+    }
+
     function fetchCities() {
         axios.get(apiUrl)
             .then(function (response) {
                 renderCities(response.data);
             })
             .catch(function (error) {
-                console.error("Error fetching cities:", error);
+                console.error("Lỗi khi lấy dữ liệu các Tỉnh/Thành phố:", error);
             });
     }
 
-    // Function to render cities dropdown
     function renderCities(data) {
-        cities.innerHTML = '<option value="" selected>Choose province</option>';
+        cities.innerHTML = '<option value="" selected>Chọn Tỉnh/Thành phố</option>';
+        updateCities.innerHTML = '<option value="" selected>Chọn Tỉnh/Thành phố</option>';
         if (data && data.length > 0) {
             data.forEach(function (city) {
                 var option = document.createElement('option');
                 option.value = city.Id;
                 option.textContent = city.Name;
                 cities.appendChild(option);
+
+                var updateOption = document.createElement('option');
+                updateOption.value = city.Id;
+                updateOption.textContent = city.Name;
+                updateCities.appendChild(updateOption);
             });
         } else {
-            console.error("No data available for cities.");
+            console.error("Không có dữ liệu Tỉnh/Thành phố.");
         }
     }
 
-    // Function to fetch and render districts based on selected city
-    function fetchDistricts(cityId) {
+    function fetchDistricts(cityId, isUpdate = false) {
         axios.get(apiUrl)
             .then(function (response) {
-                renderDistricts(response.data, cityId);
+                renderDistricts(response.data, cityId, isUpdate);
             })
             .catch(function (error) {
-                console.error("Error fetching districts:", error);
+                console.error("Lỗi khi lấy dữ liệu Quận/Huyện:", error);
             });
     }
 
-    // Function to render districts dropdown
-    function renderDistricts(data, cityId) {
-        districts.innerHTML = '<option value="" selected>Choose district</option>';
+    function renderDistricts(data, cityId, isUpdate) {
+        var districtElement = isUpdate ? updateDistricts : districts;
+        districtElement.innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
         var city = data.find(function (c) {
             return c.Id == cityId;
         });
@@ -537,27 +636,26 @@
                 var option = document.createElement('option');
                 option.value = district.Id;
                 option.textContent = district.Name;
-                districts.appendChild(option);
+                districtElement.appendChild(option);
             });
         } else {
-            console.error("No districts available for the selected city.");
+            console.error("Không có dữ liệu Quận/Huyện cho Tỉnh/Thành phố đã chọn.");
         }
     }
 
-    // Function to fetch and render wards based on selected district
-    function fetchWards(cityId, districtId) {
+    function fetchWards(cityId, districtId, isUpdate = false) {
         axios.get(apiUrl)
             .then(function (response) {
-                renderWards(response.data, cityId, districtId);
+                renderWards(response.data, cityId, districtId, isUpdate);
             })
             .catch(function (error) {
-                console.error("Error fetching wards:", error);
+                console.error("Lỗi khi lấy dữ liệu Phường/Xã:", error);
             });
     }
 
-    // Function to render wards dropdown
-    function renderWards(data, cityId, districtId) {
-        wards.innerHTML = '<option value="" selected>Choose ward</option>';
+    function renderWards(data, cityId, districtId, isUpdate) {
+        var wardElement = isUpdate ? updateWards : wards;
+        wardElement.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
         var city = data.find(function (c) {
             return c.Id == cityId;
         });
@@ -570,24 +668,23 @@
                     var option = document.createElement('option');
                     option.value = ward.Id;
                     option.textContent = ward.Name;
-                    wards.appendChild(option);
+                    wardElement.appendChild(option);
                 });
             } else {
-                console.error("No wards available for the selected district.");
+                console.error("Không có dữ liệu Phường/Xã cho Quận/Huyện đã chọn.");
             }
         } else {
-            console.error("No districts available for the selected city.");
+            console.error("Không có dữ liệu Quận/Huyện cho Tỉnh/Thành phố đã chọn.");
         }
     }
 
-    // Event listeners for dropdown changes
     cities.addEventListener('change', function () {
         var cityId = this.value;
         if (cityId) {
             fetchDistricts(cityId);
         } else {
-            districts.innerHTML = '<option value="" selected>Choose district</option>';
-            wards.innerHTML = '<option value="" selected>Choose ward</option>';
+            districts.innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+            wards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
         }
     });
 
@@ -597,27 +694,129 @@
         if (districtId) {
             fetchWards(cityId, districtId);
         } else {
-            wards.innerHTML = '<option value="" selected>Choose ward</option>';
+            wards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
         }
     });
 
-    // Update Full Address field based on selected options
+    updateCities.addEventListener('change', function () {
+        var cityId = this.value;
+        if (cityId) {
+            fetchDistricts(cityId, true);
+        } else {
+            updateDistricts.innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+            updateWards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        }
+    });
+
+    updateDistricts.addEventListener('change', function () {
+        var cityId = updateCities.value;
+        var districtId = this.value;
+        if (districtId) {
+            fetchWards(cityId, districtId, true);
+        } else {
+            updateWards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        }
+    });
+
     wards.addEventListener('change', updateFullAddress);
     document.getElementById('detailedAddress').addEventListener('input', updateFullAddress);
+
+    updateWards.addEventListener('change', updateFullAddressUpdate);
+    document.getElementById('updateDetailedAddress').addEventListener('input', updateFullAddressUpdate);
 
     function updateFullAddress() {
         var province = cities.options[cities.selectedIndex].text || '';
         var district = districts.options[districts.selectedIndex].text || '';
         var ward = wards.options[wards.selectedIndex].text || '';
         var detailedAddress = document.getElementById('detailedAddress').value.trim();
-        
+
         var fullAddress = [province, district, ward, detailedAddress].filter(Boolean).join(', ');
         document.getElementById('address').value = fullAddress;
     }
 
-    // Initial fetch of cities on page load
+    function updateFullAddressUpdate() {
+        var province = updateCities.options[updateCities.selectedIndex].text || '';
+        var district = updateDistricts.options[updateDistricts.selectedIndex].text || '';
+        var ward = updateWards.options[updateWards.selectedIndex].text || '';
+        var detailedAddress = document.getElementById('updateDetailedAddress').value.trim();
+
+        var fullAddress = [province, district, ward, detailedAddress].filter(Boolean).join(', ');
+        document.getElementById('updateAddress').value = fullAddress;
+    }
+
+    function confirmDelete(event) {
+        if (!confirm("Bạn có muốn xóa địa chỉ này không?")) {
+            event.preventDefault();
+        }
+    }
+
+    function resetAddModal() {
+        document.getElementById('city').value = '';
+        document.getElementById('district').innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+        document.getElementById('ward').innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        document.getElementById('address').value = '';
+        document.getElementById('detailedAddress').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('isDefault').checked = false;
+    }
+
+    function resetUpdateModal() {
+        document.getElementById('updateCity').value = '';
+        document.getElementById('updateDistrict').innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+        document.getElementById('updateWard').innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        document.getElementById('updateAddress').value = '';
+        document.getElementById('updateDetailedAddress').value = '';
+        document.getElementById('updatePhoneNumber').value = '';
+        document.getElementById('updateIsDefault').checked = false;
+    }
+
+    document.getElementById('addAddressModal').addEventListener('hidden.bs.modal', function (event) {
+        resetAddModal();
+    });
+
+    document.getElementById('updateAddressModal').addEventListener('hidden.bs.modal', function (event) {
+        resetUpdateModal();
+    });
+
+    function validateAddressForm(form) {
+        var address = form.address.value.trim();
+        var detailedAddress = form.detailedAddress.value.trim();
+        var phoneNumber = form.phoneNumber.value.trim();
+        var phoneNumberPattern = /^[0-9]{10,11}$/;
+
+        if (!detailedAddress || !detailedAddress.replace(/\s/g, '').length) {
+            alert("Địa chỉ chi tiết không được chứa toàn khoảng trắng.");
+            return false;
+        }
+
+        if (!phoneNumberPattern.test(phoneNumber)) {
+            alert("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại gồm 10 hoặc 11 chữ số.");
+            return false;
+        }
+
+        return true;
+    }
+
+    document.getElementById('addAddressForm').addEventListener('submit', function (event) {
+        if (!validateAddressForm(this)) {
+            event.preventDefault();
+        }
+    });
+
+    document.getElementById('updateAddressForm').addEventListener('submit', function (event) {
+        if (!validateAddressForm(this)) {
+            event.preventDefault();
+        }
+    });
+
     fetchCities();
 </script>
+
+</body>
+
+
+
+
 
 
     <footer id="footer" class="padding-large">

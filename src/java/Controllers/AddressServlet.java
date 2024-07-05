@@ -13,35 +13,40 @@ import java.util.List;
 
 public class AddressServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        ShipAddressDAO dao = new ShipAddressDAO();
-        
-        try {
-            if ("save".equals(action)) {
-                int accID = Integer.parseInt(request.getParameter("accID"));
-                String address = request.getParameter("address");
-                String phoneNumber = request.getParameter("phoneNumber");
-                boolean isDefault = request.getParameter("isDefault") != null;
+    response.setContentType("text/html;charset=UTF-8");
+    String action = request.getParameter("action");
+    ShipAddressDAO dao = new ShipAddressDAO();
 
-                // Create a new ShipAddress object without addressID
-                ShipAddress shipAddress = new ShipAddress(accID, address, phoneNumber, isDefault);
-                
-                // Insert the new address into the database
-                dao.insertShipAddress(shipAddress);
-            } else if ("delete".equals(action)) {
-                int addressID = Integer.parseInt(request.getParameter("addressID"));
-                dao.deleteShipAddress(addressID);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    try {
+        if ("save".equals(action)) {
+            int accID = Integer.parseInt(request.getParameter("accID"));
+            String address = request.getParameter("address");
+            String phoneNumber = request.getParameter("phoneNumber");
+            boolean isDefault = request.getParameter("isDefault") != null;
+
+            ShipAddress shipAddress = new ShipAddress(accID, address, phoneNumber, isDefault);
+            dao.insertShipAddress(shipAddress);
+        } else if ("update".equals(action)) {
+            int addressID = Integer.parseInt(request.getParameter("addressID"));
+            int accID = Integer.parseInt(request.getParameter("accID"));
+            String address = request.getParameter("address");
+            String phoneNumber = request.getParameter("phoneNumber");
+            boolean isDefault = request.getParameter("isDefault") != null;
+
+            ShipAddress shipAddress = new ShipAddress(addressID, accID, address, phoneNumber, isDefault);
+            dao.updateShipAddress(shipAddress);
+        } else if ("delete".equals(action)) {
+            int addressID = Integer.parseInt(request.getParameter("addressID"));
+            dao.deleteShipAddress(addressID);
         }
-
-        // Redirect to the address page after processing the request
-        response.sendRedirect("address");
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    response.sendRedirect("address");
+}
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
