@@ -59,285 +59,304 @@
 
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
-
-            <section class="checkout-wrap padding-large p-1">
-                <div class="container">
-                    <div class="row d-flex flex-wrap">
-                        <div class="col-lg-8">
-                        <c:choose>
-                            <c:when test="${sessionScope.account == null}">
-                                <!--for guest-->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-3">Địa chỉ nhận hàng</h4>
+            <form id="formCheckout" method="post">
+                <section class="checkout-wrap padding-large p-1">
+                    <div class="container">
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-lg-8">
+                            <c:choose>
+                                <c:when test="${sessionScope.account == null}">
+                                    <!--for guest-->
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 class="mb-3">Địa chỉ nhận hàng</h4>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="fname">Họ và tên</label>
+                                            <input type="text" id="fname" name="fullname" class="form-control mt-1 mb-4 ps-3">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="city">Tỉnh thành</label>
+                                            <select class="form-select form-select-sm form-control mt-1 mb-4" id="city" aria-label=".form-select-sm" name="city">
+                                                <option value="" selected>Chọn tỉnh thành</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" name="email" class="form-control mt-1 ps-3 mb-3">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="district">Quận huyện</label>
+                                            <select class="form-select form-select-sm form-control mt-1 mb-4" id="district" aria-label=".form-select-sm" name="district">
+                                                <option value="" selected>Chọn quận huyện</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="phone">Số điện thoại</label>
+                                            <input type="text" id="phone" name="phone" class="form-control mt-1 ps-3 mb-4" name="phone">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="ward">Phường xã</label>
+                                            <select class="form-select form-select-sm form-control mt-1 mb-4" id="ward" aria-label=".form-select-sm" name="ward">
+                                                <option value="" selected>Chọn phường xã</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label for="address">Địa chỉ</label>
+                                            <input type="text" id="address" name="address" class="form-control mt-1 ps-3 mb-4">
+                                        </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label for="fname">Họ và tên</label>
-                                        <input type="text" id="fname" name="firstname" class="form-control mt-1 mb-4 ps-3">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="city">Tỉnh thành</label>
-                                        <select class="form-select form-select-sm form-control mt-1 mb-4" id="city" aria-label=".form-select-sm">
-                                            <option value="" selected>Chọn tỉnh thành</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="email">Email</label>
-                                        <input type="text" id="email" name="email" class="form-control mt-1 ps-3 mb-3">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="district">Quận huyện</label>
-                                        <select class="form-select form-select-sm form-control mt-1 mb-4" id="district" aria-label=".form-select-sm">
-                                            <option value="" selected>Chọn quận huyện</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="phone">Số điện thoại</label>
-                                        <input type="text" id="phone" name="phone" class="form-control mt-1 ps-3 mb-4">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="ward">Phường xã</label>
-                                        <select class="form-select form-select-sm form-control mt-1 mb-4" id="ward" aria-label=".form-select-sm">
-                                            <option value="" selected>Chọn phường xã</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label for="address">Địa chỉ</label>
-                                        <input type="text" id="address" name="address" class="form-control mt-1 ps-3 mb-4">
-                                    </div>
-                                </div>
-                                <!--for guest-->
-                            </c:when>
-                            <c:otherwise>
-                                <!--for customer login with account-->
-                                <div class="container">
-                                    <div class="col-lg-12 border-bottom">
-                                        <h4 class="mb-3">Địa chỉ nhận hàng</h4>
-                                    </div>
-                                    <label class="list-group-item d-flex gap-2 border-0 mt-3">
-                                        <input class="form-check-input flex-shrink-0" type="radio" name="address"
-                                               id="listGroupRadios1" value="" required>
-                                        <span class="address-container">
-                                            <div class="row">
-                                                <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
-                                                <div class="col-lg-1"><a href="#" class="edit-link" data-bs-toggle="modal" data-bs-target="#addressModal">Sửa</a></div>
-                                            </div>
-                                        </span>
-                                    </label>
-                                    <label class="list-group-item d-flex gap-2 border-0 mt-3">
-                                        <input class="form-check-input flex-shrink-0" type="radio" name="address"
-                                               id="listGroupRadios2" value="" required>
-                                        <span class="address-container">
-                                            <div class="row">
-                                                <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
-                                                <div class="col-lg-1"><a href="#" class="edit-link" data-bs-toggle="modal" data-bs-target="#addressModal">Sửa</a></div>
-                                            </div>
-                                        </span>
-                                    </label>
-                                    <label class="list-group-item d-flex gap-2 border-0 mt-3">
-                                        <input class="form-check-input flex-shrink-0" type="radio" name="address"
-                                               id="listGroupRadios3" value="" required>
-                                        <span class="address-container">
-                                            <div class="row">
-                                                <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
-                                                <div class="col-lg-1"><a href="#" class="edit-link" data-bs-toggle="modal" data-bs-target="#addressModal">Sửa</a></div>
-                                            </div>
-                                        </span>
-                                    </label>
-                                    <div class="add-address">
-                                        <i class="fas fa-plus-circle"></i>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#addressModal">Thêm địa chỉ giao hàng khác</a>
-                                    </div>
-                                    <!-- Button trigger modal -->
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="addressModalLabel">Thêm địa chỉ mới</h4>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <!--for guest-->
+                                </c:when>
+                                <c:otherwise>
+                                    <!--for customer login with account-->
+                                    <div class="container">
+                                        <div class="col-lg-12 border-bottom">
+                                            <h4 class="mb-3">Địa chỉ nhận hàng</h4>
+                                        </div>
+                                        <label class="list-group-item d-flex gap-2 border-0 mt-3">
+                                            <input class="form-check-input flex-shrink-0" type="radio" name="address"
+                                                   id="listGroupRadios1" value="1" required>
+                                            <span class="address-container">
+                                                <div class="row">
+                                                    <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
+                                                    <div class="col-lg-1"><a href="#" class="edit-link" data-bs-toggle="modal" data-bs-target="#addressModal">Sửa</a></div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <label for="fname">Họ và tên</label>
-                                                            <input type="text" id="fname" name="firstname" class="form-control mt-1 mb-4 ps-3">
+                                            </span>
+                                        </label>
+                                        <label class="list-group-item d-flex gap-2 border-0 mt-3">
+                                            <input class="form-check-input flex-shrink-0" type="radio" name="address"
+                                                   id="listGroupRadios2" value="" required>
+                                            <span class="address-container">
+                                                <div class="row">
+                                                    <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
+                                                    <div class="col-lg-1"><a href="#" class="edit-link" data-bs-toggle="modal" data-bs-target="#addressModal">Sửa</a></div>
+                                                </div>
+                                            </span>
+                                        </label>
+                                        <label class="list-group-item d-flex gap-2 border-0 mt-3">
+                                            <input class="form-check-input flex-shrink-0" type="radio" name="address"
+                                                   id="listGroupRadios3" value="" required>
+                                            <span class="address-container">
+                                                <div class="row">
+                                                    <div class="col-lg-11"><p class="mb-1">Phạm Đức Hải | Thôn 5, Tiến Xuân, Thạch Thất, Hà Nội | 0868858903</p></div>
+                                                    <div class="col-lg-1"><a href="#" class="edit-link" data-bs-toggle="modal" data-bs-target="#addressModal">Sửa</a></div>
+                                                </div>
+                                            </span>
+                                        </label>
+                                        <div class="add-address">
+                                            <i class="fas fa-plus-circle"></i>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#addressModal">Thêm địa chỉ giao hàng khác</a>
+                                        </div>
+                                        <!-- Button trigger modal -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="addressModalLabel">Thêm địa chỉ mới</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <!-- Họ và tên, Số điện thoại -->
+                                                            <div class="col-lg-6">
+                                                                <label for="fname">Họ và tên</label>
+                                                                <input type="text" id="fname" name="firstname" class="form-control mt-1 mb-4 ps-3">
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <label for="phone">Số điện thoại</label>
+                                                                <input type="text" id="phone" name="phone" class="form-control mt-1 ps-3 mb-4">
+                                                            </div>
                                                         </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="city">Tỉnh thành</label>
-                                                            <select class="form-select form-select-sm form-control mt-1 mb-4" id="city" aria-label=".form-select-sm">
-                                                                <option value="" selected>Chọn tỉnh thành</option>
-                                                            </select>
+                                                        <div class="row">
+                                                            <!-- Tỉnh thành, Quận huyện, Phường xã -->
+                                                            <div class="col-lg-4">
+                                                                <label for="city">Tỉnh thành</label>
+                                                                <select class="form-select form-select-sm form-control mt-1 mb-4" id="city" aria-label=".form-select-sm">
+                                                                    <option value="" selected>Chọn tỉnh thành</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <label for="district">Quận huyện</label>
+                                                                <select class="form-select form-select-sm form-control mt-1 mb-4" id="district" aria-label=".form-select-sm">
+                                                                    <option value="" selected>Chọn quận huyện</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <label for="ward">Phường xã</label>
+                                                                <select class="form-select form-select-sm form-control mt-1 mb-4" id="ward" aria-label=".form-select-sm">
+                                                                    <option value="" selected>Chọn phường xã</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="email">Email</label>
-                                                            <input type="text" id="email" name="email" class="form-control mt-1 ps-3 mb-3">
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="district">Quận huyện</label>
-                                                            <select class="form-select form-select-sm form-control mt-1 mb-4" id="district" aria-label=".form-select-sm">
-                                                                <option value="" selected>Chọn quận huyện</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="phone">Số điện thoại</label>
-                                                            <input type="text" id="phone" name="phone" class="form-control mt-1 ps-3 mb-4">
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="ward">Phường xã</label>
-                                                            <select class="form-select form-select-sm form-control mt-1 mb-4" id="ward" aria-label=".form-select-sm">
-                                                                <option value="" selected>Chọn phường xã</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <label for="address">Địa chỉ</label>
-                                                            <input type="text" id="address" name="address" class="form-control mt-1 ps-3 mb-4">
+                                                        <div class="row">
+                                                            <!-- Địa chỉ -->
+                                                            <div class="col-lg-12">
+                                                                <label for="address">Địa chỉ</label>
+                                                                <input type="text" id="address" name="address" class="form-control mt-1 ps-3 mb-4">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                    <button type="button" class="btn btn-primary">Lưu địa chỉ</button>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                        <button type="button" class="btn btn-primary">Lưu địa chỉ</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Include Bootstrap JS (Make sure to include it after jQuery if you are using it) -->
+                                        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb84FfNYHpEMG5dKg6i1Q1M6lK9OL7AO9EEN7o8yI5iw8C49Y" crossorigin="anonymous"></script>
+                                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGiajD+AK47E2crK7tmeS+Zg+77QeRGTf3Qw5D7/Y3Pck5n6FB0vPb9jjlE" crossorigin="anonymous"></script>
                                     </div>
-                                    <!-- Include Bootstrap JS (Make sure to include it after jQuery if you are using it) -->
-                                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb84FfNYHpEMG5dKg6i1Q1M6lK9OL7AO9EEN7o8yI5iw8C49Y" crossorigin="anonymous"></script>
-                                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGiajD+AK47E2crK7tmeS+Zg+77QeRGTf3Qw5D7/Y3Pck5n6FB0vPb9jjlE" crossorigin="anonymous"></script>
-                                </div>
-                                <!--for customer login with account-->
-                            </c:otherwise>
-                        </c:choose>
+                                    <!--for customer login with account-->
+                                </c:otherwise>
+                            </c:choose>
 
-                        <div class="list-group mt-4">
-                            <h4>Phương thức thanh toán</h4>
-                            <label class="list-group-item d-flex gap-2 border-0">
-                                <input class="form-check-input flex-shrink-0" type="radio" name="bankCode"
-                                       id="listGroupRadios2" value="VNPAY" required>
-                                <img src="img/Payment/vnpay.png" height="35px" width="auto"/>
-                                <span>
-                                    <p class="mb-1">VNPay</p>
-                                </span>
-                            </label>
-                            <label class="list-group-item d-flex gap-2 border-0">
-                                <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios"
-                                       id="listGroupRadios3" value="">
-                                <img src="img/Payment/cod.png" height="40px" width="auto"/>
-                                <span>
-                                    <p class="mb-1">Thanh toán bằng tiền mặt khi nhận hàng</p>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <h4 class="mb-3">Đơn hàng (3 sản phẩm)</h4>
-                        <ul class="list-group mb-3 border" style="max-height: 320px; /* Đặt chiều cao tối đa cho thẻ ul */
-                            overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
-                            overflow-x: hidden; /* Ẩn thanh cuộn ngang nếu không cần thiết */
-                            border: 1px solid #ccc; /* Tùy chọn: thêm viền để dễ thấy */
-                            padding: 0;
-                            list-style: none;">
-                        <c:forEach items="${requestScope.listItem}" var="item">
-                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
-                                    <div class="d-flex align-items-center">
-                                        <img src="${pageContext.request.contextPath}/${item.product.imgProduct}" width="50" height="auto" alt="Thermometer"/>
-                                        <div class="ml-3" style="margin-left: 10px; width: 65%">
-                                            <h6 class="my-0" style="font-size: 13px">${item.product.name}</h6><span>x${item.quantity}</span>
-                                        </div>
-                                    </div>
-                                    <fmt:setLocale value="vi_VN" />
-                                    <fmt:setBundle basename="resources.application" />
-                                    <fmt:formatNumber var="totalPrice" value="${item.quantity * item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                    <span>${totalPrice}</span>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                        <div class="total-price pb-3">
-                            <table cellspacing="0" class="table text-capitalize">
-                                <tbody>
-                                    <tr class="subtotal pt-2 pb-2 border-top border-bottom">
-                                        <th>Tạm tính</th>
-                                        <td data-title="Subtotal">
-                                            <span class="price-amount amount text-primary ps-5 fw-light">
-                                                <bdi>
-                                                    <span class="price-currency-symbol">
-                                                        <fmt:formatNumber value="${totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                                    </span>
-                                                </bdi>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr class="order-total pt-2 pb-2 border-bottom">
-                                        <th>Phí giao hàng (tiêu chuẩn)</th>
-                                        <td data-title="Ship">
-                                            <span class="price-amount amount text-primary ps-5 fw-light">
-                                                <bdi>
-                                                    <span class="price-currency-symbol">
-                                                        <fmt:formatNumber value="${20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                                    </span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr class="order-total pt-2 pb-2 border-bottom">
-                                        <th>Tổng cộng</th>
-                                        <td data-title="Total">
-                                            <span class="price-amount amount text-primary ps-5 fw-light">
-                                                <bdi>
-                                                    <span class="price-currency-symbol">
-                                                        <fmt:formatNumber value="${totalAmount + 20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                                    </span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="button-wrap mt-3">
-                            <form action="ajaxServlet" id="frmCreateOrder" method="post">
-                                <input type="hidden" name="totalAmount" value="24000">
-                                <button type="submit" name="submit" class="btn">ĐẶT HÀNG</button>
-                            </form>
-                            <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js" onload="console.log('vnpay script loaded')"></script>
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            <script type="text/javascript">
-                                $("#frmCreateOrder").submit(function () {
-                                    console.log("Form submitted");
-                                    var postData = $("#frmCreateOrder").serialize();
-                                    var submitUrl = $("#frmCreateOrder").attr("action");
-                                    console.log("Post data:", postData);
-                                    console.log("Submit URL:", submitUrl);
-                                    $.ajax({
-                                        type: "POST",
-                                        url: submitUrl,
-                                        data: postData,
-                                        dataType: 'JSON',
-                                        success: function (x) {
-                                            console.log("Response received:", x);
-                                            if (x.code === '00') {
-                                                if (window.vnpay) {
-                                                    vnpay.open({width: 768, height: 600, url: x.data});
-                                                } else {
-                                                    location.href = x.data;
+                            <div class="list-group mt-4">
+                                <h4>Phương thức thanh toán</h4>
+                                <label class="list-group-item d-flex gap-2 border-0">
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
+                                           id="listGroupRadios2" value="VNPAY" required>
+                                    <img src="${pageContext.request.contextPath}/img/Payment/vnpay.png" height="35px" width="auto"/>
+                                    <span>
+                                        <p class="mb-1">VNPay</p>
+                                    </span>
+                                </label>
+                                <label class="list-group-item d-flex gap-2 border-0">
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
+                                           id="listGroupRadios3" value="COD" required>
+                                    <img src="${pageContext.request.contextPath}/img/Payment/cod.png" height="40px" width="auto"/>
+                                    <span>
+                                        <p class="mb-1">Thanh toán bằng tiền mặt khi nhận hàng</p>
+                                    </span>
+                                </label>
+                            </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    const paymentForm = document.getElementById('formCheckout');
+                                    const radioButtons = document.querySelectorAll('input[name="paymentMethod"]');
+
+                                    radioButtons.forEach(radio => {
+                                        radio.addEventListener('change', function () {
+                                            if (this.checked) {
+                                                if (this.value === 'VNPAY') {
+                                                    paymentForm.action = 'ajaxServlet';
+                                                    $("#formCheckout").submit(function () {
+                                                        console.log("Form submitted");
+                                                        var postData = $("#formCheckout").serialize();
+                                                        var submitUrl = $("#formCheckout").attr("action");
+                                                        console.log("Post data:", postData);
+                                                        console.log("Submit URL:", submitUrl);
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: submitUrl,
+                                                            data: postData,
+                                                            dataType: 'JSON',
+                                                            success: function (x) {
+                                                                console.log("Response received:", x);
+                                                                if (x.code === '00') {
+                                                                    if (window.vnpay) {
+                                                                        vnpay.open({width: 768, height: 600, url: x.data});
+                                                                    } else {
+                                                                        location.href = x.data;
+                                                                    }
+                                                                    return false;
+                                                                } else {
+                                                                    alert(x.Message);
+                                                                }
+                                                            },
+                                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                                console.error("AJAX Error:", textStatus, errorThrown);
+                                                            }
+                                                        });
+                                                        return false;
+                                                    });
+                                                } else if (this.value === 'COD') {
+                                                    paymentForm.action = 'processCheckout';
                                                 }
-                                                return false;
-                                            } else {
-                                                alert(x.Message);
                                             }
-                                        },
-                                        error: function (jqXHR, textStatus, errorThrown) {
-                                            console.error("AJAX Error:", textStatus, errorThrown);
-                                        }
+                                        });
                                     });
-                                    return false;
                                 });
-                            </script> 
+                            </script>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <h4 class="mb-3">Đơn hàng (${listItem.size()} sản phẩm)</h4>
+                            <ul class="list-group mb-3 border" style="max-height: 320px; /* Đặt chiều cao tối đa cho thẻ ul */
+                                overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
+                                overflow-x: hidden; /* Ẩn thanh cuộn ngang nếu không cần thiết */
+                                border: 1px solid #ccc; /* Tùy chọn: thêm viền để dễ thấy */
+                                padding: 0;
+                                list-style: none;">
+                                <c:forEach items="${requestScope.listItem}" var="item">
+                                    <input type="hidden" name="items" value="${item.product.productId},${item.quantity}">
+                                    <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
+                                        <div class="d-flex align-items-center">
+                                            <img src="${pageContext.request.contextPath}/${item.product.imgProduct}" width="50" height="auto" alt="Thermometer"/>
+                                            <div class="ml-3" style="margin-left: 10px; width: 65%">
+                                                <h6 class="my-0" style="font-size: 13px">${item.product.name}</h6><span>Số lượng: ${item.quantity}</span>
+                                            </div>
+                                        </div>
+                                        <fmt:setLocale value="vi_VN" />
+                                        <fmt:setBundle basename="resources.application" />
+                                        <fmt:formatNumber var="totalPrice" value="${item.quantity * item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                        <span>${totalPrice}</span>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                            <div class="total-price pb-3">
+                                <table cellspacing="0" class="table text-capitalize">
+                                    <tbody>
+                                        <tr class="subtotal pt-2 pb-2 border-top border-bottom">
+                                            <th>Tạm tính</th>
+                                            <td data-title="Subtotal">
+                                                <span class="price-amount amount text-primary ps-5 fw-light">
+                                                    <bdi>
+                                                        <span class="price-currency-symbol">
+                                                            <fmt:formatNumber value="${totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                                        </span>
+                                                    </bdi>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="order-total pt-2 pb-2 border-bottom">
+                                            <th>Phí giao hàng</th>
+                                            <td data-title="Ship">
+                                                <span class="price-amount amount text-primary ps-5 fw-light">
+                                                    <bdi>
+                                                        <span class="price-currency-symbol">
+                                                            <fmt:formatNumber value="${20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                                        </span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="order-total pt-2 pb-2 border-bottom">
+                                            <th style="font-weight: bold">Tổng cộng</th>
+                                            <td data-title="Total">
+                                                <span class="price-amount amount text-primary ps-5 fw-light">
+                                                    <bdi>
+                                                        <span class="price-currency-symbol" style="font-weight: bold; font-size: 22px">
+                                                            <fmt:formatNumber value="${totalAmount + 20000}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                                            <input type="hidden" name="totalPrice" value="${totalAmount + 20000}">
+                                                        </span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="button-wrap mt-3">
+                                <button type="submit" class="btn">ĐẶT HÀNG</button>
+                                <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js" onload="console.log('vnpay script loaded')"></script>
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
+            </section>
+        </form>
         <footer id="footer" class="padding-large">
             <div class="container">
                 <div class="row">

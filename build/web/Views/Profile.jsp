@@ -102,30 +102,37 @@
         </c:if>
         <jsp:include page="../common/header.jsp"></jsp:include>
         <c:set var="acc" value="${sessionScope.account}"/>
-        <div class="container rounded bg-white mt-5 mb-5" style="width: 60%">
+        <div class="container rounded bg-white mt-5 mb-5">
             <div class="row profile">
-                <div class="col-md-4 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex align-items-center mb-5 mt-5">
+                        <img class="rounded-circle me-3" width="70px" src="${acc.imgAccount}">
                         <span class="font-weight-bold">${acc.fullName}</span>
-                        <span class="text-black-50">${acc.email}</span>
-                        <span></span>
                     </div>
-                    <center>
-                        <form id="uploadForm" action="profile" method="post" enctype="multipart/form-data">
-                            <input type="file" id="avatarInput" name="avatar" style="display:none" required oninvalid="this.setCustomValidity('Vui lòng chọn một tệp hình ảnh để tải lên')" onchange="document.getElementById('uploadForm').submit()">
-                            <button type="button" id="customButton">Chọn Ảnh</button>
-                            <input type="hidden" value="changeAvt" name="action">
-                        </form>
-                    </center>
+
+                    <h4>Tài khoản của tôi</h4>
+                    <div class="mt-4">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="profile" class="text-decoration-none">Hồ sơ của tôi</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="address" class="text-decoration-none">Địa chỉ</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#" class="text-decoration-none add-experience">Đổi mật khẩu</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-8">
+
+                <div class="col-md-6">
                     <!-- Profile -->
                     <div class="p-3 py-5" id="profile">
                         <form action="profile" method="post">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Hồ Sơ Của Tôi</h4>
-                                <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Đổi mật khẩu</span>
+                                
                             </div>
                             <div class="row mt-2">
                                 <div class="col-md-6 inputprofile">
@@ -177,7 +184,6 @@
                                         oninput="this.setCustomValidity('')"
                                         >
                                 </div>
-
                                 <div class="col-md-12 "><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="enter email" value="${acc.email}" disabled></div>
                             </div>
                             <div class="mt-5 text-center">
@@ -219,6 +225,24 @@
                             </div>
                         </form>
                     </div>
+                    <div class="p-3 py-5" id="address" style="display: none;">
+    <div>
+        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+            <option value="" selected>Chọn tỉnh thành</option>
+            <!-- Options for cities will be dynamically populated here -->
+        </select>
+
+        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+            <option value="" selected>Chọn quận huyện</option>
+            <!-- Options for districts will be dynamically populated based on selected city -->
+        </select>
+
+        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+            <option value="" selected>Chọn phường xã</option>
+            <!-- Options for wards will be dynamically populated based on selected district -->
+        </select>
+    </div>    
+</div>
 
                     <c:if test="${not empty requestScope.successMessage}">
                         <script>
@@ -228,43 +252,98 @@
                     </c:if>
 
                 </div>
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}">
+                    </div>
+                    <center>
+                        <form id="uploadForm" action="profile" method="post" enctype="multipart/form-data">
+                            <input type="file" id="avatarInput" name="avatar" style="display:none" required oninvalid="this.setCustomValidity('Vui lòng chọn một tệp hình ảnh để tải lên')" onchange="document.getElementById('uploadForm').submit()">
+                            <button type="button" id="customButton">Chọn Ảnh</button>
+                            <input type="hidden" value="changeAvt" name="action">
+                        </form>
+                    </center>
+                </div>
             </div>
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>
 
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+            <script>
+                    var citis = document.getElementById("city");
+                    var districts = document.getElementById("district");
+                    var wards = document.getElementById("ward");
+                    var Parameter = {
+                        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                        method: "GET",
+                        responseType: "application/json",
+                    };
+                    var promise = axios(Parameter);
+                    promise.then(function (result) {
+                        renderCity(result.data);
+                    });
 
+                    function renderCity(data) {
+                        for (const x of data) {
+                            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                        }
+                        citis.onchange = function () {
+                            district.length = 1;
+                            ward.length = 1;
+                            if (this.value != "") {
+                                const result = data.filter(n => n.Id === this.value);
+
+                                for (const k of result[0].Districts) {
+                                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                                }
+                            }
+                        };
+                        district.onchange = function () {
+                            ward.length = 1;
+                            const dataCity = data.filter((n) => n.Id === citis.value);
+                            if (this.value != "") {
+                                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                                for (const w of dataWards) {
+                                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                                }
+                            }
+                        };
+                    }
+            </script>
             <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
             <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                // Handle profile and change password form display
-                                function showChangePassword() {
-                                    document.getElementById('profile').style.display = 'none';
-                                    document.getElementById('changepass').style.display = 'block';
-                                }
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    // Handle profile and change password form display
+                                    function showChangePassword() {
+                                        document.getElementById('profile').style.display = 'none';
+                                        document.getElementById('changepass').style.display = 'block';
+                                    }
 
-                                function showProfile() {
-                                    document.getElementById('profile').style.display = 'block';
-                                    document.getElementById('changepass').style.display = 'none';
-                                }
+                                    function showProfile() {
+                                        document.getElementById('profile').style.display = 'block';
+                                        document.getElementById('changepass').style.display = 'none';
+                                    }
 
-                                // Event listeners for profile and change password buttons
-                                document.querySelector('.add-experience').addEventListener('click', showChangePassword);
-                                document.querySelector('.btn.btn-secondary.profile-button').addEventListener('click', showProfile);
+                                    // Event listeners for profile and change password buttons
+                                    document.querySelector('.add-experience').addEventListener('click', showChangePassword);
+                                    document.querySelector('.btn.btn-secondary.profile-button').addEventListener('click', showProfile);
 
-                                // Check if change password should be shown
+                                    // Check if change password should be shown
             <% Boolean showChangePassword = (Boolean) request.getAttribute("showChangePassword"); %>
             <% if (showChangePassword != null && showChangePassword) { %>
-                                showChangePassword();
+                                    showChangePassword();
             <% } else { %>
-                                showProfile();
+                                    showProfile();
             <% } %>
 
-                                // File input trigger for custom button
-                                document.getElementById('customButton').addEventListener('click', function () {
-                                    document.getElementById('avatarInput').click();
+                                    // File input trigger for custom button
+                                    document.getElementById('customButton').addEventListener('click', function () {
+                                        document.getElementById('avatarInput').click();
+                                    });
                                 });
-                            });
         </script>
+        
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>

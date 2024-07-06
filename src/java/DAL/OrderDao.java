@@ -251,6 +251,125 @@ public class OrderDao extends DBContext {
         return products;
     }
 
+
+//    public List<Map<String, Object>> getTopBuyers() {
+//        List<Map<String, Object>> topBuyers = new ArrayList<>();
+//        String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
+//                + "FROM Account a "
+//                + "JOIN OrderCustomer oc ON a.AccountID = oc.AccountID "
+//                + "GROUP BY a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address "
+//                + "ORDER BY TotalSpent DESC";
+//        try {
+//            PreparedStatement ps = connection.prepareStatement(query);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Map<String, Object> buyer = new HashMap<>();
+//                buyer.put("accountId", rs.getInt("AccountID"));
+//                buyer.put("fullName", rs.getString("FullName"));
+//                buyer.put("email", rs.getString("Email"));
+//                buyer.put("phoneNumber", rs.getString("PhoneNumber"));
+//                buyer.put("address", rs.getString("Address"));
+//                buyer.put("totalSpent", rs.getFloat("TotalSpent"));
+//                topBuyers.add(buyer);
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return topBuyers;
+//    }
+
+    public List<OrderCustomer> getOrdersByStatusForCustomers(String statusId) {
+        List<OrderCustomer> orders = new ArrayList<>();
+        String query = "SELECT oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, a.FullName, a.Email, a.PhoneNumber, a.Address "
+                + "FROM OrderCustomer oc "
+                + "JOIN StatusOrder s ON oc.StatusID = s.StatusID "
+                + "JOIN Account a ON oc.AccountID = a.AccountID "
+                + "WHERE oc.StatusID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, Integer.parseInt(statusId)); // Chuyển đổi statusId từ String sang int
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderCId = rs.getInt("OrderCID");
+                Account account = new Account();
+                account.setAccountId(rs.getInt("AccountID"));
+                account.setFullName(rs.getString("FullName"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setAddress(rs.getString("Address"));
+                float totalPrice = rs.getFloat("TotalPrice");
+                Date date = rs.getDate("Date");
+                Status status = new Status();
+                status.setStatusId(rs.getInt("StatusID"));
+                status.setStatusName(rs.getString("StatusName"));
+                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
+                OrderCustomer order = new OrderCustomer(orderDetails, account, totalPrice, date, status);
+                orders.add(order);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<OrderGuest> getOrdersByStatusForGuests(String statusId) {
+        List<OrderGuest> orders = new ArrayList<>();
+        String query = "SELECT og.OrderGID, og.FullName, og.Email, og.PhoneNumber, og.Address, og.TotalPrice, og.Date, og.StatusID, s.StatusName "
+                + "FROM OrderGuest og "
+                + "JOIN StatusOrder s ON og.StatusID = s.StatusID "
+                + "WHERE og.StatusID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, Integer.parseInt(statusId));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderGId = rs.getInt("OrderGID");
+                String fullName = rs.getString("FullName");
+                String email = rs.getString("Email");
+                String phoneNumber = rs.getString("PhoneNumber");
+                String address = rs.getString("Address");
+                float totalPrice = rs.getFloat("TotalPrice");
+                Date date = rs.getDate("Date");
+                Status status = new Status();
+                status.setStatusId(rs.getInt("StatusID"));
+                status.setStatusName(rs.getString("StatusName"));
+                List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
+                OrderGuest order = new OrderGuest(orderDetails, fullName, email, phoneNumber, address, totalPrice, date, status);
+                orders.add(order);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return orders;
+    }
+
+    public int OrderCount() {
+        int totalOrders = 0;
+        String query = "SELECT SUM(TotalOrders) AS TotalOrders\n"
+                + "FROM (\n"
+                + "    SELECT COUNT(*) AS TotalOrders\n"
+                + "    FROM OrderGuest\n"
+                + "    \n"
+                + "    UNION ALL\n"
+                + "    \n"
+                + "    SELECT COUNT(*) AS TotalOrders\n"
+                + "    FROM OrderCustomer\n"
+                + ") AS TotalOrdersCombined";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalOrders = rs.getInt("TotalOrders");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return totalOrders;
+    }
+
+
     public List<Map<String, Object>> getTopBuyers() {
         List<Map<String, Object>> topBuyers = new ArrayList<>();
         String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "

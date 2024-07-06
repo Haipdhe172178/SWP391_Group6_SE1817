@@ -193,7 +193,20 @@
         <servlet-class>AdminControllers.UpdateController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProcessCheckoutController</servlet-name>
+
+        <servlet-name>OrderStatusControllers</servlet-name>
+        <servlet-class>AdminControllers.OrderStatusControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StatisticsControllers</servlet-name>
+        <servlet-class>AdminControllers.StatisticsControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StatisticsOrderControllers</servlet-name>
+        <servlet-class>AdminControllers.StatisticsOrderControllers</servlet-class>  
+    </servlet>
+    <servlet>
+         <servlet-name>ProcessCheckoutController</servlet-name>
         <servlet-class>Controllers.ProcessCheckoutController</servlet-class>
     </servlet>
     <servlet>
@@ -397,8 +410,19 @@
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
-        <servlet-name>ProcessCheckoutController</servlet-name>
+        <servlet-name>OrderStatusControllers</servlet-name>
+        <url-pattern>/orderstatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticsControllers</servlet-name>
+        <url-pattern>/statistics/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticsOrderControllers</servlet-name>
+        <url-pattern>/statisticsorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+         <servlet-name>ProcessCheckoutController</servlet-name>
         <url-pattern>/processCheckout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

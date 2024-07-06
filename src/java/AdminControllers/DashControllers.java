@@ -75,7 +75,7 @@ public class DashControllers extends HttpServlet {
 
         List<OrderCustomer> customerOrders = orderDao.getAllOrderCustomers();
         List<OrderGuest> guestOrders = orderDao.getAllOrderGuests();
-        int totalQuantity = getTotalOrderQuantity(customerOrders, guestOrders);
+        int totalQuantity = orderDao.OrderCount();
         float totalRevenue = getTotalRevenue(customerOrders, guestOrders);
         List<OrderCustomer> recentCustomerOrders = orderDao.getRecentOrderCustomers();
         List<OrderGuest> recentGuestOrders = orderDao.getRecentOrderGuests();
@@ -90,31 +90,42 @@ public class DashControllers extends HttpServlet {
         request.setAttribute("mostPurchasedProducts", mostPurchasedProducts);
         request.setAttribute("topBuyers", topBuyers);
 
-        Map<String, Integer> orderStatusCount = new HashMap<>();
+        Map<Integer, String> statusIdToName = new HashMap<>();
+        Map<Integer, Integer> orderStatusCount = new HashMap<>();
+
+        // Khởi tạo các trạng thái với giá trị 0
+        statusIdToName.put(1, "Chờ xác nhận");
+        statusIdToName.put(2, "Đã xác nhận");
+        statusIdToName.put(3, "Chờ giao hàng");
+        statusIdToName.put(4, "Hoàn thành");
+        statusIdToName.put(5, "Đã hủy");
+
+        for (int i = 1; i <= 5; i++) {
+            orderStatusCount.put(i, 0);
+        }
+
+        // Cập nhật giá trị dựa trên dữ liệu thực tế
         for (OrderCustomer order : customerOrders) {
-            String statusName = order.getStatus().getStatusName();
-            orderStatusCount.put(statusName, orderStatusCount.getOrDefault(statusName, 0) + 1);
+            int statusId = order.getStatus().getStatusId();
+            orderStatusCount.put(statusId, orderStatusCount.get(statusId) + 1);
         }
 
         for (OrderGuest order : guestOrders) {
-            String statusName = order.getStatus().getStatusName();
-            orderStatusCount.put(statusName, orderStatusCount.getOrDefault(statusName, 0) + 1);
+            int statusId = order.getStatus().getStatusId();
+            orderStatusCount.put(statusId, orderStatusCount.get(statusId) + 1);
         }
 
         int totalOrders = customerOrders.size() + guestOrders.size();
-        Map<String, Double> orderStatusPercentage = new LinkedHashMap<>();
-        orderStatusPercentage.put("Chờ xác nhận", 0.0);
-        orderStatusPercentage.put("Đã xác nhận", 0.0);
-        orderStatusPercentage.put("Chờ giao hàng", 0.0);
-        orderStatusPercentage.put("Hoàn thành", 0.0);
-        orderStatusPercentage.put("Đã hủy", 0.0);
+        Map<Integer, Double> orderStatusPercentage = new LinkedHashMap<>();
 
         if (totalOrders > 0) {
-            for (Map.Entry<String, Integer> entry : orderStatusCount.entrySet()) {
+            for (Map.Entry<Integer, Integer> entry : orderStatusCount.entrySet()) {
                 orderStatusPercentage.put(entry.getKey(), (entry.getValue() * 100.0) / totalOrders);
             }
         }
+
         request.setAttribute("orderStatusPercentage", orderStatusPercentage);
+        request.setAttribute("statusIdToName", statusIdToName);
 
         request.getRequestDispatcher("Views/Admin/Dashboard.jsp").forward(request, response);
     }
@@ -142,24 +153,6 @@ public class DashControllers extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private int getTotalOrderQuantity(List<OrderCustomer> customerOrders, List<OrderGuest> guestOrders) {
-        int totalQuantity = 0;
-
-        for (OrderCustomer order : customerOrders) {
-            for (OrderDetailCustomer detail : order.getOrderDetails()) {
-                totalQuantity += detail.getQuantity();
-            }
-        }
-
-        for (OrderGuest order : guestOrders) {
-            for (OrderDetailGuest detail : order.getOrderDetails()) {
-                totalQuantity += detail.getQuantity();
-            }
-        }
-
-        return totalQuantity;
-    }
 
     private float getTotalRevenue(List<OrderCustomer> customerOrders, List<OrderGuest> guestOrders) {
         float totalRevenue = 0;

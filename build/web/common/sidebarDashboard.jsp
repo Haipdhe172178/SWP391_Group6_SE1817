@@ -23,7 +23,19 @@
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
                         <span>Thống kê</span>
+                    </a>                  
+                </li>
+                 <li class>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/19.svg" alt>
+                        </div>
+                       <span>Thống kê số liệu</span>
                     </a>
+                    <ul>
+                         <li><a href="statisticsorder">Thống kê đặt hàng</a></li>   
+                        <li><a href="statistics">Thống kê doanh thu</a></li>                       
+                    </ul>
                 </li>
                 <li class>
                     <a class="has-arrow" href="contactAdmin" aria-expanded="false">
