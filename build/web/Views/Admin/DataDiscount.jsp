@@ -140,9 +140,12 @@
                                                             <button type="submit" name="submit" class="btn btn-primary">
                                                                 <img src="img/icon/icon_search.svg" alt="Search">
                                                             </button>
+                                                           
+                                                           
                                                         </form>
+                                                           
 
-                                                        <!-- Filter Form -->
+<!--                                                         Filter Form -->
                                                         <form id="frm" action="discount" method="get" class="d-flex ms-2">
                                                             <select name="op" class="form-select" onchange="document.getElementById('frm').submit()">
                                                                 <option ${n == 2 ? 'selected' : ''} value="2">Tất cả</option>
@@ -157,6 +160,19 @@
                                                 <div class="add_button ms-2">
                                                     <a href="addcode" class="btn btn_1">Add code</a>
                                                 </div>
+                                                 <form action="datetime" method="get">
+                                                               <div class="search_field">
+                                                                   <table border="0px">
+                                                                       <th> <h6 class="m-0">Thời gian đến lúc mã hết hiển thị ở trang chủ</h6></th>
+                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>
+                                                                       <th><input hidden  type="text" value="${date1}" name="dateold"  class="form-control"></th>
+                                                                       <th> <input class="add_button ms-2" type="submit" value="Cập nhật ngày"></th>
+                                                                   </table>
+                                                                   
+                                                                   
+                                                                   
+                                                            </div>
+                                                            </form>
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">

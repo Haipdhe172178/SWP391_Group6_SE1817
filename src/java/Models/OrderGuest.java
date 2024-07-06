@@ -20,7 +20,8 @@ public class OrderGuest {
     private float totalPrice;
     private Date date;
     private Status status;
-
+    private int paymentStatus;
+    
     public OrderGuest(List<OrderDetailGuest> orderDetails, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, Status status) {
         this.orderDetails = orderDetails;
         this.fullName = fullName;
@@ -31,8 +32,14 @@ public class OrderGuest {
         this.date = date;
         this.status = status;
     }
+    
+    public int getPaymentStatus() {
+        return paymentStatus;
+    }
 
-   
+    public void setPaymentStatus(int paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public List<OrderDetailGuest> getOrderDetails() {
         return orderDetails;

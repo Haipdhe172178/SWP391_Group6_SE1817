@@ -4,20 +4,13 @@
  */
 package Controllers;
 
-import DAL.AccountDAO;
-import DAL.CategoryDao;
-import DAL.DiscountDAO;
-import DAL.FeedbackDAO;
-import DAL.HomeDAO;
-
-import DAL.NewsDao;
+import DAL.OrderDao;
+import DAL.ProductDao;
 import Models.Account;
-import Models.Category;
-import Models.Feedback;
-import Models.ImageBackground;
-import Models.News;
+import Models.Item;
+import Models.OrderCustomer;
+import Models.OrderGuest;
 import Models.Product;
-import Models.UsedCoupon;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -29,9 +22,9 @@ import java.util.List;
 
 /**
  *
- * @author huyca
+ * @author Hai Pham
  */
-public class HomeControllers extends HttpServlet {
+public class ProcessCheckoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,10 +43,10 @@ public class HomeControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeControllers</title>");
+            out.println("<title>Servlet ProcessCheckoutController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProcessCheckoutController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,49 +64,7 @@ public class HomeControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           ArrayList<ImageBackground> imageBackground = new ArrayList<>();
-        ArrayList<Product> Sellmany = new ArrayList<>();
-         ArrayList<Product> dataVanHoc = new ArrayList<>();
-          ArrayList<Product> dataNuocNgoai = new ArrayList<>();
-           ArrayList<Product> dataChuyenThong = new ArrayList<>();
-            ArrayList<Product> dataKhoaHoc = new ArrayList<>();
-          ArrayList<UsedCoupon> codename = new ArrayList<>();
-          
-          DiscountDAO dao = new DiscountDAO();
-          codename = dao.Displaycode();
-        CategoryDao categoryDao = new CategoryDao();
-        List<Category> categorys = categoryDao.getallCategorys();
-        request.setAttribute("category", categorys);
-        HomeDAO dal = new HomeDAO();
-        String date = dal.getTime();
-        dataVanHoc = dal.get3addnew(2);
-         dataNuocNgoai = dal.get3addnew(3);
-          dataChuyenThong = dal.get3addnew(4);
-           dataKhoaHoc= dal.get3addnew(5);
-        imageBackground = dal.getImageBackground();
-        Sellmany = dal.get6sellmany();
-        
-        //Them list, news, feedback cho homepage
-        NewsDao nd = new NewsDao();
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
-        AccountDAO accDAO = new AccountDAO();
-        List<News> listNews = nd.getFourNewsLated();
-        List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
-        List<Account> listAcc = accDAO.getAllAccount();
-
-        request.setAttribute("listMostRating", listMostRating);
-        request.setAttribute("listAccount", listAcc);
-        request.setAttribute("news", listNews);
-        request.setAttribute("data1", Sellmany);
-        request.setAttribute("imageBG", imageBackground);
-        request.setAttribute("data01", dataVanHoc);
-        request.setAttribute("data02", dataNuocNgoai);
-        request.setAttribute("data03", dataChuyenThong);
-        request.setAttribute("data04", dataKhoaHoc);
-        request.setAttribute("codediscount", codename);
-        request.setAttribute("date", date);
-        request.getRequestDispatcher("Views/Home.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -127,7 +78,41 @@ public class HomeControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Account acc = (Account) request.getSession().getAttribute("account");
+        OrderDao od = new OrderDao();
+        ProductDao pd = new ProductDao();
+        String[] items = request.getParameterValues("items");
+        
+        //Get item list to buy
+        List<Item> listItem = new ArrayList<>();
+        for (String item : items) {
+            String[] i = item.split(",");
+            Product p = pd.getProductById(Integer.parseInt(i[0]));
+            int quantity = Integer.parseInt(i[1]);
+            listItem.add(new Item(p, quantity, p.getPrice()));
+        }
+        String totalPriceStr = request.getParameter("totalPrice");
+        Float totalPrice = Float.parseFloat(totalPriceStr);
+
+        if (acc == null) {
+            //Guest Process
+            String fullName = request.getParameter("fullname");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phone");
+            String address = request.getParameter("address");
+            address += ", " + request.getParameter("ward") + ", " + request.getParameter("district") + ", " + request.getParameter("city");
+
+            int orderGID = od.AddOrderGuest(fullName, email, phoneNumber, address, totalPrice, 1, 1);
+            od.AddOrderGuestDetails(orderGID, listItem);
+        } else {
+            //Customer Process
+            String addressIdStr = request.getParameter("address");
+            int addressID = Integer.parseInt(addressIdStr);
+            int orderCID = od.AddOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, 0);
+            od.AddOrderCustomerDetails(orderCID, listItem);
+        }
+        request.setAttribute("message", "success");
+        request.getRequestDispatcher("Views/thanks.jsp").forward(request, response);
     }
 
     /**

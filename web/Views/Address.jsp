@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Shop.jsp
-    Created on : May 15, 2024, 10:48:10 PM
-    Author     : huyca
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -12,89 +6,120 @@
 <html>
 
     <head>
-        <title>Bookly - Bookstore eCommerce Website Template</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="author" content="">
-        <meta name="keywords" content="">
-        <meta name="description" content="">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-        <style>
-            .filter-box {
-                border: 1px solid #ddd;
-                padding: 20px;
-                border-radius: 5px;
-                background-color: white;
-                margin-bottom: 20px;
-                margin-top: 20px
-            }
+    <title>Bookly - Trang quản lý địa chỉ giao hàng</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
 
-            .filter-box h2 {
-                text-align: center;
-                margin-top: 0;
-                font-size: 20px;
-            }
-            .collapsible {
-                cursor: pointer;
-                user-select: none;
-                background-color: #f86d72;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                font-size: 14px;
-                position: relative;
-            }
-            .collapsible::after {
-                content: '\002B';
-                font-size: 14px;
-                position: absolute;
-                right: 20px;
-                color: #777;
-            }
-            .collapsible.active::after {
-                content: '\2212';
-            }
-            .content {
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-            .section-title h3 {
-                margin: 0;
-                font-size: 16px;
-                color: #fff;
-            }
-            .product-categories, .product-tags {
-                padding-left: 20px;
-            }
-            .cat-item, .tags-item {
-                margin-bottom: 10px;
-                font-size: 14px;
-            }
-            button[type="submit"] {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                background-color: #f86d72;
-                color: #fff;
-                cursor: pointer;
-            }
-            button[type="submit"]:hover {
-                background-color: #f86d72;
-            }
-        </style>
-    </head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <!-- Inline CSS for Page Specific Styling -->
+    <style>
+        .filter-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+            margin: 20px 0;
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-section h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .btn-add {
+            margin-left: 20px;
+        }
+        .section-title h2 {
+            font-size: 20px; /* Match the font size of "Manage Shipping Addresses" */
+        }
+        .modal-dialog {
+            max-width: 500px; /* Make the modal smaller */
+            margin: auto; /* Center the modal horizontally */
+        }
+        .modal-content {
+            border-radius: 5px;
+        }
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+            background-color: #f86d72;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            position: relative;
+        }
+        .collapsible::after {
+            content: '\002B';
+            font-size: 14px;
+            position: absolute;
+            right: 20px;
+            color: #777;
+        }
+        .collapsible.active::after {
+            content: '\2212';
+        }
+        .content {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .section-title h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #fff;
+        }
+        .product-categories, .product-tags {
+            padding-left: 20px;
+        }
+        .cat-item, .tags-item {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f86d72;
+            color: #fff;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #e85b5e;
+        }
+        .separator {
+            border-top: 2px solid #ddd;
+            margin: 20px 0;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -391,240 +416,408 @@
                 </div>
             </div>
         </nav>
-
-    </header>
-    <div class="shopify-grid padding-large">
-        <div class="container">
-            <div class="row flex-row-reverse g-md-5">
-                <main class="col-md-9">
-                    <div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
-                        <div class="showing-product">
-                            <h6>Tìm thấy <span>${count}</span> Sản Phẩm</h6>
-                        </div>
-                        <form method="GET" action="shop">                          
-                            <div class="sort-by">
-                                <select id="sorting" class="form-select" name="sortBy" onchange="this.form.submit()">
-                                    <option value="">Mặc Định</option>
-                                    <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
-                                    <option value="name_desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
-                                    <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Low-High)</option>
-                                    <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (High-Low)</option>
+    
+    
+   <div class="container mt-5">
+    <div class="filter-box">
+        <div class="header-section">
+            <h2>Địa chỉ của tôi</h2>
+            <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                Thêm địa chỉ
+            </button>
+        </div>
+        <div class="separator"></div>
+        <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addAddressModalLabel">Thêm địa chỉ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="address" method="post" id="addAddressForm">
+                            <input type="hidden" id="action" name="action" value="save">
+                            <input type="hidden" id="accID" name="accID" value="${sessionScope.account.accountId}">
+                            <input type="hidden" id="addressID" name="addressID" value="">
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Toàn bộ địa chỉ:</label>
+                                <input type="text" class="form-control" id="address" name="address" readonly required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">Tỉnh/Thành phố:</label>
+                                <select class="form-select form-select-sm mb-3" id="city" name="city" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Tỉnh/Thành phố</option>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <label for="district" class="form-label">Quận/Huyện:</label>
+                                <select class="form-select form-select-sm mb-3" id="district" name="district" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ward" class="form-label">Phường/Xã:</label>
+                                <select class="form-select form-select-sm" id="ward" name="ward" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Phường/Xã</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="detailedAddress" class="form-label">Địa chỉ chi tiết:</label>
+                                <input type="text" class="form-control" id="detailedAddress" name="detailedAddress" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu địa chỉ</button>
                         </form>
-
                     </div>
-                    <div class="row product-content product-store">
-                        <fmt:setLocale value="vi_VN" />
-                        <c:forEach items="${ListA}" var="pro">
-                            <div class="col-lg-3 col-md-4 mb-4">
-                                <a href="single?productID=${pro.productId}">
-                                    <div class="card position-relative p-4 border rounded-3">
-                                        <div class="position-absolute">
-                                            <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"></p>
-                                        </div>
-                                        <img src="${pro.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                        <h6 class="mt-4 mb-0 fw-bold">
-                                            <a href="single?productID=${pro.productId}">${pro.name}</a>
-                                        </h6>
-                                        <div class="review-content d-flex">
-
-                                            <p class="my-2 me-2 fs-6 text-black-50">
-                                                ${pro.author.authorName}
-                                            </p>
-
-<!--                                            <div class="rating text-warning d-flex align-items-center">
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                                <svg class="star star-fill">
-                                                <use xlink:href="#star-fill"></use>
-                                                </svg>
-                                            </div>-->
-                                        </div>
-                                        <span class="price text-primary fw-bold mb-2 fs-5">
-
-                                            <fmt:formatNumber value=" ${pro.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-
-
-                                        </span>
-<!--                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                            <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                                                <svg class="cart">
-                                                <use xlink:href="#cart"></use>
-                                                </svg>
-                                            </button>   
-                                            <a href="#" class="btn btn-dark">
-                                                <span>
-                                                    <svg class="wishlist">
-                                                    <use xlink:href="#heart"></use>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </div>-->
-                                    </div>
-                                </a>
-                            </div>
-                        </c:forEach>
-                    </div>
-
-                    <nav class="py-5" aria-label="Page navigation">
-                        <ul class="pagination justify-content-center gap-4">
-                            <!-- Nút Prev -->
-                            <c:choose>
-                                <c:when test="${tag > 1}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag - 1}${query}">Prev</a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item disabled">
-                                        <span class="page-link">Prev</span>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
-                            <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
-                            <c:if test="${end > endP}">
-                                <c:set var="end" value="${endP}" />
-                                <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
-                            </c:if>
-
-                            <c:forEach begin="${start}" end="${end}" var="i">
-                                <li class="page-item ${tag == i ? 'active' : ''}">
-                                    <a class="page-link" href="shop?index=${i}${query}">${i}</a>
-                                </li>
-                            </c:forEach>
-
-                            <!-- Nút Next -->
-                            <c:choose>
-                                <c:when test="${tag < endP}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="shop?index=${tag + 1}${query}">Next</a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item disabled">
-                                        <span class="page-link">Next</span>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-                        </ul>
-                    </nav>
-
-                </main>
-                <aside class="col-md-3">
-                    <div class="sidebar ps-lg-5">
-                        <div class="widget-menu">
-                            <div class="widget-search-bar">
-                                <form class="d-flex border rounded-3 p-2" role="search" method="GET" action="shop">
-                                    <input class="form-control border-0 me-2 py-2" type="search" name="s" placeholder="Search" aria-label="Search">
-                                    <button class="btn rounded-3 p-3 d-flex align-items-center" type="submit">
-                                        <svg class="search text-light" width="18" height="18">
-                                        <use xlink:href="#search"></use>
-                                        </svg>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="filter-box">
-                            <h2>Lọc sản phẩm</h2>
-                            <form action="shop" method="get">
-                                <div class="widget-product-categories pt-5">
-                                    <div class="section-title overflow-hidden mb-2 collapsible">
-                                        <h3 class="d-flex flex-column mb-0">Thể loại</h3>
-                                    </div>
-                                    <div class="content">
-                                        <ul class="product-categories mb-0 sidebar-list list-unstyled">
-                                            <c:forEach items="${category}" var="c">
-                                                <li class="cat-item">
-                                                    <label>
-                                                        <input type="checkbox" name="categoryId" value="${c.categoryId}" 
-                                                               ${selectedCategoryIds.contains(c.categoryId) ? "checked" : ""}> ${c.categoryName}
-                                                    </label>
-                                                </li>
-                                            </c:forEach>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="widget-product-tags pt-5">
-                                    <div class="section-title overflow-hidden mb-2 collapsible">
-                                        <h3 class="d-flex flex-column mb-0">Độ tuổi</h3>
-                                    </div>
-                                    <div class="content">
-                                        <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                            <c:forEach items="${objage}" var="ob">
-                                                <li class="cat-item">
-                                                    <label>
-                                                        <input type="checkbox" name="objage" value="${ob.ageId}" 
-                                                               ${selectedAgeId == ob.ageId ? "checked" : ""} onclick="limitCheckboxSelection(this)"> ${ob.age}
-                                                    </label>
-                                                </li>
-                                            </c:forEach>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="widget-price-filter pt-5">
-                                    <div class="section-title overflow-hidden mb-2 collapsible">
-                                        <h3 class="d-flex flex-column mb-0">Khoảng giá</h3>
-                                    </div>
-                                    <div class="content">
-                                        <ul class="product-tags mb-0 sidebar-list list-unstyled">
-                                            <li class="tags-item">
-                                                <label>
-                                                    <input type="checkbox" name="price_filter" value="lessthan10" 
-                                                           ${"lessthan10".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
-                                                </label>
-                                            </li>
-                                            <li class="tags-item">
-                                                <label>
-                                                    <input type="checkbox" name="price_filter" value="10to20" 
-                                                           ${"10to20".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
-                                                </label>
-                                            </li>
-                                            <li class="tags-item">
-                                                <label>
-                                                    <input type="checkbox" name="price_filter" value="20to30" 
-                                                           ${"20to30".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
-                                                </label>
-                                            </li>
-                                            <li class="tags-item">
-                                                <label>
-                                                    <input type="checkbox" name="price_filter" value="30to40" 
-                                                           ${"30to40".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
-                                                </label>
-                                            </li>
-                                            <li class="tags-item">
-                                                <label>
-                                                    <input type="checkbox" name="price_filter" value="morethan50" 
-                                                           ${"morethan50".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="pt-5 text-center">
-                                    <button type="submit">Lọc</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </aside>
+                </div>
             </div>
         </div>
+        <div class="modal fade" id="updateAddressModal" tabindex="-1" aria-labelledby="updateAddressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateAddressModalLabel">Cập nhật địa chỉ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="address" method="post" id="updateAddressForm">
+                            <input type="hidden" id="updateAction" name="action" value="update">
+                            <input type="hidden" id="updateAccID" name="accID" value="${sessionScope.account.accountId}">
+                            <input type="hidden" id="updateAddressID" name="addressID" value="">
+                            <div class="mb-3">
+                                <label for="updateAddress" class="form-label">Toàn bộ địa chỉ:</label>
+                                <input type="text" class="form-control" id="updateAddress" name="address" readonly required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateCity" class="form-label">Tỉnh/Thành phố:</label>
+                                <select class="form-select form-select-sm mb-3" id="updateCity" name="city" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Tỉnh/Thành phố</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateDistrict" class="form-label">Quận/Huyện:</label>
+                                <select class="form-select form-select-sm mb-3" id="updateDistrict" name="district" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateWard" class="form-label">Phường/Xã:</label>
+                                <select class="form-select form-select-sm" id="updateWard" name="ward" aria-label=".form-select-sm" required>
+                                    <option value="" selected>Chọn Phường/Xã</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateDetailedAddress" class="form-label">Địa chỉ chi tiết:</label>
+                                <input type="text" class="form-control" id="updateDetailedAddress" name="detailedAddress" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updatePhoneNumber" class="form-label">Số điện thoại:</label>
+                                <input type="text" class="form-control" id="updatePhoneNumber" name="phoneNumber" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu địa chỉ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 class="section-title mt-5">Địa chỉ</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Toàn bộ địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="address" items="${addresses}">
+                    <tr>
+                        <td>${address.getAddress()}</td>
+                        <td>${address.getPhoneNumber()}</td>
+                        <td>
+                            <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAddressModal" onclick="openUpdateModal(${address.getAddressID()}, '${address.getAddress()}', '${address.getPhoneNumber()}', ${address.isDefault()})">
+                                Cập nhật
+                            </button>
+                            <form action="address" method="post" style="display:inline;" onsubmit="confirmDelete(event)">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="addressID" value="${address.getAddressID()}">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+<script>
+    var cities = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var updateCities = document.getElementById("updateCity");
+    var updateDistricts = document.getElementById("updateDistrict");
+    var updateWards = document.getElementById("updateWard");
+    var apiUrl = "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json";
+
+    function openAddModal() {
+        document.getElementById('action').value = 'save';
+        document.getElementById('addressID').value = '';
+        document.getElementById('address').value = '';
+        document.getElementById('detailedAddress').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('isDefault').checked = false;
+    }
+
+    function openUpdateModal(addressID, address, phoneNumber, isDefault) {
+        document.getElementById('updateAction').value = 'update';
+        document.getElementById('updateAddressID').value = addressID;
+        document.getElementById('updateAddress').value = address;
+        document.getElementById('updateDetailedAddress').value = address.split(', ').slice(-1)[0];
+        document.getElementById('updatePhoneNumber').value = phoneNumber;
+        document.getElementById('updateIsDefault').checked = isDefault;
+    }
+
+    function fetchCities() {
+        axios.get(apiUrl)
+            .then(function (response) {
+                renderCities(response.data);
+            })
+            .catch(function (error) {
+                console.error("Lỗi khi lấy dữ liệu các Tỉnh/Thành phố:", error);
+            });
+    }
+
+    function renderCities(data) {
+        cities.innerHTML = '<option value="" selected>Chọn Tỉnh/Thành phố</option>';
+        updateCities.innerHTML = '<option value="" selected>Chọn Tỉnh/Thành phố</option>';
+        if (data && data.length > 0) {
+            data.forEach(function (city) {
+                var option = document.createElement('option');
+                option.value = city.Id;
+                option.textContent = city.Name;
+                cities.appendChild(option);
+
+                var updateOption = document.createElement('option');
+                updateOption.value = city.Id;
+                updateOption.textContent = city.Name;
+                updateCities.appendChild(updateOption);
+            });
+        } else {
+            console.error("Không có dữ liệu Tỉnh/Thành phố.");
+        }
+    }
+
+    function fetchDistricts(cityId, isUpdate = false) {
+        axios.get(apiUrl)
+            .then(function (response) {
+                renderDistricts(response.data, cityId, isUpdate);
+            })
+            .catch(function (error) {
+                console.error("Lỗi khi lấy dữ liệu Quận/Huyện:", error);
+            });
+    }
+
+    function renderDistricts(data, cityId, isUpdate) {
+        var districtElement = isUpdate ? updateDistricts : districts;
+        districtElement.innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+        var city = data.find(function (c) {
+            return c.Id == cityId;
+        });
+        if (city && city.Districts && city.Districts.length > 0) {
+            city.Districts.forEach(function (district) {
+                var option = document.createElement('option');
+                option.value = district.Id;
+                option.textContent = district.Name;
+                districtElement.appendChild(option);
+            });
+        } else {
+            console.error("Không có dữ liệu Quận/Huyện cho Tỉnh/Thành phố đã chọn.");
+        }
+    }
+
+    function fetchWards(cityId, districtId, isUpdate = false) {
+        axios.get(apiUrl)
+            .then(function (response) {
+                renderWards(response.data, cityId, districtId, isUpdate);
+            })
+            .catch(function (error) {
+                console.error("Lỗi khi lấy dữ liệu Phường/Xã:", error);
+            });
+    }
+
+    function renderWards(data, cityId, districtId, isUpdate) {
+        var wardElement = isUpdate ? updateWards : wards;
+        wardElement.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        var city = data.find(function (c) {
+            return c.Id == cityId;
+        });
+        if (city && city.Districts && city.Districts.length > 0) {
+            var district = city.Districts.find(function (d) {
+                return d.Id == districtId;
+            });
+            if (district && district.Wards && district.Wards.length > 0) {
+                district.Wards.forEach(function (ward) {
+                    var option = document.createElement('option');
+                    option.value = ward.Id;
+                    option.textContent = ward.Name;
+                    wardElement.appendChild(option);
+                });
+            } else {
+                console.error("Không có dữ liệu Phường/Xã cho Quận/Huyện đã chọn.");
+            }
+        } else {
+            console.error("Không có dữ liệu Quận/Huyện cho Tỉnh/Thành phố đã chọn.");
+        }
+    }
+
+    cities.addEventListener('change', function () {
+        var cityId = this.value;
+        if (cityId) {
+            fetchDistricts(cityId);
+        } else {
+            districts.innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+            wards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        }
+    });
+
+    districts.addEventListener('change', function () {
+        var cityId = cities.value;
+        var districtId = this.value;
+        if (districtId) {
+            fetchWards(cityId, districtId);
+        } else {
+            wards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        }
+    });
+
+    updateCities.addEventListener('change', function () {
+        var cityId = this.value;
+        if (cityId) {
+            fetchDistricts(cityId, true);
+        } else {
+            updateDistricts.innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+            updateWards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        }
+    });
+
+    updateDistricts.addEventListener('change', function () {
+        var cityId = updateCities.value;
+        var districtId = this.value;
+        if (districtId) {
+            fetchWards(cityId, districtId, true);
+        } else {
+            updateWards.innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        }
+    });
+
+    wards.addEventListener('change', updateFullAddress);
+    document.getElementById('detailedAddress').addEventListener('input', updateFullAddress);
+
+    updateWards.addEventListener('change', updateFullAddressUpdate);
+    document.getElementById('updateDetailedAddress').addEventListener('input', updateFullAddressUpdate);
+
+    function updateFullAddress() {
+        var province = cities.options[cities.selectedIndex].text || '';
+        var district = districts.options[districts.selectedIndex].text || '';
+        var ward = wards.options[wards.selectedIndex].text || '';
+        var detailedAddress = document.getElementById('detailedAddress').value.trim();
+
+        var fullAddress = [province, district, ward, detailedAddress].filter(Boolean).join(', ');
+        document.getElementById('address').value = fullAddress;
+    }
+
+    function updateFullAddressUpdate() {
+        var province = updateCities.options[updateCities.selectedIndex].text || '';
+        var district = updateDistricts.options[updateDistricts.selectedIndex].text || '';
+        var ward = updateWards.options[updateWards.selectedIndex].text || '';
+        var detailedAddress = document.getElementById('updateDetailedAddress').value.trim();
+
+        var fullAddress = [province, district, ward, detailedAddress].filter(Boolean).join(', ');
+        document.getElementById('updateAddress').value = fullAddress;
+    }
+
+    function confirmDelete(event) {
+        if (!confirm("Bạn có muốn xóa địa chỉ này không?")) {
+            event.preventDefault();
+        }
+    }
+
+    function resetAddModal() {
+        document.getElementById('city').value = '';
+        document.getElementById('district').innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+        document.getElementById('ward').innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        document.getElementById('address').value = '';
+        document.getElementById('detailedAddress').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('isDefault').checked = false;
+    }
+
+    function resetUpdateModal() {
+        document.getElementById('updateCity').value = '';
+        document.getElementById('updateDistrict').innerHTML = '<option value="" selected>Chọn Quận/Huyện</option>';
+        document.getElementById('updateWard').innerHTML = '<option value="" selected>Chọn Phường/Xã</option>';
+        document.getElementById('updateAddress').value = '';
+        document.getElementById('updateDetailedAddress').value = '';
+        document.getElementById('updatePhoneNumber').value = '';
+        document.getElementById('updateIsDefault').checked = false;
+    }
+
+    document.getElementById('addAddressModal').addEventListener('hidden.bs.modal', function (event) {
+        resetAddModal();
+    });
+
+    document.getElementById('updateAddressModal').addEventListener('hidden.bs.modal', function (event) {
+        resetUpdateModal();
+    });
+
+    function validateAddressForm(form) {
+        var address = form.address.value.trim();
+        var detailedAddress = form.detailedAddress.value.trim();
+        var phoneNumber = form.phoneNumber.value.trim();
+        var phoneNumberPattern = /^[0-9]{10,11}$/;
+
+        if (!detailedAddress || !detailedAddress.replace(/\s/g, '').length) {
+            alert("Địa chỉ chi tiết không được chứa toàn khoảng trắng.");
+            return false;
+        }
+
+        if (!phoneNumberPattern.test(phoneNumber)) {
+            alert("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại gồm 10 hoặc 11 chữ số.");
+            return false;
+        }
+
+        return true;
+    }
+
+    document.getElementById('addAddressForm').addEventListener('submit', function (event) {
+        if (!validateAddressForm(this)) {
+            event.preventDefault();
+        }
+    });
+
+    document.getElementById('updateAddressForm').addEventListener('submit', function (event) {
+        if (!validateAddressForm(this)) {
+            event.preventDefault();
+        }
+    });
+
+    fetchCities();
+</script>
+
+</body>
+
+
+
+
+
 
     <footer id="footer" class="padding-large">
         <div class="container">
@@ -781,4 +974,5 @@
     <script type="text/javascript" src="js/script.js"></script>
 </body>
 
+</body>
 </html>

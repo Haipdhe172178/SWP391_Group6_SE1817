@@ -376,177 +376,177 @@
 
     </header>
 
-<!-- Thông báo thành công -->
+    <!-- Thông báo thành công -->
 
 
-<!-- Cart -->
-<div class="container">
-    <div class="row">
-        <div class="cart-table">
-            <div class="cart-header border-bottom border-top">
-                <div class="row d-flex text-capitalize">
-                    <h4 class="col-lg-1 py-3 m-0"></h4>
-                    <h4 class="col-lg-4 py-3 m-0">Sản phẩm</h4>
-                    <h4 class="col-lg-3 py-3 m-0">Số lượng</h4>
-                    <h4 class="col-lg-4 py-3 m-0">Tổng phụ</h4>
-                </div>
-            </div>
-          
-            <c:forEach items="${cart.items}" var="item">
-                <div class="cart-item border-bottom padding-small" data-product-id="${item.product.productId}">
-                    <div class="row align-items-center">
-                        <div class="col-lg-1 col-md-1">
-                            <input type="checkbox" class="product-select" data-quantity="${item.quantity}" data-price="${item.quantity * item.price}" />
-                        </div>
-                        <div class="col-lg-4 col-md-3">
-                            <div class="cart-info d-flex gap-2 flex-wrap align-items-center">
-                                <div class="col-lg-5">
-                                    <div class="card-image">
-                                        <img src="${pageContext.request.contextPath}/${item.product.imgProduct}" alt="${item.product.name}" class="img-fluid border rounded-3">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card-detail">
-                                        <h5 class="mt-2"><a href="single?productID=${item.product.productId}">${item.product.name}</a></h5>
-                                        <div class="card-price">
-                                            <span class="price text-primary fw-bold mb-2 fs-5" data-currency-usd="${item.price}">
-                                                <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-7">
-                            <div class="row d-flex">
-                                <div class="col-md-6">
-                                    <div class="product-quantity my-2">
-                                        <div class="input-group product-qty align-items-center" style="max-width: 150px;">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus" data-type="minus" data-field="">
-                                                    <svg width="16" height="16">
-                                                        <use xlink:href="#minus"></use>
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                            <input type="text" id="quantity-${item.product.productId}" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required data-price="${item.product.price}">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
-                                                    <svg width="16" height="16">
-                                                        <use xlink:href="#plus"></use>
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="total-price">
-                                        <fmt:setLocale value="vi_VN" />
-                                        <fmt:setBundle basename="resources.application" />
-                                        <fmt:formatNumber var="totalPrice" value="${item.quantity * item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
-                                        <span class="money fs-2 fw-light text-primary" id="total-price-${item.product.productId}">${totalPrice}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-1 col-md-2">
-                            <!-- Xoa gio hang -->
-                            <form action="deletecart" method="post">
-                                <input type="hidden" name="productId" value="${item.product.productId}">
-                                <button type="submit" class="cart-cross-outline">
-                                    <svg width="38" height="38">
-                                        <use xlink:href="#cart-cross-outline"></use>
-                                    </svg>
-                                </button>
-                            </form>
+    <!-- Cart -->
+    <form action="check" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="cart-table">
+                    <div class="cart-header border-bottom border-top">
+                        <div class="row d-flex text-capitalize">
+                            <h4 class="col-lg-1 py-3 m-0"></h4>
+                            <h4 class="col-lg-4 py-3 m-0">Sản phẩm</h4>
+                            <h4 class="col-lg-3 py-3 m-0">Số lượng</h4>
+                            <h4 class="col-lg-4 py-3 m-0">Tổng phụ</h4>
                         </div>
                     </div>
+                    <c:forEach items="${cart.items}" var="item">
+                        <div class="cart-item border-bottom padding-small" data-product-id="${item.product.productId}">
+                            <div class="row align-items-center">
+                                <div class="col-lg-1 col-md-1">
+                                    <!--Chọn sản phẩm-->
+                                    <input type="checkbox" class="product-select" data-quantity="${item.quantity}" data-price="${item.quantity * item.price}" name="selectedItem" value="${item.product.productId},${item.quantity}"/>
+                                </div>
+                                <div class="col-lg-4 col-md-3">
+                                    <div class="cart-info d-flex gap-2 flex-wrap align-items-center">
+                                        <div class="col-lg-5">
+                                            <div class="card-image">
+                                                <img src="${pageContext.request.contextPath}/${item.product.imgProduct}" alt="${item.product.name}" class="img-fluid border rounded-3" style="height: 8rem; width: auto">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="card-detail">
+                                                <h5 class="mt-2" style="font-size: 16px"><a href="single?productID=${item.product.productId}">${item.product.name}</a></h5>
+                                                <div class="card-price">
+                                                    <span class="price text-primary fw-bold mb-2 fs-5" data-currency-usd="${item.price}">
+                                                        <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-7">
+                                    <div class="row d-flex">
+                                        <div class="col-md-6">
+                                            <div class="product-quantity my-2">
+                                                <div class="input-group product-qty align-items-center" style="max-width: 150px;">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus" data-type="minus" data-field="">
+                                                            <svg width="16" height="16">
+                                                            <use xlink:href="#minus"></use>
+                                                            </svg>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" id="quantity-${item.product.productId}" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required data-price="${item.product.price}">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
+                                                            <svg width="16" height="16">
+                                                            <use xlink:href="#plus"></use>
+                                                            </svg>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="total-price">
+                                                <fmt:setLocale value="vi_VN" />
+                                                <fmt:setBundle basename="resources.application" />
+                                                <fmt:formatNumber var="totalPrice" value="${item.quantity * item.price}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0" />
+                                                <span class="money fs-2 fw-light text-primary" id="total-price-${item.product.productId}">${totalPrice}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 col-md-2">
+                                    <!-- Xoa gio hang -->
+                                    <form action="deletecart" method="post">
+                                        <input type="hidden" name="productId" value="${item.product.productId}">
+                                        <button type="submit" class="cart-cross-outline">
+                                            <svg width="38" height="38">
+                                            <use xlink:href="#cart-cross-outline"></use>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-            </c:forEach>
-
-        </div>
-        <div class="cart-totals padding-medium pb-0">
-            <h3 class="mb-3">Tổng thanh toán</h3>
-            <div class="total-price pb-3">
-                <table cellspacing="0" class="table text-capitalize">
-                    <tr class="order-total pt-2 pb-2 border-bottom">
-                        <th>Tổng</th>
-                        <td data-title="Total">
-                            <span class="price-amount amount text-primary ps-5 fw-light">
-                                <bdi>
-                                    <span id="selected-total">0 ₫</span>
-                                </bdi>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="order-total pt-2 pb-2 border-bottom">
-                        <th>Tổng số lượng</th>
-                        <td data-title="Total Quantity">
-                            <span class="price-amount amount text-primary ps-5 fw-light">
-                                <bdi>
-                                    <span id="selected-quantity">0</span>
-                                </bdi>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                <div class="cart-totals padding-medium pb-0">
+                    <h3 class="mb-3">Tổng thanh toán</h3>
+                    <div class="total-price pb-3">
+                        <table cellspacing="0" class="table text-capitalize">
+                            <tr class="order-total pt-2 pb-2 border-bottom">
+                                <th>Tổng</th>
+                                <td data-title="Total">
+                                    <span class="price-amount amount text-primary ps-5 fw-light">
+                                        <bdi>
+                                            <span id="selected-total"></span>
+                                        </bdi>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="order-total pt-2 pb-2 border-bottom">
+                                <th>Tổng số lượng</th>
+                                <td data-title="Total Quantity">
+                                    <span class="price-amount amount text-primary ps-5 fw-light">
+                                        <bdi>
+                                            <span id="selected-quantity">0</span>
+                                        </bdi>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="button-wrap d-flex flex-wrap gap-3">
+                        <button class="btn">Cập nhật giỏ hàng</button>
+                        <a href="shop" class="btn">Tiếp tục mua sắm</a>
+                        <button type="submit" class="btn" name="action" value="cartToCheckout"> Thanh toán</button>
+                    </div>
+                </div>           
             </div>
-            <div class="button-wrap d-flex flex-wrap gap-3">
-                <button class="btn">Cập nhật giỏ hàng</button>
-                <a href="shop" class="btn">Tiếp tục mua sắm</a>
-                <button class="btn">Thanh toán</button>
-            </div>
         </div>
-    </div>
-</div>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const updateCart = (productId, quantity) => {
+                fetch('/cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `productId=${productId}&quantity=${quantity}`
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.querySelector(`#total-price-${productId}`).textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
+                                document.querySelector('#selected-total').textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(data.cartTotal);
+                                document.querySelector('#selected-quantity').textContent = data.totalQuantity;
+                            } else {
+                                alert('Cập nhật giỏ hàng thất bại!');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+            };
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const updateCart = (productId, quantity) => {
-            fetch('/cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `productId=${productId}&quantity=${quantity}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.querySelector(`#total-price-${productId}`).textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(quantity * price);
-                    document.querySelector('#selected-total').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.cartTotal);
-                    document.querySelector('#selected-quantity').textContent = data.totalQuantity;
-                } else {
-                    alert('Cập nhật giỏ hàng thất bại!');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        };
+            document.querySelectorAll('.quantity-left-minus, .quantity-right-plus').forEach(button => {
+                button.addEventListener('click', function () {
+                    const input = this.closest('.product-qty').querySelector('.input-number');
+                    let quantity = parseInt(input.value);
+                    const productId = this.closest('.cart-item').dataset.productId;
 
-        document.querySelectorAll('.quantity-left-minus, .quantity-right-plus').forEach(button => {
-            button.addEventListener('click', function () {
-                const input = this.closest('.product-qty').querySelector('.input-number');
-                let quantity = parseInt(input.value);
-                const productId = this.closest('.cart-item').dataset.productId;
+                    if (this.classList.contains('quantity-left-minus') && quantity > 1) {
+                        quantity--;
+                    } else if (this.classList.contains('quantity-right-plus')) {
+                        quantity++;
+                    }
 
-                if (this.classList.contains('quantity-left-minus') && quantity > 1) {
-                    quantity--;
-                } else if (this.classList.contains('quantity-right-plus')) {
-                    quantity++;
-                }
+                    input.value = quantity;
 
-                input.value = quantity;
+                    const price = parseInt(input.dataset.price);
+                    const totalPriceElement = this.closest('.cart-item').querySelector('.total-price span');
 
-                const price = parseInt(input.dataset.price);
-                const totalPriceElement = this.closest('.cart-item').querySelector('.total-price span');
+                    totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
 
-                totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(quantity * price);
-
-                updateCart(productId, quantity);
+                    updateCart(productId, quantity);
+                });
             });
         });
-    });
 
         function removeItem(productId) {
             fetch('/cart', {

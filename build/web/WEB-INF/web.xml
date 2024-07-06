@@ -109,6 +109,10 @@
         <servlet-class>AdminControllers.UpdateCodeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddressServlet</servlet-name>
+        <servlet-class>Controllers.AddressServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CategoryController</servlet-name>
         <servlet-class>AdminControllers.CategoryController</servlet-class>
     </servlet>
@@ -189,6 +193,7 @@
         <servlet-class>AdminControllers.UpdateController</servlet-class>
     </servlet>
     <servlet>
+
         <servlet-name>OrderStatusControllers</servlet-name>
         <servlet-class>AdminControllers.OrderStatusControllers</servlet-class>
     </servlet>
@@ -198,7 +203,19 @@
     </servlet>
     <servlet>
         <servlet-name>StatisticsOrderControllers</servlet-name>
-        <servlet-class>AdminControllers.StatisticsOrderControllers</servlet-class>
+        <servlet-class>AdminControllers.StatisticsOrderControllers</servlet-class>  
+    </servlet>
+    <servlet>
+         <servlet-name>ProcessCheckoutController</servlet-name>
+        <servlet-class>Controllers.ProcessCheckoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>VNPay.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DatetimeDiscount</servlet-name>
+        <servlet-class>AdminControllers.DatetimeDiscount</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -313,6 +330,10 @@
         <url-pattern>/updatecode</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AddressServlet</servlet-name>
+        <url-pattern>/address</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CategoryController</servlet-name>
         <url-pattern>/category</url-pattern>
     </servlet-mapping>
@@ -399,6 +420,18 @@
     <servlet-mapping>
         <servlet-name>StatisticsOrderControllers</servlet-name>
         <url-pattern>/statisticsorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+         <servlet-name>ProcessCheckoutController</servlet-name>
+        <url-pattern>/processCheckout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DatetimeDiscount</servlet-name>
+        <url-pattern>/datetime</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

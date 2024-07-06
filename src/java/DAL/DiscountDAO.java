@@ -319,7 +319,7 @@ public class DiscountDAO extends DBContext {
                     + "				  order by CodeID\n"
                     + "  offset ?  rows fetch next 3 rows only";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, status1 );
+            stm.setString(1, status1);
             stm.setInt(2, (indexx - 1) * 3);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -339,4 +339,25 @@ public class DiscountDAO extends DBContext {
         return data;
     }
 
+    public boolean UpdateTime(String date_rawid, String date_rawup) {
+        boolean isUpdated = false;
+        try {
+            String stSQL = "UPDATE [dbo].[Time]\n"
+                    + "SET [date] = ?\n"
+                    + "WHERE [date] = ?";
+            PreparedStatement stm = connection.prepareStatement(stSQL);
+
+            stm.setString(1, date_rawup);
+            stm.setString(2, date_rawid);
+            int rowsUpdated = stm.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                isUpdated = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error during update: " + e.getMessage());
+        }
+        return isUpdated;
+    }
 }

@@ -7,62 +7,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <footer id="footer" class="padding-large">
+    <footer id="footer" class="padding-large" style="padding-bottom: 2px">
         <div class="container">
             <div class="row">
                 <div class="footer-top-area">
                     <div class="row d-flex flex-wrap justify-content-between">
                         <div class="col-lg-3 col-sm-6 pb-3">
                             <div class="footer-menu">
-                                <img src="images/anh456.png" alt="logo" class="img-fluid mb-2">
-                                <p>
-                                    "Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
-                                <!--                            <div class="social-links">
-                                                                <ul class="d-flex list-unstyled">
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="facebook">
-                                                                            <use xlink:href="#facebook" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="instagram">
-                                                                            <use xlink:href="#instagram" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="twitter">
-                                                                            <use xlink:href="#twitter" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="linkedin">
-                                                                            <use xlink:href="#linkedin" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">
-                                                                            <svg class="youtube">
-                                                                            <use xlink:href="#youtube" />
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>-->
+                                <img src="${pageContext.request.contextPath}/images/anh456.png" alt="logo" class="img-fluid mb-2">
+                                <p>"Tôi đọc lòi cả mắt và vẫn không đọc được tới một nửa... người ta càng đọc nhiều, người ta càng thấy còn nhiều điều cần phải đọc.” John Adams</p>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-6 pb-3">
                             <div class="footer-menu text-capitalize">
                                 <h5 class="widget-title pb-2">Trang chính</h5>
                                 <ul class="menu-list list-unstyled text-capitalize">
-                                   <li class="menu-item mb-1">
+                                    <li class="menu-item mb-1">
                                         <a href="home">Trang chủ</a>
                                     </li>
                                     <li class="menu-item mb-1">

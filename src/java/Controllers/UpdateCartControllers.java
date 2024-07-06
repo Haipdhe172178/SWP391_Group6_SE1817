@@ -49,16 +49,6 @@ public class UpdateCartControllers extends HttpServlet {
             }
         }
 
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-        if (account != null) {
-            CartDAO cartDao = new CartDAO();
-            cart.setAccountId(account.getAccountId());
-            cartDao.updateCart(cart); // Update cart in database
-        }
-         updateCartCookie(response, cart); 
-        session.setAttribute("cart", cart);
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         Gson gson = new Gson();
