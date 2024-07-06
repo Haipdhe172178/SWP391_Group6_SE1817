@@ -42,13 +42,11 @@ public class AddNewsController extends HttpServlet {
         int topicId = Integer.parseInt(request.getParameter("topicId"));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
-        Part img1Part = request.getPart("img1");
-        Part img2Part = request.getPart("img2");
+        Part imgPart = request.getPart("img");
 
-        String img1Filename = validateAndUploadFile(img1Part, request);
-        String img2Filename = validateAndUploadFile(img2Part, request);
+        String imgFilename = validateAndUploadFile(imgPart, request);
 
-        if (img1Filename == null || img2Filename == null) {
+        if (imgFilename == null) {
             List<Topic> topics = newsDao.getTopic();
             request.setAttribute("topics", topics);
             request.setAttribute("errorMessage", "Invalid image format. Only JPG, PNG, GIF, and WEBP are allowed.");
@@ -62,8 +60,7 @@ public class AddNewsController extends HttpServlet {
         news.setTopic(topic);
         news.setTitle(title);
         news.setContent(content);
-        news.setImgNews1(img1Filename);
-        news.setImgNews2(img2Filename);
+        news.setImgNews(imgFilename);
         news.setDateUpload(java.sql.Date.valueOf(dateUpload));
         news.setSource(source);
         news.setStatus(status);

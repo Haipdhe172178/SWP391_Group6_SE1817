@@ -70,6 +70,14 @@
                     </ul>
                 </li>
                 <li class>
+                    <a class="has-arrow" href="upnews" aria-expanded="false">
+                        <div class="icon_menu">
+                            <img src="img/menu-icon/18.svg" alt>
+                        </div>
+                        <span>Quản lý tin tức</span>
+                    </a>
+                </li>
+                <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/17.svg" alt>

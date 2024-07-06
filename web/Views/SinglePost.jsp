@@ -95,11 +95,9 @@
                                 <h1 class="post-title my-4 text-center">${news.title}</h1>
                                 <div class="hero-image col-lg-12 mb-4 text-center">
                                     <div class="mb-3">
-                                        <img src="${news.imgNews1}" alt="${news.title}" class="img-fluid rounded d-block mx-auto">
+                                        <img src="${news.imgNews}" alt="${news.title}" class="img-fluid rounded d-block mx-auto">
                                     </div>
-                                    <div>
-                                        <img src="${news.imgNews2}" alt="${news.title}" class="img-fluid rounded d-block mx-auto">
-                                    </div>
+                                    
                                 </div>
                                 <div class="text-center mb-4">
                                     <small class="text-muted author-note">Bài đăng được up bởi ShopBook88</small>
