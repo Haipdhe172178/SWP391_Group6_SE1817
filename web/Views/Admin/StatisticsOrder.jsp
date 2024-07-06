@@ -36,17 +36,23 @@
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
-            .chart-container {
-                width: 100%;
-                height: 400px;
+
+            .year-form {
+                margin-bottom: 20px;
+                padding: 10px;
+                background-color: #f7f7f7;
+                border: 1px solid #ddd;
+                border-radius: 5px;
             }
-            .year-select {
-                display: flex;
-                align-items: center;
-            }
-            .year-select label,
-            .year-select select {
+
+            .year-form label {
                 margin-right: 10px;
+                font-weight: bold;
+            }
+
+            .year-form select {
+                padding: 5px;
+                font-size: 14px;
             }
         </style>
     </head>
@@ -59,57 +65,57 @@
                     <div class="row mb-30">
                         <div class="row">
 
-                            <div class="col-lg-8 mb_30">
-                                <div class="white_card card_height_100 mb_30">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">Biểu đồ đơn hàng theo ngày</h3>
-                                            </div>
-                                            <form id="dateRangeForm" method="get" action="statisticsorder" style="display: inline-block;">
-                                                <div class="main-title" style="display: inline-block;">
-                                                    <label for="startDate" style="display: inline-block; margin-left: 10px; margin-right: 5px;">Từ ngày:</label>
-                                                    <input type="date" id="startDate" name="startDate" style="display: inline-block;" value="<%= request.getAttribute("startDate") %>" onchange="updateEndDateMin()">
-                                                <label for="endDate" style="display: inline-block; margin-left: 10px; margin-right: 5px;">Đến ngày:</label>
-                                                <input type="date" id="endDate" name="endDate" style="display: inline-block;" value="<%= request.getAttribute("endDate") %>">
-                                                <button type="submit">Lọc</button>
-                                            </div>
-                                        </form>
+                            <div class="row">
+                                <div class="col-lg-3 mb-30">
+                                    <form id="yearForm1" class="year-form" method="get" action="statisticsorder" onsubmit="return validateDateRange()">
+                                        <div class="form-group">
+                                            <label for="year1">Chọn năm:</label>
+                                            <select id="year1" name="year" onchange="document.getElementById('yearForm1').submit()" class="form-control">
+                                                <option value="2023" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2023) ? "selected" : "" %>>2023</option>
+                                            <option value="2024" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2024) ? "selected" : "" %>>2024</option>
+                                            <option value="2025" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2025) ? "selected" : "" %>>2025</option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="white_card_body">
-                                    <div class="chart-container">
-                                        <canvas id="revenueChartDay"></canvas>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
-                        </div>
-                        <div class="col-lg-4 mb_30">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Biểu đồ đơn hàng theo tháng</h3>
+                            <div class="col-lg-9">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-30">
+                                        <div class="white_card card_height_100 mb-30">
+                                            <div class="white_card_header">
+                                                <div class="box_header m-0">
+                                                    <div class="main-title">
+                                                        <h3 class="m-0">Biểu đồ doanh thu theo tháng</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="white_card_body">
+                                                <div class="chart-container">
+                                                    <canvas id="monthlyRevenueChart"></canvas>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <form id="yearForm" method="get" action="<%= request.getContextPath() %>/statisticsorder" style="display: inline-block;">
-                                            <div class="main-title" style="display: inline-block;">
-                                                <label for="year" style="display: inline-block; margin-left: 10px; margin-right: 5px;">Chọn năm:</label>
-                                                <select id="year" name="year" onchange="document.getElementById('yearForm').submit()" style="display: inline-block;">
-                                                    <option value="2023" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2023) ? "selected" : "" %>>2023</option>
-                                                    <option value="2024" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2024) ? "selected" : "" %>>2024</option>
-                                                    <option value="2025" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2025) ? "selected" : "" %>>2025</option>
-                                                </select>
-                                            </div>
-                                        </form>
                                     </div>
-                                </div>
-                                <div class="white_card_body">
-                                    <div class="chart-container">
-                                        <canvas id="revenueChart"></canvas>
+                                    <div class="col-lg-6 mb-30">
+                                        <div class="white_card card_height_100 mb-30">
+                                            <div class="white_card_header">
+                                                <div class="box_header m-0">
+                                                    <div class="main-title">
+                                                        <h3 class="m-0">Biểu đồ đơn hàng theo tháng</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="white_card_body">
+                                                <div class="chart-container">
+                                                    <canvas id="revenueChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -180,155 +186,107 @@
 
 
         <script>
-                                                    function updateDailyChart() {
-                                                        var ctxDay = document.getElementById('revenueChartDay').getContext('2d');
-                                                        var dailyOrder = <%= new Gson().toJson((int[]) request.getAttribute("dailyOrder")) %>;
-
-                                                        var revenueChartDay = new Chart(ctxDay, {
-                                                            type: 'bar',
-                                                            data: {
-                                                                labels: Array.from({length: dailyOrder.length}, (_, i) => i + 1),
-                                                                datasets: [{
-                                                                        label: 'Tổng số đơn đặt hàng: ' + ${totalOrders},
-                                                                        data: dailyOrder,
-                                                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                                                        borderWidth: 1
-                                                                    }]
-                                                            },
-                                                            options: {
-                                                                responsive: true,
-                                                                plugins: {
-                                                                    legend: {
-                                                                        display: true,
-                                                                        labels: {
-                                                                            color: '#191919',
-                                                                            font: {
-                                                                                size: 14
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    tooltip: {
-                                                                        enabled: true,
-                                                                        backgroundColor: 'rgba(0,0,0,0.7)',
-                                                                        titleFont: {
-                                                                            size: 16,
-                                                                            color: '#fff'
-                                                                        },
-                                                                        bodyFont: {
-                                                                            size: 14,
-                                                                            color: '#fff'
-                                                                        },
-                                                                        callbacks: {
-                                                                            label: function (tooltipItem) {
-                                                                                return 'Đơn đặt hàng: ' + tooltipItem.raw;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                scales: {
-                                                                    x: {
-                                                                        title: {
-                                                                            display: true,
-                                                                            text: '',
-                                                                            color: '#191919',
-                                                                            font: {
-                                                                                size: 16,
-                                                                                weight: 'bold'
-                                                                            }
-                                                                        },
-                                                                        ticks: {
-                                                                            color: '#191919'
-                                                                        }
-                                                                    },
-                                                                    y: {
-                                                                        beginAtZero: true,
-                                                                        title: {
-                                                                            display: true,
-                                                                            text: 'Đơn đặt hàng',
-                                                                            color: '#191919',
-                                                                            font: {
-                                                                                size: 16,
-                                                                                weight: 'bold'
-                                                                            }
-                                                                        },
-                                                                        ticks: {
-                                                                            color: '#191919'
-                                                                        }
-                                                                    }
-                                                                },
-                                                                animation: {
-                                                                    duration: 2000,
-                                                                    easing: 'easeInOutBounce'
+                                                function updateMonthlyCharts() {
+                                                    var ctxMonth = document.getElementById('monthlyRevenueChart').getContext('2d');
+                                                    var monthlyOrderData = <%= new Gson().toJson((int[]) request.getAttribute("monthlyRevenueData")) %>;
+                                                    var revenueChart = new Chart(ctxMonth, {
+                                                        type: 'pie',
+                                                        data: {
+                                                            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                                                            datasets: [{
+                                                                    label: 'Total Orders',
+                                                                    data: monthlyOrderData,
+                                                                    backgroundColor: [
+                                                                        'rgba(255, 99, 132, 0.6)',
+                                                                        'rgba(54, 162, 235, 0.6)',
+                                                                        'rgba(255, 206, 86, 0.6)',
+                                                                        'rgba(75, 192, 192, 0.6)',
+                                                                        'rgba(153, 102, 255, 0.6)',
+                                                                        'rgba(255, 159, 64, 0.6)',
+                                                                        'rgba(199, 199, 199, 0.6)',
+                                                                        'rgba(83, 102, 255, 0.6)',
+                                                                        'rgba(255, 99, 132, 0.6)',
+                                                                        'rgba(54, 162, 235, 0.6)',
+                                                                        'rgba(255, 206, 86, 0.6)',
+                                                                        'rgba(75, 192, 192, 0.6)'
+                                                                    ],
+                                                                    borderColor: 'rgba(255, 255, 255, 1)',
+                                                                    borderWidth: 1
+                                                                }]
+                                                        },
+                                                        options: {
+                                                            scales: {
+                                                                y: {
+                                                                    beginAtZero: true
                                                                 }
                                                             }
-                                                        });
-                                                    }
-
-
-                                                    function updateMonthlyChart() {
-                                                        var ctxMonth = document.getElementById('revenueChart').getContext('2d');
-                                                        var monthlyOrderData = <%= new Gson().toJson((int[]) request.getAttribute("monthlyOrderData")) %>;
-
-                                                        var revenueChart = new Chart(ctxMonth, {
-                                                            type: 'pie',
-                                                            data: {
-                                                                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                                                                datasets: [{
-                                                                        label: 'Total Orders',
-                                                                        data: monthlyOrderData,
-                                                                        backgroundColor: [
-                                                                            'rgba(255, 99, 132, 0.6)',
-                                                                            'rgba(54, 162, 235, 0.6)',
-                                                                            'rgba(255, 206, 86, 0.6)',
-                                                                            'rgba(75, 192, 192, 0.6)',
-                                                                            'rgba(153, 102, 255, 0.6)',
-                                                                            'rgba(255, 159, 64, 0.6)',
-                                                                            'rgba(199, 199, 199, 0.6)',
-                                                                            'rgba(83, 102, 255, 0.6)',
-                                                                            'rgba(255, 99, 132, 0.6)',
-                                                                            'rgba(54, 162, 235, 0.6)',
-                                                                            'rgba(255, 206, 86, 0.6)',
-                                                                            'rgba(75, 192, 192, 0.6)'
-                                                                        ],
-                                                                        borderColor: 'rgba(255, 255, 255, 1)',
-                                                                        borderWidth: 1
-                                                                    }]
-                                                            },
-                                                            options: {
-                                                                scales: {
-                                                                    y: {
-                                                                        beginAtZero: true
-                                                                    }
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-
-                                                    window.onload = function () {
-                                                        updateDailyChart();
-                                                        updateMonthlyChart();
-                                                    };
-
-                                                    function updateEndDateMin() {
-                                                        const startDate = document.getElementById('startDate').value;
-                                                        const endDate = document.getElementById('endDate');
-
-
-                                                        endDate.min = startDate;
-
-
-                                                        if (endDate.value === startDate) {
-                                                            const nextDay = new Date(startDate);
-                                                            nextDay.setDate(nextDay.getDate() + 1);
-                                                            endDate.valueAsDate = nextDay;
                                                         }
-                                                    }
-
-                                                    document.addEventListener('DOMContentLoaded', (event) => {
-                                                        // Initialize endDate min value when the page loads
-                                                        updateEndDateMin();
                                                     });
+                                                }
+
+                                                function updateMonthlyChart() {
+                                                    var ctxMonth = document.getElementById('revenueChart').getContext('2d');
+                                                    var monthlyOrderData = <%= new Gson().toJson((int[]) request.getAttribute("monthlyOrderData")) %>;
+
+                                                    var revenueChart = new Chart(ctxMonth, {
+                                                        type: 'pie',
+                                                        data: {
+                                                            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                                                            datasets: [{
+                                                                    label: 'Total Orders',
+                                                                    data: monthlyOrderData,
+                                                                    backgroundColor: [
+                                                                        'rgba(255, 99, 132, 0.6)',
+                                                                        'rgba(54, 162, 235, 0.6)',
+                                                                        'rgba(255, 206, 86, 0.6)',
+                                                                        'rgba(75, 192, 192, 0.6)',
+                                                                        'rgba(153, 102, 255, 0.6)',
+                                                                        'rgba(255, 159, 64, 0.6)',
+                                                                        'rgba(199, 199, 199, 0.6)',
+                                                                        'rgba(83, 102, 255, 0.6)',
+                                                                        'rgba(255, 99, 132, 0.6)',
+                                                                        'rgba(54, 162, 235, 0.6)',
+                                                                        'rgba(255, 206, 86, 0.6)',
+                                                                        'rgba(75, 192, 192, 0.6)'
+                                                                    ],
+                                                                    borderColor: 'rgba(255, 255, 255, 1)',
+                                                                    borderWidth: 1
+                                                                }]
+                                                        },
+                                                        options: {
+                                                            scales: {
+                                                                y: {
+                                                                    beginAtZero: true
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                }
+
+                                                window.onload = function () {
+                                                    updateMonthlyCharts();
+                                                    updateMonthlyChart();
+                                                };
+
+                                                function updateEndDateMin() {
+                                                    const startDate = document.getElementById('startDate').value;
+                                                    const endDate = document.getElementById('endDate');
+
+
+                                                    endDate.min = startDate;
+
+
+                                                    if (endDate.value === startDate) {
+                                                        const nextDay = new Date(startDate);
+                                                        nextDay.setDate(nextDay.getDate() + 1);
+                                                        endDate.valueAsDate = nextDay;
+                                                    }
+                                                }
+
+                                                document.addEventListener('DOMContentLoaded', (event) => {
+                                                   
+                                                    updateEndDateMin();
+                                                });
 
 
         </script>

@@ -394,7 +394,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StatisticsControllers</servlet-name>
-        <url-pattern>/statistics</url-pattern>
+        <url-pattern>/statistics/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StatisticsOrderControllers</servlet-name>

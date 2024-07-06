@@ -61,8 +61,6 @@ public class StatisticsOrderControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String yearParam = request.getParameter("year");
-        String startDateParam = request.getParameter("startDate");
-        String endDateParam = request.getParameter("endDate");
 
         LocalDate startDate;
         LocalDate endDate;
@@ -72,25 +70,9 @@ public class StatisticsOrderControllers extends HttpServlet {
         } else {
             year = LocalDate.now().getYear();
         }
-        if (startDateParam != null && endDateParam != null) {
-            startDate = LocalDate.parse(startDateParam);
-            endDate = LocalDate.parse(endDateParam);
-        } else {
-            startDate = LocalDate.now().withDayOfMonth(1);
-            endDate = LocalDate.now();
-        }
 
         // Retrieve order data within the date range
         RevenueDAO revenueDAO = new RevenueDAO();
-        List<Revenue> ordersWithCounts = revenueDAO.getOrdersWithCounts(startDate, endDate);
-        int[] dailyOrder = new int[31];
-
-        for (Revenue revenue : ordersWithCounts) {
-            int day = revenue.getOrderDay();
-            int totalOrders = (int) revenue.getTotalRevenue();
-            dailyOrder[day - 1] = totalOrders;
-        }
-        int totalOrders = revenueDAO.getTotalOrdersCount(startDate, endDate);
 
         List<Revenue> monthlyOrderList = revenueDAO.getOrderMonth(year);
         int[] monthlyOrderData = new int[12];
@@ -98,12 +80,17 @@ public class StatisticsOrderControllers extends HttpServlet {
             int revenueMonth = revenue.getOrderMonth();
             monthlyOrderData[revenueMonth - 1] = (int) revenue.getTotalRevenue();
         }
+
+        List<Revenue> monthlyRevenuesList = revenueDAO.getRevenueByYear(year);
+        int[] monthlyRevenueData = new int[12];
+        for (Revenue revenue : monthlyRevenuesList) {
+            int revenueMonth = revenue.getOrderMonth();
+            float totalRevenue = revenue.getTotalRevenue();
+            monthlyRevenueData[revenueMonth - 1] = (int) totalRevenue;
+        }
+        request.setAttribute("monthlyRevenueData", monthlyRevenueData);
         request.setAttribute("monthlyOrderData", monthlyOrderData);
         request.setAttribute("selectedYear", year);
-        request.setAttribute("startDate", startDate);
-        request.setAttribute("endDate", endDate);
-        request.setAttribute("dailyOrder", dailyOrder);
-          request.setAttribute("totalOrders", totalOrders);
 
         request.getRequestDispatcher("/Views/Admin/StatisticsOrder.jsp").forward(request, response);
     }

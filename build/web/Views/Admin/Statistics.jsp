@@ -51,6 +51,7 @@
             .year-select select {
                 margin-right: 10px;
             }
+            
         </style>
     </head>
 
@@ -62,55 +63,54 @@
                 <div class="main_content_iner overly_inner">
                     <div class="row mb-30">
                         <div class="row">
-
-                            <div class="col-lg-8 mb_30">
-                                <div class="white_card card_height_100 mb_30">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">Biểu đồ doanh thu ngày</h3>
-                                            </div>
-                                            <form id="dateRangeForm" method="get" action="statistics" style="display: inline-block;">
+                            <div class="white_card card_height_100 mb_30">
+                                <div class="white_card_header">
+                                    <form id="dateRangeForm" method="get" action="statistics" style="display: inline-block;">
                                                 <div class="main-title" style="display: inline-block;">
                                                     <label for="startDate" style="display: inline-block; margin-left: 10px; margin-right: 5px;">Từ ngày:</label>
                                                     <input type="date" id="startDate" name="startDate" style="display: inline-block;" value="<%= request.getAttribute("startDate") %>" onchange="updateEndDateMin()">
                                                 <label for="endDate" style="display: inline-block; margin-left: 10px; margin-right: 5px;">Đến ngày:</label>
                                                 <input type="date" id="endDate" name="endDate" style="display: inline-block;" value="<%= request.getAttribute("endDate") %>">
-                                                <button type="submit">Lọc</button>
+                                               <button type="submit" class="btn btn-success">Lọc</button>
                                             </div>
                                         </form>
+                                </div>                              
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 mb_30">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Biểu đồ doanh thu ngày</h3>
+                                            </div>                                   
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <div class="chart-container">
                                         <canvas id="revenueChart"></canvas>
+                                        <div><h4 class="crm_number" id="revenue">
+                                       Tổng doanh thu: <fmt:formatNumber value="${totalRevenue}" type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                    </h4></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 mb_30">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Biểu đồ doanh thu theo tháng </h3>
-                                        </div>
-                                        <form id="yearForm" method="get" action="statistics" style="display: inline-block; "onsubmit="return validateDateRange()">
-                                            <div class="main-title" style="display: inline-block;">
-                                                <label for="year" style="display: inline-block; margin-left: 10px; margin-right: 5px;">Chọn năm:</label>
-                                                <select id="year" name="year" onchange="document.getElementById('yearForm').submit()" style="display: inline-block;">
-                                                    <option value="2023" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2023) ? "selected" : "" %>>2023</option>
-                                                    <option value="2024" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2024) ? "selected" : "" %>>2024</option>
-                                                    <option value="2025" <%= request.getAttribute("selectedYear") != null && request.getAttribute("selectedYear").equals(2025) ? "selected" : "" %>>2025</option>
-                                                </select>
-                                            </div>
-                                        </form>
+                         <div class="col-lg-6 mb_30">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Biểu đồ đơn hàng theo ngày</h3>
+                                            </div>                                          
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <div class="chart-container">
-                                        <canvas id="monthlyRevenueChart"></canvas>
+                                        <canvas id="revenueChartOrder"></canvas>
+                                        <div><h4>Tổng số đơn đặt hàng: ${totalOrders}</h4></div>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                                                             data: {
                                                                 labels: Array.from({length: dailyOrder.length}, (_, i) => i + 1),
                                                                 datasets: [{
-                                                                        label: 'Doanh thu: ' + ${totalRevenue},
+                                                                        label: 'Doanh thu',
                                                                         data: dailyOrder,
                                                                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                                                         borderColor: 'rgba(75, 192, 192, 1)',
@@ -214,7 +214,7 @@
                                                                         },
                                                                         bodyFont: {
                                                                             size: 14
-                                                                        }                                                             
+                                                                        }
                                                                     }
                                                                 },
                                                                 scales: {
@@ -255,40 +255,87 @@
                                                             }
                                                         });
                                                     }
+                                                   
+                                                  function updateDailyCharts() {
+                                                        var ctxDay = document.getElementById('revenueChartOrder').getContext('2d');
+                                                        var dailyOrder = <%= new Gson().toJson((int[]) request.getAttribute("dailyOrder")) %>;
 
-                                                    function updateMonthlyChart() {
-                                                        var ctxMonth = document.getElementById('monthlyRevenueChart').getContext('2d');
-                                                        var monthlyOrderData = <%= new Gson().toJson((int[]) request.getAttribute("monthlyRevenueData")) %>;
-                                                        var revenueChart = new Chart(ctxMonth, {
-                                                            type: 'pie',
+                                                        var revenueChartOrder = new Chart(ctxDay, {
+                                                            type: 'bar',
                                                             data: {
-                                                                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                                                                labels: Array.from({length: dailyOrder.length}, (_, i) => i + 1),
                                                                 datasets: [{
-                                                                        label: 'Total Orders',
-                                                                        data: monthlyOrderData,
-                                                                        backgroundColor: [
-                                                                            'rgba(255, 99, 132, 0.6)',
-                                                                            'rgba(54, 162, 235, 0.6)',
-                                                                            'rgba(255, 206, 86, 0.6)',
-                                                                            'rgba(75, 192, 192, 0.6)',
-                                                                            'rgba(153, 102, 255, 0.6)',
-                                                                            'rgba(255, 159, 64, 0.6)',
-                                                                            'rgba(199, 199, 199, 0.6)',
-                                                                            'rgba(83, 102, 255, 0.6)',
-                                                                            'rgba(255, 99, 132, 0.6)',
-                                                                            'rgba(54, 162, 235, 0.6)',
-                                                                            'rgba(255, 206, 86, 0.6)',
-                                                                            'rgba(75, 192, 192, 0.6)'
-                                                                        ],
-                                                                        borderColor: 'rgba(255, 255, 255, 1)',
+                                                                        label: 'Tổng số đơn đặt hàng' ,
+                                                                        data: dailyOrder,
+                                                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                                                        borderColor: 'rgba(75, 192, 192, 1)',
                                                                         borderWidth: 1
                                                                     }]
                                                             },
                                                             options: {
-                                                                scales: {
-                                                                    y: {
-                                                                        beginAtZero: true
+                                                                responsive: true,
+                                                                plugins: {
+                                                                    legend: {
+                                                                        display: true,
+                                                                        labels: {
+                                                                            color: '#191919',
+                                                                            font: {
+                                                                                size: 14
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    tooltip: {
+                                                                        enabled: true,
+                                                                        backgroundColor: 'rgba(0,0,0,0.7)',
+                                                                        titleFont: {
+                                                                            size: 16,
+                                                                            color: '#fff'
+                                                                        },
+                                                                        bodyFont: {
+                                                                            size: 14,
+                                                                            color: '#fff'
+                                                                        },
+                                                                        callbacks: {
+                                                                            label: function (tooltipItem) {
+                                                                                return 'Đơn đặt hàng: ' + tooltipItem.raw;
+                                                                            }
+                                                                        }
                                                                     }
+                                                                },
+                                                                scales: {
+                                                                    x: {
+                                                                        title: {
+                                                                            display: true,
+                                                                            text: '',
+                                                                            color: '#191919',
+                                                                            font: {
+                                                                                size: 16,
+                                                                                weight: 'bold'
+                                                                            }
+                                                                        },
+                                                                        ticks: {
+                                                                            color: '#191919'
+                                                                        }
+                                                                    },
+                                                                    y: {
+                                                                        beginAtZero: true,
+                                                                        title: {
+                                                                            display: true,
+                                                                            text: 'Đơn đặt hàng',
+                                                                            color: '#191919',
+                                                                            font: {
+                                                                                size: 16,
+                                                                                weight: 'bold'
+                                                                            }
+                                                                        },
+                                                                        ticks: {
+                                                                            color: '#191919'
+                                                                        }
+                                                                    }
+                                                                },
+                                                                animation: {
+                                                                    duration: 2000,
+                                                                    easing: 'easeInOutBounce'
                                                                 }
                                                             }
                                                         });
@@ -296,7 +343,7 @@
 
                                                     window.onload = function () {
                                                         updateDailyChart();
-                                                        updateMonthlyChart();
+                                                        updateDailyCharts();
                                                     };
                                                     function updateEndDateMin() {
                                                         const startDate = document.getElementById('startDate').value;
