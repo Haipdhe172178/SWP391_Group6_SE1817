@@ -77,10 +77,7 @@
                     Cảm ơn bạn đã mua hàng tại Shopbook88
                 </div>
                 <a href="${pageContext.request.contextPath}/shop" class="btn">Tiếp tục mua sắm</a>
-                <a href="#" class="btn secondary">Xem chi tiết đơn hàng</a>
             </div>
-
-
         <jsp:include page="../common/footer.jsp"></jsp:include>
 
         <script src="js/jquery-1.11.0.min.js"></script>

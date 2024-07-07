@@ -226,7 +226,7 @@ public class ShopControllers extends HttpServlet {
         request.setAttribute("ListA", list);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
-
+        
         request.getRequestDispatcher("Views/Shop.jsp").forward(request, response);
     }
 
