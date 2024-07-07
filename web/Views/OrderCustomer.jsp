@@ -142,46 +142,40 @@
     </c:when>
     <c:otherwise>
         <table class="table">
-    <thead>
-        <tr>
-            <th>Mã đơn hàng</th>
-            <th>Sản phẩm</th>
-            <th>Tổng giá tiền</th>
-            <th>Tổng số lượng</th>
-            <th>Ngày mua</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="order" items="${orders}">
-            <tr class="clickable-row" data-href="ordercustomerdetail?orderId=${order.orderDetails[0].orderCId}">
-                <td>${order.orderDetails[0].orderCId}</td>
-                <td>
-                    <img src="${order.orderDetails[0].product.imgProduct}" alt="${order.orderDetails[0].product.name}" width="50" height="50"/>
-                    ${order.orderDetails[0].product.name}
-                </td>
-                <td>
-                    <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                </td>
-                <td>${totalQuantity}</td>
-                <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy"/></td>
-                <td>${order.status.statusName}</td>
-                <td>
-                    <c:if test="${order.status == 'Chờ xác nhận' || order.status == 'Đã xác nhận'}">
-                        <form action="ordercustomer" method="post">
-                            <input type="hidden" name="action" value="cancel">
-                            <input type="hidden" name="orderId" value="${order.orderId}">
-                            <textarea name="cancelReason" rows="2" cols="20" placeholder="Nhập lý do hủy"></textarea>
-                            <button type="submit">Hủy đơn hàng</button>
-                        </form>
-                    </c:if>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Sản phẩm</th>
+                    <th>Tổng giá tiền</th>
+                    <th>Ngày mua</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th> <!-- Thêm cột mới cho hành động -->
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="order" items="${orders}">
+                    <tr class="clickable-row" data-href="ordercustomerdetail?orderId=${order.orderDetails[0].orderCId}">
+                        <td>${order.orderDetails[0].orderCId}</td>
+                        <td>${order.orderDetails[0].productId}</td>
+                        <td>
+                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                        </td>
+                        <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy"/></td>
+                        <td>${order.status.statusName}</td>
+                        <td>
+                            <c:if test="${order.status == 'Chờ xác nhận' || order.status == 'Đã xác nhận'}">
+                                <form action="ordercustomer" method="post">
+                                    <input type="hidden" name="action" value="cancel">
+                                    <input type="hidden" name="orderId" value="${order.orderId}">
+                                    <textarea name="cancelReason" rows="2" cols="20" placeholder="Nhập lý do hủy"></textarea>
+                                    <button type="submit">Hủy đơn hàng</button>
+                                </form>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </c:otherwise>
 </c:choose>
 
