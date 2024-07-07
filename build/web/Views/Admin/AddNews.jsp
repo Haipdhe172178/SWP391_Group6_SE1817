@@ -63,36 +63,33 @@
                     <div class="container mt-5">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                Add News
+                                Thêm Tin Tức
                             </div>
                             <div class="card-body">
                                 <form action="AddNewsController" method="POST" enctype="multipart/form-data" class="row g-3" onsubmit="return validateForm()">
                                     <div class="col-md-6">
-                                        <label for="title" class="form-label">Title</label>
+                                        <label for="title" class="form-label">Tiêu Đề</label>
                                         <input type="text" class="form-control" id="title" name="title" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="dateUpload" class="form-label">Date Upload</label>
+                                        <label for="dateUpload" class="form-label">Ngày Đăng Tải</label>
                                         <input type="date" class="form-control" id="dateUpload" name="dateUpload" required>
                                     </div>
                                     <div class="col-12">
-                                        <label for="content" class="form-label">Content</label>
+                                        <label for="content" class="form-label">Nội Dung</label>
                                         <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="img1" class="form-label">Image 1</label>
-                                        <input type="file" class="form-control" id="img1" name="img1" accept="image/jpeg, image/png, image/gif, image/webp" required>
+                                        <label for="img" class="form-label">Ảnh</label>
+                                        <input type="file" class="form-control" id="img" name="img" accept="image/jpeg, image/png, image/gif, image/webp" required>
                                     </div>
+                                    
                                     <div class="col-md-6">
-                                        <label for="img2" class="form-label">Image 2</label>
-                                        <input type="file" class="form-control" id="img2" name="img2" accept="image/jpeg, image/png, image/gif, image/webp" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="source" class="form-label">Source</label>
+                                        <label for="source" class="form-label">Nguồn</label>
                                         <input type="text" class="form-control" id="source" name="source" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="topicId" class="form-label">Topic</label>
+                                        <label for="topicId" class="form-label">Chủ Đề</label>
                                         <select class="form-select" id="topicId" name="topicId" required>
                                         <c:forEach var="topic" items="${topics}">
                                             <option value="${topic.topicId}">${topic.topicName}</option>
@@ -100,10 +97,10 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="status" class="form-label">Status</label>
+                                    <label for="status" class="form-label">Trạng Thái</label>
                                     <select class="form-select" id="status" name="status" required>
-                                        <option value="true">Active</option>
-                                        <option value="false">Inactive</option>
+                                        <option value="true">Hoạt động</option>
+                                        <option value="false">Không hoạt động</option>
                                     </select>
                                 </div>
                                 <div class="col-12">

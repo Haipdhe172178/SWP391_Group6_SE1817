@@ -159,6 +159,31 @@
                         <li class="nav-item">
                             <a class="nav-link active me-4 " href="${pageContext.request.contextPath}/blog">Tin tức</a>
                         </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
+                                <ul class="dropdown-menu animate slide border">
+                                    <li>
+                                        <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="check" class="dropdown-item fw-light">Thanh Toán <span class="badge bg-primary"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="contact" class="dropdown-item fw-light">Liên hệ <span class="badge bg-primary"></span></a>
+                                    </li>
+                                </ul>
+                            </li>
                         <li class="nav-item">
                             <a class="nav-link me-4" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
                         </li>
