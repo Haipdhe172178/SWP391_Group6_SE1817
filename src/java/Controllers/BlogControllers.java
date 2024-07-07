@@ -93,14 +93,15 @@ public class BlogControllers extends HttpServlet {
             listNews = newsDao.getNewsPaginationByTopic(page, id, sort);
             quantity = newsDao.getNewsByCateId(id).size();
         }
-        
+
         //Page cuối cùng
         int endPage = (quantity / 6) + (quantity % 6 == 0 ? 0 : 1);
 
         //Khởi tạo 
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
-        
+        request.setAttribute("active", "news");
+
         request.setAttribute("cate", categorys);
         request.setAttribute("sortNews", sort);
         request.setAttribute("page", page);

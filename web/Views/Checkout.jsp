@@ -106,10 +106,7 @@
                                             <label for="address">Địa chỉ</label>
                                             <input type="text" id="address" name="address" class="form-control mt-1 ps-3 mb-4" required oninput="validateInput('address')">
                                         </div>
-                                        <div class="col-lg-12">
-                                            <label for="fulladdress">Địa chỉ đầy đủ</label>
-                                            <input type="text" id="fulladdress" name="fulladdress" class="form-control mt-1 ps-3 mb-4" readonly>
-                                        </div>
+                                        <input type="hidden" id="fulladdress" name="fulladdress" class="form-control mt-1 ps-3 mb-4" readonly>
                                     </div>
 
                                     <script>
