@@ -213,6 +213,12 @@
         <servlet-class>AdminControllers.DatetimeDiscount</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>OrderCustomer</servlet-name>
+        <servlet-class>Controllers.OrderCustomerControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OderCustomerDetailControllers</servlet-name>
+        <servlet-class>Controllers.OderCustomerDetailControllers</servlet-class>
         <servlet-name>ShippingAddressController</servlet-name>
         <servlet-class>Controllers.ShippingAddressController</servlet-class>
     </servlet>
@@ -433,6 +439,12 @@
         <url-pattern>/datetime</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>OrderCustomer</servlet-name>
+        <url-pattern>/ordercustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OderCustomerDetailControllers</servlet-name>
+        <url-pattern>/ordercustomerdetail</url-pattern>
         <servlet-name>ShippingAddressController</servlet-name>
         <url-pattern>/shippingAddress</url-pattern>
     </servlet-mapping>

@@ -185,25 +185,31 @@
         <script src="js/dashboard_init.js"></script>
         <script src="js/custom.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const searchInput = document.getElementById('searchInput');
-                searchInput.addEventListener('keyup', function () {
-                    const filter = searchInput.value.toLowerCase();
-                    const rows = document.querySelectorAll('#orderTable tbody tr');
-                    rows.forEach(row => {
-                        const cells = row.getElementsByTagName('td');
-                        let match = false;
-                        for (let i = 0; i < cells.length; i++) {
-                            if (cells[i].textContent.toLowerCase().includes(filter)) {
-                                match = true;
-                                break;
-                            }
-                        }
-                        row.style.display = match ? '' : 'none';
-                    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const rows = document.querySelectorAll('#orderTable tbody tr');
+
+        searchInput.addEventListener('keyup', function () {
+            const filter = searchInput.value.trim().toLowerCase();
+
+            rows.forEach(row => {
+                let found = false;
+
+                // Search through each cell in the row
+                Array.from(row.cells).forEach(cell => {
+                    const text = cell.textContent.trim().toLowerCase();
+                    if (text.includes(filter)) {
+                        found = true;
+                    }
                 });
+
+                // Show or hide the row based on search result
+                row.style.display = found ? '' : 'none';
             });
-        </script>
+        });
+    });
+</script>
+
     </body>
 
 </html>

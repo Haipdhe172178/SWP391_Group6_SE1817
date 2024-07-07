@@ -64,76 +64,86 @@
     <body class="crm_body_bg">
         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-            <section class="main_content dashboard_part large_header_bg">
-
+        <section class="main_content dashboard_part large_header_bg">
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
-                <div class="main_content_iner">
-                    <div class="container-fluid p-0">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12">
-                                <div class="white_card card_height_100 mb_30">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">Quản lý tin tức</h3>
-                                            </div>
+            <div class="main_content_iner">
+                <div class="container-fluid p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="white_card card_height_100 mb_30">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">Quản lý tin tức</h3>
                                         </div>
                                     </div>
-                                    <div class="white_card_body">
-                                        <div class="QA_section">
-                                            <div class="white_box_tittle list_header">
-                                                <h4>Tin tức</h4>
-                                                <div class="box_right d-flex lms_block">
-                                                    <div class="serach_field_2">
-                                                        <div class="search_inner">
-                                                            <form action="upnews" method="GET">
-                                                                <div class="search_field">
-                                                                    <input name="s" type="text" placeholder="Search here...">
-                                                                </div>
-                                                                <button type="submit"><img src="img/icon/icon_search.svg" alt="Search"></button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                    <div class="add_button ms-2">
-                                                        <a href="addnews" class="btn_1">Add News</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="QA_table mb_30">
-                                                <table class="table lms_table_active custom_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Tiêu Đề</th>
-                                                            <th>Nội Dung</th>
-                                                            <th>Ngày Đăng Tải</th>
-                                                            <th>Chủ Đề</th>
-                                                            <th>Nguồn</th>
-                                                            <th>Ảnh 1</th>
-                                                            <th>Ảnh 2</th>
-                                                            <th>Trạng Thái</th> 
-                                                            <th>Hành Động</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <c:forEach var="news" items="${listNews}">
-                                                        <tr>
-                                                            <td>${news.newId}</td>
-                                                            <td>${news.title}</td>
-                                                            <td>${fn:substring(news.content, 0, 50)}...</td>
-                                                            <td>${news.dateUpload}</td>
-                                                            <td>${news.topic.topicName}</td>
-                                                            <td>${news.source}</td>
-                                                            <td><img src="${news.imgNews1}" alt="Image 1"></td>
-                                                            <td><img src="${news.imgNews2}" alt="Image 2"></td>
-                                                            <td>${news.status ? 'Active' : 'Inactive'}</td> <!-- Status value -->
-                                                            <td>
-                                                                <a href="fixnews?action=edit&id=${news.newId}" title="Update"><i class="fas fa-edit"></i></a>
-                                                                <a href="fixnews?action=delete&id=${news.newId}" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
+                                </div>
+                                <div class="white_card_body">
+                                    <div class="QA_section">
+                                        <div class="white_box_tittle list_header">
+                                            <h4>Tin tức</h4>
+                                            <div class="box_right d-flex lms_block align-items-center">
+    <div class="serach_field_2">
+        <div class="search_inner">
+            <form action="upnews" method="GET" class="d-flex align-items-center">
+                <div class="search_field me-2">
+                    <input name="s" type="text" class="form-control" placeholder="Tìm kiếm ngay..." value="${searchTerm}">
+                </div>
+                <div class="filter_field d-flex me-2">
+                    <select name="status" class="form-select me-2">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="true" ${status == 'true' ? 'selected' : ''}>Hoạt động</option>
+                        <option value="false" ${status == 'false' ? 'selected' : ''}>Không hoạt động</option>
+                    </select>
+                    <select name="topicId" class="form-select">
+                        <option value="-1">Tất cả chủ đề</option>
+                        <c:forEach var="topic" items="${topics}">
+                            <option value="${topic.topicId}" ${topicId == topic.topicId ? 'selected' : ''}>${topic.topicName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="add_button ms-2">
+        <a href="addnews" class="btn_1 btn btn-success">Thêm Tin Tức</a>
+    </div>
+</div>
+                                        </div>
+                                        <div class="QA_table mb_30">
+                                            <table class="table lms_table_active custom_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Tiêu Đề</th>
+                                                        <th>Nội Dung</th>
+                                                        <th>Ngày Đăng Tải</th>
+                                                        <th>Chủ Đề</th>
+                                                        <th>Nguồn</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Trạng Thái</th>
+                                                        <th>Hành Động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach var="news" items="${listNews}">
+                                                    <tr>
+                                                        <td>${news.newId}</td>
+                                                        <td>${news.title}</td>
+                                                        <td>${fn:substring(news.content, 0, 50)}...</td>
+                                                        <td>${news.dateUpload}</td>
+                                                        <td>${news.topic.topicName}</td>
+                                                        <td>${news.source}</td>
+                                                        <td><img src="${news.imgNews}" alt="Image 1"></td>
+                                                        <td>${news.status ? 'Hoạt động' : 'Không hoạt động'}</td>
+                                                        <td>
+                                                            <a href="fixnews?action=edit&id=${news.newId}" title="Update"><i class="fas fa-edit"></i></a>
+                                                            <a href="fixnews?action=delete&id=${news.newId}" title="Delete" onclick="return confirm('Bạn có muốn xóa tin tức này không?');"><i class="fas fa-trash-alt"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
                                                 </tbody>
                                             </table>
 
@@ -151,7 +161,7 @@
                                                     <!-- Previous Button -->
                                                     <c:if test="${currentPage > 1}">
                                                         <li class="page-item">
-                                                            <a class="page-link" href="upnews?page=${currentPage - 1}&s=${searchTerm}&sortOrder=${sortOrder}" aria-label="Previous">
+                                                            <a class="page-link" href="upnews?page=${currentPage - 1}&s=${searchTerm}&status=${status}&topicId=${topicId}&sortOrder=${sortOrder}" aria-label="Previous">
                                                                 <span aria-hidden="true">Previous</span>
                                                             </a>
                                                         </li>
@@ -160,14 +170,14 @@
                                                     <!-- Page Number Links -->
                                                     <c:forEach begin="${start}" end="${end}" var="i">
                                                         <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                                            <a class="page-link" href="upnews?page=${i}&s=${searchTerm}&sortOrder=${sortOrder}">${i}</a>
+                                                            <a class="page-link" href="upnews?page=${i}&s=${searchTerm}&status=${status}&topicId=${topicId}&sortOrder=${sortOrder}">${i}</a>
                                                         </li>
                                                     </c:forEach>
 
                                                     <!-- Next Button -->
                                                     <c:if test="${currentPage < totalPages}">
                                                         <li class="page-item">
-                                                            <a class="page-link" href="upnews?page=${currentPage + 1}&s=${searchTerm}&sortOrder=${sortOrder}" aria-label="Next">
+                                                            <a class="page-link" href="upnews?page=${currentPage + 1}&s=${searchTerm}&status=${status}&topicId=${topicId}&sortOrder=${sortOrder}" aria-label="Next">
                                                                 <span aria-hidden="true">Next</span>
                                                             </a>
                                                         </li>
