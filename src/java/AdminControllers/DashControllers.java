@@ -6,6 +6,7 @@ package AdminControllers;
 
 import DAL.OrderDao;
 import Models.Account;
+import Models.Order;
 import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.OrderDetailGuest;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -77,15 +79,45 @@ public class DashControllers extends HttpServlet {
         List<OrderGuest> guestOrders = orderDao.getAllOrderGuests();
         int totalQuantity = orderDao.OrderCount();
         float totalRevenue = getTotalRevenue(customerOrders, guestOrders);
+
         List<OrderCustomer> recentCustomerOrders = orderDao.getRecentOrderCustomers();
         List<OrderGuest> recentGuestOrders = orderDao.getRecentOrderGuests();
+
+        List<Order> order = new ArrayList<>();
+        for (OrderCustomer customerOrder : recentCustomerOrders) {
+            Order orders = new Order();
+            orders.setOrderId(customerOrder.getOrderDetails().get(0).getOrderCId());
+            orders.setFullName(customerOrder.getAccount().getFullName());
+            orders.setEmail(customerOrder.getAccount().getEmail());
+            orders.setPhoneNumber(customerOrder.getAccount().getPhoneNumber());
+            orders.setAddress(customerOrder.getAccount().getAddress());
+            orders.setTotalPrice(customerOrder.getTotalPrice());
+            orders.setDate(customerOrder.getDate());
+            orders.setStatusName(customerOrder.getStatus().getStatusName());
+            orders.setOrderType("Khách hàng");
+            order.add(orders);
+        }
+
+        for (OrderGuest guestOrder : recentGuestOrders) {
+            Order orders = new Order();
+            orders.setOrderId(guestOrder.getOrderDetails().get(0).getOrderGId());
+            orders.setFullName(guestOrder.getFullName());
+            orders.setEmail(guestOrder.getEmail());
+            orders.setPhoneNumber(guestOrder.getPhoneNumber());
+            orders.setAddress(guestOrder.getAddress());
+            orders.setTotalPrice(guestOrder.getTotalPrice());
+            orders.setDate(guestOrder.getDate());
+            orders.setStatusName(guestOrder.getStatus().getStatusName());
+            orders.setOrderType("Khách vãng lai");
+            order.add(orders);
+        }
+
         List<Product> mostPurchasedProducts = orderDao.getMostPurchasedProducts();
         List<Map<String, Object>> topBuyers = orderDao.getTopBuyers();
 
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("totalRevenue", totalRevenue);
-        request.setAttribute("recentCustomerOrders", recentCustomerOrders);
-        request.setAttribute("recentGuestOrders", recentGuestOrders);
+        request.setAttribute("recentOrders", order);
         request.setAttribute("acc", account);
         request.setAttribute("mostPurchasedProducts", mostPurchasedProducts);
         request.setAttribute("topBuyers", topBuyers);
@@ -105,13 +137,13 @@ public class DashControllers extends HttpServlet {
         }
 
         // Cập nhật giá trị dựa trên dữ liệu thực tế
-        for (OrderCustomer order : customerOrders) {
-            int statusId = order.getStatus().getStatusId();
+        for (OrderCustomer orderc : customerOrders) {
+            int statusId = orderc.getStatus().getStatusId();
             orderStatusCount.put(statusId, orderStatusCount.get(statusId) + 1);
         }
 
-        for (OrderGuest order : guestOrders) {
-            int statusId = order.getStatus().getStatusId();
+        for (OrderGuest orderg: guestOrders) {
+            int statusId = orderg.getStatus().getStatusId();
             orderStatusCount.put(statusId, orderStatusCount.get(statusId) + 1);
         }
 

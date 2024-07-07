@@ -186,7 +186,7 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Đơn hàng gần đây (Customer)</h3>
+                                            <h3 class="m-0">Đơn hàng gần đây</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -197,23 +197,27 @@
                                                 <tr>
                                                     <th>ID đơn hàng</th>
                                                     <th>Tên</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Địa chỉ</th>
                                                     <th>Tổng giá</th>
                                                     <th>Ngày</th>
                                                     <th>Trạng Thái</th>
-                                                    <th>Hành Động</th>
+                                                    <th>Loại</th>                                                  
                                                 </tr>
                                             </thead>
                                             <tbody id="recentOrders">
-                                                <c:forEach var="order" items="${recentCustomerOrders}">
+                                                <c:forEach var="order" items="${recentOrders}">
                                                     <tr>
-                                                        <td>${order.orderDetails[0].orderCId}</td>
-                                                        <td>${order.account.fullName}</td>
-                                                        <td>${order.totalPrice}</td>
-                                                        <td>${order.date}</td>
-                                                        <td>${order.status.statusName}</td>
+                                                        <td>${order.orderId}</td>
+                                                        <td>${order.fullName}</td>
+                                                        <td>${order.phoneNumber}</td>
+                                                        <td>${order.address}</td>                                                   
                                                         <td>
-                                                            <a href="#" title="View"><i class="fas fa-eye"></i></a>                                                                
+                                                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
                                                         </td>
+                                                        <td>${order.date}</td>
+                                                        <td>${order.statusName}</td>
+                                                        <td>${order.orderType}</td>                                                        
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -226,56 +230,6 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 mb_20">
-                            <div class="white_card card_height_100 mb_20">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Đơn hàng gần đây (Guest)</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="white_card_body QA_section">
-                                    <div class="QA_table">
-                                        <table class="table lms_table_active2 p-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID đơn hàng</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Email</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Tổng giá</th>
-                                                    <th>Ngày</th>
-                                                    <th>Trạng Thái</th>
-                                                    <th>Hành Động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="recentGuestOrders">
-                                                <c:forEach var="order" items="${recentGuestOrders}">
-                                                    <tr>
-                                                        <td>${order.orderDetails[0].orderGId}</td>
-                                                        <td>${order.fullName}</td>
-                                                        <td>${order.email}</td>
-                                                        <td>${order.phoneNumber}</td>
-                                                        <td>${order.address}</td>
-                                                        <td>${order.totalPrice}</td>
-                                                        <td>${order.date}</td>
-                                                        <td>${order.status.statusName}</td>
-                                                        <td>
-                                                            <a href="#" title="View"><i class="fas fa-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                        <div class="view-all-btn">
-                                            <a href="" class="btn_2">Xem tất cả</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>               
                     <div class="row">
                         <div class="col-lg-5 mb_20">
@@ -306,7 +260,9 @@
                                                                 <span class="f_s_14 f_w_400 color_text_1">${p.name}</span>
                                                             </div>
                                                         </td>
-                                                        <td class="f_s_14 f_w_400 color_text_2">${p.price}</td>                                                 
+                                                        <td class="f_s_14 f_w_400 color_text_2">
+                                                            <fmt:formatNumber value="${p.price}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                                        </td>
                                                         <td class="f_s_14 f_w_400 color_text_4">${p.quantity}</td>                            
                                                     </tr>  
                                                 </c:forEach>
@@ -346,7 +302,9 @@
                                                         <td>${buyer.email}</td>
                                                         <td>${buyer.phoneNumber}</td>
                                                         <td>${buyer.address}</td>
-                                                        <td>${buyer.totalSpent}</td>
+                                                        <td>
+                                                            <fmt:formatNumber value="${buyer.totalSpent}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                                        </td>                                                    
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>

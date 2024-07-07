@@ -287,7 +287,7 @@ public class OrderDao extends DBContext {
                 + "WHERE oc.StatusID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, Integer.parseInt(statusId)); // Chuyển đổi statusId từ String sang int
+            ps.setInt(1, Integer.parseInt(statusId)); 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int orderCId = rs.getInt("OrderCID");
