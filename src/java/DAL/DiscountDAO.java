@@ -6,7 +6,6 @@ package DAL;
  */
 import Models.Author;
 import Models.Category;
-import Models.HistoryCoupons;
 import Models.ObjectAge;
 import Models.Product;
 import Models.UsedCoupon;
@@ -360,48 +359,5 @@ public class DiscountDAO extends DBContext {
             System.out.println("Error during update: " + e.getMessage());
         }
         return isUpdated;
-    }
-
-    public UsedCoupon getDiscountByCodeName(String codeName) {
-        String query = "select * from Used_coupon where  CodeName = ?";
-        UsedCoupon coupon = null;
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, codeName);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                coupon = new UsedCoupon();
-                coupon.setCodeId(rs.getInt(1));
-                coupon.setCodeName(rs.getString(2));
-                coupon.setDiscount(rs.getInt(3));
-                coupon.setCouponType(rs.getString(4));
-                coupon.setQuantity(rs.getInt(5));
-                coupon.setStatus(rs.getInt(6));
-            }
-            ps.close();
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return coupon;
-    }
-
-    public boolean checkHistoryCoupon(int accID, int codeID) {
-        String query = "select * from History_coupons where  AccountID = ? AND CodeID = ?";
-        boolean isExisted = false;
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, accID);
-            ps.setInt(2, codeID);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                isExisted = true;
-            }
-            ps.close();
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return isExisted;
     }
 }

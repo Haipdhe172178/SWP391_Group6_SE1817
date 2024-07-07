@@ -148,16 +148,16 @@
                 <div class="offcanvas-body">
                     <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link ${requestScope.active == 'home' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/home">Trang chủ</a>
+                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/home">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ${requestScope.active == 'about' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
+                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ${requestScope.active == 'shop' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/shop">Sản phẩm</a>
+                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/shop">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ${requestScope.active == 'news' ? 'active' : ''} me-4 " href="${pageContext.request.contextPath}/blog">Tin tức</a>
+                            <a class="nav-link active me-4 " href="${pageContext.request.contextPath}/blog">Tin tức</a>
                         </li>
                         <li class="nav-item dropdown">
                                 <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
@@ -185,7 +185,7 @@
                                 </ul>
                             </li>
                         <li class="nav-item">
-                            <a class="nav-link ${requestScope.active == 'contact' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
+                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank"></a>

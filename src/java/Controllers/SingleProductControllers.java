@@ -120,8 +120,7 @@ public class SingleProductControllers extends HttpServlet {
         request.setAttribute("quantitySold", quantitySold);
         request.setAttribute("relatedProduct", listP);
         request.setAttribute("product", product);
-        
-        request.setAttribute("active", "shop");
+
         request.getRequestDispatcher("Views/SingleProduct.jsp").forward(request, response);
     }
 
