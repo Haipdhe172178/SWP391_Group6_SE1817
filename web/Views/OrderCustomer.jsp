@@ -147,6 +147,7 @@
                     <th>Mã đơn hàng</th>
                     <th>Sản phẩm</th>
                     <th>Tổng giá tiền</th>
+                    <th>Tổng số lượng</th>
                     <th>Ngày mua</th>
                     <th>Trạng thái</th>
                     <th>Hành động</th> <!-- Thêm cột mới cho hành động -->
@@ -160,6 +161,7 @@
                         <td>
                             <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
                         </td>
+                        <td>${totalQuantity}</td>
                         <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy"/></td>
                         <td>${order.status.statusName}</td>
                         <td>

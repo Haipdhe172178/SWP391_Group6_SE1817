@@ -74,7 +74,8 @@ public class OrderCustomerControllers extends HttpServlet {
         } else {
             orders = orderDao.getOrderCustomersByAccountIdAndStatus(accountId, status);
         }
-
+        
+        int totalQuantity = orderDao.getTotalQuantityByOrderCId(accountId);
         int all = orderDao.getAllOrderCountForCustomers(accountId);
         int pendingCount = orderDao.getOrderCountByStatusForCustomers(accountId, 1);
         int confirmedCount = orderDao.getOrderCountByStatusForCustomers(accountId, 2);
@@ -82,7 +83,8 @@ public class OrderCustomerControllers extends HttpServlet {
         int completedCount = orderDao.getOrderCountByStatusForCustomers(accountId, 4);
         int canceledCount = orderDao.getOrderCountByStatusForCustomers(accountId, 5);
         boolean noOrders = all == 0 && pendingCount == 0 && confirmedCount == 0 && shippingCount == 0 && completedCount == 0 && canceledCount == 0;
-
+        
+        request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("all", all);
         request.setAttribute("pendingCount", pendingCount);
         request.setAttribute("confirmedCount", confirmedCount);

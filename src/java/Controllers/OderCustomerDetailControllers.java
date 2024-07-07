@@ -6,7 +6,9 @@
 package Controllers;
 
 import DAL.OrderDao;
+import DAL.ProductDao;
 import Models.OrderDetailCustomer;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -54,20 +56,30 @@ public class OderCustomerDetailControllers extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int orderId = Integer.parseInt(request.getParameter("orderId"));
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        // Lấy chi tiết đơn hàng từ cơ sở dữ liệu (sử dụng DAO)
-        OrderDao orderDAO = new OrderDao();
-        List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
+    // Initialize DAOs
+    ProductDao productDAO = new ProductDao();
+    OrderDao orderDAO = new OrderDao();
 
-        // Đặt thông tin chi tiết đơn hàng vào request
-        request.setAttribute("orderDetails", orderDetails);
+    // Get order details from the database
+    List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
 
-        // Chuyển tiếp tới trang JSP để hiển thị thông tin chi tiết đơn hàng
-        request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
+    // For each order detail, retrieve the detailed product information
+    for (OrderDetailCustomer orderDetail : orderDetails) {
+        int productId = orderDetail.getProductId();
+        Product product = productDAO.getProductById(productId);
+        orderDetail.setProduct(product); // Add product details to order detail
     }
+
+    // Set the order details with product information into the request
+    request.setAttribute("orderDetails", orderDetails);
+
+    // Forward to the JSP to display the order details
+    request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
+}
 
     /** 
      * Handles the HTTP <code>POST</code> method.

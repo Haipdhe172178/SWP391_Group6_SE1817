@@ -85,32 +85,39 @@
     <body>
          <jsp:include page="../common/header.jsp"></jsp:include>
 
-<h1>Chi tiết sản phẩm</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Mã đơn hàng</th>
-                <th>Mã sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="detail" items="${orderDetails}">
-                <tr>
-                    <td>${detail.orderCId}</td>
-                    <td>${detail.productId}</td>
-                    <td>${detail.quantity}</td>
-                    <td>
-                        <fmt:formatNumber value="${detail.unitPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                    </td>
-                   
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+<h3>Chi tiết sản phẩm</h3>
+<button>
     <a href="/SWP391/ordercustomer">Quay lại</a>
+</button>
+   <table class="table">
+    <thead>
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="detail" items="${orderDetails}">
+            <tr>
+                <td>${detail.orderCId}</td>
+                <td>
+                    <a href="single?productID=${detail.product.productId}">
+                        <img src="${detail.product.imgProduct}" alt="${detail.product.name}" width="50" height="50"/>
+                        ${detail.product.name}
+                    </a>
+                </td>
+                <td>${detail.quantity}</td>
+                <td>
+                    <fmt:formatNumber value="${detail.unitPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+
 
         <footer class="footer">
             <div class="container">
