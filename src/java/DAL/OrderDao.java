@@ -251,7 +251,6 @@ public class OrderDao extends DBContext {
         return products;
     }
 
-
 //    public List<Map<String, Object>> getTopBuyers() {
 //        List<Map<String, Object>> topBuyers = new ArrayList<>();
 //        String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
@@ -277,7 +276,6 @@ public class OrderDao extends DBContext {
 //        }
 //        return topBuyers;
 //    }
-
     public List<OrderCustomer> getOrdersByStatusForCustomers(String statusId) {
         List<OrderCustomer> orders = new ArrayList<>();
         String query = "SELECT oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, a.FullName, a.Email, a.PhoneNumber, a.Address "
@@ -369,7 +367,6 @@ public class OrderDao extends DBContext {
         return totalOrders;
     }
 
-
     public List<Map<String, Object>> getTopBuyers() {
         List<Map<String, Object>> topBuyers = new ArrayList<>();
         String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
@@ -410,7 +407,7 @@ public class OrderDao extends DBContext {
             if (rowsInserted > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                   orderCID = rs.getInt(1);
+                    orderCID = rs.getInt(1);
                 }
             }
             ps.close();
@@ -440,6 +437,7 @@ public class OrderDao extends DBContext {
 
     public int AddOrderGuest(String fullname, String email, String phoneNumber, String address, Float totalPrice, int statusID, int paymentStatus) {
         String sql = "INSERT INTO OrderGuest(FullName, Email, PhoneNumber, Address, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?,?,?)";
+        int orderGID = -1;
         try {
             PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, fullname);
@@ -450,7 +448,6 @@ public class OrderDao extends DBContext {
             ps.setInt(6, statusID);
             ps.setInt(7, paymentStatus);
             int rowsInserted = ps.executeUpdate();
-            int orderGID = -1;
             if (rowsInserted > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
@@ -458,11 +455,11 @@ public class OrderDao extends DBContext {
                 }
             }
             ps.close();
-            return orderGID;
         } catch (SQLException e) {
             e.printStackTrace();
+            orderGID = -1;
         }
-        return 0;
+        return orderGID;
     }
 
     public void AddOrderGuestDetails(int orderGID, List<Item> listItem) {
@@ -482,18 +479,39 @@ public class OrderDao extends DBContext {
         }
     }
 
-    public boolean AddOrderGuest() {
-
-        return false;
-    }
-
     public static void main(String[] args) {
         OrderDao od = new OrderDao();
-        List<Item> listItem = new ArrayList<>();
-        ProductDao pd = new ProductDao();
-        Product p = pd.getProductById(1);
-        listItem.add(new Item(p, 1, p.getPrice()));
-        int orderGID = od.AddOrderGuest("hai", "haitesst", "0123123", "213231", Float.parseFloat("10"), 1, 1);
-        od.AddOrderGuestDetails(orderGID, listItem);
+        OrderGuest og = od.getOrderByID(46);
+        System.out.println(og.getFullName());
+    }
+
+    public OrderGuest getOrderByID(int orderGID) {
+        String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
+                + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "
+                + "FROM OrderGuest og JOIN StatusOrder so ON og.StatusID = so.StatusID "
+                + "WHERE OrderGID=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderGID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int orderGId = rs.getInt(1);
+                String fullName = rs.getString(2);
+                String email = rs.getString(3);
+                String phoneNumber = rs.getString(4);
+                String address = rs.getString(5);
+                float totalPrice = rs.getFloat(6);
+                Date date = rs.getDate(7);
+                Status status = new Status();
+                status.setStatusId(rs.getInt(8));
+                status.setStatusName(rs.getString(9));
+                List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
+                OrderGuest orderGuest = new OrderGuest(orderDetails, fullName, email, phoneNumber, address, totalPrice, date, status);
+                return orderGuest;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
