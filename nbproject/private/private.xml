@@ -1,64 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>web/Views/Admin/Statistics.jsp</url>
-            <bookmark id="1">
-                <name/>
-                <line>0</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/StatisticsOrder.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/RevenueDAO.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/StatisticsControllers.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/StatisticsOrderControllers.java</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/Statistics.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/Dashboard.jsp</file>
-            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
-=======
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Cart.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/LoginGoogleHandler.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Category.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/AuthorDao.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddProduct.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/CategoryDao.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/UsedCoupon.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/UpdateController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddCategory.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Author.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AuthorControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Dashboard.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AcDetailControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateAuthor.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DiscountController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/ActiveControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Home.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddAuthorControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/CartDAO.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/DataDiscount.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateCategory.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/Product.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Blog.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/CartControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddCategory.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Cart.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddAccount.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/ImageBackground.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateProduct.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/css/style1.css</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/CategoryController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DiscountDAO.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateCode.jsp</file>
->>>>>>> 6ea76be471bc8d6fa8cafe2ce2a390b61e6acf23
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/src/java/Controllers/OrderCustomerControllers.java</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/web/Views/OrderCustomerDetail.jsp</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/src/java/DAL/OrderDao.java</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/src/java/Controllers/OderCustomerDetailControllers.java</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/web/Views/Admin/OrderStatus.jsp</file>
+            <file>file:/C:/Users/admin/Documents/SWPITER3/SWP391_Group6_SE1817/web/Views/OrderCustomer.jsp</file>
         </group>
     </open-files>
 </project-private>

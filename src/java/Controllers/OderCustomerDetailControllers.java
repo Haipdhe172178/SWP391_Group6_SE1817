@@ -60,24 +60,16 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-    // Initialize DAOs
     ProductDao productDAO = new ProductDao();
     OrderDao orderDAO = new OrderDao();
 
-    // Get order details from the database
     List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
-
-    // For each order detail, retrieve the detailed product information
     for (OrderDetailCustomer orderDetail : orderDetails) {
         int productId = orderDetail.getProductId();
         Product product = productDAO.getProductById(productId);
-        orderDetail.setProduct(product); // Add product details to order detail
+        orderDetail.setProduct(product); 
     }
-
-    // Set the order details with product information into the request
     request.setAttribute("orderDetails", orderDetails);
-
-    // Forward to the JSP to display the order details
     request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
 }
 
