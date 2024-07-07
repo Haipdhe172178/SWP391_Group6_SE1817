@@ -662,16 +662,40 @@ public OrderCustomer getOrderCustomerById(int orderId) {
     }
     return orderCustomer;
 }
+public int getTotalQuantityByOrderCId(int orderCId) {
+    int totalQuantity = 0;
+    String query = "SELECT SUM(Quantity) AS TotalQuantity " +
+                   "FROM OrderDetailCustomer " +
+                   "WHERE OrderCID = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1, orderCId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            totalQuantity = rs.getInt("TotalQuantity");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return totalQuantity;
+}
+
 
 
    public static void main(String[] args) {
-        int orderCId = 5; // Thay bằng orderCId bạn muốn kiểm tra
+    int orderCId = 5; // Thay bằng orderCId bạn muốn kiểm tra
 
-        OrderDao dao = new OrderDao();
+    OrderDao dao = new OrderDao();
 
-        // Gọi hàm getOrderDetailCustomers và truyền vào orderCId để lấy danh sách chi tiết đơn hàng
-        List<OrderDetailCustomer> orderDetails = dao.getOrderDetailCustomers(orderCId);
+    // Gọi hàm getTotalQuantityByOrderCId và truyền vào orderCId để lấy tổng số lượng
+    int totalQuantity = dao.getTotalQuantityByOrderCId(orderCId);
 
+    // In ra kết quả
+    System.out.println("Total Quantity for OrderCID " + orderCId + ": " + totalQuantity);
+}
+
+<<<<<<< HEAD
+=======
         // In ra kết quả
         if (orderDetails != null && !orderDetails.isEmpty()) {
             for (OrderDetailCustomer detail : orderDetails) {
@@ -685,4 +709,5 @@ public OrderCustomer getOrderCustomerById(int orderId) {
         }
         return null;
     }
+>>>>>>> 68c6f0f2231b8ff90ef71af5d16fc859ebb162b5
 }
