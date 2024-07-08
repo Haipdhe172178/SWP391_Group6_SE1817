@@ -131,6 +131,17 @@ public class CartDAO extends DBContext {
             e.printStackTrace();
         }
     }
+     
+     public float calculateTotalPrice(Cart cart) {
+    float totalPrice = 0.0f;
+
+    for (Item item : cart.getItems()) {
+        totalPrice += item.getProduct().getPrice() * item.getQuantity();
+    }
+
+    return totalPrice;
+}
+
     public static void main(String[] args) {
         CartDAO cartDAO = new CartDAO();
         int userId = 1; 
