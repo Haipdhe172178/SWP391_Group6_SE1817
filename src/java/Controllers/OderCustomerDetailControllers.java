@@ -5,8 +5,11 @@
 
 package Controllers;
 
+import DAL.AccountDAO;
 import DAL.OrderDao;
 import DAL.ProductDao;
+import Models.Account;
+import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.Product;
 import java.io.IOException;
@@ -55,23 +58,37 @@ public class OderCustomerDetailControllers extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    int orderId = Integer.parseInt(request.getParameter("orderId"));
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-    ProductDao productDAO = new ProductDao();
-    OrderDao orderDAO = new OrderDao();
+        ProductDao productDAO = new ProductDao();
+        OrderDao orderDAO = new OrderDao();
+        AccountDAO accountDAO = new AccountDAO();
 
-    List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
-    for (OrderDetailCustomer orderDetail : orderDetails) {
-        int productId = orderDetail.getProductId();
-        Product product = productDAO.getProductById(productId);
-        orderDetail.setProduct(product); 
+        // Lấy chi tiết đơn hàng
+        List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
+        for (OrderDetailCustomer orderDetail : orderDetails) {
+            int productId = orderDetail.getProductId();
+            Product product = productDAO.getProductById(productId);
+            orderDetail.setProduct(product); 
+        }
+        
+        // Lấy danh sách các đơn hàng
+        List<OrderCustomer> orders = orderDAO.getOrderCustomersByAccountId(orderId); // Thay thế với phương thức thực tế để lấy các đơn hàng theo orderId
+        
+        // Duyệt qua từng đơn hàng
+        for (OrderCustomer order : orders) {
+            int accountId = order.getAccount().getAccountId(); // Giả sử bạn có phương thức getAccountId trong OrderCustomer
+            Account account = accountDAO.getAccountByid(accountId); // Giả sử bạn có phương thức getAccountById trong AccountDAO
+            order.setAccount(account); // Giả sử bạn có phương thức setAccount trong OrderCustomer
+        }
+
+        request.setAttribute("orderDetails", orderDetails);
+        request.setAttribute("orders", orders); // Gán danh sách các đơn hàng vào request
+        request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
     }
-    request.setAttribute("orderDetails", orderDetails);
-    request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
-}
 
     /** 
      * Handles the HTTP <code>POST</code> method.

@@ -6,8 +6,10 @@
 package AdminControllers;
 
 import DAL.AccountDAO;
+import DAL.OrderDao;
 import DAL.RoleDao;
 import Models.Account;
+import Models.OrderCustomer;
 import Models.Role;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,9 +63,12 @@ public class AcDetailControllers extends HttpServlet {
           String accId = request.getParameter("id");
            int accountId = Integer.parseInt(accId);
            RoleDao roleDao = new RoleDao();
+           OrderDao orderDao = new OrderDao();
            List<Role> role = roleDao.getAllRole();
            AccountDAO accountDAO = new AccountDAO();
            Account account = accountDAO.getAccountByid(accountId);
+           List<OrderCustomer> order = orderDao.getOrderCustomersByAccountId(accountId);
+           request.setAttribute("order", order);
            request.setAttribute("role", role);
            request.setAttribute("acc", account);
        request.getRequestDispatcher("Views/Admin/AccountDetail.jsp").forward(request, response);

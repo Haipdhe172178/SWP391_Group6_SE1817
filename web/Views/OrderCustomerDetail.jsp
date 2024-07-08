@@ -93,6 +93,91 @@
             color: #007bff;
             font-weight: bold;
         }
+        .tracking-section {
+            margin: 20px 0;
+        }
+
+        .tracking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tracking-header h4 {
+            margin: 0;
+        }
+
+        .tracking-header button {
+            background-color: #dc3545;
+            border: none;
+            padding: 5px 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .tracking-step {
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .tracking-step:before,
+        .tracking-step:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50%;
+            height: 4px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+
+        .tracking-step:before {
+            left: 0;
+        }
+
+        .tracking-step:after {
+            right: 0;
+        }
+
+        .tracking-step:first-child:before,
+        .tracking-step:last-child:after {
+            display: none;
+        }
+
+        .tracking-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #ddd;
+            border-radius: 50%;
+            display: inline-block;
+            line-height: 30px;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tracking-step.active .tracking-icon {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .tracking-step.cancelled .tracking-icon {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .tracking-step span {
+            display: block;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -104,35 +189,63 @@
         <button>
             <a href="/SWP391/ordercustomer">Quay lại</a>
         </button>
-        <table class="table">
-            <thead>
+        <!-- Tracking Section -->
+    <!-- Tracking Section -->
+    <div class="tracking-section">
+        <div class="tracking-header">
+            <h4>Mã đơn hàng #103485708</h4>
+            <button>Bị hủy</button>
+        </div>
+        <div class="tracking-steps">
+            <div class="tracking-step active">
+                <div class="tracking-icon">1</div>
+                <span>Đang xác nhận</span>
+                <span>05/07/2024 - 00:30</span>
+            </div>
+            <div class="tracking-step active">
+                <div class="tracking-icon">2</div>
+                <span>Đang xử lý</span>
+                <span>...</span>
+            </div>
+            <div class="tracking-step">
+                <div class="tracking-icon">3</div>
+                <span>Đang giao hàng</span>
+                <span>...</span>
+            </div>
+            <div class="tracking-step cancelled">
+                <div class="tracking-icon">4</div>
+                <span>Bị hủy</span>
+                <span>05/07/2024 - 00:31</span>
+            </div>
+        </div>
+        
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="detail" items="${orderDetails}">
                 <tr>
-                    <th>Mã đơn hàng</th>
-                    <th>Sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Đơn giá</th>
+                    <td>${detail.orderCId}</td>
+                    <td>
+                        <a href="single?productID=${detail.product.productId}">
+                            <img src="${detail.product.imgProduct}" alt="${detail.product.name}" width="50" height="50" />
+                            ${detail.product.name}
+                        </a>
+                    </td>
+                    <td>${detail.quantity}</td>
+                    <td>
+                        <fmt:formatNumber value="${detail.unitPrice}" type="number" minFractionDigits="0" maxFractionDigits="0" /> VND
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="detail" items="${orderDetails}">
-                    <tr>
-                        <td>${detail.orderCId}</td>
-                        <td>
-                            <a href="single?productID=${detail.product.productId}">
-                                <img src="${detail.product.imgProduct}" alt="${detail.product.name}" width="50"
-                                    height="50" />
-                                ${detail.product.name}
-                            </a>
-                        </td>
-                        <td>${detail.quantity}</td>
-                        <td>
-                            <fmt:formatNumber value="${detail.unitPrice}" type="number" minFractionDigits="0"
-                                maxFractionDigits="0" /> VND
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+            </c:forEach>
+        </tbody>
+    </table>
     </div>
 
     <footer class="footer">
