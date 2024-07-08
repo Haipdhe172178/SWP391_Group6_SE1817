@@ -8,28 +8,25 @@ import DAL.CategoryDao;
 import DAL.ProductDao;
 import DAL.ShipAddressDAO;
 import Models.Account;
-import Models.Cart;
 import Models.Category;
 import Models.Item;
 import Models.Product;
+import Models.ShipAddress;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author huyca
+ * @author Hai Pham
  */
-public class CheckoutControllers extends HttpServlet {
+public class ShippingAddressController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,10 +45,10 @@ public class CheckoutControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckoutControllers</title>");
+            out.println("<title>Servlet ShippingAddressController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckoutControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShippingAddressController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -83,34 +80,35 @@ public class CheckoutControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("fulladdress");
+        int accID = Integer.parseInt(request.getParameter("accID"));
+        String addressID = request.getParameter("addressID");
+        String action = request.getParameter("action");
+        boolean isDefault = false;
+        ShipAddressDAO shipAddressDao = new ShipAddressDAO();
+
+        //xử lí address
+        if (action.equals("add")) {
+            ShipAddress newAddress = new ShipAddress(accID, address, phone, isDefault);
+            shipAddressDao.addShippingAddress(newAddress);
+        } else if (action.equals("update")) {
+
+            ShipAddress shipAddress = new ShipAddress(Integer.parseInt(addressID), accID, address, phone, isDefault);
+            shipAddressDao.updateShippingAddress(shipAddress);
+        }
+        request.setAttribute("listAddress", shipAddressDao.getUserAddress(accID));
+
+        //get lại items
+        String[] selectedProduct = request.getParameterValues("items");
         List<Item> listToCheckout = new ArrayList<>();
         ProductDao pDao = new ProductDao();
-        String action = request.getParameter("action");
 
-        if (action.equals("cartToCheckout")) {
-            String[] selectedProduct = request.getParameterValues("selectedItem");
-            if (selectedProduct != null) {
-                for (String selectedP : selectedProduct) {
-                    String[] product = selectedP.split(",");
-                    Product p = pDao.getProductById(Integer.parseInt(product[0]));
-                    Item i = new Item(p, Integer.parseInt(product[1]), p.getPrice());
-                    listToCheckout.add(i);
-                }
-            }
-
-        } else if (action.equals("singleToCheckout")) {
-            int productID = Integer.parseInt(request.getParameter("productId"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            Product p = pDao.getProductById(productID);
-            Item i = new Item(p, quantity, p.getPrice());
+        for (String selectedP : selectedProduct) {
+            String[] product = selectedP.split(",");
+            Product p = pDao.getProductById(Integer.parseInt(product[0]));
+            Item i = new Item(p, Integer.parseInt(product[1]), p.getPrice());
             listToCheckout.add(i);
-        }
-
-        //login will have shipping address 
-        Account account = (Account) request.getSession().getAttribute("account");
-        if (account != null) {
-            ShipAddressDAO shipAddressDao = new ShipAddressDAO();
-            request.setAttribute("listAddress", shipAddressDao.getUserAddress(account.getAccountId()));
         }
 
         request.setAttribute("listItem", listToCheckout);
@@ -119,6 +117,14 @@ public class CheckoutControllers extends HttpServlet {
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
         request.getRequestDispatcher("Views/Checkout.jsp").forward(request, response);
+    }
+
+    private double getTotalAmount(List<Item> listItem) {
+        double total = 0;
+        for (Item item : listItem) {
+            total += item.getPrice() * item.getQuantity();
+        }
+        return total;
     }
 
     /**
@@ -131,25 +137,4 @@ public class CheckoutControllers extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private double getTotalAmount(List<Item> listItem) {
-        double total = 0;
-        for (Item item : listItem) {
-            total += item.getPrice() * item.getQuantity();
-        }
-        return total;
-    }
-
-    private String getCartDataFromCookie(HttpServletRequest request) {
-        String cartData = "";
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("cart")) {
-                    cartData = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
-                    break;
-                }
-            }
-        }
-        return cartData;
-    }
 }

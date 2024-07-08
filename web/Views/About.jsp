@@ -345,7 +345,6 @@
                                         </ul>
                                         <div class="d-flex flex-wrap justify-content-center">
                                             <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
-                                            <a href="checkout" class="w-100 btn btn-primary" type="submit">Go to checkout</a>
                                         </div>
                                     </div>
                                 </li>
