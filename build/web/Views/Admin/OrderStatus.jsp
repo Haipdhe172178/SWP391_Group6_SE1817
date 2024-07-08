@@ -84,7 +84,7 @@
                                 <div class="white_card_body QA_section">
                                     <div class="search-box">
                                         <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm...">
-                                    </div>
+                                    </div>                                   
                                     <div class="QA_table table-container scrollable-table">
                                         <table class="table lms_table_active2 p-0" id="orderTable">
                                             <thead>
@@ -94,38 +94,32 @@
                                                     <th>Email</th>
                                                     <th>Số điện thoại</th>
                                                     <th>Địa chỉ</th>
-                                                    <th>Tổng giá</th>
-                                                    <th>Ngày</th>
+                                                    <th data-sort="totalPrice" style="cursor: pointer; color: black">
+                                                        Tổng giá <i class="fas fa-sort" style="margin-left: 5px;"></i>
+                                                    </th>
+                                                    <th data-sort="date" style="cursor: pointer; color: black">
+                                                        Ngày <i class="fas fa-sort" style="margin-left: 5px;"></i>
+                                                    </th>
+
                                                     <th>Trạng thái</th>
+                                                    <th>Loại</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
-                                                <c:forEach var="order" items="${customerOrders}">
+                                                <c:forEach var="order" items="${recentOrders}">
                                                     <tr>
-                                                        <td>${order.orderDetails[0].orderCId}</td>
-                                                        <td>${order.account.fullName}</td>
-                                                        <td>${order.account.email}</td>
-                                                        <td>${order.account.phoneNumber}</td>
-                                                        <td>${order.account.address}</td>
-                                                        <td>
-                                                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                                        </td>
-                                                        <td><fmt:formatDate value="${order.date}" pattern="yyyy-MM-dd"/></td>
-                                                        <td>${order.status.statusName}</td>
-                                                    </tr>
-                                                </c:forEach>
-                                                <c:forEach var="order" items="${guestOrders}">
-                                                    <tr>
-                                                        <td>${order.orderDetails[0].orderGId}</td>
+                                                        <td>${order.orderId}</td>
                                                         <td>${order.fullName}</td>
-                                                        <td>${order.email}</td>
-                                                        <td>${order.phoneNumber}</td>
-                                                        <td>${order.address}</td>
+                                                        <td>${order.email != null ? order.email : 'N/A'}</td>
+                                                        <td>${order.phoneNumber != null ? order.phoneNumber : 'N/A'}</td>
+                                                        <td>${order.address != null ? order.address : 'N/A'}</td>
                                                         <td>
                                                             <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
                                                         </td>
                                                         <td><fmt:formatDate value="${order.date}" pattern="yyyy-MM-dd"/></td>
-                                                        <td>${order.status.statusName}</td>
+                                                        <td>${order.statusName}</td>
+                                                        <td>${order.orderType}</td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -135,6 +129,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -206,9 +201,45 @@
                 // Show or hide the row based on search result
                 row.style.display = found ? '' : 'none';
             });
-        });
-    });
-</script>
+
+
+            $(document).ready(function () {
+                $("th[data-sort]").click(function () {
+                    var column = $(this).data("sort");
+                    var order = $(this).hasClass("asc") ? "desc" : "asc";
+                    $("th[data-sort]").removeClass("asc desc");
+                    $(this).addClass(order);
+                    sortTable(column, order);
+                });
+
+                function sortTable(column, order) {
+                    var rows = $("#orderTable tbody tr").get();
+
+                    rows.sort(function (rowA, rowB) {
+                        var valueA = $(rowA).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
+                        var valueB = $(rowB).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
+
+                        if (column === "totalPrice") {
+                            valueA = parseFloat(valueA.replace(/[^\d.-]/g, ''));
+                            valueB = parseFloat(valueB.replace(/[^\d.-]/g, ''));
+                        } else if (column === "date") {
+                            valueA = new Date(valueA);
+                            valueB = new Date(valueB);
+                        }
+
+                        if (order === "asc") {
+                            return valueA > valueB ? 1 : -1;
+                        } else {
+                            return valueA < valueB ? 1 : -1;
+                        }
+                    });
+                    $.each(rows, function (index, row) {
+                        $("#orderTable tbody").append(row);
+                    });
+                }
+            });
+        </script>
+
 
     </body>
 

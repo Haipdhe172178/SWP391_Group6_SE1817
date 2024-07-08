@@ -34,6 +34,14 @@
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
+             .scrollable-table {
+                max-height: 500px;
+                overflow-y: auto;
+            }
+            .table-container {
+                width: 100%;
+                display: block;
+            }
             .view-all-btn {
                 display: flex;
                 justify-content: flex-end;
@@ -101,21 +109,7 @@
                 <div class="main_content_iner overly_inner">
                     <div class="container-fluid p-0">
 
-                        <div class="row">
-                            <div class="col-lg-4 card_height_100 mb_20">
-                                <div class="white_card card_height_100 mb_20">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">Số Lượng tài khoản khách hàng</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="white_card_body">
-                                        <h2 class="crm_number" id="totalAccounts">${acc.size()}</h2>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="row">                          
                         <div class="col-lg-4 card_height_100 mb_20">
                             <div class="white_card card_height_100 mb_20">
                                 <div class="white_card_header">
@@ -186,96 +180,51 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Đơn hàng gần đây (Customer)</h3>
+                                            <h3 class="m-0">Đơn hàng</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
-                                    <div class="QA_table">
-                                        <table class="table lms_table_active2 p-0">
+                                     <div class="QA_table table-container scrollable-table">
+                                        <table class="table lms_table_active2 p-0" id="orderTable">
                                             <thead>
                                                 <tr>
                                                     <th>ID đơn hàng</th>
                                                     <th>Tên</th>
-                                                    <th>Tổng giá</th>
-                                                    <th>Ngày</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th data-sort="totalPrice" style="cursor: pointer; color: black">
+                                                        Tổng giá <i class="fas fa-sort" style="margin-left: 5px;"></i>
+                                                    </th>
+                                                    <th data-sort="date" style="cursor: pointer; color: black">
+                                                        Ngày <i class="fas fa-sort" style="margin-left: 5px;"></i>
+                                                    </th>
                                                     <th>Trạng Thái</th>
-                                                    <th>Hành Động</th>
+                                                    <th>Loại</th>                                                  
                                                 </tr>
                                             </thead>
                                             <tbody id="recentOrders">
-                                                <c:forEach var="order" items="${recentCustomerOrders}">
+                                                <c:forEach var="order" items="${recentOrders}">
                                                     <tr>
-                                                        <td>${order.orderDetails[0].orderCId}</td>
-                                                        <td>${order.account.fullName}</td>
-                                                        <td>${order.totalPrice}</td>
-                                                        <td>${order.date}</td>
-                                                        <td>${order.status.statusName}</td>
+                                                        <td>${order.orderId}</td>
+                                                        <td>${order.fullName}</td>
+                                                        <td>${order.phoneNumber}</td>
+                                                        <td>${order.address}</td>                                                   
                                                         <td>
-                                                            <a href="#" title="View"><i class="fas fa-eye"></i></a>                                                                
+                                                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
                                                         </td>
+                                                        <td>${order.date}</td>
+                                                        <td>${order.statusName}</td>
+                                                        <td>${order.orderType}</td>                                                        
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
                                         </table>
-                                        <div class="view-all-btn">
-                                            <a href="" class="btn_2">Xem tất cả</a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-12 mb_20">
-                            <div class="white_card card_height_100 mb_20">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Đơn hàng gần đây (Guest)</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="white_card_body QA_section">
-                                    <div class="QA_table">
-                                        <table class="table lms_table_active2 p-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID đơn hàng</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Email</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Tổng giá</th>
-                                                    <th>Ngày</th>
-                                                    <th>Trạng Thái</th>
-                                                    <th>Hành Động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="recentGuestOrders">
-                                                <c:forEach var="order" items="${recentGuestOrders}">
-                                                    <tr>
-                                                        <td>${order.orderDetails[0].orderGId}</td>
-                                                        <td>${order.fullName}</td>
-                                                        <td>${order.email}</td>
-                                                        <td>${order.phoneNumber}</td>
-                                                        <td>${order.address}</td>
-                                                        <td>${order.totalPrice}</td>
-                                                        <td>${order.date}</td>
-                                                        <td>${order.status.statusName}</td>
-                                                        <td>
-                                                            <a href="#" title="View"><i class="fas fa-eye"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                        <div class="view-all-btn">
-                                            <a href="" class="btn_2">Xem tất cả</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>               
                     <div class="row">
                         <div class="col-lg-5 mb_20">
@@ -283,12 +232,12 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Sản phẩm bán chạy</h3>
+                                            <h3 class="m-0">Lượt mua sản phẩm</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
-                                    <div class="QA_table">
+                                      <div class="QA_table table-container scrollable-table">
                                         <table class="table lms_table_active2 p-0">
                                             <thead>
                                                 <tr>
@@ -306,7 +255,9 @@
                                                                 <span class="f_s_14 f_w_400 color_text_1">${p.name}</span>
                                                             </div>
                                                         </td>
-                                                        <td class="f_s_14 f_w_400 color_text_2">${p.price}</td>                                                 
+                                                        <td class="f_s_14 f_w_400 color_text_2">
+                                                            <fmt:formatNumber value="${p.price}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                                        </td>
                                                         <td class="f_s_14 f_w_400 color_text_4">${p.quantity}</td>                            
                                                     </tr>  
                                                 </c:forEach>
@@ -323,7 +274,7 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Top Người Mua Hàng Nhiều Nhất</h3>
+                                            <h3 class="m-0">Người Mua Hàng Nhiều Nhất</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -346,7 +297,9 @@
                                                         <td>${buyer.email}</td>
                                                         <td>${buyer.phoneNumber}</td>
                                                         <td>${buyer.address}</td>
-                                                        <td>${buyer.totalSpent}</td>
+                                                        <td>
+                                                            <fmt:formatNumber value="${buyer.totalSpent}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                                        </td>                                                    
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -419,7 +372,43 @@
         <script src="vendors/chart_am/chart-custom.js"></script>
         <script src="js/dashboard_init.js"></script>
         <script src="js/custom.js"></script>
+        <script>
+             $(document).ready(function () {
+                $("th[data-sort]").click(function () {
+                    var column = $(this).data("sort");
+                    var order = $(this).hasClass("asc") ? "desc" : "asc";
+                    $("th[data-sort]").removeClass("asc desc");
+                    $(this).addClass(order);
+                    sortTable(column, order);
+                });
 
+                function sortTable(column, order) {
+                    var rows = $("#orderTable tbody tr").get();
+
+                    rows.sort(function (rowA, rowB) {
+                        var valueA = $(rowA).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
+                        var valueB = $(rowB).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
+
+                        if (column === "totalPrice") {
+                            valueA = parseFloat(valueA.replace(/[^\d.-]/g, ''));
+                            valueB = parseFloat(valueB.replace(/[^\d.-]/g, ''));
+                        } else if (column === "date") {
+                            valueA = new Date(valueA);
+                            valueB = new Date(valueB);
+                        }
+
+                        if (order === "asc") {
+                            return valueA > valueB ? 1 : -1;
+                        } else {
+                            return valueA < valueB ? 1 : -1;
+                        }
+                    });
+                    $.each(rows, function (index, row) {
+                        $("#orderTable tbody").append(row);
+                    });
+                }
+            });
+        </script>
     </body>
 
 </html>

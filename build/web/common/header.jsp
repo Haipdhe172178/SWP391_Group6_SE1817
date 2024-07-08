@@ -148,44 +148,44 @@
                 <div class="offcanvas-body">
                     <ul id="navbar" class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/home">Trang chủ</a>
+                            <a class="nav-link ${requestScope.active == 'home' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/home">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
+                            <a class="nav-link ${requestScope.active == 'about' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/shop">Sản phẩm</a>
+                            <a class="nav-link ${requestScope.active == 'shop' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/shop">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active me-4 " href="${pageContext.request.contextPath}/blog">Tin tức</a>
+                            <a class="nav-link ${requestScope.active == 'news' ? 'active' : ''} me-4 " href="${pageContext.request.contextPath}/blog">Tin tức</a>
                         </li>
                         <li class="nav-item dropdown">
-                                <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
-                                <ul class="dropdown-menu animate slide border">
-                                    <li>
-                                        <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
-                                    </li>
+                            <a class="nav-link me-4 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Trang</a>
+                            <ul class="dropdown-menu animate slide border">
+                                <li>
+                                    <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
+                                </li>
+                                <li>
+                                    <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
+                                </li>
 
-                                    <li>
-                                        <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="check" class="dropdown-item fw-light">Thanh Toán <span class="badge bg-primary"></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
-                                    </li>
+                                <li>
+                                    <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
+                                </li>
+                                <li>
+                                    <a href="check" class="dropdown-item fw-light">Thanh Toán <span class="badge bg-primary"></span></a>
+                                </li>
+                                <li>
+                                    <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
+                                </li>
 
-                                    <li>
-                                        <a href="contact" class="dropdown-item fw-light">Liên hệ <span class="badge bg-primary"></span></a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li>
+                                    <a href="contact" class="dropdown-item fw-light">Liên hệ <span class="badge bg-primary"></span></a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link me-4" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
+                            <a class="nav-link ${requestScope.active == 'contact' ? 'active' : ''} me-4" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-decoration-underline me-4" href="https://templatesjungle.gumroad.com/l/bookly-bookstore-ecommerce-bootstrap-html-css-website-template" target="_blank"></a>
@@ -223,7 +223,7 @@
                                     </li>
                                 </c:otherwise>
                             </c:choose>
-                            
+
                             <li class="cart-dropdown dropdown">
                                 <a href="${pageContext.request.contextPath}/cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <svg class="cart">
@@ -261,7 +261,6 @@
                                     </ul>
                                     <div class="d-flex flex-wrap justify-content-center">
                                         <a href="${pageContext.request.contextPath}/cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
-                                        <a href="${pageContext.request.contextPath}/checkout" class="w-100 btn btn-primary" type="submit">Go to checkout</a>
                                     </div>
                                 </div>
                             </li>

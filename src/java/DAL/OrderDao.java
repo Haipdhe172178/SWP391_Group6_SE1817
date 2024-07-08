@@ -161,7 +161,7 @@ public class OrderDao extends DBContext {
 
     public List<OrderCustomer> getRecentOrderCustomers() {
         List<OrderCustomer> listOrderCustomers = new ArrayList<>();
-        String query = "SELECT TOP 5 oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, "
+        String query = "SELECT oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, "
                 + "a.FullName, a.Email, a.PhoneNumber, a.Address "
                 + "FROM OrderCustomer oc "
                 + "JOIN StatusOrder s ON oc.StatusID = s.StatusID "
@@ -195,7 +195,7 @@ public class OrderDao extends DBContext {
 
     public List<OrderGuest> getRecentOrderGuests() {
         List<OrderGuest> listOrderGuests = new ArrayList<>();
-        String query = "SELECT TOP 5 og.OrderGID,og.FullName,og.Email,"
+        String query = "SELECT og.OrderGID,og.FullName,og.Email,"
                 + "og.PhoneNumber,og.Address , og.TotalPrice, og.Date, og.StatusID ,s.StatusName\n"
                 + "  FROM OrderGuest og\n"
                 + "  Join StatusOrder s On s.StatusID = og.StatusID\n"
@@ -226,13 +226,14 @@ public class OrderDao extends DBContext {
 
     public List<Product> getMostPurchasedProducts() {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT TOP 5 p.ProductID, p.Name, p.Price, p.imgProduct, "
-                + "(COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) AS TotalQuantity "
-                + "FROM Product p "
-                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID "
-                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID "
-                + "GROUP BY p.ProductID, p.Name, p.Price, p.imgProduct "
-                + "ORDER BY TotalQuantity DESC";
+        String query = "SELECT p.ProductID, p.Name, p.Price, p.imgProduct, \n"
+                + "       (COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) AS TotalQuantity \n"
+                + "FROM Product p \n"
+                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID \n"
+                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID \n"
+                + "GROUP BY p.ProductID, p.Name, p.Price, p.imgProduct\n"
+                + "HAVING (COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) > 0\n"
+                + "ORDER BY TotalQuantity DESC;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -285,7 +286,7 @@ public class OrderDao extends DBContext {
                 + "WHERE oc.StatusID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, Integer.parseInt(statusId)); // Chuyển đổi statusId từ String sang int
+            ps.setInt(1, Integer.parseInt(statusId));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int orderCId = rs.getInt("OrderCID");
@@ -369,7 +370,7 @@ public class OrderDao extends DBContext {
 
     public List<Map<String, Object>> getTopBuyers() {
         List<Map<String, Object>> topBuyers = new ArrayList<>();
-        String query = "SELECT Top 5 a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
+        String query = "SELECT a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
                 + "FROM Account a "
                 + "JOIN OrderCustomer oc ON a.AccountID = oc.AccountID "
                 + "GROUP BY a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address "
