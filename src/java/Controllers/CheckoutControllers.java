@@ -6,6 +6,7 @@ package Controllers;
 
 import DAL.CategoryDao;
 import DAL.ProductDao;
+import DAL.ShipAddressDAO;
 import Models.Account;
 import Models.Cart;
 import Models.Category;
@@ -103,6 +104,13 @@ public class CheckoutControllers extends HttpServlet {
             Product p = pDao.getProductById(productID);
             Item i = new Item(p, quantity, p.getPrice());
             listToCheckout.add(i);
+        }
+
+        //login will have shipping address 
+        Account account = (Account) request.getSession().getAttribute("account");
+        if (account != null) {
+            ShipAddressDAO shipAddressDao = new ShipAddressDAO();
+            request.setAttribute("listAddress", shipAddressDao.getUserAddress(account.getAccountId()));
         }
 
         request.setAttribute("listItem", listToCheckout);

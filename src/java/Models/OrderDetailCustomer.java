@@ -13,6 +13,7 @@ public class OrderDetailCustomer {
     private int productId;
     private int quantity;
     private float unitPrice;
+    private Product product;
 
     public OrderDetailCustomer() {
     }
@@ -56,4 +57,11 @@ public class OrderDetailCustomer {
         this.unitPrice = unitPrice;
     }
     
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

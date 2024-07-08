@@ -102,14 +102,14 @@ public class SingleProductControllers extends HttpServlet {
 
         /*End Pagination*/
         Product product = productDao.getProductById(id);
-        
+
         //LIST
         List<Product> listP = productDao.getProductsByCategoryId(product.getCategory().getCategoryId(), "fourRandom");
 
         //QUANTITY sold product
         int quantitySold = productDao.getQuantitySoldByProductId(id);
         int avgRating = feedbackDAO.avgRating(id);
-
+        
         request.setAttribute("rating", rating);
         request.setAttribute("quantityFeedback", quantity);
         request.setAttribute("page", page);
@@ -120,7 +120,7 @@ public class SingleProductControllers extends HttpServlet {
         request.setAttribute("quantitySold", quantitySold);
         request.setAttribute("relatedProduct", listP);
         request.setAttribute("product", product);
-
+        request.setAttribute("active", "shop");
         request.getRequestDispatcher("Views/SingleProduct.jsp").forward(request, response);
     }
 
@@ -136,7 +136,7 @@ public class SingleProductControllers extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
+        
     }
 
     /**

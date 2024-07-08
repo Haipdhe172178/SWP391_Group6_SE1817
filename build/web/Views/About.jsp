@@ -345,7 +345,6 @@
                                         </ul>
                                         <div class="d-flex flex-wrap justify-content-center">
                                             <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
-                                            <a href="checkout" class="w-100 btn btn-primary" type="submit">Go to checkout</a>
                                         </div>
                                     </div>
                                 </li>
@@ -511,7 +510,7 @@
                 <!-- NEWS -->
                 <c:forEach var="n" items="${requestScope.news}">
                     <div class="col-md-3 posts mb-4">
-                        <img src="${n.imgNews1}" alt="post image" class="img-fluid rounded-3">
+                        <img src="${n.imgNews}" alt="post image" class="img-fluid rounded-3">
                         <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
                         <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
                         <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 

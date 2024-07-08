@@ -193,7 +193,6 @@
         <servlet-class>AdminControllers.UpdateController</servlet-class>
     </servlet>
     <servlet>
-
         <servlet-name>OrderStatusControllers</servlet-name>
         <servlet-class>AdminControllers.OrderStatusControllers</servlet-class>
     </servlet>
@@ -203,10 +202,10 @@
     </servlet>
     <servlet>
         <servlet-name>StatisticsOrderControllers</servlet-name>
-        <servlet-class>AdminControllers.StatisticsOrderControllers</servlet-class>  
+        <servlet-class>AdminControllers.StatisticsOrderControllers</servlet-class>
     </servlet>
     <servlet>
-         <servlet-name>ProcessCheckoutController</servlet-name>
+        <servlet-name>ProcessCheckoutController</servlet-name>
         <servlet-class>Controllers.ProcessCheckoutController</servlet-class>
     </servlet>
     <servlet>
@@ -216,6 +215,22 @@
     <servlet>
         <servlet-name>DatetimeDiscount</servlet-name>
         <servlet-class>AdminControllers.DatetimeDiscount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderCustomer</servlet-name>
+        <servlet-class>Controllers.OrderCustomerControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OderCustomerDetailControllers</servlet-name>
+        <servlet-class>Controllers.OderCustomerDetailControllers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingAddressController</servlet-name>
+        <servlet-class>Controllers.ShippingAddressController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApplyDiscountController</servlet-name>
+        <servlet-class>Controllers.ApplyDiscountController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -422,7 +437,7 @@
         <url-pattern>/statisticsorder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-         <servlet-name>ProcessCheckoutController</servlet-name>
+        <servlet-name>ProcessCheckoutController</servlet-name>
         <url-pattern>/processCheckout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -432,6 +447,22 @@
     <servlet-mapping>
         <servlet-name>DatetimeDiscount</servlet-name>
         <url-pattern>/datetime</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderCustomer</servlet-name>
+        <url-pattern>/ordercustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OderCustomerDetailControllers</servlet-name>
+        <url-pattern>/ordercustomerdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingAddressController</servlet-name>
+        <url-pattern>/shippingAddress</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApplyDiscountController</servlet-name>
+        <url-pattern>/applyDiscount</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

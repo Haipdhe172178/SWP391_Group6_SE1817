@@ -40,7 +40,7 @@
                         <c:forEach var="news" items="${requestScope.listNews}">
                             <div class="col-lg-4 col-md-6 posts mb-5">
                                 <div class="img-container" style="display: flex; justify-content: center; align-items: center;">
-                                    <img src="${news.imgNews1}" alt="post image" class="img-fluid rounded-3" style="height: 12em; width: auto; border-radius: 1em">
+                                    <img src="${news.imgNews}" alt="post image" class="img-fluid rounded-3" style="height: 12em; width: auto; border-radius: 1em">
                                 </div>
                                 <a href="blog?id=${news.topic.topicId}" class="fs-6 text-primary">${news.topic.topicName}</a>
                                 <h5 class="card-title mb-2 text-capitalize text-dark" style="font-weight: bold; font-size: 0.9em; color: #343a40; margin-bottom: 0.5em; text-transform: capitalize;">

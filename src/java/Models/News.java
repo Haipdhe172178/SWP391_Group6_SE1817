@@ -8,8 +8,7 @@ public class News {
     private Topic topic;
     private String title;
     private String content;
-    private String imgNews1;
-    private String imgNews2;
+    private String imgNews;
     private Date dateUpload;
     private String source;
     private List<String> tags;
@@ -48,20 +47,12 @@ public class News {
         this.content = content;
     }
 
-    public String getImgNews1() {
-        return imgNews1;
+    public String getImgNews() {
+        return imgNews;
     }
 
-    public void setImgNews1(String imgNews1) {
-        this.imgNews1 = imgNews1;
-    }
-
-    public String getImgNews2() {
-        return imgNews2;
-    }
-
-    public void setImgNews2(String imgNews2) {
-        this.imgNews2 = imgNews2;
+    public void setImgNews(String imgNews) {
+        this.imgNews = imgNews;
     }
 
     public Date getDateUpload() {

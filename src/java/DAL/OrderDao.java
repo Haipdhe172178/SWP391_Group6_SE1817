@@ -485,13 +485,219 @@ public class OrderDao extends DBContext {
         return false;
     }
 
-    public static void main(String[] args) {
-        OrderDao od = new OrderDao();
-        List<Item> listItem = new ArrayList<>();
-        ProductDao pd = new ProductDao();
-        Product p = pd.getProductById(1);
-        listItem.add(new Item(p, 1, p.getPrice()));
-        int orderGID = od.AddOrderGuest("hai", "haitesst", "0123123", "213231", Float.parseFloat("10"), 1, 1);
-        od.AddOrderGuestDetails(orderGID, listItem);
+    public List<OrderCustomer> getOrderCustomersByAccountId(int accountId) {
+        List<OrderCustomer> listOrderCustomers = new ArrayList<>();
+        String query = "SELECT oc.OrderCID, oc.AccountID, a.FullName, a.Email,"
+                + " a.Address, a.PhoneNumber, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName "
+                + "FROM OrderCustomer oc "
+                + "JOIN StatusOrder s ON s.StatusID = oc.StatusID "
+                + "JOIN Account a ON a.AccountID = oc.AccountID "
+                + "WHERE oc.AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderCId = rs.getInt("OrderCID");
+                Account account = new Account();
+                account.setAccountId(rs.getInt("AccountID"));
+                account.setFullName(rs.getString("FullName"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setAddress(rs.getString("Address"));
+                float totalPrice = rs.getFloat("TotalPrice");
+                Date date = rs.getDate("Date");
+                Status status = new Status();
+                status.setStatusId(rs.getInt("StatusID"));
+                status.setStatusName(rs.getString("StatusName"));
+                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
+                OrderCustomer orderCustomer = new OrderCustomer(orderDetails, account, totalPrice, date, status);
+                listOrderCustomers.add(orderCustomer);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return listOrderCustomers;
     }
+
+    public List<OrderCustomer> getOrderCustomersByAccountIdAndStatus(int accountId, int statusId) {
+        List<OrderCustomer> listOrderCustomers = new ArrayList<>();
+        String query = "SELECT oc.OrderCID, oc.AccountID, a.FullName, a.Email, "
+                + "a.Address, a.PhoneNumber, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName "
+                + "FROM OrderCustomer oc "
+                + "JOIN StatusOrder s ON s.StatusID = oc.StatusID "
+                + "JOIN Account a ON a.AccountID = oc.AccountID "
+                + "WHERE oc.AccountID = ? AND oc.StatusID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ps.setInt(2, statusId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderCId = rs.getInt("OrderCID");
+                Account account = new Account();
+                account.setAccountId(rs.getInt("AccountID"));
+                account.setFullName(rs.getString("FullName"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setAddress(rs.getString("Address"));
+                float totalPrice = rs.getFloat("TotalPrice");
+                Date date = rs.getDate("Date");
+                Status status = new Status();
+                status.setStatusId(rs.getInt("StatusID"));
+                status.setStatusName(rs.getString("StatusName"));
+                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
+                OrderCustomer orderCustomer = new OrderCustomer(orderDetails, account, totalPrice, date, status);
+                listOrderCustomers.add(orderCustomer);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return listOrderCustomers;
+    }
+
+    public int getOrderCountByStatusForCustomers(int accountId, int statusId) {
+        int orderCount = 0;
+        String query = "SELECT COUNT(*) AS OrderCount "
+                + "FROM OrderCustomer "
+                + "WHERE AccountID = ? AND StatusID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ps.setInt(2, statusId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                orderCount = rs.getInt("OrderCount");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return orderCount;
+    }
+
+    public int getAllOrderCountForCustomers(int accountId) {
+        int orderCount = 0;
+        String query = "SELECT COUNT(*) AS OrderCount "
+                + "FROM OrderCustomer "
+                + "WHERE AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                orderCount = rs.getInt("OrderCount");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return orderCount;
+    }
+
+    public boolean cancelOrder(int orderId) {
+        String query = "UPDATE OrderCustomer SET StatusID = 5 WHERE OrderCID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderId);
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public OrderCustomer getOrderCustomerById(int orderId) {
+        OrderCustomer orderCustomer = null;
+        String query = "SELECT oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, "
+                + "a.FullName, a.Email, a.PhoneNumber, a.Address "
+                + "FROM OrderCustomer oc "
+                + "JOIN StatusOrder s ON oc.StatusID = s.StatusID "
+                + "JOIN Account a ON oc.AccountID = a.AccountID "
+                + "WHERE oc.OrderCID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int orderCId = rs.getInt("OrderCID");
+                Account account = new Account();
+                account.setAccountId(rs.getInt("AccountID"));
+                account.setFullName(rs.getString("FullName"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setAddress(rs.getString("Address"));
+                float totalPrice = rs.getFloat("TotalPrice");
+                Date date = rs.getDate("Date");
+                Status status = new Status();
+                status.setStatusId(rs.getInt("StatusID"));
+                status.setStatusName(rs.getString("StatusName"));
+                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId); // Triển khai phương thức này nếu cần
+                orderCustomer = new OrderCustomer(orderDetails, account, totalPrice, date, status);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return orderCustomer;
+    }
+
+    public int getTotalQuantityByOrderCId(int orderCId) {
+        int totalQuantity = 0;
+        String query = "SELECT SUM(Quantity) AS TotalQuantity "
+                + "FROM OrderDetailCustomer "
+                + "WHERE OrderCID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderCId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalQuantity = rs.getInt("TotalQuantity");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return totalQuantity;
+    }
+
+    public static void main(String[] args) {
+        int orderCId = 5; // Thay bằng orderCId bạn muốn kiểm tra
+
+        OrderDao dao = new OrderDao();
+
+        // Gọi hàm getTotalQuantityByOrderCId và truyền vào orderCId để lấy tổng số lượng
+        int totalQuantity = dao.getTotalQuantityByOrderCId(orderCId);
+
+        // In ra kết quả
+        System.out.println("Total Quantity for OrderCID " + orderCId + ": " + totalQuantity);
+    }
+
+    public OrderGuest getOrderByID(int orderGID) {
+        String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
+                + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "
+                + "FROM OrderGuest og JOIN StatusOrder so ON og.StatusID = so.StatusID "
+                + "WHERE OrderGID=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderGID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int orderGId = rs.getInt(1);
+                String fullName = rs.getString(2);
+                String email = rs.getString(3);
+                String phoneNumber = rs.getString(4);
+                String address = rs.getString(5);
+                float totalPrice = rs.getFloat(6);
+                Date date = rs.getDate(7);
+                Status status = new Status();
+                status.setStatusId(rs.getInt(8));
+                status.setStatusName(rs.getString(9));
+                List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
+                OrderGuest orderGuest = new OrderGuest(orderDetails, fullName, email, phoneNumber, address, totalPrice, date, status);
+                return orderGuest;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }
