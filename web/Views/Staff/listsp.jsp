@@ -10,78 +10,7 @@
 <html lang="zxx">
 
     <head>
-        <style>
-            .white_box_tittle {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            .list_header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .search_inner {
-                display: flex;
-                align-items: center;
-            }
-            .search_field {
-                margin-right: 10px;
-            }
-            .form-control {
-                padding: 5px 10px;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-            }
-            .btn {
-                padding: 5px 10px;
-                border-radius: 5px;
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-            }
-            .btn_1 {
-                background-color: #28a745;
-                color: #fff;
-            }
-            .btn_1:hover, .btn:hover {
-                background-color: #0056b3;
-                color: #fff;
-            }
-            .form-select {
-                padding: 5px 10px;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-            }
-        </style>
-        <style>
-            .pagination a {
-                color: #000;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
-                border: 1px solid #ddd; /* Gray border */
-                margin: 0 4px; /* Add some space between links */
-            }
 
-            .pagination a.active {
-                background-color: #4B0082;
-                color: white;
-                border: 1px solid #4B0082;
-            }
-
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
-            }
-
-            .pagination a.disabled {
-                pointer-events: none;
-                color: #ccc;
-                border-color: #ddd;
-            }
-        </style>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
@@ -98,7 +27,7 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
 
@@ -108,10 +37,8 @@
     <body class="crm_body_bg">
 
         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
-
-            <section class="main_content dashboard_part large_header_bg">
-
-            <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
+    <section class="main_content dashboard_part large_header_bg">
+        <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
                 <div class="main_content_iner ">
                     <div class="container-fluid p-0">
@@ -121,143 +48,111 @@
                                     <div class="white_card_header">
                                         <div class="box_header m-0">
                                             <div class="main-title">
-                                                <h3 class="m-0">Data table</h3>
+                                                <h3 class="m-0">Sản phẩm</h3>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="white_card_body">
                                         <div class="QA_section">
                                             <div class="white_box_tittle list_header">
-
+                                                <h4></h4>
                                                 <div class="box_right d-flex lms_block">
                                                     <div class="serach_field_2">
+                                                        <div><a href="neworder">Tiep tuc thanh toan</a></div>
                                                         <div class="search_inner">
-                                                            <!-- Search Form -->
-                                                            <form action="discount" method="get" class="d-flex">
+                                                            <form action="listsp" method="GET">
                                                                 <div class="search_field">
-                                                                    <input name="s" type="text" value="${s}" placeholder="Search here..." class="form-control">
-                                                            </div>
-                                                            <button type="submit" name="submit" class="btn btn-primary">
-                                                                <img src="img/icon/icon_search.svg" alt="Search">
-                                                            </button>
-                                                           
-                                                           
-                                                        </form>
-                                                           
-
-<!--                                                         Filter Form -->
-                                                        <form id="frm" action="discount" method="get" class="d-flex ms-2">
-                                                            <select name="op" class="form-select" onchange="document.getElementById('frm').submit()">
-                                                                <option ${n == 2 ? 'selected' : ''} value="2">Tất cả</option>
-                                                                <option ${n == 0 ? 'selected' : ''} value="0">Không được sử dụng</option>
-                                                                <option ${n == 1 ? 'selected' : ''} value="1">Được sử dụng</option>
-                                                            </select>
-                                                        </form>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Add Button -->
-                                                <div class="add_button ms-2">
-                                                    <a href="addcode" class="btn btn_1">Add code</a>
-                                                </div>
-                                                 <form action="datetime" method="get">
-                                                               <div class="search_field">
-                                                                   <table border="0px">
-                                                                       <th> <h6 class="m-0">Thời gian đến lúc mã hết hiển thị ở trang chủ</h6></th>
-                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>
-                                                                       <th><input hidden  type="text" value="${date1}" name="dateold"  class="form-control"></th>
-                                                                       <th> <input class="add_button ms-2" type="submit" value="Cập nhật ngày"></th>
-                                                                   </table>
-                                                                   
-                                                                   
-                                                                   
-                                                            </div>
+                                                                    <input name="s" type="text" placeholder="Tìm kiếm....">
+                                                                </div>
+                                                                <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
                                                             </form>
+                                                        </div>
+                                                    </div>
+                                                 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="QA_table mb_30">
-                                            <%
-                                         int count=1;
-                                            %>
+                                            <div class="QA_table mb_30">
 
-                                            <table class="table lms_table_active ">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">ID</th>
-                                                        <th scope="col">Mã Code</th>
-                                                        <th scope="col">Giảm giá bao nhiêu phần trăm</th>
-                                                        <th scope="col">Giảm giá nhân dịp</th>
-                                                        <th scope="col">Số lượng mã phát ra</th>
-
-                                                        <th scope="col">Hoạt động</th>
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${data}" var="p">
+                                                <table class="table lms_table_active ">
+                                                    <thead>
                                                         <tr>
-                                                            <td><%= count++%></td>
-                                                            <td>${p.codeName}</td>
-                                                            <td>${p.discount}</td>
-                                                            <td>${p.couponType}</td>
+                                                            <th scope="col">ID</th>
+                                                            <th scope="col">Tên</th>
+                                                            <th scope="col">Giá</th>
+                                                            <th scope="col">Số lượng</th>
+                                                            <th scope="col">Mô tả sản phẩm</th>
+                                                            <th scope="col">Thể loại</th>
+                                                            <th scope="col">Tác giả</th>
+                                                            <th scope="col">Ảnh</th>
+                                                            <th scope="col">Độ tuổi</th>
+                                                            
+                                                            <th scope="col">Hành động</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach items="${product}" var="p">
+                                                        <tr>
+                                                            <td>${p.productId}</td>
+                                                            <td>${p.name}</td>
+                                                            <td>${p.price}</td>
                                                             <td>${p.quantity}</td>
-
+                                                            <td>${fn:substring(p.description, 0, 50)}...</td>
+                                                            <td>${p.category.categoryName}</td>
+                                                            <td>${p.author.authorName}</td>
+                                                            <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
+                                                            <td>${p.oage.age}</td>
+                                                            
                                                             <td>
-                                                                <c:choose>
-
-                                                                    <c:when test="${p.status == 1}">
-                                                                        Đang sử dụng
-                                                                    </c:when>
-                                                                    <c:when test="${p.status != 1}">
-                                                                        Không được sử dụng
-                                                                    </c:when>
-                                                                </c:choose>
+                                                                <a href="makeOrder?id=${p.productId}&amount=${p.quantity}" title="Add"><i class="fas fa-add"></i></a>
 
                                                             </td>
-                                                            <td><a href="updatecode?id=${p.codeId}">UPDATE</td>
                                                         </tr>
+
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
-
                                         </div>
+                                        <nav class="py-5" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                                <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                                                <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                                                <c:if test="${end > endP}">
+                                                    <c:set var="end" value="${endP}" />
+                                                    <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                                                </c:if>
 
-                                        <c:choose>
-                                            <c:when test="${empty n}">
-                                                <form method="get" action="discount">
-                                                    <nav class="pagination" aria-label="Page navigation">
-                                                        <a href="discount?index=${tag - 1}&&s=${s}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
-                                                        <c:forEach begin="1" end="${endP}" var="i">
-                                                            <a href="discount?index=${i}&&s=${s}" class="${tag == i ? 'active' : ''}">${i}</a>
-                                                        </c:forEach>
-                                                        <a href="discount?index=${tag + 1}&&s=${s}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
-                                                    </nav>
-                                                </form>  
-                                            </c:when>
-                                            <c:otherwise>
-                                                <form method="get" action="discount">
-                                                    <nav class="pagination" aria-label="Page navigation">
-                                                        <a href="discount?index=${tag - 1}&&op=${n}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
-                                                        <c:forEach begin="1" end="${endP}" var="i">
-                                                            <a href="discount?index=${i}&&op=${n}" class="${tag == i ? 'active' : ''}">${i}</a>
-                                                        </c:forEach>
-                                                        <a href="discount?index=${tag + 1}&&op=${n}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
-                                                    </nav>
-                                                </form>  
-                                            </c:otherwise>
-                                        </c:choose>   
+                                                <!-- Nút Previous -->
+                                                <c:if test="${tag > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="listsp?index=${tag - 1}${query}" aria-label="Previous">
+                                                            <span aria-hidden="true">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
 
+                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
+                                                    <li class="page-item ${tag == i ? 'active' : ''}">
+                                                        <a class="page-link" href="listsp?index=${i}${query}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
 
-
-
-                                        </ul>
+                                                <!-- Nút Next -->
+                                                <c:if test="${tag < endP}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="listsp?index=${tag + 1}${query}" aria-label="Next">
+                                                            <span aria-hidden="true">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
                                         </nav>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-12">
                         </div>
                     </div>
@@ -412,5 +307,4 @@
 
         <script src="js/custom.js"></script>
     </body>
-
 </html>

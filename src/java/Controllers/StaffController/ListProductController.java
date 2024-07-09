@@ -4,11 +4,12 @@
  */
 package Controllers.StaffController;
 
-import DAL.OrderDao;
-import Models.Orders;
+import DAL.ProductDao;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +18,9 @@ import java.util.List;
 
 /**
  *
- * @author Hai Pham
+ * @author USER
  */
-public class StaffDashboardController extends HttpServlet {
+public class ListProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class StaffDashboardController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StaffDashboardController</title>");
+            out.println("<title>Servlet ListProductController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StaffDashboardController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListProductController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,31 +60,55 @@ public class StaffDashboardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         List<Orders> list = new ArrayList<>();
-         OrderDao dal = new OrderDao();
-          String index = request.getParameter("index");
-       
-           int indexx;
-        if(request.getParameter("index")==null)
-       {
-           indexx = 1;
-       }else{
-         indexx = Integer.parseInt(index);
+        ProductDao productDao = new ProductDao();
+        //cookie lay id
+        Cookie[] arr = request.getCookies();
+        String txt = "";
+        if(arr!=null){
+            for(Cookie i:arr){
+                if(i.getName().equals("cartAdmin")){
+                    txt+=i.getValue();//"1:1/2:1/3:1"
+                }
+            }
         }
-      
-         int count = dal.getToralOrder();
-      
-        int endpage = count/10;
-        if(count%10==0){           
-        }else{
-            endpage++;
+        List<String> ids = new ArrayList<>();//
+        
+        String[] data = txt.split("/");//"1:1"
+        for (String s : data) {
+            ids.add(s.split(":")[0]);
         }
-          list = dal.getallOrder(indexx);
-          request.setAttribute("endP", endpage);
-          request.setAttribute("tag", indexx);
+        
+        
+        String indexPage = request.getParameter("index");
+        int index;
+        if (indexPage != null) {
+            index = Integer.parseInt(indexPage);
+        } else {
+            index = 1;
+        }
+        List<Product> list;
+        int count = productDao.getTotalProduct();
+        int endPage;
+        list = productDao.pagingProducts(index,ids);
+        String searchKeyword = request.getParameter("s");
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            list = productDao.pagingProductsByKeyword(index, searchKeyword);
+            count = productDao.getTotalProductsByKeyword(searchKeyword);
+        }
+        endPage = count / 8;
+        if (count % 8 != 0) {
+            endPage++;
+        }
+        String query = "";
+        if (searchKeyword != null) {
+            query += "&&s=" + searchKeyword;
+        }
 
-         request.setAttribute("list", list);
-        request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
+        request.setAttribute("query", query);
+        request.setAttribute("product", list);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tag", index);
+        request.getRequestDispatcher("Views/Staff/listsp.jsp").forward(request, response);
     }
 
     /**

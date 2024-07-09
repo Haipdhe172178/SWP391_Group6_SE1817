@@ -227,22 +227,22 @@
                                             <c:when test="${empty n}">
                                                 <form method="get" action="discount">
                                                     <nav class="pagination" aria-label="Page navigation">
-                                                        <a href="discount?index=${tag - 1}&&s=${s}" class="${tag == 1 ? 'disabled' : ''}">Previous</a>
+                                                        <a href="discount?index=${tag - 1}&&s=${s}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
                                                         <c:forEach begin="1" end="${endP}" var="i">
                                                             <a href="discount?index=${i}&&s=${s}" class="${tag == i ? 'active' : ''}">${i}</a>
                                                         </c:forEach>
-                                                        <a href="discount?index=${tag + 1}&&s=${s}" class="${tag == endP ? 'disabled' : ''}">Next</a>
+                                                        <a href="discount?index=${tag + 1}&&s=${s}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
                                                     </nav>
                                                 </form>  
                                             </c:when>
                                             <c:otherwise>
                                                 <form method="get" action="discount">
                                                     <nav class="pagination" aria-label="Page navigation">
-                                                        <a href="discount?index=${tag - 1}&&op=${n}" class="${tag == 1 ? 'disabled' : ''}">Previous</a>
+                                                        <a href="discount?index=${tag - 1}&&op=${n}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
                                                         <c:forEach begin="1" end="${endP}" var="i">
                                                             <a href="discount?index=${i}&&op=${n}" class="${tag == i ? 'active' : ''}">${i}</a>
                                                         </c:forEach>
-                                                        <a href="discount?index=${tag + 1}&&op=${n}" class="${tag == endP ? 'disabled' : ''}">Next</a>
+                                                        <a href="discount?index=${tag + 1}&&op=${n}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
                                                     </nav>
                                                 </form>  
                                             </c:otherwise>

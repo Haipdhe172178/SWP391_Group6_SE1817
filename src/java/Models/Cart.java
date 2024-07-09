@@ -110,7 +110,28 @@ public class Cart {
             e.printStackTrace();
         }
     }
-
+    
+    public Cart(String txt, List<Product> list,String sp) {
+        items = new ArrayList<>();
+        try {
+            if (txt != null && txt.length() != 0) { // Giỏ hàng tồn tại
+                String[] s = txt.split(sp);
+                for (String i : s) {
+                    String[] n = i.split(":");
+                    int id = Integer.parseInt(n[0]);
+                    int quantity = Integer.parseInt(n[1]);
+                    Product p = getProductById(id, list);
+                    if (p != null) {
+                        Item t = new Item(p, quantity, p.getPrice());
+                        addItem(t);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

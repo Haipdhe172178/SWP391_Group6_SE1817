@@ -288,83 +288,50 @@
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
-                                <li class="wishlist-dropdown dropdown pe-3">
-                                    <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
-                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="text-primary">Your wishlist</span>
-                                            <span class="badge bg-primary rounded-pill">2</span>
-                                        </h4>
-                                        <ul class="list-group mb-3">
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div>
-                                                    <h5>
-                                                        <a href="single">The Emerald Crown</a>
-                                                    </h5>
-                                                    <small>Special discounted price.</small>
-                                                    <a href="#" class="d-block fw-medium text-capitalize mt-2">Add to cart</a>
-                                                </div>
-                                                <span class="text-primary">$2000</span>
-                                            </li>
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div>
-                                                    <h5>
-                                                        <a href="single">The Last Enchantment</a>
-                                                    </h5>
-                                                    <small>Perfect for enlightened people.</small>
-                                                    <a href="#" class="d-block fw-medium text-capitalize mt-2">Add to cart</a>
-                                                </div>
-                                                <span class="text-primary">$400</span>
-                                            </li>
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between">
-                                                <span class="text-capitalize"><b>Total (USD)</b></span>
-                                                <strong>$1470</strong>
-                                            </li>
-                                        </ul>
-                                        <div class="d-flex flex-wrap justify-content-center">
-                                            <a href="#" class="w-100 btn btn-dark mb-1" type="submit">Add all to cart</a>
-                                            <a href="cart" class="w-100 btn btn-primary" type="submit">View cart</a>
-                                        </div>
-                                    </div>
-                                </li>
+
                                 <li class="cart-dropdown dropdown">
                                     <a href="cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                         <svg class="cart">
                                         <use xlink:href="#cart"></use>
-                                        </svg><span class="fs-6 fw-light">(02)</span>
+                                        </svg><span class="fs-6 fw-light">(${requestScope.size})</span>
                                     </a>
                                     <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="text-primary">Your cart</span>
-                                            <span class="badge bg-primary rounded-pill">2</span>
+                                            <span class="text-primary">Giỏ hàng của bạn</span>
+                                            <span class="badge bg-primary rounded-pill">${requestScope.size}</span>
                                         </h4>
                                         <ul class="list-group mb-3">
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div>
-                                                    <h5>
-                                                        <a href="single">Secrets of the Alchemist</a>
-                                                    </h5>
-                                                    <small>High quality in good price.</small>
-                                                </div>
-                                                <span class="text-primary">$870</span>
-                                            </li>
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div>
-                                                    <h5>
-                                                        <a href="single">Quest for the Lost City</a>
-                                                    </h5>
-                                                    <small>Professional Quest for the Lost City.</small>
-                                                </div>
-                                                <span class="text-primary">$600</span>
-                                            </li>
+                                            <c:forEach var="item" items="${lastTwoItems}">
+                                                <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-shrink-0">
+                                                            <img src="${item.getProduct().getImgProduct()}" alt="${item.getProduct().getName()}" class="img-thumbnail" style="width: 80px; height: auto;">
+                                                        </div>
+                                                        <div class="ms-3">
+                                                            <h7>
+                                                                <a href="single?productID=${item.getProduct().getProductId()}">${item.getProduct().getName()}</a>
+                                                            </h7>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-column align-items-end">
+                                                        <span class="text-primary">
+                                                            <fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/>
+                                                        </span>
+                                                        <span>X${item.getQuantity()}</span> <!-- Hiển thị số lượng -->
+                                                    </div>
+                                                </li>
+                                            </c:forEach>
                                             <li class="list-group-item bg-transparent d-flex justify-content-between">
-                                                <span class="text-capitalize"><b>Total (USD)</b></span>
-                                                <strong>$1470</strong>
+                                                <span class="text-capitalize"><b>Tổng tiền</b></span>
+                                                <strong>
+                                                    <fmt:formatNumber value="${requestScope.totalAmount}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/></strong>
                                             </li>
                                         </ul>
                                         <div class="d-flex flex-wrap justify-content-center">
-                                            <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
+                                            <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">Xem giỏ hàng</a>
                                         </div>
                                     </div>
+
                                 </li>
                             </ul>
                         </div>

@@ -5,6 +5,7 @@
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -163,28 +164,28 @@
     <body class="crm_body_bg">
         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-        <section class="main_content dashboard_part large_header_bg">
+            <section class="main_content dashboard_part large_header_bg">
 
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
-            <div class="main_content_iner">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-10">
-                            <div class="profile-wrapper">
-                                <div class="white_card card_height_100 mb-30">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">Thông tin Tài khoản</h3>
+                <div class="main_content_iner">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <div class="profile-wrapper">
+                                    <div class="white_card card_height_100 mb-30">
+                                        <div class="white_card_header">
+                                            <div class="box_header m-0">
+                                                <div class="main-title">
+                                                    <h3 class="m-0">Thông tin Tài khoản</h3>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="container rounded bg-white mt-5 mb-5 profile-container">
-                                        <div class="row">
-                                            <div class="col-md-4 border-right">
-                                                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                                                    <img class="mt-5" width="150px" src="${acc.imgAccount}" alt="Avatar">
+                                        <div class="container rounded bg-white mt-5 mb-5 profile-container">
+                                            <div class="row">
+                                                <div class="col-md-4 border-right">
+                                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                                        <img class="mt-5" width="150px" src="${acc.imgAccount}" alt="Avatar">
                                                     <button class="btn btn-primary mt-3" id="personalInfoBtn">Thông tin cá nhân</button>
                                                     <c:if test="${acc.roleId != 1 && acc.roleId != 2}">
                                                         <button class="btn btn-secondary mt-2" id="orderHistoryBtn">Lịch sử đơn hàng</button>
@@ -245,14 +246,42 @@
                                                                     </c:forEach></label>
                                                             </div>
                                                         </div>
-                                                       
+
                                                     </div>
                                                     <!-- Order History Section -->
                                                     <div id="orderHistorySection">
-                                                        <h4 class="text-right mb-4">Lịch Sử Đơn Hàng</h4>                                                      
-                                                        <p>Chưa có đơn hàng nào.</p>
+                                                        <h4 class="text-right mb-4">Lịch Sử Đơn Hàng</h4>
+                                                        <c:choose>
+                                                            <c:when test="${empty order}">
+                                                                <p>Chưa có đơn hàng nào.</p>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Mã đơn hàng</th>
+                                                                            <th>Tổng giá tiền</th>
+                                                                            <th>Ngày mua</th>
+                                                                            <th>Trạng thái</th>
+                                                                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <c:forEach var="order" items="${requestScope.order}">
+                                                                            <tr>
+                                                                                <td>${order.orderDetails[0].orderCId}</td>
+                                                                                <td><fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0"
+                                        maxFractionDigits="0" /> VND</td>
+                                                                                <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy" /></td>
+                                                                                 <td>${order.status.statusName}</td>
+                                                                            </tr>
+                                                                        </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </div>
-                                                     <a href="account" class="btn btn-outline-info" style="margin-top: 10px">Trở lại</a>
+                                                    <a href="account" class="btn btn-outline-info" style="margin-top: 10px">Trở lại</a>
                                                 </div>
                                             </div>
                                         </div>

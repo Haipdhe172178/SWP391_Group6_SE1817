@@ -10,6 +10,7 @@ import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.OrderDetailGuest;
 import Models.OrderGuest;
+import Models.Orders;
 import Models.Product;
 import Models.Status;
 import java.sql.PreparedStatement;
@@ -698,6 +699,157 @@ public class OrderDao extends DBContext {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public List<Orders> getallOrder(int indexx) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Orders> list = new ArrayList<>();
+
+        String query = "SELECT \n"
+                + "    RowNumber,\n"
+                + "    OrderID,\n"
+                + "    FullName,\n"
+                + "    Email,\n"
+                + "    PhoneNumber,\n"
+                + "    Address,\n"
+                + "    TotalPrice,\n"
+                + "    Date,\n"
+                + "    StatusID,\n"
+                + "    PaymentStatus,\n"
+                + "    AccountID\n"
+                + "FROM (\n"
+                + "    SELECT \n"
+                + "        ROW_NUMBER() OVER (ORDER BY Date DESC) AS RowNumber,\n"
+                + "        OrderID,\n"
+                + "        FullName,\n"
+                + "        Email,\n"
+                + "        PhoneNumber,\n"
+                + "        Address,\n"
+                + "        TotalPrice,\n"
+                + "        Date,\n"
+                + "        StatusID,\n"
+                + "        PaymentStatus,\n"
+                + "        AccountID\n"
+                + "    FROM (\n"
+                + "        SELECT \n"
+                + "            o.OrderCID AS OrderID,  \n"
+                + "            a.FullName,\n"
+                + "            a.Email,\n"
+                + "            sa.PhoneNumber, \n"
+                + "            sa.Address,\n"
+                + "            o.TotalPrice,\n"
+                + "            o.Date,\n"
+                + "            o.StatusID,\n"
+                + "            o.PaymentStatus,\n"
+                + "            o.AccountID\n"
+                + "        FROM \n"
+                + "            [dbo].[OrderCustomer] o\n"
+                + "        JOIN \n"
+                + "            [ShopBook88].[dbo].[Account] a ON o.AccountID = a.AccountID\n"
+                + "        JOIN \n"
+                + "            [ShopBook88].[dbo].[ShippingAddress] sa ON o.AddressID = sa.AddressID\n"
+                + "\n"
+                + "        UNION ALL\n"
+                + "\n"
+                + "        SELECT \n"
+                + "            og.OrderGID AS OrderID,\n"
+                + "            og.FullName,\n"
+                + "            og.Email,\n"
+                + "            og.PhoneNumber,\n"
+                + "            og.Address,\n"
+                + "            og.TotalPrice,\n"
+                + "            og.Date,\n"
+                + "            og.StatusID,\n"
+                + "            og.PaymentStatus,\n"
+                + "            NULL AS AccountID\n"
+                + "        FROM \n"
+                + "            [dbo].[OrderGuest] og\n"
+                + "    ) AS CombinedOrders\n"
+                + ") AS NumberedOrders\n"
+                + "ORDER BY RowNumber\n"
+                + "OFFSET ? ROWS\n"
+                + "FETCH NEXT 10 ROWS ONLY;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, (indexx-1)*10);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Orders order = new Orders();
+                order.setStt(rs.getInt(1));
+                order.setOrderID(rs.getInt(2));
+
+                order.setFullName(rs.getString(3));
+                order.setEmail(rs.getString(4));
+                order.setPhoneNumber(rs.getString(5));
+                order.setAddress(rs.getString(6));
+                order.setTotalPrice(rs.getFloat(7));
+                order.setDate(rs.getDate(8));
+                order.setStatus(rs.getInt(9));
+                order.setPaymentStatus(rs.getInt(10));
+                order.setAccountID(rs.getInt(11));
+                list.add(order);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+
+    }
+
+    public int getToralOrder() {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int totalOrders = 0;
+        String query = "SELECT COUNT(*) AS TotalOrders\n"
+                + "FROM (\n"
+                + "    SELECT \n"
+                + "        o.OrderCID AS OrderID,  \n"
+                + "        a.FullName,\n"
+                + "        a.Email,\n"
+                + "        sa.PhoneNumber, \n"
+                + "        sa.Address,\n"
+                + "        o.TotalPrice,\n"
+                + "        o.Date,\n"
+                + "        o.StatusID,\n"
+                + "        o.PaymentStatus,\n"
+                + "        o.AccountID\n"
+                + "    FROM \n"
+                + "        [dbo].[OrderCustomer] o\n"
+                + "    JOIN \n"
+                + "        [ShopBook88].[dbo].[Account] a ON o.AccountID = a.AccountID\n"
+                + "    JOIN \n"
+                + "        [ShopBook88].[dbo].[ShippingAddress] sa ON o.AddressID = sa.AddressID\n"
+                + "\n"
+                + "    UNION ALL\n"
+                + "\n"
+                + "    SELECT \n"
+                + "        og.OrderGID AS OrderID,\n"
+                + "        og.FullName,\n"
+                + "        og.Email,\n"
+                + "        og.PhoneNumber,\n"
+                + "        og.Address,\n"
+                + "        og.TotalPrice,\n"
+                + "        og.Date,\n"
+                + "        og.StatusID,\n"
+                + "        og.PaymentStatus,\n"
+                + "        NULL AS AccountID\n"
+                + "    FROM \n"
+                + "        [dbo].[OrderGuest] og\n"
+                + ") AS CombinedOrders;";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalOrders = rs.getInt("TotalOrders");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return totalOrders;
+
     }
 
 }
