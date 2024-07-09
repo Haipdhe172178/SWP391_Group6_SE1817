@@ -171,8 +171,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col text-end">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                        <button type="button" class="btn btn-primary">Lưu địa chỉ</button>
+                                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-primary">Lưu địa chỉ</button>
                                     </div>
                                 </div>
                             </form>
