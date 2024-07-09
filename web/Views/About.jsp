@@ -163,13 +163,13 @@
             <div class="container-fluid">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <p class="fs-6 my-2 text-center">Need any help? Call us <a href="#">112233344455</a></p>
+                        <p class="fs-6 my-2 text-center">Bạn cần giúp đỡ? Hãy gọi cho chúng tôi <a href="#">+84 38 272 0127</a></p>
                     </div>
                     <div class="col-md-4 border-start border-end">
-                        <p class="fs-6 my-2 text-center">Summer sale discount off 60% off! <a class="text-decoration-underline" href="shop">Shop Now</a></p>
+                        <p class="fs-6 my-2 text-center">Đang có giảm giá lên tới 60% <a class="text-decoration-underline" href="shop">Mua ngay!!</a></p>
                     </div>
                     <div class="col-md-4">
-                        <p class="fs-6 my-2 text-center">2-3 business days delivery & free returns</p>
+                        <p class="fs-6 my-2 text-center">Giao hàng 2-3 ngày làm việc và trả lại miễn phí</p>
                     </div>
                 </div>
             </div>
