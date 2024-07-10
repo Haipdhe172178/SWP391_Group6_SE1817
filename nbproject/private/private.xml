@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailCustomer.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/StaffDashboard.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/DataDiscount.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/FeedbackList.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Orders.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/FeedbackListController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderGuest.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailGuest.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/StaffDashboardController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderCustomer.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/OrderDao.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddCode.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

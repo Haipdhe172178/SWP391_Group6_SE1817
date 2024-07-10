@@ -67,17 +67,17 @@
 
     <body class="crm_body_bg">
         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
-            <section class="main_content dashboard_part large_header_bg">
+        <section class="main_content dashboard_part large_header_bg">
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
-                <div class="main_content_iner overly_inner">
-                    <div class="container-fluid p-0">
-                        <div class="row">
-                            <div class="col-lg-12 mb_20">
-                                <div class="white_card card_height_100 mb_20">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">Đơn hàng trạng thái: ${statusName}</h3>
+            <div class="main_content_iner overly_inner">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-lg-12 mb_20">
+                            <div class="white_card card_height_100 mb_20">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">Đơn hàng trạng thái: ${statusName}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +100,6 @@
                                                     <th data-sort="date" style="cursor: pointer; color: black">
                                                         Ngày <i class="fas fa-sort" style="margin-left: 5px;"></i>
                                                     </th>
-
                                                     <th>Trạng thái</th>
                                                     <th>Loại</th>
                                                 </tr>
@@ -129,7 +128,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -180,30 +178,29 @@
         <script src="js/dashboard_init.js"></script>
         <script src="js/custom.js"></script>
         <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.getElementById('searchInput');
-        const rows = document.querySelectorAll('#orderTable tbody tr');
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById('searchInput');
+                const rows = document.querySelectorAll('#orderTable tbody tr');
 
-        searchInput.addEventListener('keyup', function () {
-            const filter = searchInput.value.trim().toLowerCase();
+                searchInput.addEventListener('keyup', function () {
+                    const filter = searchInput.value.trim().toLowerCase();
 
-            rows.forEach(row => {
-                let found = false;
+                    rows.forEach(row => {
+                        let found = false;
 
-                // Search through each cell in the row
-                Array.from(row.cells).forEach(cell => {
-                    const text = cell.textContent.trim().toLowerCase();
-                    if (text.includes(filter)) {
-                        found = true;
-                    }
+                        // Search through each cell in the row
+                        Array.from(row.cells).forEach(cell => {
+                            const text = cell.textContent.trim().toLowerCase();
+                            if (text.includes(filter)) {
+                                found = true;
+                            }
+                        });
+
+                        // Show or hide the row based on search result
+                        row.style.display = found ? '' : 'none';
+                    });
                 });
 
-                // Show or hide the row based on search result
-                row.style.display = found ? '' : 'none';
-            });
-
-
-            $(document).ready(function () {
                 $("th[data-sort]").click(function () {
                     var column = $(this).data("sort");
                     var order = $(this).hasClass("asc") ? "desc" : "asc";
@@ -239,8 +236,6 @@
                 }
             });
         </script>
-
-
     </body>
 
 </html>

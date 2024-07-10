@@ -595,21 +595,88 @@ public class OrderDao extends DBContext {
     }
 
     public boolean cancelOrder(int orderId) {
-        String query = "UPDATE OrderCustomer SET StatusID = 5 WHERE OrderCID = ?";
+        String query = "UPDATE OrderCustomer SET StatusID =5 WHERE OrderCID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, orderId);
             int rowsUpdated = ps.executeUpdate();
-            return rowsUpdated > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+            return rowsUpdated > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
 
+    public boolean updateStatusById(int orderId, int status) {
+        String sql = "  Update OrderCustomer\n"
+                + "  set StatusID = ? \n"
+                + "  where OrderCID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, orderId);
+            int rowsInserted = ps.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Map<String, Integer> getStatusCounts(int accountId) {
+        Map<String, Integer> statusCounts = new HashMap<>();
+        String query = "SELECT StatusID, COUNT(*) as Count "
+                + "FROM OrderCustomer "
+                + "WHERE AccountID = ? "
+                + "GROUP BY StatusID";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int statusId = rs.getInt("StatusID");
+                int count = rs.getInt("Count");
+                switch (statusId) {
+                    case 1:
+                        statusCounts.put("pending", count);
+                        break;
+                    case 2:
+                        statusCounts.put("confirmed", count);
+                        break;
+                    case 3:
+                        statusCounts.put("shipping", count);
+                        break;
+                    case 4:
+                        statusCounts.put("completed", count);
+                        break;
+                    case 5:
+                        statusCounts.put("canceled", count);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            String allOrdersQuery = "SELECT COUNT(*) as Count FROM OrderCustomer WHERE AccountID = ?";
+            ps = connection.prepareStatement(allOrdersQuery);
+            ps.setInt(1, accountId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                statusCounts.put("all", rs.getInt("Count"));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return statusCounts;
+    }
+
     public OrderCustomer getOrderCustomerById(int orderId) {
         OrderCustomer orderCustomer = null;
         String query = "SELECT oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, "
+                + "oc.paymentStatus, "
                 + "a.FullName, a.Email, a.PhoneNumber, a.Address "
                 + "FROM OrderCustomer oc "
                 + "JOIN StatusOrder s ON oc.StatusID = s.StatusID "
@@ -632,8 +699,10 @@ public class OrderDao extends DBContext {
                 Status status = new Status();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
-                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId); // Triển khai phương thức này nếu cần
+                int paymentStatus = rs.getInt("paymentStatus");
+                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
                 orderCustomer = new OrderCustomer(orderDetails, account, totalPrice, date, status);
+                    orderCustomer.setPaymentStatus(paymentStatus);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -660,14 +729,9 @@ public class OrderDao extends DBContext {
     }
 
     public static void main(String[] args) {
-        int orderCId = 5; // Thay bằng orderCId bạn muốn kiểm tra
-
+        int orderCId = 5;
         OrderDao dao = new OrderDao();
-
-        // Gọi hàm getTotalQuantityByOrderCId và truyền vào orderCId để lấy tổng số lượng
         int totalQuantity = dao.getTotalQuantityByOrderCId(orderCId);
-
-        // In ra kết quả
         System.out.println("Total Quantity for OrderCID " + orderCId + ": " + totalQuantity);
     }
 
@@ -852,6 +916,7 @@ public class OrderDao extends DBContext {
 
     }
 
+
     public void updatePaymentSuccess(String type, int orderID) {
         String tableName = "";
         String columnName = "";
@@ -873,6 +938,19 @@ public class OrderDao extends DBContext {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
+
+    public boolean updateOrderCustomerStatus(int orderCID, int newStatusID) {
+        String query = "UPDATE OrderCustomer SET StatusID = ? WHERE OrderCID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, newStatusID);
+            ps.setInt(2, orderCID);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+
         }
     }
 
