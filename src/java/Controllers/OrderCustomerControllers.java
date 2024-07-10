@@ -4,10 +4,12 @@ import DAL.AccountDAO;
 import DAL.ProductDao;
 import DAL.OrderDao;
 import Models.Account;
+import Models.Cart;
+import Models.Item;
 import Models.OrderCustomer;
 import Models.Status;
 import Models.OrderDetailCustomer;
-import Models.Product; // Import Product model
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,12 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * Servlet to handle customer orders.
  */
 public class OrderCustomerControllers extends HttpServlet {
 
-     private final OrderDao orderDao = new OrderDao();
+    private final OrderDao orderDao = new OrderDao();
     private final ProductDao productDao = new ProductDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -74,7 +75,7 @@ public class OrderCustomerControllers extends HttpServlet {
         } else {
             orders = orderDao.getOrderCustomersByAccountIdAndStatus(accountId, status);
         }
-        
+
         for (OrderCustomer order : orders) {
             List<OrderDetailCustomer> orderDetails = order.getOrderDetails();
             for (OrderDetailCustomer detail : orderDetails) {
@@ -82,7 +83,7 @@ public class OrderCustomerControllers extends HttpServlet {
                 detail.setProduct(product);
             }
         }
-       
+
         int totalQuantity = orderDao.getTotalQuantityByOrderCId(accountId);
         int all = orderDao.getAllOrderCountForCustomers(accountId);
         int pendingCount = orderDao.getOrderCountByStatusForCustomers(accountId, 1);
@@ -91,7 +92,7 @@ public class OrderCustomerControllers extends HttpServlet {
         int completedCount = orderDao.getOrderCountByStatusForCustomers(accountId, 4);
         int canceledCount = orderDao.getOrderCountByStatusForCustomers(accountId, 5);
         boolean noOrders = all == 0 && pendingCount == 0 && confirmedCount == 0 && shippingCount == 0 && completedCount == 0 && canceledCount == 0;
-        
+
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("all", all);
         request.setAttribute("pendingCount", pendingCount);
@@ -108,24 +109,64 @@ public class OrderCustomerControllers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("account");
+        if (a == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        int accountId = a.getAccountId();
+
         String action = request.getParameter("action");
-        if (action != null) {
-            switch (action) {
-                case "cancel":
-                    int orderId = Integer.parseInt(request.getParameter("orderId"));
-                    String cancelReason = request.getParameter("cancelReason");
-                    if (orderId > 0 && cancelReason != null && !cancelReason.isEmpty()) {
-                        boolean success = orderDao.cancelOrder(orderId);
-                        if (success) {
-                            response.sendRedirect(request.getContextPath() + "/ordercustomer");
-                        } else {
+        String orderIdStr = request.getParameter("orderId");
+        String status = request.getParameter("status");
+
+        if (action != null && orderIdStr != null) {
+            boolean isComplete = false;
+            String ms = null;
+
+            try {
+                int orderId = Integer.parseInt(orderIdStr);
+                OrderDao orderDao = new OrderDao();
+
+                switch (action) {
+                    case "cancel":
+                        boolean isCancelled = orderDao.cancelOrder(orderId);
+                        if (isCancelled) {
+                            session.setAttribute("notification", "cancel");
                         }
-                    }
-                    break;
-                case "updateAddress":
-                    break;
-                case "requestChange":
-                    break;
+                        break;
+
+                    case "received":
+                        isComplete = orderDao.updateStatusById(orderId, 4);
+                        ms = isComplete ? "Đơn hàng đã được đánh dấu là đã nhận!" : "Không thể cập nhật đơn hàng!";
+                        break;
+                    case "buyAgain":
+                        List<OrderDetailCustomer> orderDetails = orderDao.getOrderDetailCustomers(orderId);
+                        Cart cart = (Cart) session.getAttribute("cart");
+                        if (cart == null) {
+                            cart = new Cart();
+                            session.setAttribute("cart", cart);
+                        }
+                        for (OrderDetailCustomer detail : orderDetails) {
+                            Product product = productDao.getProductById(detail.getProductId());
+                            Item item = new Item(product, detail.getQuantity(), product.getPrice());
+                            cart.addItem(item);
+                        }
+                        response.sendRedirect("cart");
+                        return;
+                    default:
+                        ms = "Hành động không hợp lệ!";
+                }
+
+                if (isComplete) {
+                    request.getSession().setAttribute("notification", action);
+                }
+                response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
+
+            } catch (NumberFormatException e) {
+                request.setAttribute("message", "ID đơn hàng không hợp lệ!");
+                response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
             }
         }
     }
