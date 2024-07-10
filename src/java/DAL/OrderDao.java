@@ -735,7 +735,7 @@ public class OrderDao extends DBContext {
         System.out.println("Total Quantity for OrderCID " + orderCId + ": " + totalQuantity);
     }
 
-    public OrderGuest getOrderByID(int orderGID) {
+    public OrderGuest getOrderGuestByID(int orderGID) {
         String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
                 + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "
                 + "FROM OrderGuest og JOIN StatusOrder so ON og.StatusID = so.StatusID "
@@ -916,6 +916,29 @@ public class OrderDao extends DBContext {
 
     }
 
+
+    public void updatePaymentSuccess(String type, int orderID) {
+        String tableName = "";
+        String columnName = "";
+        if ("customer".equals(type)) {
+            tableName = "OrderCustomer";
+            columnName = "OrderCID";
+        } else if ("guest".equalsIgnoreCase(type)) {
+            tableName = "OrderGuest";
+            columnName = "OrderGID";
+        }
+
+        String sql = "UPDATE " + tableName + "\n"
+                + "SET PaymentStatus = 1\n"
+                + "WHERE " + columnName + " = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
     public boolean updateOrderCustomerStatus(int orderCID, int newStatusID) {
         String query = "UPDATE OrderCustomer SET StatusID = ? WHERE OrderCID = ?";
         try {
@@ -927,6 +950,7 @@ public class OrderDao extends DBContext {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+
         }
     }
 
