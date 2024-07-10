@@ -73,8 +73,7 @@ public class DashControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDao orderDao = new OrderDao();
-        List<Account> account = orderDao.getAllAccount();
-
+      
         List<OrderCustomer> customerOrders = orderDao.getAllOrderCustomers();
         List<OrderGuest> guestOrders = orderDao.getAllOrderGuests();
         int totalQuantity = orderDao.OrderCount();
@@ -118,7 +117,7 @@ public class DashControllers extends HttpServlet {
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("totalRevenue", totalRevenue);
         request.setAttribute("recentOrders", order);
-        request.setAttribute("acc", account);
+      
         request.setAttribute("mostPurchasedProducts", mostPurchasedProducts);
         request.setAttribute("topBuyers", topBuyers);
 
