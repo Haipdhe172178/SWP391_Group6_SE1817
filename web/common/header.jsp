@@ -6,6 +6,17 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.Cookie" %>
+<%@ page import="java.net.URLDecoder" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Models.Product" %>
+<%@ page import="Models.Item" %>
+<%@ page import="Models.Cart" %>
+<%@ page import="DAL.CartDAO" %>
+<%@ page import="DAL.ProductDao" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -173,9 +184,6 @@
                                     <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="check" class="dropdown-item active fw-light">Thanh Toán <span class="badge bg-primary"></span></a>
-                                </li>
-                                <li>
                                     <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
                                 </li>
 
@@ -223,44 +231,69 @@
                                     </li>
                                 </c:otherwise>
                             </c:choose>
+                            <%
+                                // Đọc cookie và lấy thông tin giỏ hàng
+                                Cookie[] cookies = request.getCookies();
+                                String cart = "";
+                                int cartItemCount = 0;
 
+                                if (cookies != null) {
+                                    for (Cookie cookie : cookies) {
+                                        if (cookie.getName().equals("cart")) {
+                                            cart = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8.toString());
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                String cartData = cart; // Lấy dữ liệu giỏ hàng từ cookie
+                                ProductDao productDao = new ProductDao();
+                                List<Product> productList = productDao.getAllProducts();
+                                Cart cartObject = new Cart(cartData, productList);
+                                List<Item> cartItems = cartObject.getItems();
+                                int size = cartItems.size();
+                                List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
+
+                                String[] items = cart.split(",");
+                                cartItemCount = items.length; 
+                                request.setAttribute("lastTwoItems", lastTwoItems);
+                                request.setAttribute("size", cartItemCount);
+                                request.setAttribute("cartItemCount", cartItemCount);
+                            %>
                             <li class="cart-dropdown dropdown">
-                                <a href="${pageContext.request.contextPath}/cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <svg class="cart">
                                     <use xlink:href="#cart"></use>
-                                    </svg><span class="fs-6 fw-light">(02)</span>
+                                    </svg><span class="fs-6 fw-light">(${requestScope.size})</span>
                                 </a>
                                 <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
                                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-primary">Your cart</span>
-                                        <span class="badge bg-primary rounded-pill">2</span>
+                                        <span class="text-primary">Giỏ hàng của bạn</span>
+                                        <span class="badge bg-primary rounded-pill">${requestScope.size}</span>
                                     </h4>
                                     <ul class="list-group mb-3">
-                                        <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h5>
-                                                    <a href="single">Secrets of the Alchemist</a>
-                                                </h5>
-                                                <small>High quality in good price.</small>
-                                            </div>
-                                            <span class="text-primary">$870</span>
-                                        </li>
-                                        <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h5>
-                                                    <a href="single">Quest for the Lost City</a>
-                                                </h5>
-                                                <small>Professional Quest for the Lost City.</small>
-                                            </div>
-                                            <span class="text-primary">$600</span>
-                                        </li>
-                                        <li class="list-group-item bg-transparent d-flex justify-content-between">
-                                            <span class="text-capitalize"><b>Total (USD)</b></span>
-                                            <strong>$1470</strong>
-                                        </li>
+                                        <c:forEach var="item" items="${lastTwoItems}">
+                                            <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="${item.getProduct().getImgProduct()}" alt="${item.getProduct().getName()}" class="img-thumbnail" style="width: 80px; height: auto;">
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <h7>
+                                                            <a href="single?productID=${item.getProduct().getProductId()}">${item.getProduct().getName()}</a>
+                                                        </h7>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-column align-items-end">
+                                                    <span class="text-primary">
+                                                        <fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                     <div class="d-flex flex-wrap justify-content-center">
-                                        <a href="${pageContext.request.contextPath}/cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
+                                        <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">Xem giỏ hàng</a>
                                     </div>
                                 </div>
                             </li>
