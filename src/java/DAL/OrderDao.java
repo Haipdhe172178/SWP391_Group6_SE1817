@@ -671,7 +671,7 @@ public class OrderDao extends DBContext {
         System.out.println("Total Quantity for OrderCID " + orderCId + ": " + totalQuantity);
     }
 
-    public OrderGuest getOrderByID(int orderGID) {
+    public OrderGuest getOrderGuestByID(int orderGID) {
         String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
                 + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "
                 + "FROM OrderGuest og JOIN StatusOrder so ON og.StatusID = so.StatusID "
@@ -771,7 +771,7 @@ public class OrderDao extends DBContext {
                 + "FETCH NEXT 10 ROWS ONLY;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, (indexx-1)*10);
+            ps.setInt(1, (indexx - 1) * 10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -850,6 +850,30 @@ public class OrderDao extends DBContext {
 
         return totalOrders;
 
+    }
+
+    public void updatePaymentSuccess(String type, int orderID) {
+        String tableName = "";
+        String columnName = "";
+        if ("customer".equals(type)) {
+            tableName = "OrderCustomer";
+            columnName = "OrderCID";
+        } else if ("guest".equalsIgnoreCase(type)) {
+            tableName = "OrderGuest";
+            columnName = "OrderGID";
+        }
+
+        String sql = "UPDATE " + tableName + "\n"
+                + "SET PaymentStatus = 1\n"
+                + "WHERE " + columnName + " = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
