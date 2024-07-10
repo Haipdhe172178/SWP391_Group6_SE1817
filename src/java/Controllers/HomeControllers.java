@@ -101,6 +101,7 @@ public class HomeControllers extends HttpServlet {
         List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
         List<Account> listAcc = accDAO.getAllAccount();
 
+        request.setAttribute("active", "home");
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
