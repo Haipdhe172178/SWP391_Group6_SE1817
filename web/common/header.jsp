@@ -7,12 +7,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="jakarta.servlet.http.Cookie" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.net.URLDecoder" %>
 <%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Models.Product" %>
 <%@ page import="Models.Item" %>
 <%@ page import="Models.Cart" %>
+<%@ page import="Models.Account" %>
 <%@ page import="DAL.CartDAO" %>
 <%@ page import="DAL.ProductDao" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -232,70 +234,101 @@
                                 </c:otherwise>
                             </c:choose>
                             <%
-                                // Đọc cookie và lấy thông tin giỏ hàng
+                                Account account = (Account) request.getSession().getAttribute("account");
                                 Cookie[] cookies = request.getCookies();
-                                String cart = "";
+                                String cartData = "";
                                 int cartItemCount = 0;
 
+                                // Lấy dữ liệu giỏ hàng từ cookie
                                 if (cookies != null) {
                                     for (Cookie cookie : cookies) {
                                         if (cookie.getName().equals("cart")) {
-                                            cart = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8.toString());
+                                            cartData = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8.toString());
                                             break;
                                         }
                                     }
                                 }
 
-                                String cartData = cart; // Lấy dữ liệu giỏ hàng từ cookie
                                 ProductDao productDao = new ProductDao();
                                 List<Product> productList = productDao.getAllProducts();
-                                Cart cartObject = new Cart(cartData, productList);
-                                List<Item> cartItems = cartObject.getItems();
+                                Cart cookieCart = new Cart(cartData, productList);
+
+                                Cart finalCart = null;
+                                if (account == null) {
+                                    // Người dùng chưa đăng nhập, sử dụng giỏ hàng từ cookie
+                                    finalCart = cookieCart;
+                                } else {
+                                    // Người dùng đã đăng nhập, lấy giỏ hàng từ database và gộp với giỏ hàng từ cookie
+                                    CartDAO cartDAO = new CartDAO();
+                                    Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
+                                    if (dbCart != null) {
+                                        // Gộp giỏ hàng từ database và cookie
+                                        for (Item item : cookieCart.getItems()) {
+                                            dbCart.addItem(item);
+                                        }
+                                        finalCart = dbCart;
+                                    } else {
+                                        finalCart = cookieCart;
+                                    }
+                                }
+
+                                List<Item> cartItems = finalCart.getItems();
                                 int size = cartItems.size();
                                 List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
 
-                                String[] items = cart.split(",");
-                                cartItemCount = items.length; 
+                                cartItemCount = size; // Cập nhật số lượng mặt hàng trong giỏ hàng
                                 request.setAttribute("lastTwoItems", lastTwoItems);
-                                request.setAttribute("size", cartItemCount);
-                                request.setAttribute("cartItemCount", cartItemCount);
+                                request.setAttribute("size", size);
                             %>
+
                             <li class="cart-dropdown dropdown">
                                 <a href="cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <svg class="cart">
                                     <use xlink:href="#cart"></use>
                                     </svg><span class="fs-6 fw-light">(${requestScope.size})</span>
                                 </a>
-                                <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
-                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-primary">Giỏ hàng của bạn</span>
-                                        <span class="badge bg-primary rounded-pill">${requestScope.size}</span>
-                                    </h4>
-                                    <ul class="list-group mb-3">
-                                        <c:forEach var="item" items="${lastTwoItems}">
-                                            <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="${item.getProduct().getImgProduct()}" alt="${item.getProduct().getName()}" class="img-thumbnail" style="width: 80px; height: auto;">
-                                                    </div>
-                                                    <div class="ms-3">
-                                                        <h7>
-                                                            <a href="single?productID=${item.getProduct().getProductId()}">${item.getProduct().getName()}</a>
-                                                        </h7>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-column align-items-end">
-                                                    <span class="text-primary">
-                                                        <fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/>
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                    <div class="d-flex flex-wrap justify-content-center">
-                                        <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">Xem giỏ hàng</a>
-                                    </div>
-                                </div>
+                                <c:choose>
+                                    <c:when test="${requestScope.size == 0}">
+                                        <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
+                                            <div class="empty-cart-message" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 3rem">
+                                                <img src="images/cartEmpty.png" alt="alt" style="width: 40%;"/>
+                                                <h4>Chưa có sản phẩm</h4>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
+                                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                <span class="text-primary">Giỏ hàng của bạn</span>
+                                                <span class="badge bg-primary rounded-pill">${requestScope.size}</span>
+                                            </h4>
+                                            <ul class="list-group mb-3">
+                                                <c:forEach var="item" items="${lastTwoItems}">
+                                                    <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <img src="${item.getProduct().getImgProduct()}" alt="${item.getProduct().getName()}" class="img-thumbnail" style="width: 80px; height: auto;">
+                                                            </div>
+                                                            <div class="ms-3">
+                                                                <h7>
+                                                                    <a href="single?productID=${item.getProduct().getProductId()}">${item.getProduct().getName()}</a>
+                                                                </h7>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <span class="text-primary">
+                                                                <fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                            <div class="d-flex flex-wrap justify-content-center">
+                                                <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">Xem giỏ hàng</a>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
                         </ul>
                     </div>
