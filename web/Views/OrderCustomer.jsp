@@ -105,36 +105,8 @@
 
 <body>
 
-<script>
-    function showNotification() {
-        var notification = '<%= session.getAttribute("notification") %>';
-        var notificationContainer = document.getElementById('notification-container');
-
-        if (notification === 'cancel') {
-            if (notificationContainer) {
-                var notificationElement = document.createElement('div');
-                notificationElement.classList.add('notification', 'success');
-                notificationElement.textContent = 'Đã hủy đơn hàng thành công';
-                notificationContainer.appendChild(notificationElement);
-                notificationContainer.style.display = 'block';
-                setTimeout(function () {
-                    notificationContainer.style.display = 'none';
-                }, 5000);
-            }
-        }
-
-        // Remove the notification from session after displaying
-        <% session.removeAttribute("notification"); %>
-    }
-
-    // Call the function when the page loads
-    window.onload = function () {
-        showNotification();
-    };
-</script>
-
     <jsp:include page="../common/header.jsp"></jsp:include>
-  <div class="container order-section">
+ <div class="container order-section">
     <h3>Đơn hàng của tôi</h3>
 
     <div class="search-box">
@@ -237,6 +209,7 @@
 </c:choose>
 
 </div>
+
 
     <footer class="footer">
         <div class="container">

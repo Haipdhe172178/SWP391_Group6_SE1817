@@ -131,12 +131,9 @@ public class OrderCustomerControllers extends HttpServlet {
 
                 switch (action) {
                     case "cancel":
-                        boolean isCancelled = orderDao.cancelOrder(orderId);
-                        if (isCancelled) {
-                            session.setAttribute("notification", "cancel");
-                        }
+                        isComplete = orderDao.cancelOrder(orderId);
+                        ms = isComplete ? "Đơn hàng đã được hủy!" : "Không thể hủy đơn hàng!";
                         break;
-
                     case "received":
                         isComplete = orderDao.updateStatusById(orderId, 4);
                         ms = isComplete ? "Đơn hàng đã được đánh dấu là đã nhận!" : "Không thể cập nhật đơn hàng!";
@@ -155,13 +152,12 @@ public class OrderCustomerControllers extends HttpServlet {
                         }
                         response.sendRedirect("cart");
                         return;
+
                     default:
                         ms = "Hành động không hợp lệ!";
                 }
 
-                if (isComplete) {
-                    request.getSession().setAttribute("notification", action);
-                }
+                request.getSession().setAttribute("notification", ms);
                 response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
 
             } catch (NumberFormatException e) {
