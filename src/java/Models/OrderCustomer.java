@@ -18,7 +18,7 @@ public class OrderCustomer {
     private float totalPrice;
     private Date date;
     private Status status;
-    private int paymentStatus;
+    public int paymentStatus;
     private ShippingAddress shipAddress;
 
     public OrderCustomer(List<OrderDetailCustomer> orderDetails, Account account, float totalPrice, Date date, Status status) {
@@ -80,5 +80,4 @@ public class OrderCustomer {
     public void setDate(Date date) {
         this.date = date;
     }
-
 }

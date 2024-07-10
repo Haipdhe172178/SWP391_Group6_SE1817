@@ -607,7 +607,7 @@ public class OrderDao extends DBContext {
         }
     }
 
-public boolean updateStatusById(int orderId, int status) {
+    public boolean updateStatusById(int orderId, int status) {
         String sql = "  Update OrderCustomer\n"
                 + "  set StatusID = ? \n"
                 + "  where OrderCID = ?";
@@ -623,12 +623,12 @@ public boolean updateStatusById(int orderId, int status) {
         return false;
     }
 
-  public Map<String, Integer> getStatusCounts(int accountId) {
+    public Map<String, Integer> getStatusCounts(int accountId) {
         Map<String, Integer> statusCounts = new HashMap<>();
-        String query = "SELECT StatusID, COUNT(*) as Count " +
-                       "FROM OrderCustomer " +
-                       "WHERE AccountID = ? " +
-                       "GROUP BY StatusID";
+        String query = "SELECT StatusID, COUNT(*) as Count "
+                + "FROM OrderCustomer "
+                + "WHERE AccountID = ? "
+                + "GROUP BY StatusID";
 
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -672,9 +672,11 @@ public boolean updateStatusById(int orderId, int status) {
 
         return statusCounts;
     }
+
     public OrderCustomer getOrderCustomerById(int orderId) {
         OrderCustomer orderCustomer = null;
         String query = "SELECT oc.OrderCID, oc.AccountID, oc.TotalPrice, oc.Date, oc.StatusID, s.StatusName, "
+                + "oc.paymentStatus, "
                 + "a.FullName, a.Email, a.PhoneNumber, a.Address "
                 + "FROM OrderCustomer oc "
                 + "JOIN StatusOrder s ON oc.StatusID = s.StatusID "
@@ -697,8 +699,10 @@ public boolean updateStatusById(int orderId, int status) {
                 Status status = new Status();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
-                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId); // Triển khai phương thức này nếu cần
+                int paymentStatus = rs.getInt("paymentStatus");
+                List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
                 orderCustomer = new OrderCustomer(orderDetails, account, totalPrice, date, status);
+                    orderCustomer.setPaymentStatus(paymentStatus);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -831,7 +835,7 @@ public boolean updateStatusById(int orderId, int status) {
                 + "FETCH NEXT 10 ROWS ONLY;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, (indexx-1)*10);
+            ps.setInt(1, (indexx - 1) * 10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -911,7 +915,8 @@ public boolean updateStatusById(int orderId, int status) {
         return totalOrders;
 
     }
- public boolean updateOrderCustomerStatus(int orderCID, int newStatusID) {
+
+    public boolean updateOrderCustomerStatus(int orderCID, int newStatusID) {
         String query = "UPDATE OrderCustomer SET StatusID = ? WHERE OrderCID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
