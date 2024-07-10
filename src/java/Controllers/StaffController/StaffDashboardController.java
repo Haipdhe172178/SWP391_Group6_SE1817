@@ -59,30 +59,29 @@ public class StaffDashboardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         List<Orders> list = new ArrayList<>();
-         OrderDao dal = new OrderDao();
-          String index = request.getParameter("index");
-       
-           int indexx;
-        if(request.getParameter("index")==null)
-       {
-           indexx = 1;
-       }else{
-         indexx = Integer.parseInt(index);
+        List<Orders> list = new ArrayList<>();
+        OrderDao dal = new OrderDao();
+        String index = request.getParameter("index");
+
+        int indexx;
+        if (request.getParameter("index") == null) {
+            indexx = 1;
+        } else {
+            indexx = Integer.parseInt(index);
         }
-      
-         int count = dal.getToralOrder();
-      
-        int endpage = count/10;
-        if(count%10==0){           
-        }else{
+
+        int count = dal.getToralOrder();
+
+        int endpage = count / 10;
+        if (count % 10 == 0) {
+        } else {
             endpage++;
         }
-          list = dal.getallOrder(indexx);
-          request.setAttribute("endP", endpage);
-          request.setAttribute("tag", indexx);
+        list = dal.getallOrder(indexx);
+        request.setAttribute("endP", endpage);
+        request.setAttribute("tag", indexx);
 
-         request.setAttribute("list", list);
+        request.setAttribute("list", list);
         request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
     }
 

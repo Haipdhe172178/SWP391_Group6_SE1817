@@ -19,6 +19,7 @@ public class SinglePostControllers extends HttpServlet {
         News news = newsDao.getNewsById(id);
 
         request.setAttribute("news", news);
+        request.setAttribute("active", "news");
         request.getRequestDispatcher("Views/SinglePost.jsp").forward(request, response);
     }
 

@@ -83,7 +83,7 @@ public class ContactControllers extends HttpServlet {
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("news", listNews);
-
+        request.setAttribute("active", "contact");
         request.setAttribute("contact", contact);
         request.getRequestDispatcher("Views/Contact.jsp").forward(request, response);
     }
@@ -104,17 +104,17 @@ public class ContactControllers extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         String topic = request.getParameter("topic");
         String message = request.getParameter("message");
-
+        
         Contact contact = new Contact();
         contact.setUserName(userName);
         contact.setEmail(email);
         contact.setPhoneNumber(phoneNumber);
         contact.setTopic(topic);
         contact.setMessage(message);
-
+        
         ContactDAO contactDAO = new ContactDAO();
         boolean success = contactDAO.insertContact(contact);
-
+        
         if (success) {
             request.setAttribute("message", "Liên hệ của bạn đã được gửi thành công!");
         } else {
