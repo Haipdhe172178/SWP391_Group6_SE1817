@@ -1,14 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package Controllers;
 
+import DAL.AccountDAO;
 import DAL.OrderDao;
 import DAL.ProductDao;
+import DAL.ShipAddressDAO;
+import Models.Account;
+import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.Product;
+import Models.ShipAddress;
+import Models.ShippingAddress;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,23 +56,36 @@ public class OderCustomerDetailControllers extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    int orderId = Integer.parseInt(request.getParameter("orderId"));
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-    ProductDao productDAO = new ProductDao();
-    OrderDao orderDAO = new OrderDao();
+        ProductDao productDAO = new ProductDao();
+        OrderDao orderDAO = new OrderDao();
+        ShipAddressDAO shipAddressDAO = new ShipAddressDAO();
+        AccountDAO accountDAO = new AccountDAO();
 
-    List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
-    for (OrderDetailCustomer orderDetail : orderDetails) {
-        int productId = orderDetail.getProductId();
-        Product product = productDAO.getProductById(productId);
-        orderDetail.setProduct(product); 
+        List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
+        for (OrderDetailCustomer orderDetail : orderDetails) {
+            int productId = orderDetail.getProductId();
+            Product product = productDAO.getProductById(productId);
+            orderDetail.setProduct(product); 
+        }
+
+    
+        ShipAddress shipAddress = shipAddressDAO.selectShipAddress(orderId);
+        OrderCustomer order = orderDAO.getOrderCustomerById(orderId);
+        int accountId = order.getAccount().getAccountId();
+        Account account = accountDAO.getAccountByid(accountId);
+        
+        request.setAttribute("orderDetails", orderDetails);
+        request.setAttribute("order", order);
+        request.setAttribute("account", account);
+        request.setAttribute("shippingAddress", shipAddress);
+
+        request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
     }
-    request.setAttribute("orderDetails", orderDetails);
-    request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
-}
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -82,7 +96,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

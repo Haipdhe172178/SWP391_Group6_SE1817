@@ -30,13 +30,17 @@ public class CartControllers extends HttpServlet {
         ProductDao productDao = new ProductDao();
         List<Product> productList = productDao.getAllProducts();
 
-        Cart cart;
-
+        CartDAO cartDAO = new CartDAO();
         String cartData = getCartDataFromCookie(request);
-        cart = new Cart(cartData, productList);
+        Cart cart = new Cart(cartData, productList);
 
+        List<Item> cartItems = cart.getItems();
+        int size = cartItems.size();
+        List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
+        
+        request.setAttribute("size", size);
+        request.setAttribute("lastTwoItems", lastTwoItems);
         request.setAttribute("cart", cart);
-        request.setAttribute("cartSize", cart.getItems().size());
         request.getRequestDispatcher("Views/Cart.jsp").forward(request, response);
     }
 
@@ -48,7 +52,6 @@ public class CartControllers extends HttpServlet {
         int productId = Integer.parseInt(request.getParameter("productId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        // Check if the quantity is greater than zero
         if (quantity <= 0) {
             session.setAttribute("message", "Số lượng sản phẩm phải lớn hơn 0");
             response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);

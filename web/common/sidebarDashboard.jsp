@@ -102,7 +102,7 @@
             </div>
             <ul id="sidebar_menu">
                 <li class>
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="staffdashboard?index=1" aria-expanded="false">
                         <div class="icon_menu">
                             <img src="img/menu-icon/8.svg" alt>
                         </div>

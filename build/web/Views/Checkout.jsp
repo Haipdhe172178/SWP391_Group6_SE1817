@@ -446,6 +446,7 @@
                                                 function updateFullAddress() {
                                                     var city = cities.options[cities.selectedIndex].text || '';
                                                     var district = districts.options[districts.selectedIndex].text || '';
+                                                    
                                                     var ward = wards.options[wards.selectedIndex].text || '';
                                                     var detailedAddress = document.getElementById('maddress').value.trim();
 

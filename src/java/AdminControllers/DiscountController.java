@@ -70,11 +70,7 @@ public class DiscountController extends HttpServlet {
                  status1 = Integer.parseInt(status);
             }
           
-         
-     
-         
-          
-          
+   
         String searchtext = request.getParameter("s");
           String index = request.getParameter("index");
           
@@ -152,11 +148,7 @@ public class DiscountController extends HttpServlet {
         
         
         else{
-      
-    
-            
-            
-            
+
             int indexx;
         if(request.getParameter("index")==null)
        {

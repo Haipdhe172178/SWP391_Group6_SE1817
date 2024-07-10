@@ -9,21 +9,27 @@ import java.util.List;
 
 /**
  *
- * @author huyca
+ * @author USER
  */
-public class OrderGuest {
-    private List<OrderDetailGuest> orderDetails;
-    private String fullName;
+public class Orders { 
+     private int stt;
+      private int OrderID;
+      private String fullName;
     private String email;
     private String phoneNumber;
     private String address;
     private float totalPrice;
     private Date date;
-    private Status status;
+    private int status;
     private int paymentStatus;
-    
-    public OrderGuest(List<OrderDetailGuest> orderDetails, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, Status status) {
-        this.orderDetails = orderDetails;
+    private int accountID;
+
+    public Orders() {
+    }
+
+    public Orders(int stt, int OrderID, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, int status, int paymentStatus, int accountID) {
+        this.stt = stt;
+        this.OrderID = OrderID;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -31,22 +37,24 @@ public class OrderGuest {
         this.totalPrice = totalPrice;
         this.date = date;
         this.status = status;
-    }
-
-    public OrderGuest() {
-    }
-    
-    
-    public int getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(int paymentStatus) {
         this.paymentStatus = paymentStatus;
+        this.accountID = accountID;
     }
 
-    public List<OrderDetailGuest> getOrderDetails() {
-        return orderDetails;
+    public int getStt() {
+        return stt;
+    }
+
+    public void setStt(int stt) {
+        this.stt = stt;
+    }
+
+    public int getOrderID() {
+        return OrderID;
+    }
+
+    public void setOrderID(int OrderID) {
+        this.OrderID = OrderID;
     }
 
     public String getFullName() {
@@ -97,11 +105,33 @@ public class OrderGuest {
         this.date = date;
     }
 
-    public Status getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Status statusId) {
+    public void setStatus(int status) {
         this.status = status;
     }
+
+    public int getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(int paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public int getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
+    }
+
+   
+   
+    
+    
+    
 }
