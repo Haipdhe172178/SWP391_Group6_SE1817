@@ -6,6 +6,19 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.Cookie" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ page import="java.net.URLDecoder" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Models.Product" %>
+<%@ page import="Models.Item" %>
+<%@ page import="Models.Cart" %>
+<%@ page import="Models.Account" %>
+<%@ page import="DAL.CartDAO" %>
+<%@ page import="DAL.ProductDao" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 <symbol id="search" xmlns="http://www.w3.org/2000/symbolsvg" viewBox="0 0 24 24">
@@ -100,7 +113,7 @@
             <li class="cat-list-item">
                 <a href="shop"  title="">Tất cả</a>
             </li>
-            <c:forEach items="${cate}" var="cate">
+            <c:forEach items="${category}" var="cate">
                 <li class="cat-list-item">
                     <a href="shop?categoryId=${cate.categoryId}"  title="">${cate.categoryName}</a>
                 </li>
@@ -116,13 +129,13 @@
         <div class="container-fluid">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <p class="fs-6 my-2 text-center">Need any help? Call us <a href="#">112233344455</a></p>
+                    <p class="fs-6 my-2 text-center">Bạn cần giúp đỡ? Hãy gọi cho chúng tôi <a href="#">+84 38 272 0127</a></p>
                 </div>
                 <div class="col-md-4 border-start border-end">
-                    <p class="fs-6 my-2 text-center">Summer sale discount off 60% off! <a class="text-decoration-underline" href="shop">Shop Now</a></p>
+                    <p class="fs-6 my-2 text-center">Đang có giảm giá lên tới 60% <a class="text-decoration-underline" href="shop">Mua ngay!!</a></p>
                 </div>
                 <div class="col-md-4">
-                    <p class="fs-6 my-2 text-center">2-3 business days delivery & free returns</p>
+                    <p class="fs-6 my-2 text-center">Giao hàng 2-3 ngày làm việc và trả lại miễn phí</p>
                 </div>
             </div>
         </div>
@@ -166,14 +179,11 @@
                                     <a href="about" class="dropdown-item fw-light">Giới thiệu <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
-                                    <a href="shop" class="dropdown-item active fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
+                                    <a href="shop" class="dropdown-item fw-light">Sản phẩm <span class="badge bg-primary"></span></a>
                                 </li>
 
                                 <li>
                                     <a href="cart" class="dropdown-item fw-light">Giỏ hàng <span class="badge bg-primary"></span></a>
-                                </li>
-                                <li>
-                                    <a href="check" class="dropdown-item fw-light">Thanh Toán <span class="badge bg-primary"></span></a>
                                 </li>
                                 <li>
                                     <a href="blog" class="dropdown-item fw-light">Tin tức <span class="badge bg-primary"></span></a>
@@ -216,53 +226,109 @@
                                             <button class="dropbtn">${sessionScope.account.getUserName()}</button>
                                             <div class="dropdown-content">
                                                 <a href="profile">Tài khoản của tôi</a>
-                                                <a href="#">Đơn mua</a>
+                                                <a href="ordercustomer">Đơn mua</a>
                                                 <a href="logout">Đăng xuất</a>
                                             </div>
                                         </div>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
+                            <%
+                                Account account = (Account) request.getSession().getAttribute("account");
+                                Cookie[] cookies = request.getCookies();
+                                String cartData = "";
+                                int cartItemCount = 0;
+
+                                // Lấy dữ liệu giỏ hàng từ cookie
+                                if (cookies != null) {
+                                    for (Cookie cookie : cookies) {
+                                        if (cookie.getName().equals("cart")) {
+                                            cartData = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8.toString());
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                ProductDao productDao = new ProductDao();
+                                List<Product> productList = productDao.getAllProducts();
+                                Cart cookieCart = new Cart(cartData, productList);
+
+                                Cart finalCart = null;
+                                if (account == null) {
+                                    // Người dùng chưa đăng nhập, sử dụng giỏ hàng từ cookie
+                                    finalCart = cookieCart;
+                                } else {
+                                    // Người dùng đã đăng nhập, lấy giỏ hàng từ database và gộp với giỏ hàng từ cookie
+                                    CartDAO cartDAO = new CartDAO();
+                                    Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
+                                    if (dbCart != null) {
+                                        // Gộp giỏ hàng từ database và cookie
+                                        for (Item item : cookieCart.getItems()) {
+                                            dbCart.addItem(item);
+                                        }
+                                        finalCart = dbCart;
+                                    } else {
+                                        finalCart = cookieCart;
+                                    }
+                                }
+
+                                List<Item> cartItems = finalCart.getItems();
+                                int size = cartItems.size();
+                                List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
+
+                                cartItemCount = size; // Cập nhật số lượng mặt hàng trong giỏ hàng
+                                request.setAttribute("lastTwoItems", lastTwoItems);
+                                request.setAttribute("size", size);
+                            %>
 
                             <li class="cart-dropdown dropdown">
-                                <a href="${pageContext.request.contextPath}/cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="cart" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <svg class="cart">
                                     <use xlink:href="#cart"></use>
-                                    </svg><span class="fs-6 fw-light">(02)</span>
+                                    </svg><span class="fs-6 fw-light">(${requestScope.size})</span>
                                 </a>
-                                <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
-                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-primary">Your cart</span>
-                                        <span class="badge bg-primary rounded-pill">2</span>
-                                    </h4>
-                                    <ul class="list-group mb-3">
-                                        <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h5>
-                                                    <a href="single">Secrets of the Alchemist</a>
-                                                </h5>
-                                                <small>High quality in good price.</small>
+                                <c:choose>
+                                    <c:when test="${requestScope.size == 0}">
+                                        <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
+                                            <div class="empty-cart-message" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 3rem">
+                                                <img src="images/cartEmpty.png" alt="alt" style="width: 40%;"/>
+                                                <h4>Chưa có sản phẩm</h4>
                                             </div>
-                                            <span class="text-primary">$870</span>
-                                        </li>
-                                        <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h5>
-                                                    <a href="single">Quest for the Lost City</a>
-                                                </h5>
-                                                <small>Professional Quest for the Lost City.</small>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="dropdown-menu animate slide dropdown-menu-start dropdown-menu-lg-end p-3">
+                                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                <span class="text-primary">Giỏ hàng của bạn</span>
+                                                <span class="badge bg-primary rounded-pill">${requestScope.size}</span>
+                                            </h4>
+                                            <ul class="list-group mb-3">
+                                                <c:forEach var="item" items="${lastTwoItems}">
+                                                    <li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <img src="${item.getProduct().getImgProduct()}" alt="${item.getProduct().getName()}" class="img-thumbnail" style="width: 80px; height: auto;">
+                                                            </div>
+                                                            <div class="ms-3">
+                                                                <h7>
+                                                                    <a href="single?productID=${item.getProduct().getProductId()}">${item.getProduct().getName()}</a>
+                                                                </h7>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <span class="text-primary">
+                                                                <fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency" currencySymbol="₫" groupingUsed="true" maxFractionDigits="0"/>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                            <div class="d-flex flex-wrap justify-content-center">
+                                                <a href="cart" class="w-100 btn btn-dark mb-1" type="submit">Xem giỏ hàng</a>
                                             </div>
-                                            <span class="text-primary">$600</span>
-                                        </li>
-                                        <li class="list-group-item bg-transparent d-flex justify-content-between">
-                                            <span class="text-capitalize"><b>Total (USD)</b></span>
-                                            <strong>$1470</strong>
-                                        </li>
-                                    </ul>
-                                    <div class="d-flex flex-wrap justify-content-center">
-                                        <a href="${pageContext.request.contextPath}/cart" class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
-                                    </div>
-                                </div>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
                         </ul>
                     </div>

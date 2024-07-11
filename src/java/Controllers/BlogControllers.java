@@ -101,7 +101,7 @@ public class BlogControllers extends HttpServlet {
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("active", "news");
-        request.setAttribute("cate", categorys);
+        request.setAttribute("category", categorys);
         request.setAttribute("sortNews", sort);
         request.setAttribute("page", page);
         request.setAttribute("endPage", endPage);

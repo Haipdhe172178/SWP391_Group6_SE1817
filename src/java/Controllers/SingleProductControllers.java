@@ -109,6 +109,9 @@ public class SingleProductControllers extends HttpServlet {
         //QUANTITY sold product
         int quantitySold = productDao.getQuantitySoldByProductId(id);
         int avgRating = feedbackDAO.avgRating(id);
+        CategoryDao categoryDao = new CategoryDao();
+        List<Category> cate = categoryDao.getallCategorys();
+        request.setAttribute("category", cate);
         
         request.setAttribute("rating", rating);
         request.setAttribute("quantityFeedback", quantity);
