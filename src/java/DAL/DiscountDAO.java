@@ -403,4 +403,35 @@ public class DiscountDAO extends DBContext {
         }
         return isExisted;
     }
+
+    public boolean insertHistoryCoupon(int accID, UsedCoupon coupon) {
+        String sql = "INSERT INTO [dbo].[History_coupons] (AccountID, CodeID) VALUES (?, ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, accID);
+            st.setInt(2, coupon.getCodeId());
+            int rowsInserted = st.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public void UpdateQuantityDiscount(int codeID, int quantity) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String sql = "UPDATE [dbo].[Used_coupon]\n"
+                    + "   SET [Quantity] = ?\n"
+                    + " WHERE CodeID = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, quantity);
+            ps.setInt(2, codeID);
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -22,7 +22,7 @@ import javax.crypto.Mac;
 public class Config {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:9999/SWP391/Views/thanks.jsp";
+    public static String vnp_ReturnUrl = "http://localhost:9999/SWP391/confirmVnpay";
     public static String vnp_TmnCode = "EMCEFG6G";
     public static String secretKey = "VLWFNG4STP10O5SEOIPF7VM9EADRB7SU";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

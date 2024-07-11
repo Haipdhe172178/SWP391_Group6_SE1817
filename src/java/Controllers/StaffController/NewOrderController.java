@@ -110,12 +110,13 @@ public class NewOrderController extends HttpServlet {
         String totalPrice = request.getParameter("total");
 
         OrderDao od = new OrderDao();
-        int orderId = od.AddOrderGuest(name, email, phone, address,
+        int orderId = 0;
+         List<Item> listItem = new ArrayList<>();
+        if(Integer.parseInt(totalPrice)>20000){
+              orderId = od.AddOrderGuest(name, email, phone, address,
                 Float.parseFloat(totalPrice),
                 Integer.parseInt(status), Integer.parseInt(payment));
-
-        //product id
-        Cookie[] arr = request.getCookies();
+          Cookie[] arr = request.getCookies();
         String txt = "";
         if (arr != null) {
             for (Cookie i : arr) {
@@ -133,7 +134,7 @@ public class NewOrderController extends HttpServlet {
 
         //lay  quantity
         //add orderGuestDetail
-        List<Item> listItem = new ArrayList<>();
+       
         for (String productId : productIds) {
             //price 36 25
             String quantity = request.getParameter("quantity" + productId);//1 2
@@ -146,10 +147,27 @@ public class NewOrderController extends HttpServlet {
             
             Item i = new Item(p1, Integer.parseInt(quantity), Float.parseFloat(price));
             listItem.add(i);
+        
+        
+        
+        
+        
+        }
+      
+
+        //product id
+       
             
         }
-        od.AddOrderGuestDetails(orderId, listItem);
+        if(orderId == 0 ){
+            String error = "Bạn chưa chọn 1 sản phẩm nào";
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("Views/Staff/NewOrder.jsp").forward(request, response);
+        }else{
+              od.AddOrderGuestDetails(orderId, listItem);
        response.sendRedirect("staffdashboard");
+        }
+       
     }
 
     /**

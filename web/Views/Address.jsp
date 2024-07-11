@@ -307,7 +307,7 @@
             document.getElementById('updateAction').value = 'update';
             document.getElementById('updateAddressID').value = addressID;
             document.getElementById('updateAddress').value = address;
-            document.getElementById('updateDetailedAddress').value = address.split(', ').slice(-1)[0];
+            document.getElementById('updateDetailedAddress').value = address.split(', ')[0];
             document.getElementById('updatePhoneNumber').value = phoneNumber;
             document.getElementById('updateIsDefault').checked = isDefault;
         }

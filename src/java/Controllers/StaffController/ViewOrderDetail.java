@@ -5,24 +5,25 @@
 
 package Controllers.StaffController;
 
+import DAL.OrderDao;
 import DAL.ProductDao;
-import Models.Cart;
-import Models.Item;
+import Models.OrderCustomer;
+import Models.Orders;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author USER
  */
-public class RemoveProductCart extends HttpServlet {
+public class ViewOrderDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +40,10 @@ public class RemoveProductCart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RemoveProductCart</title>");  
+            out.println("<title>Servlet ViewOrderDetail</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RemoveProductCart at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewOrderDetail at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,38 +60,24 @@ public class RemoveProductCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-           List<Product> list = new ProductDao().getAllProducts();
-        Cookie[] arr = request.getCookies();
-        String txt ="";
-        if(arr!=null){
-            for (Cookie o:arr){
-                if(o.getName().equals("cartAdmin")){
-                    txt+=o.getValue();
-                    o.setMaxAge(0);
-                    response.addCookie(o);
-                }
-            }
-        }
+        
         String id = request.getParameter("id");
-        String[] ids=txt.split("/");
-        String out="";
-        for(int i = 0;i<ids.length;i++){
-            String[] s=ids[i].split(":");
-            if(!s[0].equals(id)){
-                if(out.isEmpty()){
-                    out = ids[i];
-                }else{
-                    out+="/"+ids[i];
-                }
-            }
+        String accountid = request.getParameter("acid");
+        OrderDao dal = new OrderDao();
+        Orders order = new Orders();
+        List <Product> list = new ArrayList<>();
+        ProductDao dao =new ProductDao();
+        if(!(accountid.equals("0"))){
+            order = dal.getOrderCusById(Integer.parseInt(id));
+            list = dao.getProductByCOrder(Integer.parseInt(id));
+        }else{
+            order = dal.getOrderGetByID(Integer.parseInt(id));
+            list = dao.getProductByGOrder(Integer.parseInt(id));
         }
-        if(!out.isEmpty()){
-            Cookie c =new Cookie("cartAdmin", out);
-            c.setMaxAge(2*24*60*60);
-            response.addCookie(c);
-        }
-       
-        response.sendRedirect("neworder");
+                
+        request.setAttribute("list", list);
+        request.setAttribute("order", order);
+        request.getRequestDispatcher("Views/Staff/ViewOrderdetail.jsp").forward(request, response);
     } 
 
     /** 
@@ -103,39 +90,7 @@ public class RemoveProductCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        List<Product> list = new ProductDao().getAllProducts();
-        Cookie[] arr = request.getCookies();
-        String txt ="";
-        if(arr!=null){
-            for (Cookie o:arr){
-                if(o.getName().equals("cartAdmin")){
-                    txt+=o.getValue();
-                    o.setMaxAge(0);
-                    response.addCookie(o);
-                }
-            }
-        }
-        String id = request.getParameter("id");
-        String[] ids=txt.split("/");
-        String out="";
-        for(int i = 0;i<ids.length;i++){
-            String[] s=ids[i].split(":");
-            if(!s[0].equals(id)){
-                if(out.isEmpty()){
-                    out = ids[i];
-                }else{
-                    out+="/"+ids[i];
-                }
-            }
-        }
-        if(!out.isEmpty()){
-            Cookie c =new Cookie("cartAdmin", out);
-            c.setMaxAge(2*24*60*60);
-            response.addCookie(c);
-        }
-       
-        response.sendRedirect("neworder");
-        
+        processRequest(request, response);
     }
 
     /** 

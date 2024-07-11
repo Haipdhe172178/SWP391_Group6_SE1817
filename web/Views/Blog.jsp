@@ -71,7 +71,7 @@
             }
             .cat-item, .tags-item {
                 margin-bottom: 10px;
-                font-size: 14px;
+                font-size: 18px;
             }
             button[type="submit"] {
                 padding: 10px 20px;

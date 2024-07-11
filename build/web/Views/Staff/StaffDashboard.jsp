@@ -216,7 +216,7 @@
                                                                          <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 4}">
-                                                                             <a href="#" >Xem chi tiết</a>
+                                                                             <a href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết</a>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 5}">
                                                                        <a href="#" >Xem chi tiết</a>
