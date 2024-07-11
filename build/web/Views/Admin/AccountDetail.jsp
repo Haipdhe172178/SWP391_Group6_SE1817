@@ -200,53 +200,50 @@
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label for="fullname" class="labels">Họ và tên: ${acc.fullName}</label>
-
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="username" class="labels">Tên đăng nhập: ${acc.userName}</label>
-
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label class="labels">Giới tính: ${acc.gender}</label>
-
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="phonenumber" class="labels">Số điện thoại:${acc.phoneNumber}</label>
-
+                                                                <label for="phonenumber" class="labels">Số điện thoại: ${acc.phoneNumber}</label>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
                                                                 <label for="address" class="labels">Địa chỉ: ${acc.address}</label>
-
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="email" class="labels">Email: ${acc.email}</label>
-
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6">
-                                                                <label for="status" class="labels">Trạng thái:  <c:choose>
+                                                                <label for="status" class="labels">Trạng thái:  
+                                                                    <c:choose>
                                                                         <c:when test="${acc.status == 1}">
                                                                             <span style="color: green;">Active</span>
                                                                         </c:when>
                                                                         <c:when test="${acc.status == 0}">
                                                                             <span style="color: red;">Inactive</span>
                                                                         </c:when>
-                                                                    </c:choose></label>
+                                                                    </c:choose>
+                                                                </label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="role" class="labels">Chức vụ:  <c:forEach items="${role}" var="ro">
+                                                                <label for="role" class="labels">Chức vụ:  
+                                                                    <c:forEach items="${role}" var="ro">
                                                                         <c:if test="${acc.roleId == ro.roleId}">
                                                                             ${ro.roleName}
                                                                         </c:if>
-                                                                    </c:forEach></label>
+                                                                    </c:forEach>
+                                                                </label>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <!-- Order History Section -->
                                                     <div id="orderHistorySection">
@@ -263,17 +260,15 @@
                                                                             <th>Tổng giá tiền</th>
                                                                             <th>Ngày mua</th>
                                                                             <th>Trạng thái</th>
-                                                                           
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <c:forEach var="order" items="${requestScope.order}">
+                                                                        <c:forEach var="order" items="${order}">
                                                                             <tr>
                                                                                 <td>${order.orderDetails[0].orderCId}</td>
-                                                                                <td><fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0"
-                                        maxFractionDigits="0" /> VND</td>
+                                                                                <td><fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0" /> VND</td>
                                                                                 <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy" /></td>
-                                                                                 <td>${order.status.statusName}</td>
+                                                                                <td>${order.status.statusName}</td>
                                                                             </tr>
                                                                         </c:forEach>
                                                                     </tbody>
@@ -281,7 +276,14 @@
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </div>
-                                                    <a href="account" class="btn btn-outline-info" style="margin-top: 10px">Trở lại</a>
+                                                    <c:choose>
+                                                        <c:when test="${isAdmin}">
+                                                            <a href="manages" class="btn btn-outline-info" style="margin-top: 10px">Trở lại</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="account" class="btn btn-outline-info" style="margin-top: 10px">Trở lại</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                             </div>
                                         </div>

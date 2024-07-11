@@ -17,6 +17,7 @@ import java.util.List;
  * @author ASUS TUF
  */
 public class AccountDAO extends DBContext {
+
     public Account check(String username, String password) {
         String sql = "SELECT * FROM [dbo].[Account] WHERE Username=? AND Password=?";
         try {
@@ -231,6 +232,35 @@ public class AccountDAO extends DBContext {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<Account> getAllAccountByRoleId(int id) {
+        List<Account> listAcc = new ArrayList<>();
+        String query = "Select * From Account Where roleID = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountId(rs.getInt(1));
+                acc.setFullName(rs.getString(2));
+                acc.setUserName(rs.getString(3));
+                acc.setPassWord(rs.getString(4));
+                acc.setGender(rs.getString(5));
+                acc.setEmail(rs.getString(6));
+                acc.setPhoneNumber(rs.getString(7));
+                acc.setAddress(rs.getString(8));
+                acc.setRoleId(rs.getInt(9));
+                acc.setImgAccount(rs.getString(10));
+                acc.setStatus(rs.getInt(11));
+
+                listAcc.add(acc);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return listAcc;
     }
 
     public Account getAccountByid(int id) {

@@ -4,12 +4,14 @@
  */
 package DAL;
 
+import Models.Account;
 import Models.Author;
 import Models.Category;
 import Models.ObjectAge;
 import Models.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -587,19 +589,18 @@ public class ProductDao extends DBContext {
         return list;
     }
 
- 
     public List<Product> pagingProducts(int index, List<String> ids) {
         List<Product> list = new ArrayList<>();
 
         // Manually create the idsString
-       String idString="";
+        String idString = "";
         for (String id : ids) {
             if (idString.length() > 0) {
-                idString+=",";
+                idString += ",";
             }
-            idString+="'"+id+"'";
+            idString += "'" + id + "'";
         }
-        String idsString = idString.substring(0,idString.length());
+        String idsString = idString.substring(0, idString.length());
         System.out.println(idsString);
         String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription "
                 + "FROM Product p "
@@ -831,5 +832,87 @@ public class ProductDao extends DBContext {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public void hideProduct(int prodcutId) {
+        String query = "UPDATE Product Set Status = 0 Where ProductID =?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, prodcutId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showProduct(int prodcutId) {
+        String query = "UPDATE Product Set Status = 1 Where ProductID =?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, prodcutId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Product> getProductByStatus(int status, int index) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription \n"
+                + "FROM Product p \n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID \n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID \n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID \n"
+                + "WHERE p.status = ?\n"
+                + "ORDER BY p.ProductID \n"
+                + "OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY;";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, status);
+            ps.setInt(2, (index - 1) * 5);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getFloat("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setDescription(rs.getString("description"));
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("categoryId"));
+                category.setCategoryName(rs.getString("categoryName"));
+                product.setCategory(category);
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("authorID"));
+                author.setAuthorName(rs.getString("authorName"));
+                author.setDescription(rs.getString("description"));
+                product.setAuthor(author);
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("ageId"));
+                oage.setAge(rs.getString("age"));
+                product.setOage(oage);
+                product.setImgProduct(rs.getString("imgProduct"));
+                product.setStatus(rs.getInt("status"));
+                list.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+     public int getTotalProductByStatus(int status) {
+        int total = 0;
+        String query = "SELECT COUNT(*) FROM Product WHERE status = ? ";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, status);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }

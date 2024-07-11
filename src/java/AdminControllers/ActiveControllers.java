@@ -5,6 +5,7 @@
 package AdminControllers;
 
 import DAL.AccountDAO;
+import DAL.ProductDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -57,20 +58,31 @@ public class ActiveControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountDAO accountDao = new AccountDAO();
+        ProductDao productDao = new ProductDao();
         String action = request.getParameter("action");
         String type = request.getParameter("type");
 
         if (action != null && !action.isEmpty()) {
-           int accountId = Integer.parseInt(request.getParameter("accountId"));
-            if ("hideacc".equals(action)) {
-                accountDao.hideAccount(accountId);
-            } else if ("showacc".equals(action)) {
-                accountDao.showAccount(accountId);
-            }
-            if ("staff".equals(type)) {
-                response.sendRedirect(request.getContextPath() + "/manages");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/account");
+            if ("hideacc".equals(action) || "showacc".equals(action)) {
+                int accountId = Integer.parseInt(request.getParameter("accountId"));
+                if ("hideacc".equals(action)) {
+                    accountDao.hideAccount(accountId);
+                } else if ("showacc".equals(action)) {
+                    accountDao.showAccount(accountId);
+                }
+                if ("staff".equals(type)) {
+                    response.sendRedirect(request.getContextPath() + "/manages");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/account");
+                }
+            } else if ("hideproduct".equals(action) || "showproduct".equals(action)) {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                if ("hideproduct".equals(action)) {
+                    productDao.hideProduct(productId);
+                } else if ("showproduct".equals(action)) {
+                    productDao.showProduct(productId);
+                }
+                response.sendRedirect(request.getContextPath() + "/data");
             }
         }
     }

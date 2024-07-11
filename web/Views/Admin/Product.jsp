@@ -5,6 +5,7 @@
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -32,6 +33,12 @@
         <link rel="stylesheet" href="css/metisMenu.css">
 
         <link rel="stylesheet" href="css/style1.css" />
+        <style>
+            .inactive-row {
+                opacity: 0.5;
+            }
+        </style>
+
     </head>
 
     <body class="crm_body_bg">
@@ -74,30 +81,51 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="QA_table mb_30">
 
-                                                <table class="table lms_table_active ">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">ID</th>
-                                                            <th scope="col">Tên</th>
-                                                            <th scope="col">Giá</th>
-                                                            <th scope="col">Số lượng</th>
-                                                            <th scope="col">Mô tả sản phẩm</th>
-                                                            <th scope="col">Thể loại</th>
-                                                            <th scope="col">Tác giả</th>
-                                                            <th scope="col">Ảnh</th>
-                                                            <th scope="col">Độ tuổi</th>
-                                                            <th scope="col">Trạng thái</th>
-                                                            <th scope="col">Hành động</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                            <div class="QA_table mb_30">
+                                                <form action="data" method="GET" id="sortForm">
+                                                    <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
+                                            </form>
+                                            <table class="table lms_table_active ">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">
+                                                            Giá
+                                                            <a href="data?sort=priceasc"><i class="fas fa-arrow-up"></i></a>
+                                                            <a href="data?sort=pricedesc"><i class="fas fa-arrow-down"></i></a>
+                                                        </th>
+                                                        <th scope="col">Số lượng</th>
+                                                        <th scope="col">Mô tả sản phẩm</th>
+                                                        <th scope="col">Thể loại</th>
+                                                        <th scope="col">Tác giả</th>
+                                                        <th scope="col">Ảnh</th>
+                                                        <th scope="col">Độ tuổi</th>
+                                                        <th scope="col">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#57ccb7">
+                                                                    Trạng thái
+                                                                    <i class=""></i>
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="data">All</a>
+                                                                    <a class="dropdown-item" href="data?statusFilter=1">Active</a>
+                                                                    <a class="dropdown-item" href="data?statusFilter=0">Inactive</a>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col">Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     <c:forEach items="${product}" var="p">
-                                                        <tr>
+                                                        <tr class="${p.status == 0 ? 'inactive-row' : ''}">
                                                             <td>${p.productId}</td>
                                                             <td>${p.name}</td>
-                                                            <td>${p.price}</td>
+                                                            <td>
+                                                                <fmt:formatNumber value="${p.price}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                                            </td>
                                                             <td>${p.quantity}</td>
                                                             <td>${fn:substring(p.description, 0, 50)}...</td>
                                                             <td>${p.category.categoryName}</td>
@@ -116,11 +144,12 @@
                                                             </td>
                                                             <td>
                                                                 <a href="update?id=${p.productId}" title="Update"><i class="fas fa-edit"></i></a>
-
+                                                                <a href="active?action=hideproduct&productId=${p.productId}" title="Hide"><i class="fas fa-ban"></i></a>
+                                                                <a href="active?action=showproduct&productId=${p.productId}" title="Show"><i class="fas fa-check-circle"></i></a>
                                                             </td>
                                                         </tr>
-
                                                     </c:forEach>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -138,10 +167,11 @@
                                                 <c:if test="${tag > 1}">
                                                     <li class="page-item">
                                                         <a class="page-link" href="data?index=${tag - 1}${query}" aria-label="Previous">
-                                                            <span aria-hidden="true">Previous</span>
+                                                            <span aria-hidden="true"><i class="fas fa-arrow-left"></i></span>
                                                         </a>
                                                     </li>
                                                 </c:if>
+
 
                                                 <!-- Vòng lặp để tạo các nút trang -->
                                                 <c:forEach begin="${start}" end="${end}" var="i">
@@ -154,10 +184,11 @@
                                                 <c:if test="${tag < endP}">
                                                     <li class="page-item">
                                                         <a class="page-link" href="data?index=${tag + 1}${query}" aria-label="Next">
-                                                            <span aria-hidden="true">Next</span>
+                                                            <span aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                                                         </a>
                                                     </li>
                                                 </c:if>
+
                                             </ul>
                                         </nav>
 
@@ -318,5 +349,22 @@
         <script src="vendors/scroll/scrollable-custom.js"></script>
 
         <script src="js/custom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function filterStatus(status) {
+                const statusFilter = document.getElementById('statusFilter');
+                statusFilter.value = status;
+                document.getElementById('sortForm').submit();
+            }
+            function confirmAction(action) {
+                if (action === 'hide') {
+                    return confirm('Bạn có chắc chắn muốn ẩn tài khoản này không?');
+                } else if (action === 'show') {
+                    return confirm('Bạn có chắc chắn muốn hiển thị tài khoản này không?');
+                }
+                return false;
+            }
+        </script>
     </body>
 </html>
