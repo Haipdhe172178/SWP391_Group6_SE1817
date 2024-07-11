@@ -59,6 +59,10 @@
                 color: white;
                 border: 1px solid #007bff;
             }
+            .filter_button {
+                margin-left: 10px;
+                align-self: flex-end;
+            }
         </style>
     </head>
     <body class="crm_body_bg">
@@ -84,33 +88,40 @@
                                         <div class="white_box_tittle list_header">
                                             <h4>Tin tức</h4>
                                             <div class="box_right d-flex lms_block align-items-center">
-    <div class="serach_field_2">
-        <div class="search_inner">
-            <form action="upnews" method="GET" class="d-flex align-items-center">
-                <div class="search_field me-2">
-                    <input name="s" type="text" class="form-control" placeholder="Tìm kiếm ngay..." value="${searchTerm}">
-                </div>
-                <div class="filter_field d-flex me-2">
-                    <select name="status" class="form-select me-2">
-                        <option value="">Tất cả trạng thái</option>
-                        <option value="true" ${status == 'true' ? 'selected' : ''}>Hoạt động</option>
-                        <option value="false" ${status == 'false' ? 'selected' : ''}>Không hoạt động</option>
-                    </select>
-                    <select name="topicId" class="form-select">
-                        <option value="-1">Tất cả chủ đề</option>
-                        <c:forEach var="topic" items="${topics}">
-                            <option value="${topic.topicId}" ${topicId == topic.topicId ? 'selected' : ''}>${topic.topicName}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-            </form>
-        </div>
-    </div>
-    <div class="add_button ms-2">
-        <a href="addnews" class="btn_1 btn btn-success">Thêm Tin Tức</a>
-    </div>
-</div>
+                                                <!-- Search Field -->
+                                                <div class="serach_field_2">
+                                                    <div class="search_inner">
+                                                        <form action="upnews" method="GET" class="d-flex align-items-center">
+                                                            <div class="search_field me-2">
+                                                                <input name="s" type="text" class="form-control" placeholder="Tìm kiếm ngay..." value="${searchTerm}">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Filter Fields -->
+                                            <div class="box_right d-flex lms_block align-items-center mt-3">
+                                                <form id="filterForm" action="upnews" method="GET" class="d-flex align-items-center">
+                                                    <div class="filter_field d-flex me-2">
+                                                        <select name="status" class="form-select me-2" onchange="document.getElementById('filterForm').submit();">
+                                                            <option value="">Tất cả trạng thái</option>
+                                                            <option value="true" ${status == 'true' ? 'selected' : ''}>Hoạt động</option>
+                                                            <option value="false" ${status == 'false' ? 'selected' : ''}>Không hoạt động</option>
+                                                        </select>
+                                                        <select name="topicId" class="form-select" onchange="document.getElementById('filterForm').submit();">
+                                                            <option value="-1">Tất cả chủ đề</option>
+                                                            <c:forEach var="topic" items="${topics}">
+                                                                <option value="${topic.topicId}" ${topicId == topic.topicId ? 'selected' : ''}>${topic.topicName}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                    <!-- Add Button -->
+                                                    <div class="filter_button ms-2">
+                                                        <a href="addnews" class="btn_1 btn btn-success">Thêm Tin Tức</a>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                         <div class="QA_table mb_30">
                                             <table class="table lms_table_active custom_table">

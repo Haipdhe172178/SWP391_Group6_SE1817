@@ -263,8 +263,13 @@
         <servlet-class>Controllers.StaffController.RemoveProductCart</servlet-class>
     </servlet>
     <servlet>
+
         <servlet-name>ViewOrderDetail</servlet-name>
         <servlet-class>Controllers.StaffController.ViewOrderDetail</servlet-class>
+
+        <servlet-name>ConfirmVNPayController</servlet-name>
+        <servlet-class>Controllers.ConfirmVNPayController</servlet-class>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -515,8 +520,13 @@
         <url-pattern>/remove</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>ViewOrderDetail</servlet-name>
         <url-pattern>/viewdetail</url-pattern>
+
+        <servlet-name>ConfirmVNPayController</servlet-name>
+        <url-pattern>/confirmVnpay</url-pattern>
+
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
