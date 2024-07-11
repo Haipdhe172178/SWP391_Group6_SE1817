@@ -938,7 +938,8 @@ public class OrderDao extends DBContext {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
-
+        }
+    }
     public boolean updateOrderCustomerStatus(int orderCID, int newStatusID) {
         String query = "UPDATE OrderCustomer SET StatusID = ? WHERE OrderCID = ?";
         try {
