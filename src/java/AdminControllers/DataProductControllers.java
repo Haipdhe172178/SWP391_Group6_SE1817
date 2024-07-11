@@ -65,7 +65,7 @@ public class DataProductControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDao productDao = new ProductDao();
-          
+
         String indexPage = request.getParameter("index");
         int index;
         if (indexPage != null) {
@@ -73,14 +73,33 @@ public class DataProductControllers extends HttpServlet {
         } else {
             index = 1;
         }
+        String sortParam = request.getParameter("sort");
+        boolean ascending = true;
+        if ("priceasc".equalsIgnoreCase(sortParam)) {
+            ascending = true;
+        } else if ("pricedesc".equalsIgnoreCase(sortParam)) {
+            ascending = false;
+        }
+
         List<Product> list;
-        int count = productDao.getTotalProduct();
+        int count = 0;
         int endPage;
-        list = productDao.pagingProducts(index);
+
         String searchKeyword = request.getParameter("s");
+        String statusFilter = request.getParameter("statusFilter");
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             list = productDao.pagingProductsByKeyword(index, searchKeyword);
             count = productDao.getTotalProductsByKeyword(searchKeyword);
+        } else if ("priceasc".equalsIgnoreCase(sortParam) || "pricedesc".equalsIgnoreCase(sortParam)) {
+            list = productDao.pagingProductsSortedByPrice(index, ascending);
+            count = productDao.getTotalProductBySort(sortParam);
+        } else if (statusFilter != null && !statusFilter.isEmpty()) {
+            int status = Integer.parseInt(statusFilter);
+            list = productDao.getProductByStatus(status, index);
+            count = productDao.getTotalProductByStatus(status);
+        } else {
+            list = productDao.pagingProducts(index);
+            count = productDao.getTotalProduct();
         }
         endPage = count / 8;
         if (count % 8 != 0) {
@@ -90,8 +109,13 @@ public class DataProductControllers extends HttpServlet {
         if (searchKeyword != null) {
             query += "&&s=" + searchKeyword;
         }
-       
-       
+        if (sortParam != null) {
+            query += "&&sort=" + sortParam;
+        }
+        if (statusFilter != null) {
+            query += "&&statusFilter=" + statusFilter;
+        }
+
         request.setAttribute("query", query);
         request.setAttribute("product", list);
         request.setAttribute("endP", endPage);

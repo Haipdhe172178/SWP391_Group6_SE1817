@@ -33,8 +33,8 @@
                        <span>Thống kê số liệu</span>
                     </a>
                     <ul>
-                         <li><a href="statisticsorder">Thống kê đặt hàng</a></li>   
-                        <li><a href="statistics">Thống kê doanh thu</a></li>                       
+                         <li><a href="statisticsorder">Thống kê theo năm</a></li>   
+                        <li><a href="statistics">Thống kê theo tháng</a></li>                       
                     </ul>
                 </li>
                 <li class>
