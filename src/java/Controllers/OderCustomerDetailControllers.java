@@ -1,17 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package Controllers;
 
 import DAL.AccountDAO;
 import DAL.OrderDao;
 import DAL.ProductDao;
+import DAL.ShipAddressDAO;
 import Models.Account;
 import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.Product;
+import Models.ShipAddress;
+import Models.ShippingAddress;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -60,33 +58,32 @@ public class OderCustomerDetailControllers extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
         ProductDao productDAO = new ProductDao();
         OrderDao orderDAO = new OrderDao();
+        ShipAddressDAO shipAddressDAO = new ShipAddressDAO();
         AccountDAO accountDAO = new AccountDAO();
 
-        // Lấy chi tiết đơn hàng
         List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
         for (OrderDetailCustomer orderDetail : orderDetails) {
             int productId = orderDetail.getProductId();
             Product product = productDAO.getProductById(productId);
             orderDetail.setProduct(product); 
         }
-        
-        // Lấy danh sách các đơn hàng
-        List<OrderCustomer> orders = orderDAO.getOrderCustomersByAccountId(orderId); // Thay thế với phương thức thực tế để lấy các đơn hàng theo orderId
-        
-        // Duyệt qua từng đơn hàng
-        for (OrderCustomer order : orders) {
-            int accountId = order.getAccount().getAccountId(); // Giả sử bạn có phương thức getAccountId trong OrderCustomer
-            Account account = accountDAO.getAccountByid(accountId); // Giả sử bạn có phương thức getAccountById trong AccountDAO
-            order.setAccount(account); // Giả sử bạn có phương thức setAccount trong OrderCustomer
-        }
 
+    
+        ShipAddress shipAddress = shipAddressDAO.selectShipAddress(orderId);
+        OrderCustomer order = orderDAO.getOrderCustomerById(orderId);
+        int accountId = order.getAccount().getAccountId();
+        Account account = accountDAO.getAccountByid(accountId);
+        
         request.setAttribute("orderDetails", orderDetails);
-        request.setAttribute("orders", orders); // Gán danh sách các đơn hàng vào request
+        request.setAttribute("order", order);
+        request.setAttribute("account", account);
+        request.setAttribute("shippingAddress", shipAddress);
+
         request.getRequestDispatcher("Views/OrderCustomerDetail.jsp").forward(request, response);
     }
 
@@ -99,7 +96,7 @@ public class OderCustomerDetailControllers extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

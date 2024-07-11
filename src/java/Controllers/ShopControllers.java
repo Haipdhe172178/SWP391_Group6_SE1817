@@ -92,12 +92,12 @@ public class ShopControllers extends HttpServlet {
         } else {
             session.setAttribute("sortBy", sortBy);
         }
-
+        
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
         ObjectAgeDao objectAgeDao = new ObjectAgeDao();
-
+        
         List<Author> authors = authorDao.getallAuthors();
         List<Category> categories = categoryDao.getallCategorys();
         List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
@@ -112,13 +112,13 @@ public class ShopControllers extends HttpServlet {
                 }
             }
         }
-
+        
         String ageIdStr = request.getParameter("objage");
         int ageId = 0;
         if (ageIdStr != null && !ageIdStr.isEmpty()) {
             ageId = Integer.parseInt(ageIdStr);
         }
-
+        
         String priceFilter = request.getParameter("price_filter");
         float minPrice = 0;
         float maxPrice = 0;
@@ -146,13 +146,13 @@ public class ShopControllers extends HttpServlet {
                     break;
             }
         }
-
+        
         String searchKeyword = request.getParameter("s");
 
         // Get products based on sorting and filtering
         List<Product> list = new ArrayList<>();
         int count = 0;
-
+        
         if (!selectedCategoryIds.isEmpty() || ageId != 0 || minPrice > 0 || maxPrice > 0) {
             list = productDao.paginProductByFilter(index, selectedCategoryIds, ageId, minPrice, maxPrice);
             count = productDao.countProductsByFilter(selectedCategoryIds, ageId, minPrice, maxPrice);
@@ -179,7 +179,7 @@ public class ShopControllers extends HttpServlet {
             }
             count = productDao.getTotalProduct();
         }
-
+        
         int endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;
@@ -226,7 +226,7 @@ public class ShopControllers extends HttpServlet {
         request.setAttribute("ListA", list);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
-
+        request.setAttribute("active", "shop");
         request.getRequestDispatcher("Views/Shop.jsp").forward(request, response);
     }
 

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>StaffAuthorizationFilter</filter-name>
+        <filter-class>AuthorizationFilter.StaffAuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>StaffAuthorizationFilter</filter-name>
+        <servlet-name>FeedbackListController</servlet-name>
+        <url-pattern>/Views/Staff/*</url-pattern>
+        <servlet-name>ListProductController</servlet-name>
+        <servlet-name>MakeOrderController</servlet-name>
+        <servlet-name>NewOrderController</servlet-name>
+        <servlet-name>RemoveProductCart</servlet-name>
+        <servlet-name>StaffDashboardController</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>HomeControllers</servlet-name>
         <servlet-class>Controllers.HomeControllers</servlet-class>
@@ -249,8 +263,13 @@
         <servlet-class>Controllers.StaffController.RemoveProductCart</servlet-class>
     </servlet>
     <servlet>
+
         <servlet-name>ViewOrderDetail</servlet-name>
         <servlet-class>Controllers.StaffController.ViewOrderDetail</servlet-class>
+
+        <servlet-name>ConfirmVNPayController</servlet-name>
+        <servlet-class>Controllers.ConfirmVNPayController</servlet-class>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -501,8 +520,13 @@
         <url-pattern>/remove</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>ViewOrderDetail</servlet-name>
         <url-pattern>/viewdetail</url-pattern>
+
+        <servlet-name>ConfirmVNPayController</servlet-name>
+        <url-pattern>/confirmVnpay</url-pattern>
+
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

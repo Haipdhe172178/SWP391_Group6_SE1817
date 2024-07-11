@@ -5,6 +5,7 @@
 package Controllers;
 
 import Controllers.VNPay.Config;
+import DAL.DiscountDAO;
 import DAL.OrderDao;
 import DAL.ProductDao;
 import Models.Account;
@@ -13,6 +14,7 @@ import Models.OrderCustomer;
 import Models.OrderDetailGuest;
 import Models.OrderGuest;
 import Models.Product;
+import Models.UsedCoupon;
 import SendEmail.SendEmail;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -117,16 +119,14 @@ public class ProcessCheckoutController extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phone");
         String address = request.getParameter("fulladdress");
-        int paymentStatus = paymentMethod.equalsIgnoreCase("VNPay") ? 1 : 0;
 
-        int orderGID = od.AddOrderGuest(fullName, email, phoneNumber, address, totalPrice, 1, paymentStatus);
+        int orderGID = od.AddOrderGuest(fullName, email, phoneNumber, address, totalPrice, 1, 0);
         od.AddOrderGuestDetails(orderGID, listItem);
 
         if (paymentMethod.equalsIgnoreCase("VNPay")) {
-            SendEmail.sendEmail(email, "Xac nhan don hang #" + orderGID, sendEmailConfirm(orderGID));
             redirectToVNPay(request, response, totalPrice, orderGID);
         } else {
-            SendEmail.sendEmail(email, "Xac nhan don hang #" + orderGID, sendEmailConfirm(orderGID));
+            SendEmail.sendEmail(email, "Xac nhan don hang #" + orderGID, SendEmail.sendEmailConfirm(orderGID));
             redirectToThankYouPage(request, response);
         }
 
@@ -134,11 +134,18 @@ public class ProcessCheckoutController extends HttpServlet {
 
     private void handleCustomerOrder(HttpServletRequest request, HttpServletResponse response, Account acc, OrderDao od, List<Item> listItem, Float totalPrice, String paymentMethod) throws IOException, ServletException {
         int addressID = Integer.parseInt(request.getParameter("address"));
-        int paymentStatus = paymentMethod.equalsIgnoreCase("VNPay") ? 1 : 0;
+        UsedCoupon coupon = (UsedCoupon) request.getSession().getAttribute("coupon");
 
-        int orderCID = od.AddOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, paymentStatus);
+        int orderCID = od.AddOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, 0);
         od.AddOrderCustomerDetails(orderCID, listItem);
-
+        if (coupon != null) {
+            DiscountDAO discountDao = new DiscountDAO();
+            boolean isSuccess = discountDao.insertHistoryCoupon(acc.getAccountId(), coupon);
+            if (isSuccess) {
+                discountDao.UpdateQuantityDiscount(coupon.getCodeId(), coupon.getQuantity() - 1);
+                request.getSession().removeAttribute("coupon");
+            }
+        }
         if (paymentMethod.equalsIgnoreCase("VNPay")) {
             redirectToVNPay(request, response, totalPrice, orderCID);
         } else {
@@ -225,42 +232,4 @@ public class ProcessCheckoutController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public String sendEmailConfirm(int orderGID) {
-        OrderDao od = new OrderDao();
-        OrderGuest orderGuest = od.getOrderByID(orderGID);
-        ProductDao pDao = new ProductDao();
-        List<OrderDetailGuest> listOd = orderGuest.getOrderDetails();
-
-        StringBuilder content = new StringBuilder();
-        content.append("<html>");
-        content.append("<body>");
-        content.append("<h1>Xác nhận đơn hàng #" + orderGID + "</h1>");
-        content.append("<p>Cám ơn bạn đã mua hàng! Đơn hàng của bạn đã được nhận và sẽ sớm được gửi đi.</p>");
-
-        // Thêm thông tin chi tiết đơn hàng vào email
-        content.append("<h2>Thông tin chi tiết đơn hàng:</h2>");
-        content.append("<table border='1' cellpadding='5' cellspacing='0'>");
-        content.append("<tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Thành tiền</th></tr>");
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-        // Thay đổi các giá trị dưới đây bằng thông tin thực tế từ đơn hàng của bạn
-        for (OrderDetailGuest og : listOd) {
-            Product p = pDao.getProductById(og.getProductId());
-            content.append("<tr><td>" + p.getName() + "</td><td>" + currencyFormat.format(og.getUnitPrice()) + " </td><td>" + og.getQuantity() + "</td><td>" + currencyFormat.format(og.getUnitPrice() * og.getQuantity()) + " </td></tr>");
-        }
-
-        // Tổng tiền và thông tin khách hàng
-        content.append("<tr><td colspan='3' style='text-align:right'>Tổng tiền:</td><td>" + currencyFormat.format(orderGuest.getTotalPrice()) + " </td></tr>");
-        content.append("<tr><td colspan='3' style='text-align:right'>Họ và tên khách hàng:</td><td>" + orderGuest.getFullName() + "</td></tr>");
-        content.append("<tr><td colspan='3' style='text-align:right'>Email khách hàng:</td><td>" + orderGuest.getEmail() + "</td></tr>");
-        content.append("<tr><td colspan='3' style='text-align:right'>Số điện thoại khách hàng:</td><td>" + orderGuest.getPhoneNumber() + "</td></tr>");
-        content.append("<tr><td colspan='3' style='text-align:right'>Địa chỉ giao hàng:</td><td>" + orderGuest.getAddress() + "</td></tr>");
-
-        content.append("</table>");
-        content.append("</body>");
-        content.append("</html>");
-
-        // Gửi email
-        return content.toString();
-    }
 }

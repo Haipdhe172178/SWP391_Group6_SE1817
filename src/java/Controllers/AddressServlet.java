@@ -1,7 +1,9 @@
 package Controllers;
 
+import DAL.CategoryDao;
 import DAL.ShipAddressDAO;
 import Models.Account;
+import Models.Category;
 import Models.ShipAddress;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -52,10 +54,13 @@ public class AddressServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ShipAddressDAO dao = new ShipAddressDAO();
+        CategoryDao categoryDao = new CategoryDao();
+        List<Category> cate = categoryDao.getallCategorys();
+        
         Account account = (Account)request.getSession().getAttribute("account");
         // Fetch the list of addresses from the database
         List<ShipAddress> addresses = dao.getUserAddress(account.getAccountId());
-        
+        request.setAttribute("category", cate);
         // Set the list of addresses as a request attribute
         request.setAttribute("addresses", addresses);
         // Forward the request to the JSP page

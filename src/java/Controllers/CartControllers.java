@@ -21,7 +21,7 @@ import java.util.List;
 
 public class CartControllers extends HttpServlet {
 
-   @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,17 +34,16 @@ public class CartControllers extends HttpServlet {
         String cartData = getCartDataFromCookie(request);
         Cart cart = new Cart(cartData, productList);
 
-        float totalAmount = cartDAO.calculateTotalPrice(cart); // Tính tổng giá tiền của giỏ hàng
-
         List<Item> cartItems = cart.getItems();
         int size = cartItems.size();
         List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
-
-        request.setAttribute("totalAmount", totalAmount); // Đưa totalAmount vào request để sử dụng trong JSP
+        
         request.setAttribute("size", size);
         request.setAttribute("lastTwoItems", lastTwoItems);
+        request.setAttribute("cart", cart);
         request.getRequestDispatcher("Views/Cart.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

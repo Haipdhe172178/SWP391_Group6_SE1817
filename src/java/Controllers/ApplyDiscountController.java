@@ -69,19 +69,65 @@ public class ApplyDiscountController extends HttpServlet {
 
         UsedCoupon coupon = dDAO.getDiscountByCodeName(discountCode);
         boolean checkUsed = dDAO.checkHistoryCoupon(acc.getAccountId(), coupon.getCodeId());
-
-        double finalTotalPrice = (totalAmount - (totalAmount * coupon.getDiscount() / 100)) + 20000;
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         int shippingFee = 20000;
 
         // Set content type and character encoding for the response
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // Format currency
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-        String content = "";
-        if (coupon != null && checkUsed == false) {
-            content = "<table cellspacing=\"0\" class=\"table text-capitalize\">\n"
+        if (coupon == null || checkUsed || coupon.getQuantity() == 0) {
+
+            String content = "<table cellspacing=\"0\" class=\"table text-capitalize\">\n"
+                    + "    <tbody>\n"
+                    + "        <tr class=\"subtotal pt-2 pb-2 border-top border-bottom\">\n"
+                    + "            <th>Tạm tính</th>\n"
+                    + "            <td data-title=\"Subtotal\">\n"
+                    + "                <span class=\"price-amount amount text-primary ps-5 fw-light\">\n"
+                    + "                    <bdi>\n"
+                    + "                        <span class=\"price-currency-symbol\">\n"
+                    + "                            " + currencyFormat.format(totalAmount) + "\n"
+                    + "                        </span>\n"
+                    + "                    </bdi>\n"
+                    + "                </span>\n"
+                    + "            </td>\n"
+                    + "        </tr>\n"
+                    + "        <tr class=\"order-total pt-2 pb-2 border-bottom\">\n"
+                    + "            <th>Phí giao hàng</th>\n"
+                    + "            <td data-title=\"Ship\">\n"
+                    + "                <span class=\"price-amount amount text-primary ps-5 fw-light\">\n"
+                    + "                    <bdi>\n"
+                    + "                        <span class=\"price-currency-symbol\">\n"
+                    + "                            " + currencyFormat.format(shippingFee) +"\n"
+                    + "                        </span>\n"
+                    + "                </span>\n"
+                    + "            </td>\n"
+                    + "        </tr>\n"
+                    + "        <tr class=\"order-total pt-2 pb-2 border-bottom\" id=\"totalPriceID\">\n"
+                    + "            <th style=\"font-weight: bold\">Tổng cộng</th>\n"
+                    + "            <td data-title=\"Total\">\n"
+                    + "                <span class=\"price-amount amount text-primary ps-5 fw-light\">\n"
+                    + "                    <bdi>\n"
+                    + "                        <span class=\"price-currency-symbol\" style=\"font-weight: bold; font-size: 22px\">\n"
+                    + "                            " + currencyFormat.format(totalAmount + shippingFee) + "\n"
+                    + "                            <input type=\"hidden\" id=\"valueTotalPrice\" name=\"totalPrice\" value=\"" + (totalAmount + shippingFee) + "\">\n"
+                    + "                        </span>\n"
+                    + "                    </bdi>\n"
+                    + "                </span>\n"
+                    + "            </td>\n"
+                    + "        </tr>\n"
+                    + "    </tbody>\n"
+                    + "</table>"
+                    + "<h4 style=\"color: red;\">Mã không hợp lệ do đã sử dụng trước đó hoặc hết hạn</h4>";
+
+            out.println(content);
+        } else {
+            // Mã giảm giá hợp lệ và chưa được sử dụng
+            request.getSession().setAttribute("coupon", coupon);
+
+            // Tính toán giá trị cuối cùng
+            double finalTotalPrice = (totalAmount - (totalAmount * coupon.getDiscount() / 100)) + shippingFee;
+            String content = "<table cellspacing=\"0\" class=\"table text-capitalize\">\n"
                     + "    <tbody>\n"
                     + "        <tr class=\"subtotal pt-2 pb-2 border-top border-bottom\">\n"
                     + "            <th>Tạm tính</th>\n"
@@ -133,9 +179,10 @@ public class ApplyDiscountController extends HttpServlet {
                     + "        </tr>\n"
                     + "    </tbody>\n"
                     + "</table>";
+            out.println(content);
         }
 
-        out.println(content);
+        out.close();
     }
 
     /**

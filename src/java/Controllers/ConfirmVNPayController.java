@@ -2,24 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.StaffController;
+package Controllers;
 
+import Controllers.VNPay.Config;
 import DAL.OrderDao;
-import Models.Orders;
+import Models.Account;
+import Models.OrderCustomer;
+import Models.OrderGuest;
+import SendEmail.SendEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author Hai Pham
  */
-public class StaffDashboardController extends HttpServlet {
+public class ConfirmVNPayController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +45,10 @@ public class StaffDashboardController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StaffDashboardController</title>");
+            out.println("<title>Servlet ConfirmVNPayController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StaffDashboardController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConfirmVNPayController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,30 +66,46 @@ public class StaffDashboardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Orders> list = new ArrayList<>();
-        OrderDao dal = new OrderDao();
-        String index = request.getParameter("index");
+        OrderDao orderDao = new OrderDao();
 
-        int indexx;
-        if (request.getParameter("index") == null) {
-            indexx = 1;
-        } else {
-            indexx = Integer.parseInt(index);
+        //Begin process return from VNPAY
+        Map fields = new HashMap();
+        for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
+            String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
+            String fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                fields.put(fieldName, fieldValue);
+            }
         }
 
-        int count = dal.getToralOrder();
-
-        int endpage = count / 10;
-        if (count % 10 == 0) {
-        } else {
-            endpage++;
+        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+        if (fields.containsKey("vnp_SecureHashType")) {
+            fields.remove("vnp_SecureHashType");
         }
-        list = dal.getallOrder(indexx);
-        request.setAttribute("endP", endpage);
-        request.setAttribute("tag", indexx);
+        if (fields.containsKey("vnp_SecureHash")) {
+            fields.remove("vnp_SecureHash");
+        }
+        String signValue = Config.hashAllFields(fields);
+        int orderId = Integer.parseInt(request.getParameter("vnp_TxnRef"));
+        Account acc = (Account) request.getSession().getAttribute("account");
 
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
+        if (signValue.equals(vnp_SecureHash)) {
+            if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+                if (acc != null) {
+                    orderDao.updatePaymentSuccess("customer", orderId);
+                } else {
+                    orderDao.updatePaymentSuccess("guest", orderId);
+                    OrderGuest og = orderDao.getOrderGuestByID(orderId);
+                    SendEmail.sendEmail(og.getEmail(), "Xac nhan don hang #" + orderId, SendEmail.sendEmailConfirm(orderId));
+                }
+                request.getRequestDispatcher("Views/thanks.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Thanh toán thất bại, vui lòng thử lại");
+            }
+        } else {
+            request.setAttribute("message", "Thanh toán thất bại, vui lòng thử lại");
+        }
+        request.getRequestDispatcher("Views/thanks.jsp").forward(request, response);
     }
 
     /**

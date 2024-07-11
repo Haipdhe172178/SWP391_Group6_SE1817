@@ -439,7 +439,7 @@
                                                     document.getElementById('actionModal').value = 'update';
                                                     document.getElementById('updateAddressID').value = addressID;
                                                     document.getElementById('mfulladdress').value = address;
-                                                    document.getElementById('maddress').value = address.split(', ').slice(-1)[0];
+                                                    document.getElementById('maddress').value = address.split(', ')[0];
                                                     document.getElementById('mphone').value = phoneNumber;
                                                 }
 

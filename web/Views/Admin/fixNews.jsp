@@ -97,7 +97,7 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Update News</button>
+                                <button type="submit" class="btn btn-primary">Thêm Tin Tức</button>
                             </div>
                         </form>
 

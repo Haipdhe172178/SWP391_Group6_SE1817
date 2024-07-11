@@ -106,95 +106,110 @@
 <body>
 
     <jsp:include page="../common/header.jsp"></jsp:include>
-    <div class="container order-section">
-        <h3>Đơn hàng của tôi</h3>
+ <div class="container order-section">
+    <h3>Đơn hàng của tôi</h3>
 
-        <div class="search-box">
-            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm...">
-        </div>
-
-        <div class="container">
-            <ul id="navbar"
-                class="navbar-nav d-flex justify-content-center justify-content-lg-start align-items-center flex-wrap flex-column flex-lg-row">
-                <li class="nav-item">
-                    <a class="nav-link me-4 ${param.status == 'all' ? 'active' : ''}"
-                        href="ordercustomer?accountId=${requestScope.accountId}&status=all">Tất cả <span>${all}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-4 ${param.status == 'pending' ? 'active' : ''}"
-                        href="ordercustomer?accountId=${requestScope.accountId}&status=pending">Chờ xác nhận <span>${pendingCount}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-4 ${param.status == 'confirmed' ? 'active' : ''}"
-                        href="ordercustomer?accountId=${requestScope.accountId}&status=confirmed">Đã xác nhận <span>${confirmedCount}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-4 ${param.status == 'shipping' ? 'active' : ''}"
-                        href="ordercustomer?accountId=${requestScope.accountId}&status=shipping">Chờ giao hàng <span>${shippingCount}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-4 ${param.status == 'completed' ? 'active' : ''}"
-                        href="ordercustomer?accountId=${requestScope.accountId}&status=completed">Hoàn thành <span>${completedCount}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link me-4 ${param.status == 'canceled' ? 'active' : ''}"
-                        href="ordercustomer?accountId=${requestScope.accountId}&status=canceled">Đã hủy <span>${canceledCount}</span></a>
-                </li>
-            </ul>
-        </div>
-
-        <c:choose>
-            <c:when test="${requestScope.noOrders}">
-                <p>Bạn chưa có đơn hàng nào</p>
-            </c:when>
-            <c:otherwise>
-                <table class="table" id="orderTable">
-                    <thead>
-                        <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Sản phẩm</th>
-                            <th>Tổng giá tiền</th>
-                            <th>Tổng số lượng</th>
-                            <th>Ngày mua</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="order" items="${orders}">
-                            <tr class="clickable-row"
-                                data-href="ordercustomerdetail?orderId=${order.orderDetails[0].orderCId}">
-                                <td>${order.orderDetails[0].orderCId}</td>
-                                <td>
-                                    <img src="${order.orderDetails[0].product.imgProduct}"
-                                        alt="${order.orderDetails[0].product.name}" width="50" height="50" />
-                                    ${order.orderDetails[0].product.name}
-                                </td>
-                                <td>
-                                    <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0"
-                                        maxFractionDigits="0" /> VND
-                                </td>
-                                <td>${totalQuantity}</td>
-                                <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy" /></td>
-                                <td>${order.status.statusName}</td>
-                                <td>
-                                    <c:if test="${order.status == 'Chờ xác nhận' || order.status == 'Đã xác nhận'}">
-                                        <form action="ordercustomer" method="post">
-                                            <input type="hidden" name="action" value="cancel">
-                                            <input type="hidden" name="orderId" value="${order.orderId}">
-                                            <textarea name="cancelReason" rows="2" cols="20"
-                                                placeholder="Nhập lý do hủy"></textarea>
-                                            <button type="submit">Hủy đơn hàng</button>
-                                        </form>
-                                    </c:if>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:otherwise>
-        </c:choose>
+    <div class="search-box">
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm...">
     </div>
+
+  <div class="container">
+    <ul id="navbar"
+        class="navbar-nav d-flex justify-content-center justify-content-lg-start align-items-center flex-wrap flex-column flex-lg-row">
+        <li class="nav-item">
+            <a class="nav-link me-4 ${param.status == 'all' ? 'active' : ''}"
+                href="ordercustomer?accountId=${requestScope.accountId}&status=all">Tất cả <span>${all}</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link me-4 ${param.status == 'pending' ? 'active' : ''}"
+                href="ordercustomer?accountId=${requestScope.accountId}&status=pending">Chờ xác nhận <span>${pendingCount}</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link me-4 ${param.status == 'confirmed' ? 'active' : ''}"
+                href="ordercustomer?accountId=${requestScope.accountId}&status=confirmed">Đã xác nhận <span>${confirmedCount}</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link me-4 ${param.status == 'shipping' ? 'active' : ''}"
+                href="ordercustomer?accountId=${requestScope.accountId}&status=shipping">Chờ giao hàng <span>${shippingCount}</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link me-4 ${param.status == 'completed' ? 'active' : ''}"
+                href="ordercustomer?accountId=${requestScope.accountId}&status=completed">Hoàn thành <span>${completedCount}</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link me-4 ${param.status == 'canceled' ? 'active' : ''}"
+                href="ordercustomer?accountId=${requestScope.accountId}&status=canceled">Đã hủy <span>${canceledCount}</span></a>
+        </li>
+    </ul>
+</div>
+
+<c:choose>
+    <c:when test="${requestScope.noOrders}">
+        <p>Bạn chưa có đơn hàng nào</p>
+    </c:when>
+    <c:otherwise>
+        <table class="table" id="orderTable">
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Sản phẩm</th>
+                    <th>Tổng giá tiền</th>
+                    <th>Tổng số lượng</th>
+                    <th>Ngày mua</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="order" items="${orders}">
+                    <tr class="clickable-row"
+                        data-href="ordercustomerdetail?orderId=${order.orderDetails[0].orderCId}">
+                        <td>${order.orderDetails[0].orderCId}</td>
+                        <td>
+                            <img src="${order.orderDetails[0].product.imgProduct}"
+                                alt="${order.orderDetails[0].product.name}" width="50" height="50" />
+                            ${order.orderDetails[0].product.name}
+                        </td>
+                        <td>
+                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0"
+                                maxFractionDigits="0" /> VND
+                        </td>
+                        <td>${totalQuantity}</td>
+                        <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy" /></td>
+                        <td>${order.status.statusName}</td>
+                        <td>
+                            <c:if test="${order.status.statusId == 1}">
+                                <form action="ordercustomer" method="post">
+                                    <input type="hidden" name="action" value="cancel">
+                                    <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
+                                    <input type="hidden" name="status" value="${param.status}">
+                                    <button type="submit">Hủy đơn hàng</button>
+                                </form>
+                            </c:if>
+                            <c:if test="${order.status.statusId == 3}">
+                                <form action="ordercustomer" method="post">
+                                    <input type="hidden" name="action" value="received">
+                                    <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
+                                    <input type="hidden" name="status" value="${param.status}">
+                                    <button type="submit">Đã nhận hàng</button>
+                                </form>
+                            </c:if>
+                            <form action="ordercustomer" method="post">
+                                <input type="hidden" name="action" value="buyAgain">
+                                <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
+                                <input type="hidden" name="status" value="${param.status}">
+                                <button type="submit">Mua lại</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </c:otherwise>
+</c:choose>
+
+</div>
+
 
     <footer class="footer">
         <div class="container">
