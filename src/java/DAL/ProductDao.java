@@ -587,19 +587,18 @@ public class ProductDao extends DBContext {
         return list;
     }
 
- 
     public List<Product> pagingProducts(int index, List<String> ids) {
         List<Product> list = new ArrayList<>();
 
         // Manually create the idsString
-       String idString="";
+        String idString = "";
         for (String id : ids) {
             if (idString.length() > 0) {
-                idString+=",";
+                idString += ",";
             }
-            idString+="'"+id+"'";
+            idString += "'" + id + "'";
         }
-        String idsString = idString.substring(0,idString.length());
+        String idsString = idString.substring(0, idString.length());
         System.out.println(idsString);
         String query = "SELECT p.*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription "
                 + "FROM Product p "
@@ -831,5 +830,65 @@ public class ProductDao extends DBContext {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public List<Product> getProductByCOrder(int COrderid) {
+        List<Product> products = new ArrayList<>();
+        String query = "  SELECT \n"
+                + "    odc.[ProductID],\n"
+                + "    p.[Name],\n"
+                + "    p.[Price],\n"
+                + "    odc.[Quantity],\n"
+                + "    p.[Description],\n"
+                + "    p.[CategoryID],\n"
+                + "    p.[AuthorID],\n"
+                + "    p.[ImgProduct],\n"
+                + "    p.[AgeID],\n"
+                + "    p.[Status]\n"
+                + "FROM \n"
+                + "    [ShopBook88].[dbo].[OrderDetailCustomer] odc\n"
+                + "JOIN \n"
+                + "    [ShopBook88].[dbo].[Product] p\n"
+                + "ON \n"
+                + "    odc.[ProductID] = p.[ProductID]\n"
+                + "WHERE \n"
+                + "    odc.[OrderCID] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, COrderid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("ProductID"));
+                product.setName(rs.getString("Name"));
+                product.setPrice(rs.getFloat("Price"));
+                product.setQuantity(rs.getInt("Quantity"));
+                product.setDescription(rs.getString("Description"));
+
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("CategoryID"));
+                product.setCategory(category);
+
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("AuthorID"));
+                product.setAuthor(author);
+
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("AgeID"));
+                product.setOage(oage);
+
+                product.setImgProduct(rs.getString("ImgProduct"));
+                product.setStatus(rs.getInt("Status"));
+
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+
+    public List<Product> getProductByGOrder(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

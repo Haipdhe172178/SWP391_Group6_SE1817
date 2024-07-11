@@ -771,7 +771,7 @@ public class OrderDao extends DBContext {
                 + "FETCH NEXT 10 ROWS ONLY;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, (indexx-1)*10);
+            ps.setInt(1, (indexx - 1) * 10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -850,6 +850,95 @@ public class OrderDao extends DBContext {
 
         return totalOrders;
 
+    }
+
+    public Orders getOrderCusById(int orderGID) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "  SELECT \n"
+                + "    o.OrderCID AS OrderID,\n"
+                + "    a.FullName,\n"
+                + "    a.Email,\n"
+                + "    sa.PhoneNumber, \n"
+                + "    sa.Address,\n"
+                + "    o.TotalPrice,\n"
+                + "    o.Date,\n"
+                + "    o.StatusID,\n"
+                + "    o.PaymentStatus,\n"
+                + "    o.AccountID\n"
+                + "FROM \n"
+                + "    [dbo].[OrderCustomer] o\n"
+                + "JOIN \n"
+                + "    [ShopBook88].[dbo].[Account] a ON o.AccountID = a.AccountID\n"
+                + "JOIN \n"
+                + "    [ShopBook88].[dbo].[ShippingAddress] sa ON o.AddressID = sa.AddressID\n"
+                + "WHERE \n"
+                + "    o.OrderCID = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderGID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Orders order = new Orders();
+
+                order.setOrderID(rs.getInt(1));
+
+                order.setFullName(rs.getString(2));
+                order.setEmail(rs.getString(3));
+                order.setPhoneNumber(rs.getString(4));
+                order.setAddress(rs.getString(5));
+                order.setTotalPrice(rs.getFloat(6));
+                order.setDate(rs.getDate(7));
+                order.setStatus(rs.getInt(8));
+                order.setPaymentStatus(rs.getInt(9));
+                order.setAccountID(rs.getInt(10));
+                return order;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public Orders getOrderGetByID(int orderGID) {
+        String query = "  SELECT \n"
+                + "    og.OrderGID AS OrderID,\n"
+                + "    og.FullName,\n"
+                + "    og.Email,\n"
+                + "    og.PhoneNumber,\n"
+                + "    og.Address,\n"
+                + "    og.TotalPrice,\n"
+                + "    og.Date,\n"
+                + "    og.StatusID,\n"
+                + "    og.PaymentStatus,\n"
+                + "    NULL AS AccountID\n"
+                + "FROM \n"
+                + "    [dbo].[OrderGuest] og\n"
+                + "WHERE \n"
+                + "    og.OrderGID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderGID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Orders order = new Orders();
+                order.setOrderID(rs.getInt(1));
+
+                order.setFullName(rs.getString(2));
+                order.setEmail(rs.getString(3));
+                order.setPhoneNumber(rs.getString(4));
+                order.setAddress(rs.getString(5));
+                order.setTotalPrice(rs.getFloat(6));
+                order.setDate(rs.getDate(7));
+                order.setStatus(rs.getInt(8));
+                order.setPaymentStatus(rs.getInt(9));
+                order.setAccountID(rs.getInt(10));
+                return order;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }

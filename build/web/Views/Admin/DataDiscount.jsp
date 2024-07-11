@@ -164,7 +164,8 @@
                                                                <div class="search_field">
                                                                    <table border="0px">
                                                                        <th> <h6 class="m-0">Thời gian đến lúc mã hết hiển thị ở trang chủ</h6></th>
-                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>
+<!--                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>-->
+                                                                       <input type="datetime-local" id="appointment" value="${date1}" name="date">
                                                                        <th><input hidden  type="text" value="${date1}" name="dateold"  class="form-control"></th>
                                                                        <th> <input class="add_button ms-2" type="submit" value="Cập nhật ngày"></th>
                                                                    </table>

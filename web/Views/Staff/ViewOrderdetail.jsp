@@ -73,9 +73,9 @@
                 <div class="container mt-5">
                     <div class="card">
                         <div class="card-header">
-                            <h3>Tạo Đơn hàng</h3>
+                            <h3>Xem chi tiết đơn hàng</h3>
                         </div>
-                        <form action="neworder" method="post" onsubmit="return validateForm()">
+                      
                             <div class="card-body">
                                 <h5>Sản phẩm đã chọn</h5>
                                 <table class="table table-bordered">
@@ -87,39 +87,33 @@
                                             <th>Giá tiền</th>
                                             <th>Số lượng</th>
                                             <th>Thành tiền</th>
-                                            <th>Hành động</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${listsp}" var="ls" varStatus="status">
+                                          <%
+                                         int count=1;
+                                            %>
+                                    <c:forEach items="${list}" var="ls" varStatus="status">
                                         <tr>
-                                            <td>${status.count}</td>
-                                            <td>${ls.product.name}</td>
-                                            <td><img src="${ls.product.imgProduct}" alt="Product 1" width="50"></td>
-                                            <td class="price">${ls.product.price} <input name="price${ls.product.productId}" value="${ls.product.price}" hidden/></td>
+                                            <td><%= count++ %></td>
+                                            <td>${ls.name}</td>
+                                            <td><img src="${ls.imgProduct}" alt="Product 1" width="50"></td>
+                                            <td class="price">${ls.price}</td>
                                             <td>
-                                                <input type="number" name="quantity${ls.product.productId}" class="quantity" value="1" min="0" max="${ls.product.quantity}" onchange="updateTotal(${ls.product.quantity})"/>
+                                                ${ls.quantity}
                                             </td>
-                                            <td class="total-price"></td>
-                                            <td>
-<!--                                                <form action="remove" method="post">
-                                                    <input type="hidden" name="id" value="${ls.product.productId}"/>
-                                                    <input type="submit" value="Xóa"/>
-                                                </form>-->
-                                                    <a href="remove?id=${ls.product.productId}">Xoá</a>
-                                            </td>
+                                            <td class="total-price">${ls.quantity * ls.price}</td>
+                                          
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <button class="btn btn-primary">
-                                <a href="listsp" class="text-white">Chọn thêm sản phẩm</a>
-                            </button>
+                           
 
                             <div class="mt-3">
-                                <p>Tổng tiền sản phẩm: <span id="subtotal">0</span>đ</p>
-                                <p>Phí vận chuyển: <span id="shipping-fee">20000</span>đ</p>
-                                <p>Tổng: <span id="total" name="total" >0</span>đ</p>
+               
+                                <h2 style="color: rgba">   Tổng: <span id="total" name="total"> ${order.totalPrice}</span>đ</p></h2>
                                 <input id="total1" name="total" hidden=""/>
                             </div>
 
@@ -163,46 +157,45 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="fullName">Tên người nhận*</label>
-                                    <input type="text" name="name" class="form-control" id="fullName" placeholder="Tên người nhận" required>
+                                    <input type="text" name="name" value="${order.fullName}" class="form-control" id="fullName"  disabled>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="mobile">Số điện thoại*</label>
-                                    <input type="text" name="phone" class="form-control" id="mobile" placeholder="Số điện thoại" required pattern="^\d{10,11}$">
+                                    <input type="text" name="phone" value="${order.phoneNumber}" class="form-control" id="mobile"  disabled  pattern="^\d{10,11}$">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="email">Email*</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+                                    <input type="email" name="email" value="${order.email}"  class="form-control" id="email"  disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="address">Địa Chỉ người nhận</label>
-                                <input type="text" name="address" class="form-control" id="address" placeholder="Địa Chỉ người nhận">
+                                <input type="text" value="${order.address}" name="address" class="form-control" id="address" disabled >
                             </div>
 
                             <h5>Thanh toán</h5>
-                            <div class="form-check">
-                                <select name="payment" class="form-control">
-                                    <option value="0">Chưa trả tiền</option>
-                                    <option value="1">Đã trả tiền</option>
+                            <div class="form-check" >
+                                <select name="payment" class="form-control" disabled>
+                                    <option value="0" ${order.paymentStatus == 0 ? "selected" : ""}>Chưa trả tiền</option>
+                                    <option value="1" ${order.paymentStatus == 1 ? "selected" : ""} >Đã trả tiền</option>
                                 </select>
                             </div>
 
-                            <h5>Order Status</h5>
-                            <div class="form-check">
-                                <select name="status" class="form-control">
-                                    <option value="1">Chờ xác nhận</option>
-                                    <option value="2">Đã xác nhận</option>
-                                    <option value="3">Chờ giao hàng</option>
-                                    <option value="4">Hoàn thành</option>
-                                    <option value="5">Đã hủy</option>
+                            <h5>Trạng thái đơn hàng</h5>
+                            <div class="form-check"  >
+                                <select name="status" class="form-control" disabled>
+                                    <option value="1" ${order.status == 1 ? "selected" : ""}>Chờ xác nhận</option>
+                                    <option value="2" ${order.status ==2 ? "selected" : ""}>Đã xác nhận</option>
+                                    <option value="3"${order.status == 4? "selected" : ""}>Chờ giao hàng</option>
+                                    <option value="4"${order.status == 5 ? "selected" : ""}>Hoàn thành</option>
+                                    <option value="5"${order.status == 6 ? "selected" : ""}>Đã hủy</option>
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                          
 
                         </div>
                     </form>
-                        <div><h2 style="color: red">${error}</h2></div>
                 </div>
             </div>
             <script>

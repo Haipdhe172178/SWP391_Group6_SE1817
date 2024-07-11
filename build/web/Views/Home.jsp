@@ -300,7 +300,7 @@
             </div>
         </div>
 
-        <nav id="header-nav" class="navbar navbar-expand-lg py-3">
+        <nav id="header-nav" class="navbar navbar-expand-lg py-3 z-2">
             <div class="container">
                 <a class="navbar-brand" href="home">
                     <img  src="images/anh456.png" class="logo" style="width: 12rem; height: auto"> 
@@ -484,8 +484,8 @@
     </header>
 
 
-       <br> <br> <br><br><br>
-    <div class="swiper-container">
+       
+    <div class="swiper-container z-3">
         <div class="swiper-wrapper">
                <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1036')">
 
