@@ -17,11 +17,11 @@ public class OrderCustomer {
     private Account account;
     private float totalPrice;
     private Date date;
-    private Status status;
+    private StatusOrder status;
     public int paymentStatus;
     private ShippingAddress shipAddress;
 
-    public OrderCustomer(List<OrderDetailCustomer> orderDetails, Account account, float totalPrice, Date date, Status status) {
+    public OrderCustomer(List<OrderDetailCustomer> orderDetails, Account account, float totalPrice, Date date, StatusOrder status) {
         this.orderDetails = orderDetails;
         this.account = account;
         this.totalPrice = totalPrice;
@@ -45,11 +45,11 @@ public class OrderCustomer {
         this.paymentStatus = paymentStatus;
     }
     
-    public Status getStatus() {
+    public StatusOrder getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusOrder status) {
         this.status = status;
     }
 
