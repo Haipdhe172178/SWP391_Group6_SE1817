@@ -103,14 +103,15 @@
                     <i class="text-success fa-solid fa-house-chimney fa-2xl mx-4 mb-3"></i>
                     <p class="text-dark font-weight-bolder py-1 px-1 mx-n2">Giao hàng thành công</p>
                 </div>
+                <div class="container text-center">
+                    <h3 style="color: #f86d72"> Đơn Hàng </h3>
+                </div>
                 <table class="table">
                     <thead>
-                        <tr style="color: #f86d72">
-                            <th>Đơn hàng</th>
                             <th>Sản phẩm</th>
                             <th>Số lượng</th>
                             <th>Đơn giá</th>
-                            <th>Test</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -124,7 +125,7 @@
                                 <td>
                                     <fmt:formatNumber value="${detail.unitPrice}" type="number" minFractionDigits="0" maxFractionDigits="0" /> VND
                                 </td>
-                                <td>${statusOrder.statusId}</td>
+                                
                             </tr>
                         </c:forEach>
                     </tbody>
