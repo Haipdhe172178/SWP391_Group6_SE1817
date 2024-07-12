@@ -88,18 +88,18 @@ public class DataProductControllers extends HttpServlet {
         String searchKeyword = request.getParameter("s");
         String statusFilter = request.getParameter("statusFilter");
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            list = productDao.pagingProductsByKeyword(index, searchKeyword);
-            count = productDao.getTotalProductsByKeyword(searchKeyword);
+            list = productDao.pagingProductsByKeyword(index, searchKeyword, "0,1");
+            count = productDao.getTotalProductsByKeyword(searchKeyword, "0,1");
         } else if ("priceasc".equalsIgnoreCase(sortParam) || "pricedesc".equalsIgnoreCase(sortParam)) {
-            list = productDao.pagingProductsSortedByPrice(index, ascending);
-            count = productDao.getTotalProductBySort(sortParam);
+            list = productDao.pagingProductsSortedByPrice(index, ascending, "0,1");
+            count = productDao.getTotalProductBySort(sortParam, "0,1");
         } else if (statusFilter != null && !statusFilter.isEmpty()) {
             int status = Integer.parseInt(statusFilter);
             list = productDao.getProductByStatus(status, index);
             count = productDao.getTotalProductByStatus(status);
         } else {
-            list = productDao.pagingProducts(index);
-            count = productDao.getTotalProduct();
+            list = productDao.pagingProducts(index, "0,1");
+            count = productDao.getTotalProduct("0,1");
         }
         endPage = count / 8;
         if (count % 8 != 0) {

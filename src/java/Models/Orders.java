@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author USER
  */
-public class Orders { 
-     private int stt;
-      private int OrderID;
-      private String fullName;
+public class Orders {
+    private int stt;
+    private int OrderID;
+    private String fullName;
     private String email;
     private String phoneNumber;
     private String address;
@@ -129,9 +129,4 @@ public class Orders {
         this.accountID = accountID;
     }
 
-   
-   
-    
-    
-    
 }

@@ -67,17 +67,17 @@
 
     <body class="crm_body_bg">
         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
-        <section class="main_content dashboard_part large_header_bg">
+            <section class="main_content dashboard_part large_header_bg">
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
-            <div class="main_content_iner overly_inner">
-                <div class="container-fluid p-0">
-                    <div class="row">
-                        <div class="col-lg-12 mb_20">
-                            <div class="white_card card_height_100 mb_20">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Đơn hàng trạng thái: ${statusName}</h3>
+                <div class="main_content_iner overly_inner">
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            <div class="col-lg-12 mb_20">
+                                <div class="white_card card_height_100 mb_20">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Đơn hàng trạng thái: ${statusName}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -94,21 +94,22 @@
                                                     <th>Email</th>
                                                     <th>Số điện thoại</th>
                                                     <th>Địa chỉ</th>
-                                                    <th data-sort="totalPrice" style="cursor: pointer; color: black">
-                                                        Tổng giá <i class="fas fa-sort" style="margin-left: 5px;"></i>
+                                                    <th>Tổng giá
+                                                        <a href="orderstatus?status=${statusId}&sort=priceasc"><i class="fas fa-arrow-up"></i></a>
+                                                        <a href="orderstatus?status=${statusId}&sort=pricedesc"><i class="fas fa-arrow-down"></i></a>
                                                     </th>
-                                                    <th data-sort="date" style="cursor: pointer; color: black">
-                                                        Ngày <i class="fas fa-sort" style="margin-left: 5px;"></i>
+                                                    <th >Ngày
+                                                        <a href="orderstatus?status=${statusId}&sort=dateasc"><i class="fas fa-arrow-up"></i></a>
+                                                        <a href="orderstatus?status=${statusId}&sort=datedesc"><i class="fas fa-arrow-down"></i></a>
                                                     </th>
                                                     <th>Trạng thái</th>
-                                                    <th>Loại</th>
+
                                                 </tr>
                                             </thead>
-
                                             <tbody>
-                                                <c:forEach var="order" items="${recentOrders}">
+                                                <c:forEach var="order" items="${ListA}">
                                                     <tr>
-                                                        <td>${order.orderId}</td>
+                                                        <td>${order.orderID}</td>
                                                         <td>${order.fullName}</td>
                                                         <td>${order.email != null ? order.email : 'N/A'}</td>
                                                         <td>${order.phoneNumber != null ? order.phoneNumber : 'N/A'}</td>
@@ -117,12 +118,47 @@
                                                             <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
                                                         </td>
                                                         <td><fmt:formatDate value="${order.date}" pattern="yyyy-MM-dd"/></td>
-                                                        <td>${order.statusName}</td>
-                                                        <td>${order.orderType}</td>
+                                                        <td>${statusName}</td>                                                       
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
                                         </table>
+                                        <nav class="py-5" aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center gap-4">
+                                                <!-- Xác định phạm vi các trang hiển thị -->
+                                                <c:set var="start" value="${tag > 3 ? tag - 2 : 1}" />
+                                                <c:set var="end" value="${tag > 3 ? tag + 2 : 5}" />
+                                                <c:if test="${end > endP}">
+                                                    <c:set var="end" value="${endP}" />
+                                                    <c:set var="start" value="${endP - 4 > 0 ? endP - 4 : 1}" />
+                                                </c:if>
+
+                                                <!-- Nút Previous -->
+                                                <c:if test="${tag > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="orderstatus?status=${statusId}&index=${tag - 1}${query}" aria-label="Previous">
+                                                            <span aria-hidden="true"><i class="fas fa-arrow-left"></i></span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+
+                                                <!-- Vòng lặp để tạo các nút trang -->
+                                                <c:forEach begin="${start}" end="${end}" var="i">
+                                                    <li class="page-item ${tag == i ? 'active' : ''}">
+                                                        <a class="page-link" href="orderstatus?status=${statusId}&index=${i}${query}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
+
+                                                <!-- Nút Next -->
+                                                <c:if test="${tag < endP}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="orderstatus?status=${statusId}&index=${tag + 1}${query}" aria-label="Next">
+                                                            <span aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -177,65 +213,7 @@
         <script src="vendors/chart_am/chart-custom.js"></script>
         <script src="js/dashboard_init.js"></script>
         <script src="js/custom.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const searchInput = document.getElementById('searchInput');
-                const rows = document.querySelectorAll('#orderTable tbody tr');
 
-                searchInput.addEventListener('keyup', function () {
-                    const filter = searchInput.value.trim().toLowerCase();
-
-                    rows.forEach(row => {
-                        let found = false;
-
-                        // Search through each cell in the row
-                        Array.from(row.cells).forEach(cell => {
-                            const text = cell.textContent.trim().toLowerCase();
-                            if (text.includes(filter)) {
-                                found = true;
-                            }
-                        });
-
-                        // Show or hide the row based on search result
-                        row.style.display = found ? '' : 'none';
-                    });
-                });
-
-                $("th[data-sort]").click(function () {
-                    var column = $(this).data("sort");
-                    var order = $(this).hasClass("asc") ? "desc" : "asc";
-                    $("th[data-sort]").removeClass("asc desc");
-                    $(this).addClass(order);
-                    sortTable(column, order);
-                });
-
-                function sortTable(column, order) {
-                    var rows = $("#orderTable tbody tr").get();
-
-                    rows.sort(function (rowA, rowB) {
-                        var valueA = $(rowA).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
-                        var valueB = $(rowB).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
-
-                        if (column === "totalPrice") {
-                            valueA = parseFloat(valueA.replace(/[^\d.-]/g, ''));
-                            valueB = parseFloat(valueB.replace(/[^\d.-]/g, ''));
-                        } else if (column === "date") {
-                            valueA = new Date(valueA);
-                            valueB = new Date(valueB);
-                        }
-
-                        if (order === "asc") {
-                            return valueA > valueB ? 1 : -1;
-                        } else {
-                            return valueA < valueB ? 1 : -1;
-                        }
-                    });
-                    $.each(rows, function (index, row) {
-                        $("#orderTable tbody").append(row);
-                    });
-                }
-            });
-        </script>
     </body>
 
 </html>

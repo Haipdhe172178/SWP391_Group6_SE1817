@@ -64,21 +64,20 @@ public class ListProductController extends HttpServlet {
         //cookie lay id
         Cookie[] arr = request.getCookies();
         String txt = "";
-        if(arr!=null){
-            for(Cookie i:arr){
-                if(i.getName().equals("cartAdmin")){
-                    txt+=i.getValue();//"1:1/2:1/3:1"
+        if (arr != null) {
+            for (Cookie i : arr) {
+                if (i.getName().equals("cartAdmin")) {
+                    txt += i.getValue();//"1:1/2:1/3:1"
                 }
             }
         }
         List<String> ids = new ArrayList<>();//
-        
+
         String[] data = txt.split("/");//"1:1"
         for (String s : data) {
             ids.add(s.split(":")[0]);
         }
-        
-        
+
         String indexPage = request.getParameter("index");
         int index;
         if (indexPage != null) {
@@ -87,13 +86,13 @@ public class ListProductController extends HttpServlet {
             index = 1;
         }
         List<Product> list;
-        int count = productDao.getTotalProduct();
+        int count = productDao.getTotalProduct("0,1");
         int endPage;
-        list = productDao.pagingProducts(index,ids);
+        list = productDao.pagingProducts(index, ids);
         String searchKeyword = request.getParameter("s");
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
-            list = productDao.pagingProductsByKeyword(index, searchKeyword);
-            count = productDao.getTotalProductsByKeyword(searchKeyword);
+            list = productDao.pagingProductsByKeyword(index, searchKeyword, "0,1");
+            count = productDao.getTotalProductsByKeyword(searchKeyword, "0,1");
         }
         endPage = count / 8;
         if (count % 8 != 0) {
