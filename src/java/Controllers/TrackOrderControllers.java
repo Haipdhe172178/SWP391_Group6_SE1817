@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author admin
  */
-public class TrackOrder extends HttpServlet {
+public class TrackOrderControllers extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -61,38 +61,37 @@ public class TrackOrder extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-          
-       int orderId = Integer.parseInt(request.getParameter("orderId"));
+    @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+      
+    int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        ProductDao productDAO = new ProductDao();
-        OrderDao orderDAO = new OrderDao();
-        ShipAddressDAO shipAddressDAO = new ShipAddressDAO();
-        AccountDAO accountDAO = new AccountDAO();
+    ProductDao productDAO = new ProductDao();
+    OrderDao orderDAO = new OrderDao();
+    ShipAddressDAO shipAddressDAO = new ShipAddressDAO();
+    AccountDAO accountDAO = new AccountDAO();
 
-        List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
-        for (OrderDetailCustomer orderDetail : orderDetails) {
-            int productId = orderDetail.getProductId();
-            Product product = productDAO.getProductById(productId);
-            orderDetail.setProduct(product); 
-        }
-
-     StatusOrder statusOrder = orderDAO.getStatusOrderById(orderId);
-        request.setAttribute("statusOrder", statusOrder);
-        ShipAddress shipAddress = shipAddressDAO.selectShipAddress(orderId);
-        OrderCustomer order = orderDAO.getOrderCustomerById(orderId);
-        int accountId = order.getAccount().getAccountId();
-        Account account = accountDAO.getAccountByid(accountId);
-        
-        request.setAttribute("orderDetails", orderDetails);
-        request.setAttribute("order", order);
-        request.setAttribute("account", account);
-        request.setAttribute("shippingAddress", shipAddress);
-request.getRequestDispatcher("Views/TrackOrder.jsp").forward(request, response);
+    List<OrderDetailCustomer> orderDetails = orderDAO.getOrderDetailCustomers(orderId);
+    for (OrderDetailCustomer orderDetail : orderDetails) {
+        int productId = orderDetail.getProductId();
+        Product product = productDAO.getProductById(productId);
+        orderDetail.setProduct(product); 
     }
 
+    StatusOrder statusOrder = orderDAO.getStatusOrderById(orderId);
+    request.setAttribute("statusOrder", statusOrder);
+    ShipAddress shipAddress = shipAddressDAO.selectShipAddress(orderId);
+    OrderCustomer order = orderDAO.getOrderCustomerById(orderId);
+    int accountId = order.getAccount().getAccountId();
+    Account account = accountDAO.getAccountByid(accountId);
+
+    request.setAttribute("orderDetails", orderDetails);
+    request.setAttribute("order", order);
+    request.setAttribute("account", account);
+    request.setAttribute("shippingAddress", shipAddress);
+    request.getRequestDispatcher("Views/TrackOrder.jsp").forward(request, response);
+}
 
     /** 
      * Handles the HTTP <code>POST</code> method.
