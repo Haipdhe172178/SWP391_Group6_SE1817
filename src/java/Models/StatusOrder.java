@@ -8,14 +8,14 @@ package Models;
  *
  * @author huyca
  */
-public class Status {
+public class StatusOrder {
     private int statusId;
     private String statusName;
 
-    public Status() {
+    public StatusOrder() {
     }
 
-    public Status(int statusId, String statusName) {
+    public StatusOrder(int statusId, String statusName) {
         this.statusId = statusId;
         this.statusName = statusName;
     }

@@ -242,7 +242,7 @@
                     <p>Phí vận chuyển: 20.000 VND</p>
                 </div>
             </div>
-
+                    <a href="trackorder?orderId=${order.orderDetails[0].orderCId}">Theo dõi đơn hàng</a>
             <table class="table">
                 <thead>
                     <tr>

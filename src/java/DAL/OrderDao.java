@@ -12,7 +12,12 @@ import Models.OrderDetailGuest;
 import Models.OrderGuest;
 import Models.Orders;
 import Models.Product;
+<<<<<<< HEAD
 import Models.Status;
+import SendEmail.SendEmail;
+=======
+import Models.StatusOrder;
+>>>>>>> 8daec631a20ba6bcc46ba6c26c2c5c493d12766d
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,7 +80,7 @@ public class OrderDao extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
@@ -127,7 +132,7 @@ public class OrderDao extends DBContext {
                 String address = rs.getString("Address");
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("statusName"));
                 List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
@@ -181,7 +186,7 @@ public class OrderDao extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
@@ -212,7 +217,7 @@ public class OrderDao extends DBContext {
                 String address = rs.getString("Address");
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("statusName"));
                 List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
@@ -299,7 +304,7 @@ public class OrderDao extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
@@ -330,7 +335,7 @@ public class OrderDao extends DBContext {
                 String address = rs.getString("Address");
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
@@ -508,7 +513,7 @@ public class OrderDao extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
@@ -544,7 +549,7 @@ public class OrderDao extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
@@ -696,13 +701,13 @@ public class OrderDao extends DBContext {
                 account.setAddress(rs.getString("Address"));
                 float totalPrice = rs.getFloat("TotalPrice");
                 Date date = rs.getDate("Date");
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt("StatusID"));
                 status.setStatusName(rs.getString("StatusName"));
                 int paymentStatus = rs.getInt("paymentStatus");
                 List<OrderDetailCustomer> orderDetails = getOrderDetailCustomers(orderCId);
                 orderCustomer = new OrderCustomer(orderDetails, account, totalPrice, date, status);
-                    orderCustomer.setPaymentStatus(paymentStatus);
+                orderCustomer.setPaymentStatus(paymentStatus);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -727,14 +732,10 @@ public class OrderDao extends DBContext {
         }
         return totalQuantity;
     }
+<<<<<<< HEAD
 
-    public static void main(String[] args) {
-        int orderCId = 5;
-        OrderDao dao = new OrderDao();
-        int totalQuantity = dao.getTotalQuantityByOrderCId(orderCId);
-        System.out.println("Total Quantity for OrderCID " + orderCId + ": " + totalQuantity);
-    }
-
+=======
+>>>>>>> 8daec631a20ba6bcc46ba6c26c2c5c493d12766d
     public OrderGuest getOrderGuestByID(int orderGID) {
         String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
                 + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "
@@ -752,7 +753,7 @@ public class OrderDao extends DBContext {
                 String address = rs.getString(5);
                 float totalPrice = rs.getFloat(6);
                 Date date = rs.getDate(7);
-                Status status = new Status();
+                StatusOrder status = new StatusOrder();
                 status.setStatusId(rs.getInt(8));
                 status.setStatusName(rs.getString(9));
                 List<OrderDetailGuest> orderDetails = getOrderDetailGuests(orderGId);
@@ -916,7 +917,6 @@ public class OrderDao extends DBContext {
 
     }
 
-
     public Orders getOrderCusById(int orderGID) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         String query = "  SELECT \n"
@@ -1029,6 +1029,7 @@ public class OrderDao extends DBContext {
             e.printStackTrace();
         }
     }
+
     public boolean updateOrderCustomerStatus(int orderCID, int newStatusID) {
         String query = "UPDATE OrderCustomer SET StatusID = ? WHERE OrderCID = ?";
         try {
@@ -1041,6 +1042,173 @@ public class OrderDao extends DBContext {
             ex.printStackTrace();
             return false;
 
+        }
+
+    }
+     public StatusOrder getStatusOrderById(int orderId) {
+        StatusOrder statusOrder = null;
+        String query = "SELECT s.StatusID, s.StatusName FROM StatusOrder s "
+                     + "JOIN OrderCustomer oc ON s.StatusID = oc.StatusID "
+                     + "WHERE oc.OrderCID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int statusId = rs.getInt("StatusID");
+                String statusName = rs.getString("StatusName");
+                statusOrder = new StatusOrder(statusId, statusName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statusOrder;
+    }
+       public static void main(String[] args) {
+        OrderDao orderDao = new OrderDao();
+        int testOrderId = 8;
+        StatusOrder statusOrder = orderDao.getStatusOrderById(testOrderId);
+        if (statusOrder != null) {
+            System.out.println("Status ID: " + statusOrder.getStatusId());
+            System.out.println("Status Name: " + statusOrder.getStatusName());
+        } else {
+            System.out.println("No status found for Order ID: " + testOrderId);
+        }
+    }
+
+
+    public boolean updateOrderStaff(int orderID, int aId) {
+        String tableName = aId == 0 ? "OrderGuest" : "OrderCustomer";
+        String param = aId == 0 ? "OrderGID" : "OrderCID";
+        String query = "UPDATE " + tableName + " SET StatusID = 2 WHERE " + param + " = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderID);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+    public List<OrderDetailGuest> getAllByOrderId(int orderID, int aId) {
+        List<OrderDetailGuest> list = new ArrayList<>();
+        String tableName = aId == 0 ? "OrderDetailGuest" : "OrderDetailCustomer";
+        String param = aId == 0 ? "OrderGID" : "OrderCID";
+        String query = "Select * from " + tableName + " WHERE " + param + " = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OrderDetailGuest od = new OrderDetailGuest();
+                od.setOrderGId(rs.getInt(1));
+                od.setProductId(rs.getInt("productId"));
+                od.setQuantity(rs.getInt("Quantity"));
+                od.setUnitPrice(rs.getFloat(4));
+                list.add(od);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public boolean updateProductQuantityStaff(int productId, int quantity, String toanTu) {
+        String query = "update Product \n"
+                + "set Quantity = (select Quantity from Product where ProductID = ?) " + toanTu + " ? \n"
+                + "where ProductID = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, productId);
+            ps.setInt(2, quantity);
+            ps.setInt(3, productId);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public String getEmailByOrderId(int orderID, int aId) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        String query;
+        if (aId == 0) {
+            query = "Select * from  OrderGuest  WHERE  OrderGID = ?";
+        } else {
+            query = "Select * from  Account  WHERE  AccountID = ?";
+        }
+
+        try {
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            if (aId == 0) {
+                ps.setInt(1, orderID);
+            } else {
+                ps.setInt(1, aId);
+            }
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("email");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
+    public void updateOrder(Orders orders, String status) {
+
+        String query;
+        if (orders.getAccountID() == 0) {
+            query = "UPDATE [dbo].[OrderGuest]\n"
+                    + "   SET [FullName] = ?\n"
+                    + "      ,[Email] = ?\n"
+                    + "      ,[PhoneNumber] = ?\n"
+                    + "      ,[Address] = ?\n"
+                    + "      ,[TotalPrice] = ?\n"
+                    + "      ,[StatusID] = ?\n"
+                    + "      ,[PaymentStatus] = ?\n"
+                    + " WHERE OrderGID = ?";
+        } else {
+            query = "UPDATE [dbo].[OrderCustomer]\n"
+                    + "   SET \n"
+                    + "      [StatusID] = ?\n"
+                    + "      ,[PaymentStatus] = ?\n"
+                    + " WHERE OrderCID=?";
+        }
+
+        try {
+
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            if (orders.getAccountID() == 0) {
+
+                ps.setString(1, orders.getFullName());
+                ps.setString(2, orders.getEmail());
+                ps.setString(3, orders.getPhoneNumber());
+                ps.setString(4, orders.getAddress());
+                ps.setFloat(5, orders.getTotalPrice());
+                ps.setInt(6, orders.getStatus());
+
+                ps.setInt(7, orders.getPaymentStatus());
+                ps.setInt(8, orders.getOrderID());
+
+            } else {
+                ps.setInt(1, orders.getStatus());
+                ps.setInt(2, orders.getPaymentStatus());
+                ps.setInt(3, orders.getOrderID());
+            }
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
 
     }

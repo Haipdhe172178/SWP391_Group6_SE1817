@@ -11,15 +11,18 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/StaffDashboardController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/VNPay/ajaxServlet.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/OrderDao.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/UpdateOrderController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ViewOrderDetail.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/OrderDao.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/updateOrder.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddCode.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Item.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/FeedbackList.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/RemoveProductCart.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ConfirmController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailGuest.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/NewOrder.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailGuest.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderCustomer.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DiscountController.java</file>
@@ -31,6 +34,7 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/OrderCustomerDetail.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/MakeOrderController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/EnterOtp.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/VNPay/Config.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Order.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ListProductController.java</file>

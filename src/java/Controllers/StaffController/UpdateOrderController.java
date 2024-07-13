@@ -6,12 +6,15 @@ package Controllers.StaffController;
 
 import DAL.OrderDao;
 import DAL.ProductDao;
-import Models.OrderCustomer;
+import Models.Item;
+import Models.OrderDetailGuest;
 import Models.Orders;
 import Models.Product;
+import SendEmail.SendEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +25,7 @@ import java.util.List;
  *
  * @author USER
  */
-public class ViewOrderDetail extends HttpServlet {
+public class UpdateOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +44,10 @@ public class ViewOrderDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewOrderDetail</title>");
+            out.println("<title>Servlet UpdateOrderController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewOrderDetail at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateOrderController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,10 +65,9 @@ public class ViewOrderDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String id = request.getParameter("id");
         String accountid = request.getParameter("acid");
-        
+
         OrderDao dal = new OrderDao();
         Orders order = new Orders();
         List<Product> list = new ArrayList<>();
@@ -77,14 +79,16 @@ public class ViewOrderDetail extends HttpServlet {
             order = dal.getOrderGetByID(Integer.parseInt(id));
             list = dao.getProductByGOrder(Integer.parseInt(id));
         }
-        int check=0;
-        if (request.getParameter("op") != null) {
-            check=1;
-        }
-        request.setAttribute("opConfirm", check);
+        String data[] = {"Chờ xác nhận", "Đã xác nhận", "Chờ giao hàng", "Hoàn thành", "Đã hủy"};
+        List<String> status = new ArrayList<>();
+        status.add(data[order.getStatus() - 1]);
+        status.add(data[order.getStatus()]);
+        status.add(data[4]);
+
         request.setAttribute("list", list);
         request.setAttribute("order", order);
-        request.getRequestDispatcher("Views/Staff/ViewOrderdetail.jsp").forward(request, response);
+        request.setAttribute("listStatus", status);
+        request.getRequestDispatcher("Views/Staff/updateOrder.jsp").forward(request, response);
     }
 
     /**
@@ -98,7 +102,54 @@ public class ViewOrderDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String payment = request.getParameter("payment");
+        String status = request.getParameter("status");
+        String totalPrice = request.getParameter("total");
+        String orderID = request.getParameter("orderID");
+        String statusold_raw = request.getParameter("statusold");
+        String accountID = request.getParameter("accID");
+        int statusold = Integer.parseInt(statusold_raw);
+        String data1[] = {"Chờ xác nhận", "Đã xác nhận", "Chờ giao hàng", "Hoàn thành", "Đã hủy"};
+//        int stt =0;
+        int statusId = 0;
+        for (int i=0;i<5;i++) {
+            if(data1[i].equals(status)){
+                statusId = ++i;
+                break;
+            }
+        }
+        OrderDao dao = new OrderDao();
+       
+        Orders orders = new Orders(0, Integer.parseInt(orderID), name, email, phone, address, Float.parseFloat(totalPrice),
+                null, statusId, Integer.parseInt(payment), Integer.parseInt(accountID));
+
+        dao.updateOrder(orders, status);
+        List<OrderDetailGuest> list = dao.getAllByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+
+
+        if (status.equals(data1[4])) {
+            if (statusold == 2 || statusold == 3) {
+                for (OrderDetailGuest od : list) {
+                    dao.updateProductQuantityStaff(od.getProductId(), od.getQuantity(),"+");
+                }
+            }
+        } else {
+            if (statusold == 1 && status.equals(data1[1])) {
+                //update quantity
+                // -
+                for (OrderDetailGuest od : list) {
+                    dao.updateProductQuantityStaff(od.getProductId(), od.getQuantity(),"-");
+                }
+            }
+        }
+        String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+        SendEmail sd = new SendEmail();
+        sd.sendEmail(gmail, "Book88 gui ban it tien an sang", "Ban da hang thanh vui long vao trnag web de kt");
+        response.sendRedirect("staffdashboard");
     }
 
     /**

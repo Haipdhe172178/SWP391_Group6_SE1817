@@ -175,7 +175,7 @@
                                 maxFractionDigits="0" /> VND
                         </td>
                         <td>${totalQuantity}</td>
-                        <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy" /></td>
+                        <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy"/></td>
                         <td>${order.status.statusName}</td>
                         <td>
                             <c:if test="${order.status.statusId == 1}">

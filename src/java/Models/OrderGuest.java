@@ -19,10 +19,10 @@ public class OrderGuest {
     private String address;
     private float totalPrice;
     private Date date;
-    private Status status;
+    private StatusOrder status;
     private int paymentStatus;
     
-    public OrderGuest(List<OrderDetailGuest> orderDetails, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, Status status) {
+    public OrderGuest(List<OrderDetailGuest> orderDetails, String fullName, String email, String phoneNumber, String address, float totalPrice, Date date, StatusOrder status) {
         this.orderDetails = orderDetails;
         this.fullName = fullName;
         this.email = email;
@@ -97,11 +97,11 @@ public class OrderGuest {
         this.date = date;
     }
 
-    public Status getStatus() {
+    public StatusOrder getStatus() {
         return status;
     }
 
-    public void setStatus(Status statusId) {
+    public void setStatus(StatusOrder statusId) {
         this.status = status;
     }
 }

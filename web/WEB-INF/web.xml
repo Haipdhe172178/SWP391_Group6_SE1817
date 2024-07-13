@@ -262,14 +262,26 @@
         <servlet-name>RemoveProductCart</servlet-name>
         <servlet-class>Controllers.StaffController.RemoveProductCart</servlet-class>
     </servlet>
-     <servlet>
-
-     <servlet-name>ViewOrderDetail</servlet-name>
-     <servlet-class>Controllers.StaffController.ViewOrderDetail</servlet-class>
-     </servlet>
+    <servlet>
+        <servlet-name>ViewOrderDetail</servlet-name>
+        <servlet-class>Controllers.StaffController.ViewOrderDetail</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>ConfirmVNPayController</servlet-name>
         <servlet-class>Controllers.ConfirmVNPayController</servlet-class>
+    </servlet>
+    <servlet>
+<<<<<<< HEAD
+        <servlet-name>ConfirmController</servlet-name>
+        <servlet-class>Controllers.StaffController.ConfirmController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateOrderController</servlet-name>
+        <servlet-class>Controllers.StaffController.UpdateOrderController</servlet-class>
+=======
+        <servlet-name>TrackOrder</servlet-name>
+        <servlet-class>Controllers.TrackOrderControllers</servlet-class>
+>>>>>>> 8daec631a20ba6bcc46ba6c26c2c5c493d12766d
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -520,12 +532,25 @@
         <url-pattern>/remove</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>ViewOrderDetail</servlet-name>
-    <url-pattern>/viewdetail</url-pattern>
-</servlet-mapping>
+        <servlet-name>ViewOrderDetail</servlet-name>
+        <url-pattern>/viewdetail</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ConfirmVNPayController</servlet-name>
         <url-pattern>/confirmVnpay</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+<<<<<<< HEAD
+        <servlet-name>ConfirmController</servlet-name>
+        <url-pattern>/confirm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderController</servlet-name>
+        <url-pattern>/uporder</url-pattern>
+=======
+        <servlet-name>TrackOrder</servlet-name>
+        <url-pattern>/trackorder</url-pattern>
+>>>>>>> 8daec631a20ba6bcc46ba6c26c2c5c493d12766d
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

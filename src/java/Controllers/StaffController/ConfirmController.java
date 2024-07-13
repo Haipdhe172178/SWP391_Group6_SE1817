@@ -5,24 +5,21 @@
 package Controllers.StaffController;
 
 import DAL.OrderDao;
-import DAL.ProductDao;
-import Models.OrderCustomer;
-import Models.Orders;
-import Models.Product;
+import Models.OrderDetailGuest;
+import SendEmail.SendEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author USER
  */
-public class ViewOrderDetail extends HttpServlet {
+public class ConfirmController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,10 @@ public class ViewOrderDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewOrderDetail</title>");
+            out.println("<title>Servlet ConfirmController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewOrderDetail at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConfirmController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,30 +59,21 @@ public class ViewOrderDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String id = request.getParameter("id");
-        String accountid = request.getParameter("acid");
+        String orderID = request.getParameter("orderId");
+        String aId = request.getParameter("acId");
+        OrderDao d = new OrderDao();
+        d.updateOrderStaff(Integer.parseInt(orderID),Integer.parseInt(aId));
+        List<OrderDetailGuest> list = d.getAllByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
+        for(OrderDetailGuest od : list){
+            d.updateProductQuantityStaff(od.getProductId(),od.getQuantity(),"-");
+        }
+        String gmail = d.getEmailByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
+        SendEmail sd = new SendEmail();
+        sd.sendEmail(gmail, "Book88 gui ban it tien an sang", "Ban da hang thanh vui long vao trnag web de kt");
+        response.sendRedirect("staffdashboard");
         
-        OrderDao dal = new OrderDao();
-        Orders order = new Orders();
-        List<Product> list = new ArrayList<>();
-        ProductDao dao = new ProductDao();
-        if (!(accountid.equals("0"))) {
-            order = dal.getOrderCusById(Integer.parseInt(id));
-            list = dao.getProductByCOrder(Integer.parseInt(id));
-        } else {
-            order = dal.getOrderGetByID(Integer.parseInt(id));
-            list = dao.getProductByGOrder(Integer.parseInt(id));
-        }
-        int check=0;
-        if (request.getParameter("op") != null) {
-            check=1;
-        }
-        request.setAttribute("opConfirm", check);
-        request.setAttribute("list", list);
-        request.setAttribute("order", order);
-        request.getRequestDispatcher("Views/Staff/ViewOrderdetail.jsp").forward(request, response);
     }
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.

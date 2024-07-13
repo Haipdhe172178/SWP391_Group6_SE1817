@@ -152,6 +152,7 @@
                                                         
                                                         <th scope="col">Trạng thái</th>
                                                          <th scope="col">Hoạt động</th>
+                                                         <th scope="col"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -183,19 +184,19 @@
                                                                   <c:choose>
 
                                                                     <c:when test="${l.status == 1}">
-                                                                        <p style="color: yellow"> Chờ xác nhận</p>
+                                                                        <label style="color: yellow"> Chờ xác nhận</label>
                                                                     </c:when>
                                                                     <c:when test="${l.status == 2}">
-                                                                         <p style="color: yellowgreen">Đã xác nhận</p>
+                                                                         <label style="color: yellowgreen">Đã xác nhận</label>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 3}">
-                                                                          <p style="color: greenyellow"> Chờ giao hàng</p>
+                                                                          <label style="color: greenyellow"> Chờ giao hàng</label>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 4}">
-                                                                         <p style="color: green"> Hoàn thành</p>
+                                                                         <label style="color: green"> Hoàn thành</label>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 5}">
-                                                                         <p style="color: red"> Đã hủy</p>
+                                                                         <label style="color: red"> Đã hủy</label>
                                                                     </c:when>
                                                                 </c:choose>
                                                            
@@ -205,22 +206,31 @@
 
                                                             <td>
                                                                <c:choose>
-
-                                                                    <c:when test="${l.status == 1}">
-                                                                          <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
+                                                                   
+                                                                    <c:when test="${l.status == 1 }">
+                                                                          <a style="color: yellowgreen" href="uporder?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
                                                                     <c:when test="${l.status == 2}">
-                                                                         <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
+                                                                         <a style="color: yellowgreen" href="uporder?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 3}">
-                                                                         <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
+                                                                         <a style="color: yellowgreen" href="uporder?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 4}">
                                                                              <a href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết</a>
                                                                     </c:when>
                                                                          <c:when test="${l.status == 5}">
-                                                                       <a href="#" >Xem chi tiết</a>
+                                                                       <a href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết</a>
                                                                     </c:when>
+                                                                </c:choose>
+                                                            </td>
+                                                             <td>
+                                                               <c:choose>
+                                                                   
+                                                                    <c:when test="${l.status == 1 }">
+                                                                          <a style="color: yellowgreen" href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}&op=1" >Confirm</a>
+                                                                    </c:when>
+                                                                    
                                                                 </c:choose>
                                                             </td>
                                                         </tr>
