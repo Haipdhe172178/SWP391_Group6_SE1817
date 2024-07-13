@@ -12,12 +12,13 @@ import Models.OrderDetailGuest;
 import Models.OrderGuest;
 import Models.Orders;
 import Models.Product;
-<<<<<<< HEAD
+
 import Models.Status;
 import SendEmail.SendEmail;
-=======
+
 import Models.StatusOrder;
->>>>>>> 8daec631a20ba6bcc46ba6c26c2c5c493d12766d
+
+import Models.StatusOrder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -732,10 +733,7 @@ public class OrderDao extends DBContext {
         }
         return totalQuantity;
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 8daec631a20ba6bcc46ba6c26c2c5c493d12766d
     public OrderGuest getOrderGuestByID(int orderGID) {
         String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
                 + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "
@@ -1075,6 +1073,7 @@ public class OrderDao extends DBContext {
             System.out.println("No status found for Order ID: " + testOrderId);
         }
     }
+
 
 
     public boolean updateOrderStaff(int orderID, int aId) {
