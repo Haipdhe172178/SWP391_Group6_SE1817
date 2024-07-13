@@ -191,10 +191,8 @@
                             <div class="form-check">
                                 <select name="status" class="form-control">
                                     <option value="1">Chờ xác nhận</option>
-                                    <option value="2">Đã xác nhận</option>
-                                    <option value="3">Chờ giao hàng</option>
-                                    <option value="4">Hoàn thành</option>
-                                    <option value="5">Đã hủy</option>
+                                    
+                                    
                                 </select>
                             </div>
 

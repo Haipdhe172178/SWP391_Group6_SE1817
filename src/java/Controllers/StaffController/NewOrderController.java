@@ -162,6 +162,12 @@ public class NewOrderController extends HttpServlet {
         if(orderId == 0 ){
             String error = "Bạn chưa chọn 1 sản phẩm nào";
             request.setAttribute("error", error);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.setAttribute("address", address);
+            request.setAttribute("payment", payment);
+            request.setAttribute("status", status);
+            request.setAttribute("total", totalPrice);
             request.getRequestDispatcher("Views/Staff/NewOrder.jsp").forward(request, response);
         }else{
               od.AddOrderGuestDetails(orderId, listItem);
