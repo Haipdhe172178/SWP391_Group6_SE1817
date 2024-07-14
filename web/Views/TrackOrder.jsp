@@ -16,7 +16,6 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 
-<body class="d-flex flex-column overflow-auto h-100 bg-success text-dark">
 
     <div class="container h-50 px-4 py-5 mx-auto">
         <div class="card bg-light shadow-lg border border-dark rounded-lg py-3 px-5 my-5">
@@ -24,6 +23,7 @@
                 <div class="container text-center">
                     <h3 style="color: #f86d72"> Theo dõi đơn hàng </h3>
                 </div>
+                
                 <div class="d-flex">
                     <p class="h5 text-dark">
                         <i class="text-primary fa-solid fa-cart-shopping fa-lg mr-1"></i>

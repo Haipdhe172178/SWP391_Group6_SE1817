@@ -205,6 +205,17 @@
                 font-size: 14px;
                 color: #555;
             }
+            button {
+                font-size: 14px;
+                padding: 10px 20px;
+                margin: 5px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: inline-block;
+                width: 150px; 
+                box-sizing: border-box;
+            }
 
         </style>
     </head>
@@ -242,7 +253,12 @@
                     <p>Phí vận chuyển: 20.000 VND</p>
                 </div>
             </div>
-                    <a href="trackorder?orderId=${order.orderDetails[0].orderCId}">Theo dõi đơn hàng</a>
+<p style="text-align: center;">
+    <a href="trackorder?orderId=${order.orderDetails[0].orderCId}" style="font-size: larger; color: blue; float: right;">
+        Theo dõi đơn hàng
+    </a>
+</p>
+
             <table class="table">
                 <thead>
                     <tr>
