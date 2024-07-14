@@ -140,7 +140,7 @@
                         </div>
 
                         <h5>Thanh toán</h5>
-                        <div class="form-check" >
+                        <div class="form-group" >
                             <select name="payment" class="form-control" disabled>
                                 <option value="0" ${order.paymentStatus == 0 ? "selected" : ""}>Chưa trả tiền</option>
                                 <option value="1" ${order.paymentStatus == 1 ? "selected" : ""} >Đã trả tiền</option>
@@ -148,7 +148,7 @@
                         </div>
 
                         <h5>Trạng thái đơn hàng</h5>
-                        <div class="form-check"  >
+                        <div class="form-group"  >
                             <select name="status" class="form-control" disabled>
                                 <option value="1" ${order.status == 1 ? "selected" : ""}>Chờ xác nhận</option>
                                 <option value="2" ${order.status ==2 ? "selected" : ""}>Đã xác nhận</option>
@@ -168,7 +168,8 @@
                         <form method="get" action="confirm">
                             <input hidden type="text" name="orderId" value="${order.getOrderID()}"/>
                              <input hidden type="text" name="acId" value="${order.accountID}"/>
-                            <input type="submit" value="Comfirm" />
+                           <button type="submit" class="btn btn-primary">Xác nhận</button>
+                             
                         </form>
                     </c:if>
                 </div>

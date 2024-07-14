@@ -109,14 +109,11 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-
-
                         <div class="mt-3">
                                <p>Phí vận chuyển: <span id="shipping-fee">20000</span>đ</p>
                             <h2 style="color: rgba">   Tổng: <span id="total" name="total"> ${order.totalPrice}</span>đ</p></h2>
                             <input id="total1" name="total" value="${order.totalPrice}" hidden />
                         </div>
-
 
                         <h5>Chi tiết giao hàng</h5>
 
@@ -134,13 +131,14 @@
                                 <input type="email" name="email" value="${order.email}"  class="form-control" id="email" ${order.accountID == 0 ? "" :"disabled" }  >
                             </div>
                         </div>
+                             
                         <div class="form-group">
                             <label for="address">Địa Chỉ người nhận</label>
                             <input type="text" value="${order.address}" name="address" class="form-control" id="address" ${order.accountID == 0 ? "" :"disabled" }  >
                         </div>
 
                         <h5>Thanh toán</h5>
-                        <div class="form-check" >
+                        <div class="form-group" >
                             <select name="payment" class="form-control" >
                                 <option value="0" ${order.paymentStatus == 0 ? "selected" : ""}>Chưa trả tiền</option>
                                 <option value="1" ${order.paymentStatus == 1 ? "selected" : ""} >Đã trả tiền</option>
@@ -148,7 +146,7 @@
                         </div>
 
                         <h5>Trạng thái đơn hàng</h5>
-                        <div class="form-check"  >
+                        <div class="form-group"  >
                             <select name="status" class="form-control" >
                                 <c:forEach items="${listStatus}" var="s">
                                     <option value="${s}" >${s}</option>
@@ -160,10 +158,10 @@
 
 
                     </div>
-                                <input type="text" name="statusold" value="${order.status}" />  
-                                <input type="text" name="orderID" value="${order.getOrderID()}" /> 
-                                 <input type="text" name="accID" value="${order.accountID}" /> 
-                               <input type="submit" value="Cập nhật" />
+                                <input hidden type="text" name="statusold" value="${order.status}" />  
+                                <input hidden="" type="text" name="orderID" value="${order.getOrderID()}" /> 
+                                 <input hidden type="text" name="accID" value="${order.accountID}" /> 
+                               <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
                        
                     </form>
 
