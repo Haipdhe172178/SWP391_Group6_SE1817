@@ -6,12 +6,15 @@
 package AdminControllers;
 
 import DAL.CategoryDao;
+import Models.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -70,8 +73,50 @@ public class AddCategory extends HttpServlet {
        String name = request.getParameter("name");
         CategoryDao dal = new CategoryDao();
        if(isValidName(name)){
-          dal.addCategory(name); 
-          response.sendRedirect("category");
+           List<Category> cal = new ArrayList<>();
+           
+           cal = dal.getallCategorys();
+           int k = 0;
+              for(int i = 0;i<cal.size();i++){
+                  if(name.equals(cal.get(i).getCategoryName().trim())){
+                  k++;    
+                  }
+              }
+              if(k==0){
+                boolean check =  dal.addCategory(name); 
+         
+            if(check==true){
+                 response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Update Status</title>");
+                out.println("<style>");
+                out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
+                out.println(".popup-box { width: 300px; padding: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center; }");
+                out.println("</style>");
+                out.println("<script type='text/javascript'>");
+                out.println("document.addEventListener('DOMContentLoaded', function() {");
+                out.println("  var popup = document.createElement('div');");
+                out.println("  popup.className = 'popup-box';");
+                out.println("  popup.innerHTML = '<h2>Thêm thể loại.</h2><p> thành công.</p>';");
+                out.println("  document.body.appendChild(popup);");
+                out.println("  setTimeout(function() { popup.style.display = 'none'; window.location.href = 'category'; }, 2000);"); // Chờ 2 giây trước khi chuyển hướng
+                out.println("});");
+                out.println("</script>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+          
+              }else{
+                  request.setAttribute("name", name);
+           String error = "Nhập dữ liệu trùng với dữ liệu đã có ";
+           request.setAttribute("error", error);
+           request.getRequestDispatcher("Views/Admin/AddCategory.jsp").forward(request, response);
+              }
+         
        }else{
            request.setAttribute("name", name);
            String error = "Nhập không đúng dữ liệu ";

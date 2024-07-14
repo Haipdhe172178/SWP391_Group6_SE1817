@@ -173,11 +173,7 @@ public class StaffDashboardController extends HttpServlet {
 
         request.setAttribute("list", list);
         request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
-        }
-        
-        
-        
-        
+        }       
     }
 
     /**

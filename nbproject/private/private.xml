@@ -3,49 +3,65 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/NewOrderController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/StaffDashboard.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Cart.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Checkout.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/ConfirmVNPayController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/StaffDashboardController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/VNPay/ajaxServlet.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/UpdateOrderController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/updateOrder.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/FeedbackList.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/thanks.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/common/sidebarDashboard.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailGuest.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/ChangeRole.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DiscountController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/ViewOrderdetail.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/FeedbackListController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/HomeDAO.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/ShippingAddress.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/DeleteCartControllers.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DiscountDAO.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/NewOrderController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/forgotPassword.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/ConfirmVNPayController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SinglePost.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/TrackOrder.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddNews.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SingleProduct.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ViewOrderDetail.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/OrderDao.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/updateOrder.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddCode.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Item.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/FeedbackList.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/RemoveProductCart.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ConfirmController.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/NewOrder.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailGuest.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderCustomer.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DiscountController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Home.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/OrderCustomer.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/DataDiscount.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Orders.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Login.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/ProductDao.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/OrderCustomerDetail.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/MakeOrderController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/EnterOtp.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/DatetimeDiscount.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/VNPay/Config.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Order.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ListProductController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AuthorizationFilter/StaffAuthorizationFilter.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderDetailCustomer.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/ViewOrderdetail.jsp</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/FeedbackListController.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/newPassword.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/AddAccount.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderGuest.java</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/ImageBackground.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/listsp.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Feedback.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/HomeDAO.java</file>
-            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/DeleteCartControllers.java</file>
         </group>
     </open-files>
 </project-private>

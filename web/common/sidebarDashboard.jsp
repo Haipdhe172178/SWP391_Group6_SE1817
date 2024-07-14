@@ -52,10 +52,9 @@
                         </div>
                         <span>Mã giảm giá</span>
                     </a>
-                    <ul>
-                        <li><a href="image">Ảnh trang chủ</a></li>
-                    </ul>
-                </li>        
+                   
+                </li>       
+                
                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">
