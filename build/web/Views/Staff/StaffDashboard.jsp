@@ -239,7 +239,7 @@
                                                                 <c:choose>
 
                                                                     <c:when test="${l.status == 1 }">
-                                                                        <a style="color: yellowgreen" href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}&op=1" >Confirm</a>
+                                                                        <a style="color: yellowgreen" href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}&op=1" >Xác nhận đơn hàng</a>
                                                                     </c:when>
 
                                                                 </c:choose>
@@ -250,31 +250,7 @@
                                             </table>
 
                                         </div>
-                                        <!--endPage,page,listFeedback-->
-
-                                        <!--                                                <form method="get" action="staffdashboard">
-                                        <c:if test="${status == 1 } ">
-                                             <nav class="pagination" aria-label="Page navigation">
-                                            <a href="staffdashboard?index=${tag - 1}$status=${status}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
-                                            <c:forEach begin="1" end="${endP}" var="i">
-                                                <a href="staffdashboard?index=${i}$status=${status}" class="${tag == i ? 'active' : ''}">${i}</a>
-                                            </c:forEach>
-                                            <a href="staffdashboard?index=${tag + 1}$status=${status}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
-                                        </nav>
-                                            
-                                        </c:if >
-                                        <c:if test="${status != null && text != null}">
-                                              <nav class="pagination" aria-label="Page navigation">
-                                            <a href="staffdashboard?index=${tag - 1}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
-                                            <c:forEach begin="1" end="${endP}" var="i">
-                                                <a href="staffdashboard?index=${i}" class="${tag == i ? 'active' : ''}">${i}</a>
-                                            </c:forEach>
-                                            <a href="staffdashboard?index=${tag + 1}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
-                                        </nav>
-                                            
-                                        </c:if>
                                        
-                                    </form>  -->
 
                                         <c:choose>
                                             <c:when test="${empty status && empty text}">

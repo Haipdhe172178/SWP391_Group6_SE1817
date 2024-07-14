@@ -151,7 +151,7 @@
                                     </select>
                                 </div>
 
-                                <h5>Order Status</h5>
+                                <h5>Trạng thái đơn hàng</h5>
                                 <div class="form-group">
                                     <select name="status" class="form-control">
                                         <option value="1">Chờ xác nhận</option>
@@ -159,7 +159,7 @@
                                     </select>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                <button type="submit" class="btn btn-primary mt-3">Thêm</button>
                             </div>
                         </form>
                         <div><h2 style="color: red">${error}</h2></div>

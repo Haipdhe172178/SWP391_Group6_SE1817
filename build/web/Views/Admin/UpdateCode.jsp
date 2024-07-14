@@ -91,7 +91,7 @@
                                                 </select>
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary" name="submit">Update</button>
+                                            <button type="submit" class="btn btn-primary" name="submit">Cập nhật</button>
                                         </div>
                                     </form>
                                     <h3>${error}</h3>

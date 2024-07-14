@@ -89,7 +89,7 @@ public class DatetimeDiscount extends HttpServlet {
                 out.println("document.addEventListener('DOMContentLoaded', function() {");
                 out.println("  var popup = document.createElement('div');");
                 out.println("  popup.className = 'popup-box';");
-                out.println("  popup.innerHTML = '<h2>Update successful.</h2><p>Rows updated successfully.</p>';");
+                out.println("  popup.innerHTML = '<h2>Cập nhật ngày thành công</h2><p></p>';");
                 out.println("  document.body.appendChild(popup);");
                 out.println("  setTimeout(function() { popup.style.display = 'none'; window.location.href = 'discount'; }, 2000);"); // Chờ 2 giây trước khi chuyển hướng
                 out.println("});");

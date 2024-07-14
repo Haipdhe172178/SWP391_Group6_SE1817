@@ -129,7 +129,7 @@
                                                         </div>
                                                         <% } %>
                                                          <div class="add_button ms-2">
-                                                    <a href="addcode" class="btn btn_1">Add code</a>
+                                                    <a href="addcode" class="btn btn_1">Thêm mã giảm giá</a>
                                                 </div>
                                         <div class="box_header m-0">
                                             <div class="main-title">
@@ -228,7 +228,7 @@
                                                                 </c:choose>
 
                                                             </td>
-                                                            <td><a href="updatecode?id=${p.codeId}">UPDATE</td>
+                                                            <td><a href="updatecode?id=${p.codeId}">Cập nhật</td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>

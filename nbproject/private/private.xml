@@ -10,6 +10,7 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/VNPay/ajaxServlet.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/UpdateOrderController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/updateOrder.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/CategoryDao.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/FeedbackList.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/thanks.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Product.java</file>
@@ -26,6 +27,7 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/DiscountDAO.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/NewOrderController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/forgotPassword.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/DAL/FeedbackDAO.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/ConfirmVNPayController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/SinglePost.jsp</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/TrackOrder.jsp</file>
@@ -39,6 +41,7 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/RemoveProductCart.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/StaffController/ConfirmController.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Staff/NewOrder.jsp</file>
+            <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddCategory.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/OrderCustomer.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Controllers/HomeControllers.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Home.jsp</file>
