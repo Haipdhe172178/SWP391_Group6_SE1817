@@ -119,9 +119,21 @@
                             <div class="col-lg-12">
                                 <div class="white_card card_height_100 mb_30">
                                     <div class="white_card_header">
+                                         <% 
+                                                              String success = request.getParameter("success");
+                                                                      if ("true".equals(success)) { 
+                                                        %>
+                                                        <div class="notification-box" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724; padding: 20px;">
+                                                           
+                                                            <p>Cập thành công</p>
+                                                        </div>
+                                                        <% } %>
+                                                         <div class="add_button ms-2">
+                                                    <a href="addcode" class="btn btn_1">Thêm mã giảm giá</a>
+                                                </div>
                                         <div class="box_header m-0">
                                             <div class="main-title">
-                                                <h3 class="m-0">Data table</h3>
+                                                <h3 class="m-0"></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -140,12 +152,12 @@
                                                             <button type="submit" name="submit" class="btn btn-primary">
                                                                 <img src="img/icon/icon_search.svg" alt="Search">
                                                             </button>
-                                                           
-                                                           
-                                                        </form>
-                                                           
 
-<!--                                                         Filter Form -->
+
+                                                        </form>
+                                                       
+
+                                                        <!--                                                         Filter Form -->
                                                         <form id="frm" action="discount" method="get" class="d-flex ms-2">
                                                             <select name="op" class="form-select" onchange="document.getElementById('frm').submit()">
                                                                 <option ${n == 2 ? 'selected' : ''} value="2">Tất cả</option>
@@ -157,23 +169,23 @@
                                                 </div>
 
                                                 <!-- Add Button -->
-                                                <div class="add_button ms-2">
-                                                    <a href="addcode" class="btn btn_1">Add code</a>
-                                                </div>
-                                                 <form action="datetime" method="get">
-                                                               <div class="search_field">
-                                                                   <table border="0px">
-                                                                       <th> <h6 class="m-0">Thời gian đến lúc mã hết hiển thị ở trang chủ</h6></th>
+                                               
+                                                <form action="datetime" method="get">
+                                                   
+                                                    <div class="search_field"
+                                                         
+                                                        <table border="0px">
+                                                           
 <!--                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>-->
-                                                                       <input type="datetime-local" id="appointment" value="${date1}" name="date">
-                                                                       <th><input hidden  type="text" value="${date1}" name="dateold"  class="form-control"></th>
-                                                                       <th> <input class="add_button ms-2" type="submit" value="Cập nhật ngày"></th>
-                                                                   </table>
-                                                                   
-                                                                   
-                                                                   
-                                                            </div>
-                                                            </form>
+                                                            <input type="datetime-local" id="appointment" value="${date1}" name="date">
+                                                            <th><input hidden  type="text" value="${date1}" name="dateold"  class="form-control"></th>
+                                                             <input class="add_button ms-2" type="submit" value="Cập nhật ngày">
+                                                        </table>
+
+
+
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
@@ -216,7 +228,7 @@
                                                                 </c:choose>
 
                                                             </td>
-                                                            <td><a href="updatecode?id=${p.codeId}">UPDATE</td>
+                                                            <td><a href="updatecode?id=${p.codeId}">Cập nhật</td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>

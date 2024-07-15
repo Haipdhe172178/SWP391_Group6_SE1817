@@ -11,6 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -58,37 +60,73 @@ public class DatetimeDiscount extends HttpServlet {
             throws ServletException, IOException {
         String date_rawid = request.getParameter("dateold");
         String date_rawup = request.getParameter("date");
-        DiscountDAO dal = new DiscountDAO();
-        boolean isUpdated = dal.UpdateTime(date_rawid, date_rawup);
 
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Update Status</title>");
-        out.println("<style>");
-        out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
-        out.println(".notification-box { border: 1px solid #ccc; padding: 20px; background-color: #f8f8f8; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }");
-        out.println(".success { border-color: #4CAF50; color: #4CAF50; }");
-        out.println(".error { border-color: #f44336; color: #f44336; }");
-        out.println("</style>");
-        out.println("<script type='text/javascript'>");
-        out.println("function redirect() {");
-        out.println("  setTimeout(function() { window.location.href = 'discount'; }, 2000);");
-        out.println("}");
-        out.println("</script>");
-        out.println("</head>");
-        out.println("<body onload='redirect()'>");
-        out.println("<div class='notification-box " + (isUpdated ? "success" : "error") + "'>");
-        if (isUpdated) {
-            out.println("<h2>Cập nhập ngày thành công!</h2>");
-        } else {
-            out.println("<h2>Cập nhật ngày thất bại.</h2>");
-            out.println("<p>Bạn hãy nhập đúng cấu trúc đã có.</p>");
+        // Định dạng chuỗi ngày giờ từ request
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        // Định dạng chuỗi ngày giờ mới mong muốn
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        try {
+            // Parse chuỗi ngày giờ từ request thành đối tượng Date
+            Date date = inputFormat.parse(date_rawup);
+            // Format lại thành chuỗi ngày giờ mới
+            String formattedDate = outputFormat.format(date);
+
+            // Sử dụng chuỗi formattedDate để thực hiện các thao tác khác
+            DiscountDAO dal = new DiscountDAO();
+            boolean isUpdated = dal.UpdateTime(date_rawid, formattedDate);
+
+            if (isUpdated) {
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Update Status</title>");
+                out.println("<style>");
+                out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
+                out.println(".popup-box { width: 300px; padding: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center; }");
+                out.println("</style>");
+                out.println("<script type='text/javascript'>");
+                out.println("document.addEventListener('DOMContentLoaded', function() {");
+                out.println("  var popup = document.createElement('div');");
+                out.println("  popup.className = 'popup-box';");
+                out.println("  popup.innerHTML = '<h2>Cập nhật ngày thành công</h2><p></p>';");
+                out.println("  document.body.appendChild(popup);");
+                out.println("  setTimeout(function() { popup.style.display = 'none'; window.location.href = 'discount'; }, 2000);"); // Chờ 2 giây trước khi chuyển hướng
+                out.println("});");
+                out.println("</script>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("</body>");
+                out.println("</html>");
+            } else {
+                // In thông báo lỗi nếu không cập nhật thành công
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Update Status</title>");
+                out.println("<style>");
+                out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
+                out.println(".notification-box { border: 1px solid #ccc; padding: 20px; background-color: #f8f8f8; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }");
+                out.println("</style>");
+                out.println("<script type='text/javascript'>");
+                out.println("function redirect() {");
+                out.println("  setTimeout(function() { window.location.href = 'discount'; }, 2000);");
+                out.println("}");
+                out.println("</script>");
+                out.println("</head>");
+                out.println("<body onload='redirect()'>");
+                out.println("<div class='notification-box'>");
+                out.println("<h2>Update not successful.</h2>");
+                out.println("<p>No rows affected or an error occurred.</p>");
+                out.println("</div>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+        } catch (Exception e) {
+
+            // Xử lý lỗi nếu không thể parse chuỗi ngày giờ từ request
         }
-        out.println("</div>");
-        out.println("</body>");
-        out.println("</html>");
 
     }
 
@@ -103,36 +141,54 @@ public class DatetimeDiscount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String date_rawid = request.getParameter("dateole");
-        String date_rawup = request.getParameter("date1");
-        DiscountDAO dal = new DiscountDAO();
-        boolean isUpdated = dal.UpdateTime(date_rawid, date_rawup);
 
-        if (isUpdated) {
-            response.sendRedirect("discount");
-        } else {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Update Status</title>");
-            out.println("<style>");
-            out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
-            out.println(".notification-box { border: 1px solid #ccc; padding: 20px; background-color: #f8f8f8; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }");
-            out.println("</style>");
-            out.println("<script type='text/javascript'>");
-            out.println("function redirect() {");
-            out.println("  setTimeout(function() { window.location.href = 'discount'; }, 2000);");
-            out.println("}");
-            out.println("</script>");
-            out.println("</head>");
-            out.println("<body onload='redirect()'>");
-            out.println("<div class='notification-box'>");
-            out.println("<h2>Update not successful.</h2>");
-            out.println("<p>No rows affected or an error occurred.</p>");
-            out.println("</div>");
-            out.println("</body>");
-            out.println("</html>");
+        String date_rawid = request.getParameter("dateold");
+        String date_rawup = request.getParameter("date");
+
+        // Định dạng chuỗi ngày giờ từ request
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        // Định dạng chuỗi ngày giờ mới mong muốn
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        try {
+            // Parse chuỗi ngày giờ từ request thành đối tượng Date
+            Date date = inputFormat.parse(date_rawup);
+            // Format lại thành chuỗi ngày giờ mới
+            String formattedDate = outputFormat.format(date);
+
+            // Sử dụng chuỗi formattedDate để thực hiện các thao tác khác
+            DiscountDAO dal = new DiscountDAO();
+            boolean isUpdated = dal.UpdateTime(date_rawid, formattedDate);
+
+            if (isUpdated) {
+                response.sendRedirect("discount");
+            } else {
+                // In thông báo lỗi nếu không cập nhật thành công
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Update Status</title>");
+                out.println("<style>");
+                out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
+                out.println(".notification-box { border: 1px solid #ccc; padding: 20px; background-color: #f8f8f8; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }");
+                out.println("</style>");
+                out.println("<script type='text/javascript'>");
+                out.println("function redirect() {");
+                out.println("  setTimeout(function() { window.location.href = 'discount'; }, 2000);");
+                out.println("}");
+                out.println("</script>");
+                out.println("</head>");
+                out.println("<body onload='redirect()'>");
+                out.println("<div class='notification-box'>");
+                out.println("<h2>Update not successful.</h2>");
+                out.println("<p>No rows affected or an error occurred.</p>");
+                out.println("</div>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+        } catch (Exception e) {
+
+            // Xử lý lỗi nếu không thể parse chuỗi ngày giờ từ request
         }
     }
 

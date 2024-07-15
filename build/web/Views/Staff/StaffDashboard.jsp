@@ -74,6 +74,19 @@
                 color: #ccc;
                 border-color: #ddd;
             }
+            .create_order_button {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff; /* Màu nền */
+                color: #fff; /* Màu văn bản */
+                text-decoration: none;
+                border-radius: 4px; /* Bo góc */
+                transition: background-color 0.3s ease;
+            }
+
+            .create_order_button:hover {
+                background-color: #0056b3; /* Màu nền khi di chuột vào */
+            }
         </style>
     </head>
 
@@ -84,63 +97,61 @@
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
 
                 <div id="notification-container" class="notification-container"></div>
-               
-            <div class="main_content_iner ">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <!--<h3 class="m-0">Sản phẩm</h3>-->
+
+                <div class="main_content_iner ">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <!--<h3 class="m-0">Sản phẩm</h3>-->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="white_card_body">
-                                    <div class="QA_section">
-                                        <div class="white_box_tittle list_header">
-                                            <!--FILTER BY Status-->
-                                                   <div class="cbo_filter">
-                                                                                            <form action="staffdashboard" method="get" id="filterForm">
-                                                                                                <label for="filter">Trạng thái:</label>
-                                                                                                <select name="status" onchange="document.getElementById('filterForm').submit()">
-                                                                                                    <option value="" ${status eq null ? 'selected': ''}>Tất cả</option>
-                                                                                                    <option value="1" ${status eq '1' ? 'selected': ''}>Chờ xác nhận</option>
-                                                                                                    <option value="2" ${status eq '2' ? 'selected': ''}>Đã xác nhận</option>
-                                                                                                    <option value="3" ${status eq '3' ? 'selected': ''}>Chờ giao hàng</option>
-                                                                                                    <option value="4" ${status eq '4' ? 'selected': ''}>Hoàn thành</option>
-                                                                                                    <option value="5" ${status eq '5' ? 'selected': ''}>Đã hủy</option>
-                                                                                                </select>
-                                                                                                <input type="hidden" name="status" value="${requestScope.status}">
-                                                                                                <input type="hidden" name="search" value="${requestScope.search}">
-                                                                                            </form>
-                                                                                        </div>
+                                    
+                                    <div class="white_card_body">
+                                        <div class="QA_section">
+                                            
+                                             <a href="neworder" class="create_order_button">Tạo đơn hàng</a>
+                                            <div class="white_box_tittle list_header">
+                                                <!--FILTER BY Status-->
+                                                <div class="cbo_filter">
+                                                    <form action="staffdashboard" method="get" id="filterForm">
+                                                        <label for="filter">Trạng thái:</label>
+                                                        <select name="status" onchange="document.getElementById('filterForm').submit()">
+                                                            <option value="" ${status eq null ? 'selected': ''}>Tất cả</option>
+                                                        <option value="1" ${status eq '1' ? 'selected': ''}>Chờ xác nhận</option>
+                                                        <option value="2" ${status eq '2' ? 'selected': ''}>Đã xác nhận</option>
+                                                        <option value="3" ${status eq '3' ? 'selected': ''}>Chờ giao hàng</option>
+                                                        <option value="4" ${status eq '4' ? 'selected': ''}>Hoàn thành</option>
+                                                        <option value="5" ${status eq '5' ? 'selected': ''}>Đã hủy</option>
+                                                    </select>
+
+                                                </form>
+                                            </div>
                                             <!--FILTER BY RATING-->
 
-                                            <!--SEARCH BY PRODUCT NAME-->
-                                            <!--                                            <div class="box_right d-flex lms_block">
-                                                                                            <div class="serach_field_2">
-                                                                                                <div class="search_inner">
-                                                                                                    <form action="feedbacklist" method="GET">
-                                                                                                        <input type="hidden" name="status" value="${requestScope.status}">
-                                                                                                        <input type="hidden" name="filter" value="${requestScope.filter}">
-                                                                                                        <div class="search_field">
-                                                                                                            <input name="search" type="text" placeholder="Tìm kiếm...." value="${requestScope.searchResult}">
-                                                                                                        </div>
-                                                                                                        <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                                                                    </form>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>-->
+
+                                            <div class="box_right d-flex lms_block">
+                                                <h4 class="filter" </h4>
+                                                <div class="serach_field_2">
+                                                    <div class="search_inner">
+                                                        <form action="staffdashboard" method="GET">
+
+                                                            <div class="search_field">
+                                                                <input name="text" type="text" placeholder="Tìm kiếm tên khách hàng" value="${requestScope.text}">
+                                                            </div>
+                                                            <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="QA_table mb_30">
-                                            <!--                                      <div class="filterFeedback">
-                                                                                            <a href="feedbacklist?page=1&status=pending&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'pending' ?'active':''}">Chờ duyệt (${requestScope.totalPending})</a>
-                                                                                            <a href="feedbacklist?page=1&status=accept&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'accept' ?'active':''}" style="margin-left: 10px" >Đang hiển thị (${requestScope.totalAccept})</a>
-                                                                                            <a href="feedbacklist?page=1&status=reject&search=${requestScope.searchResult}&filter=${requestScope.filter}" class="filter  ${requestScope.status eq 'reject' ?'active':''}" style="margin-left: 10px" >Bị ẩn (${requestScope.totalReject})</a>
-                                                                                        </div>-->
-                                            <a href="neworder">Tạo đơn hàng</a>
+
+                                           
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
@@ -149,9 +160,10 @@
                                                         <th scope="col" style="width: 5px">Số điện thoại người Đặt</th>
                                                         <th scope="col" style="width: 250px">Tống số tiền</th>
                                                         <th scope="col" style="width: 200px">Ngày Đặt</th>
-                                                        
+
                                                         <th scope="col">Trạng thái</th>
-                                                         <th scope="col">Hoạt động</th>
+                                                        <th scope="col">Hoạt động</th>
+                                                        <th scope="col"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -166,13 +178,13 @@
                                                                 ${l.phoneNumber}
                                                             </td>
                                                             <td>
-                                                                
-                                               
-                                        <fmt:formatNumber value="${l.totalPrice} " type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                              
-                                                            
-                                                            
-                                                            
+
+
+                                                                <fmt:formatNumber value="${l.totalPrice} " type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/> VND
+
+
+
+
                                                             </td>
 
                                                             <td>
@@ -180,47 +192,56 @@
                                                             </td>
                                                             <td style="font-size: 12px">
 
-                                                                  <c:choose>
+                                                                <c:choose>
 
                                                                     <c:when test="${l.status == 1}">
-                                                                        <p style="color: yellow"> Chờ xác nhận</p>
+                                                                        <label style="color: blueviolet"> Chờ xác nhận</label>
                                                                     </c:when>
                                                                     <c:when test="${l.status == 2}">
-                                                                         <p style="color: yellowgreen">Đã xác nhận</p>
+                                                                        <label style="color: yellowgreen">Đã xác nhận</label>
                                                                     </c:when>
-                                                                         <c:when test="${l.status == 3}">
-                                                                          <p style="color: greenyellow"> Chờ giao hàng</p>
+                                                                    <c:when test="${l.status == 3}">
+                                                                        <label style="color: greenyellow"> Chờ giao hàng</label>
                                                                     </c:when>
-                                                                         <c:when test="${l.status == 4}">
-                                                                         <p style="color: green"> Hoàn thành</p>
+                                                                    <c:when test="${l.status == 4}">
+                                                                        <label style="color: green"> Hoàn thành</label>
                                                                     </c:when>
-                                                                         <c:when test="${l.status == 5}">
-                                                                         <p style="color: red"> Đã hủy</p>
+                                                                    <c:when test="${l.status == 5}">
+                                                                        <label style="color: red"> Đã hủy</label>
                                                                     </c:when>
                                                                 </c:choose>
-                                                           
+
                                                             </td>
-                                                            
+
 
 
                                                             <td>
-                                                               <c:choose>
+                                                                <c:choose>
 
-                                                                    <c:when test="${l.status == 1}">
-                                                                          <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
+                                                                    <c:when test="${l.status == 1 }">
+                                                                        <a style="color: yellowgreen" href="uporder?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
                                                                     <c:when test="${l.status == 2}">
-                                                                         <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
+                                                                        <a style="color: yellowgreen" href="uporder?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
-                                                                         <c:when test="${l.status == 3}">
-                                                                         <a style="color: yellowgreen" href="#" >Xem chi tiết/Cập Nhật</a>
+                                                                    <c:when test="${l.status == 3}">
+                                                                        <a style="color: yellowgreen" href="uporder?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết/Cập Nhật</a>
                                                                     </c:when>
-                                                                         <c:when test="${l.status == 4}">
-                                                                             <a href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết</a>
+                                                                    <c:when test="${l.status == 4}">
+                                                                        <a href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết</a>
                                                                     </c:when>
-                                                                         <c:when test="${l.status == 5}">
-                                                                       <a href="#" >Xem chi tiết</a>
+                                                                    <c:when test="${l.status == 5}">
+                                                                        <a href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}" >Xem chi tiết</a>
                                                                     </c:when>
+                                                                </c:choose>
+                                                            </td>
+                                                            <td>
+                                                                <c:choose>
+
+                                                                    <c:when test="${l.status == 1 }">
+                                                                        <a style="color: yellowgreen" href="viewdetail?id=${l.getOrderID()}&acid=${l.accountID}&op=1" >Xác nhận đơn hàng</a>
+                                                                    </c:when>
+
                                                                 </c:choose>
                                                             </td>
                                                         </tr>
@@ -229,8 +250,10 @@
                                             </table>
 
                                         </div>
-                                        <!--endPage,page,listFeedback-->
-                               
+                                       
+
+                                        <c:choose>
+                                            <c:when test="${empty status && empty text}">
                                                 <form method="get" action="staffdashboard">
                                                     <nav class="pagination" aria-label="Page navigation">
                                                         <a href="staffdashboard?index=${tag - 1}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
@@ -240,13 +263,26 @@
                                                         <a href="staffdashboard?index=${tag + 1}" class="${tag == endP ? 'disabled' : ''}">Sau</a>
                                                     </nav>
                                                 </form>  
-                                           
+                                            </c:when>
+                                            <c:otherwise>
+                                                <form method="get" action="staffdashboard">
+                                                    <nav class="pagination" aria-label="Page navigation">
+                                                        <a href="staffdashboard?index=${tag - 1}&status=${status}&text=${text}" class="${tag == 1 ? 'disabled' : ''}">Trước</a>
+                                                        <c:forEach begin="1" end="${endP}" var="i">
+                                                            <a href="staffdashboard?index=${i}&status=${status}&text=${text}"" class="${tag == i ? 'active' : ''}">${i}</a>
+                                                        </c:forEach>
+                                                        <a href="staffdashboard?index=${tag + 1}&status=${status}&text=${text}"" class="${tag == endP ? 'disabled' : ''}">Sau</a>
+                                                    </nav>
+                                                </form>  
+                                            </c:otherwise>
+                                        </c:choose>   
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
 

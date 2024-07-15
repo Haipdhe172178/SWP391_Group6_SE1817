@@ -663,6 +663,9 @@ public class ProductDao extends DBContext {
                 product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
                 product.setStatus(rs.getInt("status"));
+                if(product.getQuantity()==0){
+                    continue;
+                }
                 list.add(product);
             }
         } catch (Exception ex) {
@@ -1002,7 +1005,61 @@ public class ProductDao extends DBContext {
     }
 
     public List<Product> getProductByGOrder(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Product> products = new ArrayList<>();
+        String query = "  SELECT \n"
+                + "    odc.[ProductID],\n"
+                + "    p.[Name],\n"
+                + "    p.[Price],\n"
+                + "    odc.[Quantity],\n"
+                + "    p.[Description],\n"
+                + "    p.[CategoryID],\n"
+                + "    p.[AuthorID],\n"
+                + "    p.[ImgProduct],\n"
+                + "    p.[AgeID],\n"
+                + "    p.[Status]\n"
+                + "FROM \n"
+                + "    [ShopBook88].[dbo].[OrderDetailGuest] odc\n"
+                + "JOIN \n"
+                + "    [ShopBook88].[dbo].[Product] p\n"
+                + "ON \n"
+                + "    odc.[ProductID] = p.[ProductID]\n"
+                + "WHERE \n"
+                + "    odc.OrderGID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, parseInt);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("ProductID"));
+                product.setName(rs.getString("Name"));
+                product.setPrice(rs.getFloat("Price"));
+                product.setQuantity(rs.getInt("Quantity"));
+                product.setDescription(rs.getString("Description"));
+
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("CategoryID"));
+                product.setCategory(category);
+
+                Author author = new Author();
+                author.setAuthorID(rs.getInt("AuthorID"));
+                product.setAuthor(author);
+
+                ObjectAge oage = new ObjectAge();
+                oage.setAgeId(rs.getInt("AgeID"));
+                product.setOage(oage);
+
+                product.setImgProduct(rs.getString("ImgProduct"));
+                product.setStatus(rs.getInt("Status"));
+
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return products;
+
     }
 
 }

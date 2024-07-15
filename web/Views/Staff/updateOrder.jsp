@@ -69,7 +69,7 @@
                         <i class="ti-angle-up"></i>
                     </a>
                 </div>
-
+                 <form method="post" action="uporder">
                 <div class="container mt-5">
                     <div class="card">
                         <div class="card-header">
@@ -109,39 +109,37 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-
-
                         <div class="mt-3">
-                                 <p>Phí vận chuyển: <span id="shipping-fee">20000</span>đ</p>
+                               <p>Phí vận chuyển: <span id="shipping-fee">20000</span>đ</p>
                             <h2 style="color: rgba">   Tổng: <span id="total" name="total"> ${order.totalPrice}</span>đ</p></h2>
-                            <input id="total1" name="total" hidden=""/>
+                            <input id="total1" name="total" value="${order.totalPrice}" hidden />
                         </div>
-
 
                         <h5>Chi tiết giao hàng</h5>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Tên người nhận*</label>
-                                <input type="text" name="name" value="${order.fullName}" class="form-control" id="fullName"  disabled>
+                                <input type="text" name="name" value="${order.fullName}" class="form-control" id="fullName" ${order.accountID == 0 ? "" :"disabled" }  >
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="mobile">Số điện thoại*</label>
-                                <input type="text" name="phone" value="${order.phoneNumber}" class="form-control" id="mobile"  disabled  pattern="^\d{10,11}$">
+                                <input type="text" name="phone" value="${order.phoneNumber}" class="form-control" id="mobile" ${order.accountID == 0 ? "" :"disabled" }   pattern="^\d{10,11}$">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="email">Email*</label>
-                                <input type="email" name="email" value="${order.email}"  class="form-control" id="email"  disabled>
+                                <input type="email" name="email" value="${order.email}"  class="form-control" id="email" ${order.accountID == 0 ? "" :"disabled" }  >
                             </div>
                         </div>
+                             
                         <div class="form-group">
                             <label for="address">Địa Chỉ người nhận</label>
-                            <input type="text" value="${order.address}" name="address" class="form-control" id="address" disabled >
+                            <input type="text" value="${order.address}" name="address" class="form-control" id="address" ${order.accountID == 0 ? "" :"disabled" }  >
                         </div>
 
                         <h5>Thanh toán</h5>
                         <div class="form-group" >
-                            <select name="payment" class="form-control" disabled>
+                            <select name="payment" class="form-control" >
                                 <option value="0" ${order.paymentStatus == 0 ? "selected" : ""}>Chưa trả tiền</option>
                                 <option value="1" ${order.paymentStatus == 1 ? "selected" : ""} >Đã trả tiền</option>
                             </select>
@@ -149,29 +147,28 @@
 
                         <h5>Trạng thái đơn hàng</h5>
                         <div class="form-group"  >
-                            <select name="status" class="form-control" disabled>
-                                <option value="1" ${order.status == 1 ? "selected" : ""}>Chờ xác nhận</option>
-                                <option value="2" ${order.status ==2 ? "selected" : ""}>Đã xác nhận</option>
-                                <option value="3"${order.status == 3? "selected" : ""}>Chờ giao hàng</option>
-                                <option value="4"${order.status == 4 ? "selected" : ""}>Hoàn thành</option>
-                                <option value="5"${order.status == 5 ? "selected" : ""}>Đã hủy</option>
+                            <select name="status" class="form-control" >
+                                <c:forEach items="${listStatus}" var="s">
+                                    <option value="${s}" >${s}</option>
+                                </c:forEach>
+                                
                             </select>
                         </div>
 
 
 
                     </div>
-
+                                <input hidden type="text" name="statusold" value="${order.status}" />  
+                                <input hidden="" type="text" name="orderID" value="${order.getOrderID()}" /> 
+                                 <input hidden type="text" name="accID" value="${order.accountID}" /> 
+                               <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
+                       
                     </form>
 
-                    <c:if test="${opConfirm == 1}" >
-                        <form method="get" action="confirm">
-                            <input hidden type="text" name="orderId" value="${order.getOrderID()}"/>
-                             <input hidden type="text" name="acId" value="${order.accountID}"/>
-                           <button type="submit" class="btn btn-primary">Xác nhận</button>
-                             
-                        </form>
-                    </c:if>
+                    
+                      
+                           
+                  
                 </div>
             </div>
 

@@ -59,7 +59,14 @@ public class StaffDashboardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Orders> list = new ArrayList<>();
+        
+        String status = request.getParameter("status");
+         String text = request.getParameter("text");
+         
+         
+        if(status==null && text ==null ){
+            
+         List<Orders> list = new ArrayList<>();
         OrderDao dal = new OrderDao();
         String index = request.getParameter("index");
 
@@ -83,6 +90,90 @@ public class StaffDashboardController extends HttpServlet {
 
         request.setAttribute("list", list);
         request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
+        } else if(status!=null && !(status.isEmpty())){
+            
+            List<Orders> list = new ArrayList<>();
+        OrderDao dal = new OrderDao();
+        String index = request.getParameter("index");
+
+        int indexx;
+        if (request.getParameter("index") == null) {
+            indexx = 1;
+        } else {
+            indexx = Integer.parseInt(index);
+        }
+         
+        int count = dal.getToralOrderByStatus(status);
+
+        int endpage = count / 10;
+        if (count % 10 == 0) {
+        } else {
+            endpage++;
+        }
+        list = dal.getallOrderbyStatus(indexx,status);
+        request.setAttribute("status", status);
+        request.setAttribute("endP", endpage);
+        request.setAttribute("tag", indexx);
+
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
+            
+            
+            
+            
+        }else if(text!=null){
+             List<Orders> list = new ArrayList<>();
+        OrderDao dal = new OrderDao();
+        String index = request.getParameter("index");
+
+        int indexx;
+        if (request.getParameter("index") == null) {
+            indexx = 1;
+        } else {
+            indexx = Integer.parseInt(index);
+        }
+     
+        int count = dal.getToralOrderbysearch(text);
+
+        int endpage = count / 10;
+        if (count % 10 == 0) {
+        } else {
+            endpage++;
+        }
+        list = dal.getallOrderbyText(indexx,text);
+        request.setAttribute("text", text);
+        request.setAttribute("endP", endpage);
+        request.setAttribute("tag", indexx);
+
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
+            
+        }else{
+             List<Orders> list = new ArrayList<>();
+        OrderDao dal = new OrderDao();
+        String index = request.getParameter("index");
+
+        int indexx;
+        if (request.getParameter("index") == null) {
+            indexx = 1;
+        } else {
+            indexx = Integer.parseInt(index);
+        }
+
+        int count = dal.getToralOrder();
+
+        int endpage = count / 10;
+        if (count % 10 == 0) {
+        } else {
+            endpage++;
+        }
+        list = dal.getallOrder(indexx);
+        request.setAttribute("endP", endpage);
+        request.setAttribute("tag", indexx);
+
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("Views/Staff/StaffDashboard.jsp").forward(request, response);
+        }       
     }
 
     /**

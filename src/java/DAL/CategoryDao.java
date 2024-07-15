@@ -77,19 +77,21 @@ public class CategoryDao extends DBContext {
         System.out.println(count);
     }
 
-    public void addCategory(String name) {
+    public boolean addCategory(String name) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         try {
             String sql = "INSERT INTO Category (CategoryName) VALUES (?)";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, name);
-
+       
             stm.execute();
+             return true;
         } catch (Exception e) {
             System.out.println("addcategory" + e.getMessage());
+            
         }
-
+            return false;  
     }
 
     public List<Category> getallCategorypage(int index) {

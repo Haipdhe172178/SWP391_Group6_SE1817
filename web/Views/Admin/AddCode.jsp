@@ -86,7 +86,7 @@
                                                 </select>
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary" name="submit">Add</button>
+                                            <button type="submit" class="btn btn-primary" name="submit">Thêm</button>
                                         </div>
                                     </form>
                                     <h3>${error}</h3>
