@@ -148,7 +148,7 @@ public class UpdateOrderController extends HttpServlet {
         }
         String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
         SendEmail sd = new SendEmail();
-        sd.sendEmail(gmail, "Book88 gui ban it tien an sang", "Ban da hang thanh vui long vao trnag web de kt");
+          sd.sendEmail(gmail, "BookBook88", "Đơn hàng của bạn đã được chuẩn bị");
         response.sendRedirect("staffdashboard");
     }
 
