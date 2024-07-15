@@ -5,9 +5,9 @@
 package AdminControllers;
 
 import DAL.OrderDao;
-import Models.Order;
 import Models.OrderCustomer;
 import Models.OrderGuest;
+import Models.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,54 +62,98 @@ public class OrderStatusControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String statusId = request.getParameter("status");
+
+        String indexPage = request.getParameter("index");
+        String sort = request.getParameter("sort");
+        String searchName = request.getParameter("s"); 
+        int index;
+        if (indexPage != null) {
+            index = Integer.parseInt(indexPage);
+        } else {
+            index = 1;
+        }
+
         OrderDao orderDao = new OrderDao();
+        List<Orders> orders;
+        int totalOrders = 0;
+        String sortBy = null;
+        String sortDirection = "ASC";
 
-        List<OrderCustomer> customerOrders = orderDao.getOrdersByStatusForCustomers(statusId);
-        List<OrderGuest> guestOrders = orderDao.getOrdersByStatusForGuests(statusId);
-
-        List<Order> order = new ArrayList<>();
-        for (OrderCustomer customerOrder : customerOrders) {
-            Order orders = new Order();
-            orders.setOrderId(customerOrder.getOrderDetails().get(0).getOrderCId());
-            orders.setFullName(customerOrder.getAccount().getFullName());
-            orders.setEmail(customerOrder.getAccount().getEmail());
-            orders.setPhoneNumber(customerOrder.getAccount().getPhoneNumber());
-            orders.setAddress(customerOrder.getAccount().getAddress());
-            orders.setTotalPrice(customerOrder.getTotalPrice());
-            orders.setDate(customerOrder.getDate());
-            orders.setStatusName(customerOrder.getStatus().getStatusName());
-            orders.setOrderType("Khách hàng");
-            order.add(orders);
+        // Handle sorting logic
+        if (sort != null && !sort.isEmpty()) {
+            switch (sort) {
+                case "priceasc":
+                    sortBy = "TotalPrice";
+                    sortDirection = "ASC";
+                    break;
+                case "pricedesc":
+                    sortBy = "TotalPrice";
+                    sortDirection = "DESC";
+                    break;
+                case "dateasc":
+                    sortBy = "Date";
+                    sortDirection = "ASC";
+                    break;
+                case "datedesc":
+                    sortBy = "Date";
+                    sortDirection = "DESC";
+                    break;
+            }
         }
 
-        for (OrderGuest guestOrder : guestOrders) {
-            Order orders = new Order();
-            orders.setOrderId(guestOrder.getOrderDetails().get(0).getOrderGId());
-            orders.setFullName(guestOrder.getFullName());
-            orders.setEmail(guestOrder.getEmail());
-            orders.setPhoneNumber(guestOrder.getPhoneNumber());
-            orders.setAddress(guestOrder.getAddress());
-            orders.setTotalPrice(guestOrder.getTotalPrice());
-            orders.setDate(guestOrder.getDate());
-            orders.setStatusName(guestOrder.getStatus().getStatusName());
-            orders.setOrderType("Khách vãng lai");
-            order.add(orders);
+        if (searchName != null && !searchName.isEmpty()) {
+            totalOrders = orderDao.getTotalOrdersName(statusId, searchName);
+            orders = orderDao.getOrderNameByStatus(index, statusId, searchName);
+        } else {
+            totalOrders = orderDao.getTotalOrdersByStatus(statusId);
+            if (sortBy != null) {
+                orders = orderDao.getOrderByStatusSorted(index, statusId, sortBy, sortDirection);
+            } else {
+                orders = orderDao.getOrderByStatus(index, statusId);
+            }
         }
+
+        int endPage = totalOrders / 5;
+        if (totalOrders % 5 != 0) {
+            endPage++;
+        }
+
         String statusName = null;
-        if ("1".equals(statusId)) {
-            statusName = "Chờ xác nhận";
-        } else if ("2".equals(statusId)) {
-            statusName = "Đã xác nhận";
-        } else if ("3".equals(statusId)) {
-            statusName = "Chờ giao hàng";
-        } else if ("4".equals(statusId)) {
-            statusName = "Hoàn thành";
-        } else if ("5".equals(statusId)) {
-            statusName = "Đã hủy";
+        switch (statusId) {
+            case "1":
+                statusName = "Chờ xác nhận";
+                break;
+            case "2":
+                statusName = "Đã xác nhận";
+                break;
+            case "3":
+                statusName = "Chờ giao hàng";
+                break;
+            case "4":
+                statusName = "Hoàn thành";
+                break;
+            case "5":
+                statusName = "Đã hủy";
+                break;
         }
 
-        request.setAttribute("recentOrders", order);
+        String query = "";
+        if (sort != null && !sort.isEmpty()) {
+            query += "&sort=" + sort;
+        }
+        if (searchName != null && !searchName.isEmpty()) {
+            query += "&s=" + searchName;
+        }
+
+        // Set attributes for JSP rendering
+        request.setAttribute("statusId", statusId);
+        request.setAttribute("ListA", orders);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tag", index);
         request.setAttribute("statusName", statusName);
+        request.setAttribute("query", query);
+
+        // Forward request to JSP page
         request.getRequestDispatcher("Views/Admin/OrderStatus.jsp").forward(request, response);
     }
 

@@ -6,6 +6,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Models.OrderStatus" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -34,7 +37,7 @@
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
-             .scrollable-table {
+            .scrollable-table {
                 max-height: 500px;
                 overflow-y: auto;
             }
@@ -94,6 +97,14 @@
             .QA_table table tbody tr td {
                 padding: 8px 10px;
             }
+            .apply-filter-button {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
 
 
         </style>
@@ -110,37 +121,44 @@
                     <div class="container-fluid p-0">
 
                         <div class="row">                          
-                        <div class="col-lg-4 card_height_100 mb_20">
-                            <div class="white_card card_height_100 mb_20">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Tổng số đơn hàng</h3>
+                            <div class="col-lg-4 card_height_100 mb_20">
+                                <div class="white_card card_height_100 mb_20">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">
+                                                    <i class="fas fa-shopping-cart"></i> 
+                                                    Tổng số đơn hàng
+                                                </h3>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="white_card_body">
-                                    <h2 class="crm_number" id="totalOrders">${totalQuantity}</h2>
+                                    <div class="white_card_body">
+                                        <h2 class="crm_number" id="totalOrders">${totalQuantity}</h2>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4 card_height_100 mb_20">
                             <div class="white_card card_height_100 mb_20">
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Doanh thu</h3>
+                                            <h3 class="m-0">
+                                                <i class="fas fa-coins"></i> 
+                                                Doanh thu
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body">
                                     <h2 class="crm_number" id="revenue">
-                                        <fmt:formatNumber value="${totalRevenue}" type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                        <fmt:formatNumber value="${totalRevenue}" type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/> VND                                      
                                     </h2>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 mb_20">
+                        <div class="col-lg-6 mb_20">
                             <div class="white_card card_height_100 mb_20">
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
@@ -150,32 +168,14 @@
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
-                                    <div class="QA_table">
-                                        <table class="table lms_table_active2 p-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Trạng thái</th>
-                                                    <th>Phần trăm</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="entry" items="${orderStatusPercentage}">
-                                                    <tr>
-                                                        <td><a href="orderstatus?status=${entry.key}">${statusIdToName[entry.key]}</a></td>
-                                                        <td>
-                                                            <div class="progress" style="height: 20px;">
-                                                                <div class="progress-bar" role="progressbar" style="width: ${entry.value}%;" aria-valuenow="${entry.value}" aria-valuemin="0" aria-valuemax="100">${entry.value}%</div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                    <div class="QA_chart">
+                                        <canvas id="orderStatusChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 mb_20">
+
+                        <div class="col-lg-6 mb_20">
                             <div class="white_card card_height_100 mb_20">
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
@@ -185,46 +185,30 @@
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
-                                     <div class="QA_table table-container scrollable-table">
-                                        <table class="table lms_table_active2 p-0" id="orderTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID đơn hàng</th>
-                                                    <th>Tên</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th data-sort="totalPrice" style="cursor: pointer; color: black">
-                                                        Tổng giá <i class="fas fa-sort" style="margin-left: 5px;"></i>
-                                                    </th>
-                                                    <th data-sort="date" style="cursor: pointer; color: black">
-                                                        Ngày <i class="fas fa-sort" style="margin-left: 5px;"></i>
-                                                    </th>
-                                                    <th>Trạng Thái</th>
-                                                    <th>Loại</th>                                                  
-                                                </tr>
-                                            </thead>
-                                            <tbody id="recentOrders">
-                                                <c:forEach var="order" items="${recentOrders}">
-                                                    <tr>
-                                                        <td>${order.orderId}</td>
-                                                        <td>${order.fullName}</td>
-                                                        <td>${order.phoneNumber}</td>
-                                                        <td>${order.address}</td>                                                   
-                                                        <td>
-                                                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                                        </td>
-                                                        <td>${order.date}</td>
-                                                        <td>${order.statusName}</td>
-                                                        <td>${order.orderType}</td>                                                        
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                    <!-- Filters Section -->
+                                    <div class="filter-section">
+                                        <!-- Filter by Name Dropdown -->
+                                        <label for="nameFilter">Tên:</label>
+                                        <select id="nameFilter">
+                                            <option value="all">Tất Cả</option>
+                                            <c:forEach var="order" items="${recentOrders}">
+                                                <option value="${order.fullName}">${order.fullName}</option>
+                                            </c:forEach>
+                                        </select>
+
+                                        <!-- Date Range Filters -->
+                                        <label for="monthFilter">Tháng:</label>
+                                        <input type="month" id="monthFilter">
+
+                                        <!-- Apply Filter Button -->
+                                        <button id="applyFilter" class="apply-filter-button">Lọc</button>
                                     </div>
+
+                                    <!-- Chart Canvas -->
+                                    <canvas id="orderChart" width="400" height="200"></canvas>
                                 </div>
                             </div>
                         </div>
-
                     </div>               
                     <div class="row">
                         <div class="col-lg-5 mb_20">
@@ -237,7 +221,7 @@
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
-                                      <div class="QA_table table-container scrollable-table">
+                                    <div class="QA_table table-container scrollable-table">
                                         <table class="table lms_table_active2 p-0">
                                             <thead>
                                                 <tr>
@@ -373,7 +357,7 @@
         <script src="js/dashboard_init.js"></script>
         <script src="js/custom.js"></script>
         <script>
-             $(document).ready(function () {
+            $(document).ready(function () {
                 $("th[data-sort]").click(function () {
                     var column = $(this).data("sort");
                     var order = $(this).hasClass("asc") ? "desc" : "asc";
@@ -381,14 +365,11 @@
                     $(this).addClass(order);
                     sortTable(column, order);
                 });
-
                 function sortTable(column, order) {
                     var rows = $("#orderTable tbody tr").get();
-
                     rows.sort(function (rowA, rowB) {
                         var valueA = $(rowA).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
                         var valueB = $(rowB).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
-
                         if (column === "totalPrice") {
                             valueA = parseFloat(valueA.replace(/[^\d.-]/g, ''));
                             valueB = parseFloat(valueB.replace(/[^\d.-]/g, ''));
@@ -406,6 +387,133 @@
                     $.each(rows, function (index, row) {
                         $("#orderTable tbody").append(row);
                     });
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('orderChart').getContext('2d');
+                var recentOrders = [
+            <c:forEach var="order" items="${recentOrders}">
+                    {
+                        fullName: "${order.fullName}",
+                        totalPrice: ${order.totalPrice},
+                        date: "${order.date}"
+                    },
+            </c:forEach>
+                ];
+                console.log('Initial recentOrders:', recentOrders);
+                var orderChart;
+                function updateChart(selectedName, selectedMonth) {
+                    var filteredLabels = [];
+                    var filteredData = [];
+                    recentOrders.forEach(function (order) {
+                        var orderMonth = order.date.substring(0, 7);
+                        if ((selectedName === 'all' || order.fullName === selectedName) && (selectedMonth === '' || orderMonth === selectedMonth)) {
+                            filteredLabels.push(order.date);
+                            filteredData.push(order.totalPrice);
+                        }
+                    });
+                    orderChart.data.labels = filteredLabels;
+                    orderChart.data.datasets[0].data = filteredData;
+                    orderChart.update();
+                    console.log('Filtered labels:', filteredLabels);
+                    console.log('Filtered data:', filteredData);
+                }
+
+                var orderData = {
+                    labels: recentOrders.map(order => order.date),
+                    datasets: [{
+                            label: 'Tổng giá (VND)',
+                            data: recentOrders.map(order => order.totalPrice),
+                            fill: false,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                };
+                orderChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: orderData,
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                document.getElementById('applyFilter').addEventListener('click', function () {
+                    var selectedName = document.getElementById('nameFilter').value;
+                    var selectedMonth = document.getElementById('monthFilter').value;
+                    updateChart(selectedName, selectedMonth);
+                });
+            });
+        </script>
+        <% 
+    List<OrderStatus> orderStatusCounts = (List<OrderStatus>) request.getAttribute("orderStatusCounts"); 
+        %>
+        <script>
+            // Dữ liệu từ servlet
+            var orderStatusCounts = JSON.parse('<%= new com.google.gson.Gson().toJson(orderStatusCounts) %>');
+
+            // Tạo nhãn và dữ liệu cho biểu đồ
+            var labels = [];
+            var data = [];
+
+            orderStatusCounts.forEach(function (status) {
+                labels.push(status.statusName);
+                data.push(status.pendingCount);
+            });
+
+            // Khởi tạo biểu đồ Chart.js
+            var ctx = document.getElementById('orderStatusChart').getContext('2d');
+            var orderStatusChart = new Chart(ctx, {
+                type: 'pie', // Đổi từ 'bar' thành 'pie'
+                data: {
+                    labels: labels,
+                    datasets: [{
+                            label: 'Số lượng đơn hàng',
+                            data: data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 2
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return labels[tooltipItem.dataIndex] + ': ' + data[tooltipItem.dataIndex];
+                                }
+                            }
+                        }
+                    },
+                    onClick: function (evt, item) {
+                        if (item.length > 0) {
+                            var elementIndex = item[0]._index; 
+                            var statusId = orderStatusCounts[elementIndex].statusId; 
+                            window.location.href = 'orderstatus?status=' + statusId; 
+                        }
+                    }
+
                 }
             });
         </script>

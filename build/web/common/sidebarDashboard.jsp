@@ -22,7 +22,7 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
-                        <span>Thống kê</span>
+                        <span>Tổng số liệu</span>
                     </a>                  
                 </li>
                  <li class>
@@ -34,7 +34,7 @@
                     </a>
                     <ul>
                          <li><a href="statisticsorder">Thống kê theo năm</a></li>   
-                        <li><a href="statistics">Thống kê theo tháng</a></li>                       
+                        <li><a href="statistics">Thống kê theo ngày</a></li>                       
                     </ul>
                 </li>
                 <li class>
@@ -51,10 +51,8 @@
                             <img src="img/menu-icon/8.svg" alt>
                         </div>
                         <span>Mã giảm giá</span>
-                    </a>
-                   
-                </li>       
-                
+                    </a>                 
+                </li>                      
                 <li class>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <div class="icon_menu">

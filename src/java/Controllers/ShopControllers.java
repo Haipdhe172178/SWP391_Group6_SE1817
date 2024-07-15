@@ -92,16 +92,16 @@ public class ShopControllers extends HttpServlet {
         } else {
             session.setAttribute("sortBy", sortBy);
         }
-        
+
         CategoryDao categoryDao = new CategoryDao();
         ProductDao productDao = new ProductDao();
         AuthorDao authorDao = new AuthorDao();
         ObjectAgeDao objectAgeDao = new ObjectAgeDao();
-        
+
         List<Author> authors = authorDao.getallAuthors();
         List<Category> categories = categoryDao.getallCategorys();
         List<ObjectAge> objectAges = objectAgeDao.getallObjectAges();
-        
+
         String[] categoryIdStrArray = request.getParameterValues("categoryId");
         List<Integer> selectedCategoryIds = new ArrayList<>();
         if (categoryIdStrArray != null) {
@@ -112,13 +112,13 @@ public class ShopControllers extends HttpServlet {
                 }
             }
         }
-        
+
         String ageIdStr = request.getParameter("objage");
         int ageId = 0;
         if (ageIdStr != null && !ageIdStr.isEmpty()) {
             ageId = Integer.parseInt(ageIdStr);
         }
-        
+
         String priceFilter = request.getParameter("price_filter");
         float minPrice = 0;
         float maxPrice = 0;
@@ -146,40 +146,40 @@ public class ShopControllers extends HttpServlet {
                     break;
             }
         }
-        
+
         String searchKeyword = request.getParameter("s");
 
         // Get products based on sorting and filtering
         List<Product> list = new ArrayList<>();
         int count = 0;
-        
+
         if (!selectedCategoryIds.isEmpty() || ageId != 0 || minPrice > 0 || maxPrice > 0) {
-            list = productDao.paginProductByFilter(index, selectedCategoryIds, ageId, minPrice, maxPrice);
-            count = productDao.countProductsByFilter(selectedCategoryIds, ageId, minPrice, maxPrice);
+            list = productDao.paginProductByFilter(index, selectedCategoryIds, ageId, minPrice, maxPrice, "1");
+            count = productDao.countProductsByFilter(selectedCategoryIds, ageId, minPrice, maxPrice, "1");
         } else if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            list = productDao.pagingProductsByKeyword(index, searchKeyword);
-            count = productDao.getTotalProductsByKeyword(searchKeyword);
+            list = productDao.pagingProductsByKeyword(index, searchKeyword, "1");
+            count = productDao.getTotalProductsByKeyword(searchKeyword, "1");
         } else {
             switch (sortBy) {
                 case "name_asc":
-                    list = productDao.pagingProductsSortedByName(index, true);
+                    list = productDao.pagingProductsSortedByName(index, true, "1");
                     break;
                 case "name_desc":
-                    list = productDao.pagingProductsSortedByName(index, false);
+                    list = productDao.pagingProductsSortedByName(index, false, "1");
                     break;
                 case "price_asc":
-                    list = productDao.pagingProductsSortedByPrice(index, true);
+                    list = productDao.pagingProductsSortedByPrice(index, true, "1");
                     break;
                 case "price_desc":
-                    list = productDao.pagingProductsSortedByPrice(index, false);
+                    list = productDao.pagingProductsSortedByPrice(index, false, "1");
                     break;
                 default:
-                    list = productDao.pagingProducts(index);
+                    list = productDao.pagingProducts(index, "1");
                     break;
             }
-            count = productDao.getTotalProduct();
+            count = productDao.getTotalProduct("1");
         }
-        
+
         int endPage = count / 8;
         if (count % 8 != 0) {
             endPage++;

@@ -69,6 +69,12 @@
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/Models/Feedback.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/src/java/AdminControllers/AddAcountControllers.java</file>
             <file>file:/C:/Users/USER/Github/SWP391_Group6_SE1817/web/Views/Admin/UpdateCode.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Models/OrderStatus.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/DAL/OrderDao.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/OrderStatusControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/AdminControllers/DashControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/Dashboard.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/OrderStatus.jsp</file>
         </group>
     </open-files>
 </project-private>
