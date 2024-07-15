@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Models;
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +27,8 @@ public class OrderCustomer {
         this.date = date;
         this.status = status;
     }
-
+    public OrderCustomer() {
+    }
     public ShippingAddress getShipaddress() {
         return shipAddress;
     }

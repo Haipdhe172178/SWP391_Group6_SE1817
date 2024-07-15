@@ -14,10 +14,6 @@ import Models.OrderStatus;
 import Models.Orders;
 import Models.Product;
 
-//import Models.Status;
-import SendEmail.SendEmail;
-
-import Models.StatusOrder;
 
 import Models.StatusOrder;
 import java.sql.PreparedStatement;
@@ -644,7 +640,7 @@ public class OrderDao extends DBContext {
         }
         return totalQuantity;
     }
-
+    
     public OrderGuest getOrderGuestByID(int orderGID) {
         String query = "  SELECT og.OrderGID,og.FullName, og.Email, og.PhoneNumber, og.Address,"
                 + " og.TotalPrice, og.Date, og.StatusID, so.StatusName, og.PaymentStatus "

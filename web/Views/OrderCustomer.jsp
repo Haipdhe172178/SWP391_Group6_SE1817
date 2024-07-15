@@ -200,7 +200,7 @@
                                         <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0"
                                                           maxFractionDigits="0" /> VND
                                     </td>
-                                    <td>${totalQuantity}</td>
+                                    <td>${order.getOrderDetails().size()}</td>
                                     <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy"/></td>
                                     <td>${order.status.statusName}</td>
                                     <td>
