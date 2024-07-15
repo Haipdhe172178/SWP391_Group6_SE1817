@@ -81,10 +81,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                       
                                 <div class="white_card_body QA_section">
-                                    <div class="search-box">
-                                        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm...">
-                                    </div>                                   
+                                    <div class="serach_field_2">
+                                                        <div class="search_inner">
+                                                            <form action="orderstatus" method="GET">
+                                                                <div class="search_field">
+                                                                    <input name="s" type="text" placeholder="Tìm kiếm....">
+                                                                     <input name="status" type="hidden" value="${statusId}">
+                                                                </div>
+                                                                <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
                                     <div class="QA_table table-container scrollable-table">
                                         <table class="table lms_table_active2 p-0" id="orderTable">
                                             <thead>
@@ -98,12 +108,11 @@
                                                         <a href="orderstatus?status=${statusId}&sort=priceasc"><i class="fas fa-arrow-up"></i></a>
                                                         <a href="orderstatus?status=${statusId}&sort=pricedesc"><i class="fas fa-arrow-down"></i></a>
                                                     </th>
-                                                    <th >Ngày
+                                                    <th>Ngày
                                                         <a href="orderstatus?status=${statusId}&sort=dateasc"><i class="fas fa-arrow-up"></i></a>
                                                         <a href="orderstatus?status=${statusId}&sort=datedesc"><i class="fas fa-arrow-down"></i></a>
                                                     </th>
                                                     <th>Trạng thái</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -118,7 +127,7 @@
                                                             <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
                                                         </td>
                                                         <td><fmt:formatDate value="${order.date}" pattern="yyyy-MM-dd"/></td>
-                                                        <td>${statusName}</td>                                                       
+                                                        <td>${statusName}</td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -161,6 +170,7 @@
                                         </nav>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

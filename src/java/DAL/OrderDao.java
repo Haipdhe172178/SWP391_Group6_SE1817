@@ -10,6 +10,7 @@ import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.OrderDetailGuest;
 import Models.OrderGuest;
+import Models.OrderStatus;
 import Models.Orders;
 import Models.Product;
 import Models.Status;
@@ -1031,10 +1032,97 @@ public class OrderDao extends DBContext {
         return totalOrders;
     }
 
+    public List<Orders> getOrderNameByStatus(int index, String status, String searchName) {
+        List<Orders> list = new ArrayList<>();
+        String query = "SELECT RowNumber, OrderID, FullName, Email, PhoneNumber, Address, TotalPrice, Date, StatusID, PaymentStatus, AccountID\n"
+                + "FROM (\n"
+                + "    SELECT \n"
+                + "    ROW_NUMBER() OVER (ORDER BY Date DESC) AS RowNumber, OrderID, FullName, Email, PhoneNumber, Address, TotalPrice, Date, StatusID, PaymentStatus, AccountID\n"
+                + "    FROM (\n"
+                + "        SELECT o.OrderCID AS OrderID, a.FullName, a.Email, sa.PhoneNumber, sa.Address, o.TotalPrice, o.Date, o.StatusID, o.PaymentStatus, o.AccountID\n"
+                + "        FROM [OrderCustomer] o\n"
+                + "        JOIN [Account] a ON o.AccountID = a.AccountID\n"
+                + "        JOIN [ShopBook88].[dbo].[ShippingAddress] sa ON o.AddressID = sa.AddressID\n"
+                + "        WHERE o.StatusID = ? AND (a.FullName LIKE ?)\n"
+                + "        UNION ALL\n"
+                + "        SELECT og.OrderGID AS OrderID, og.FullName, og.Email, og.PhoneNumber, og.Address, og.TotalPrice, og.Date, og.StatusID, og.PaymentStatus, NULL AS AccountID\n"
+                + "        FROM [dbo].[OrderGuest] og\n"
+                + "        WHERE og.StatusID = ? AND (og.FullName LIKE ?)\n"
+                + "    ) AS CombinedOrders\n"
+                + ") AS NumberedOrders\n"
+                + "ORDER BY RowNumber\n"
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, Integer.parseInt(status));
+            ps.setString(2, "%" + searchName + "%");
+            ps.setInt(3, Integer.parseInt(status));
+            ps.setString(4, "%" + searchName + "%");
+            ps.setInt(5, (index - 1) * 5);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Orders order = new Orders();
+                    order.setStt(rs.getInt("RowNumber"));
+                    order.setOrderID(rs.getInt("OrderID"));
+                    order.setFullName(rs.getString("FullName"));
+                    order.setEmail(rs.getString("Email"));
+                    order.setPhoneNumber(rs.getString("PhoneNumber"));
+                    order.setAddress(rs.getString("Address"));
+                    order.setTotalPrice(rs.getFloat("TotalPrice"));
+                    order.setDate(rs.getDate("Date"));
+                    order.setStatus(rs.getInt("StatusID"));
+                    order.setPaymentStatus(rs.getInt("PaymentStatus"));
+                    order.setAccountID(rs.getInt("AccountID"));
+                    list.add(order);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public int getTotalOrdersName(String statusId, String searchName) {
+        int totalOrders = 0;
+        String query = "SELECT COUNT(*) AS TotalOrders\n"
+                + "FROM (\n"
+                + "    SELECT  o.OrderCID AS OrderID,  a.FullName, a.Email, sa.PhoneNumber, sa.Address, "
+                + "    o.TotalPrice, o.Date, o.StatusID, o.PaymentStatus, o.AccountID\n"
+                + "    FROM [OrderCustomer] o\n"
+                + "    JOIN [Account] a ON o.AccountID = a.AccountID\n"
+                + "    JOIN [ShippingAddress] sa ON o.AddressID = sa.AddressID\n"
+                + "    WHERE o.StatusID = ? AND (a.FullName LIKE ?)\n"
+                + "    UNION ALL\n"
+                + "    SELECT  og.OrderGID AS OrderID, og.FullName, og.Email, og.PhoneNumber, "
+                + "    og.Address, og.TotalPrice, og.Date, og.StatusID, og.PaymentStatus,\n"
+                + "    NULL AS AccountID\n"
+                + "    FROM [OrderGuest] og\n"
+                + "    WHERE og.StatusID = ? AND (og.FullName LIKE ?)\n"
+                + ") AS CombinedOrders";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, Integer.parseInt(statusId));
+            ps.setString(2, "%" + searchName + "%");
+            ps.setInt(3, Integer.parseInt(statusId));
+            ps.setString(4, "%" + searchName + "%");
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalOrders = rs.getInt("TotalOrders");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return totalOrders;
+    }
+
     public List<Orders> getOrderByStatusSorted(int index, String status, String sortBy, String sortDirection) {
         List<Orders> list = new ArrayList<>();
 
-        // Xây dựng câu truy vấn SQL
         String query = "SELECT RowNumber, OrderID, FullName, Email, PhoneNumber, Address, TotalPrice, Date, StatusID, PaymentStatus, AccountID\n"
                 + "FROM (\n"
                 + "    SELECT \n"
@@ -1084,49 +1172,40 @@ public class OrderDao extends DBContext {
         return list;
     }
 
-    public List<Orders> getOrderByStatusSortedDate(int index, String status, String sortDirection) {
+    public List<Orders> getOrder() {
         List<Orders> list = new ArrayList<>();
         String query = "SELECT RowNumber, OrderID, FullName, Email, PhoneNumber, Address, TotalPrice, Date, StatusID, PaymentStatus, AccountID\n"
                 + "FROM (\n"
-                + "    SELECT \n"
-                + "        ROW_NUMBER() OVER (ORDER BY Date " + sortDirection + ") AS RowNumber, OrderID, FullName, Email, PhoneNumber, Address, TotalPrice, Date, StatusID, PaymentStatus, AccountID\n"
+                + "    SELECT ROW_NUMBER() OVER (ORDER BY Date DESC) AS RowNumber, OrderID, FullName, Email, PhoneNumber, Address, TotalPrice, Date, StatusID, PaymentStatus, AccountID\n"
                 + "    FROM (\n"
                 + "        SELECT o.OrderCID AS OrderID, a.FullName, a.Email, sa.PhoneNumber, sa.Address, o.TotalPrice, o.Date, o.StatusID, o.PaymentStatus, o.AccountID\n"
                 + "        FROM [OrderCustomer] o\n"
                 + "        JOIN [Account] a ON o.AccountID = a.AccountID\n"
                 + "        JOIN [ShopBook88].[dbo].[ShippingAddress] sa ON o.AddressID = sa.AddressID\n"
-                + "        WHERE o.StatusID = ?\n"
                 + "        UNION ALL\n"
                 + "        SELECT og.OrderGID AS OrderID, og.FullName, og.Email, og.PhoneNumber, og.Address, og.TotalPrice, og.Date, og.StatusID, og.PaymentStatus,\n"
-                + "            NULL AS AccountID\n"
+                + "        NULL AS AccountID\n"
                 + "        FROM [dbo].[OrderGuest] og\n"
-                + "        WHERE og.StatusID = ?\n"
                 + "    ) AS CombinedOrders\n"
                 + ") AS NumberedOrders\n"
-                + "ORDER BY RowNumber\n"
-                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
+                + "ORDER BY RowNumber";
 
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, Integer.parseInt(status));
-            ps.setInt(2, Integer.parseInt(status));
-            ps.setInt(3, (index - 1) * 5);
+        try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Orders order = new Orders();
-                    order.setStt(rs.getInt("RowNumber"));
-                    order.setOrderID(rs.getInt("OrderID"));
-                    order.setFullName(rs.getString("FullName"));
-                    order.setEmail(rs.getString("Email"));
-                    order.setPhoneNumber(rs.getString("PhoneNumber"));
-                    order.setAddress(rs.getString("Address"));
-                    order.setTotalPrice(rs.getFloat("TotalPrice"));
-                    order.setDate(rs.getDate("Date"));
-                    order.setStatus(rs.getInt("StatusID"));
-                    order.setPaymentStatus(rs.getInt("PaymentStatus"));
-                    order.setAccountID(rs.getInt("AccountID"));
-                    list.add(order);
-                }
+            while (rs.next()) {
+                Orders order = new Orders();
+                order.setStt(rs.getInt("RowNumber"));
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setFullName(rs.getString("FullName"));
+                order.setEmail(rs.getString("Email"));
+                order.setPhoneNumber(rs.getString("PhoneNumber"));
+                order.setAddress(rs.getString("Address"));
+                order.setTotalPrice(rs.getFloat("TotalPrice"));
+                order.setDate(rs.getDate("Date"));
+                order.setStatus(rs.getInt("StatusID"));
+                order.setPaymentStatus(rs.getInt("PaymentStatus"));
+                order.setAccountID(rs.getInt("AccountID"));
+                list.add(order);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1135,4 +1214,72 @@ public class OrderDao extends DBContext {
         return list;
     }
 
+    public List<OrderStatus> getOrderStatusCounts() {
+        List<OrderStatus> orderStatusCounts = new ArrayList<>();
+
+        String query = "SELECT so.StatusID, so.StatusName, COALESCE(o.TotalOrderCount, 0) AS TotalOrderCount\n"
+                + "FROM StatusOrder so\n"
+                + "LEFT JOIN (\n"
+                + "    SELECT StatusID, SUM(OrderCount) AS TotalOrderCount\n"
+                + "    FROM (\n"
+                + "        SELECT StatusID, 'OrderCustomer' AS TableName, COUNT(*) AS OrderCount FROM OrderCustomer GROUP BY StatusID\n"
+                + "        UNION ALL\n"
+                + "        SELECT StatusID, 'OrderGuest' AS TableName, COUNT(*) AS OrderCount FROM OrderGuest GROUP BY StatusID\n"
+                + "    ) AS o\n"
+                + "    WHERE o.StatusID IN (?, ?, ?, ?, ?)\n"
+                + "    GROUP BY o.StatusID\n"
+                + ") AS o ON so.StatusID = o.StatusID\n"
+                + "ORDER BY so.StatusID;";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, 1);
+            ps.setInt(2, 2);
+            ps.setInt(3, 3);
+            ps.setInt(4, 4);
+            ps.setInt(5, 5);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int statusId = rs.getInt("StatusID");
+                String statusName = rs.getString("StatusName");
+                int count = rs.getInt("TotalOrderCount");
+                orderStatusCounts.add(new OrderStatus(statusId, statusName, count));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return orderStatusCounts;
+    }
+
+    public static void main(String[] args) {
+        OrderDao orderDao = new OrderDao();
+
+        // Test parameters
+        int index = 1;
+        String statusId = "4"; // Example status ID
+        String searchName = "tai"; // Example search name
+
+        // Call getOrderNameByStatus method
+        List<Orders> orders = orderDao.getOrderNameByStatus(index, statusId, searchName);
+
+        // Print the retrieved orders
+        for (Orders order : orders) {
+            System.out.println("Order ID: " + order.getOrderID());
+            System.out.println("Full Name: " + order.getFullName());
+            System.out.println("Email: " + order.getEmail());
+            System.out.println("Phone Number: " + order.getPhoneNumber());
+            System.out.println("Address: " + order.getAddress());
+            System.out.println("Total Price: " + order.getTotalPrice());
+            System.out.println("Date: " + order.getDate());
+            System.out.println("Status ID: " + order.getStatus());
+            System.out.println("Payment Status: " + order.getPaymentStatus());
+            System.out.println("Account ID: " + order.getAccountID());
+            System.out.println("-----------------------");
+        }
+    }
 }

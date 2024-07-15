@@ -6,11 +6,12 @@ package AdminControllers;
 
 import DAL.OrderDao;
 import Models.Account;
-import Models.Order;
 import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
 import Models.OrderDetailGuest;
 import Models.OrderGuest;
+import Models.OrderStatus;
+import Models.Orders;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,43 +74,13 @@ public class DashControllers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDao orderDao = new OrderDao();
-      
+
         List<OrderCustomer> customerOrders = orderDao.getAllOrderCustomers();
         List<OrderGuest> guestOrders = orderDao.getAllOrderGuests();
         int totalQuantity = orderDao.OrderCount();
         float totalRevenue = getTotalRevenue(customerOrders, guestOrders);
 
-        List<OrderCustomer> recentCustomerOrders = orderDao.getRecentOrderCustomers();
-        List<OrderGuest> recentGuestOrders = orderDao.getRecentOrderGuests();
-
-        List<Order> order = new ArrayList<>();
-        for (OrderCustomer customerOrder : recentCustomerOrders) {
-            Order orders = new Order();
-            orders.setOrderId(customerOrder.getOrderDetails().get(0).getOrderCId());
-            orders.setFullName(customerOrder.getAccount().getFullName());
-            orders.setEmail(customerOrder.getAccount().getEmail());
-            orders.setPhoneNumber(customerOrder.getAccount().getPhoneNumber());
-            orders.setAddress(customerOrder.getAccount().getAddress());
-            orders.setTotalPrice(customerOrder.getTotalPrice());
-            orders.setDate(customerOrder.getDate());
-            orders.setStatusName(customerOrder.getStatus().getStatusName());
-            orders.setOrderType("Khách hàng");
-            order.add(orders);
-        }
-
-        for (OrderGuest guestOrder : recentGuestOrders) {
-            Order orders = new Order();
-            orders.setOrderId(guestOrder.getOrderDetails().get(0).getOrderGId());
-            orders.setFullName(guestOrder.getFullName());
-            orders.setEmail(guestOrder.getEmail());
-            orders.setPhoneNumber(guestOrder.getPhoneNumber());
-            orders.setAddress(guestOrder.getAddress());
-            orders.setTotalPrice(guestOrder.getTotalPrice());
-            orders.setDate(guestOrder.getDate());
-            orders.setStatusName(guestOrder.getStatus().getStatusName());
-            orders.setOrderType("Khách vãng lai");
-            order.add(orders);
-        }
+        List<Orders> order = orderDao.getOrder();
 
         List<Product> mostPurchasedProducts = orderDao.getMostPurchasedProducts();
         List<Map<String, Object>> topBuyers = orderDao.getTopBuyers();
@@ -117,46 +88,11 @@ public class DashControllers extends HttpServlet {
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("totalRevenue", totalRevenue);
         request.setAttribute("recentOrders", order);
-      
+
         request.setAttribute("mostPurchasedProducts", mostPurchasedProducts);
         request.setAttribute("topBuyers", topBuyers);
-
-        Map<Integer, String> statusIdToName = new HashMap<>();
-        Map<Integer, Integer> orderStatusCount = new HashMap<>();
-
-        // Khởi tạo các trạng thái với giá trị 0
-        statusIdToName.put(1, "Chờ xác nhận");
-        statusIdToName.put(2, "Đã xác nhận");
-        statusIdToName.put(3, "Chờ giao hàng");
-        statusIdToName.put(4, "Hoàn thành");
-        statusIdToName.put(5, "Đã hủy");
-
-        for (int i = 1; i <= 5; i++) {
-            orderStatusCount.put(i, 0);
-        }
-
-        // Cập nhật giá trị dựa trên dữ liệu thực tế
-        for (OrderCustomer orderc : customerOrders) {
-            int statusId = orderc.getStatus().getStatusId();
-            orderStatusCount.put(statusId, orderStatusCount.get(statusId) + 1);
-        }
-
-        for (OrderGuest orderg: guestOrders) {
-            int statusId = orderg.getStatus().getStatusId();
-            orderStatusCount.put(statusId, orderStatusCount.get(statusId) + 1);
-        }
-
-        int totalOrders = customerOrders.size() + guestOrders.size();
-        Map<Integer, Double> orderStatusPercentage = new LinkedHashMap<>();
-
-        if (totalOrders > 0) {
-            for (Map.Entry<Integer, Integer> entry : orderStatusCount.entrySet()) {
-                orderStatusPercentage.put(entry.getKey(), (entry.getValue() * 100.0) / totalOrders);
-            }
-        }
-
-        request.setAttribute("orderStatusPercentage", orderStatusPercentage);
-        request.setAttribute("statusIdToName", statusIdToName);
+        List<OrderStatus> orderStatusCounts = orderDao.getOrderStatusCounts();
+        request.setAttribute("orderStatusCounts", orderStatusCounts);
 
         request.getRequestDispatcher("Views/Admin/Dashboard.jsp").forward(request, response);
     }

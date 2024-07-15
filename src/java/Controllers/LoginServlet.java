@@ -90,7 +90,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String productID = request.getParameter("productID");
         String index = request.getParameter("index");
-        
+
 
         if (account != null) {
             if (account.getStatus() == 0) {

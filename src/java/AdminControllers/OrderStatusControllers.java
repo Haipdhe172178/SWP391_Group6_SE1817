@@ -5,7 +5,6 @@
 package AdminControllers;
 
 import DAL.OrderDao;
-import Models.Order;
 import Models.OrderCustomer;
 import Models.OrderGuest;
 import Models.Orders;
@@ -66,6 +65,7 @@ public class OrderStatusControllers extends HttpServlet {
 
         String indexPage = request.getParameter("index");
         String sort = request.getParameter("sort");
+        String searchName = request.getParameter("s"); 
         int index;
         if (indexPage != null) {
             index = Integer.parseInt(indexPage);
@@ -79,6 +79,7 @@ public class OrderStatusControllers extends HttpServlet {
         String sortBy = null;
         String sortDirection = "ASC";
 
+        // Handle sorting logic
         if (sort != null && !sort.isEmpty()) {
             switch (sort) {
                 case "priceasc":
@@ -100,11 +101,16 @@ public class OrderStatusControllers extends HttpServlet {
             }
         }
 
-        totalOrders = orderDao.getTotalOrdersByStatus(statusId);
-        if (sortBy != null) {
-            orders = orderDao.getOrderByStatusSorted(index, statusId, sortBy, sortDirection);
+        if (searchName != null && !searchName.isEmpty()) {
+            totalOrders = orderDao.getTotalOrdersName(statusId, searchName);
+            orders = orderDao.getOrderNameByStatus(index, statusId, searchName);
         } else {
-            orders = orderDao.getOrderByStatus(index, statusId);
+            totalOrders = orderDao.getTotalOrdersByStatus(statusId);
+            if (sortBy != null) {
+                orders = orderDao.getOrderByStatusSorted(index, statusId, sortBy, sortDirection);
+            } else {
+                orders = orderDao.getOrderByStatus(index, statusId);
+            }
         }
 
         int endPage = totalOrders / 5;
@@ -135,8 +141,11 @@ public class OrderStatusControllers extends HttpServlet {
         if (sort != null && !sort.isEmpty()) {
             query += "&sort=" + sort;
         }
+        if (searchName != null && !searchName.isEmpty()) {
+            query += "&s=" + searchName;
+        }
 
-        // Đặt các thuộc tính cho request
+        // Set attributes for JSP rendering
         request.setAttribute("statusId", statusId);
         request.setAttribute("ListA", orders);
         request.setAttribute("endP", endPage);
@@ -144,7 +153,7 @@ public class OrderStatusControllers extends HttpServlet {
         request.setAttribute("statusName", statusName);
         request.setAttribute("query", query);
 
-        // Chuyển tiếp request tới trang JSP
+        // Forward request to JSP page
         request.getRequestDispatcher("Views/Admin/OrderStatus.jsp").forward(request, response);
     }
 

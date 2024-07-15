@@ -87,6 +87,10 @@
         <servlet-class>AdminControllers.DeleteCodeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DashControllers</servlet-name>
+        <servlet-class>AdminControllers.DashControllers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AddcodeController</servlet-name>
         <servlet-class>AdminControllers.AddcodeController</servlet-class>
     </servlet>
@@ -287,6 +291,10 @@
         <url-pattern>/single</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>DashControllers</servlet-name>
+        <url-pattern>/dash</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CartControllers</servlet-name>
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
@@ -464,7 +472,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StatisticsControllers</servlet-name>
-        <url-pattern>/statistics/*</url-pattern>
+        <url-pattern>/statistics</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StatisticsOrderControllers</servlet-name>
