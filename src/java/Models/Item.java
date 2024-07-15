@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.Objects;
+
 public class Item {
     private Product product;
     private int quantity;
@@ -37,4 +39,21 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        return Objects.equals(this.product.getProductId(), other.product.getProductId());
+    }
+    
+    
 }

@@ -102,70 +102,72 @@ public class OrderCustomerControllers extends HttpServlet {
         request.setAttribute("canceledCount", canceledCount);
         request.setAttribute("accountId", accountId);
         request.setAttribute("orders", orders);
+        
         request.setAttribute("noOrders", noOrders);
         request.getRequestDispatcher("Views/OrderCustomer.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        if (a == null) {
-            response.sendRedirect("login");
-            return;
-        }
-        int accountId = a.getAccountId();
+   @Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    Account a = (Account) session.getAttribute("account");
+    if (a == null) {
+        response.sendRedirect("login");
+        return;
+    }
+    int accountId = a.getAccountId();
 
-        String action = request.getParameter("action");
-        String orderIdStr = request.getParameter("orderId");
-        String status = request.getParameter("status");
+    String action = request.getParameter("action");
+    String orderIdStr = request.getParameter("orderId");
+    String status = request.getParameter("status");
 
-        if (action != null && orderIdStr != null) {
-            boolean isComplete = false;
-            String ms = null;
+    if (action != null && orderIdStr != null) {
+        boolean isComplete = false;
+        String message = null;
 
-            try {
-                int orderId = Integer.parseInt(orderIdStr);
-                OrderDao orderDao = new OrderDao();
+        try {
+            int orderId = Integer.parseInt(orderIdStr);
+            OrderDao orderDao = new OrderDao();
+            ProductDao productDao = new ProductDao();
 
-                switch (action) {
-                    case "cancel":
-                        isComplete = orderDao.cancelOrder(orderId);
-                        ms = isComplete ? "Đơn hàng đã được hủy!" : "Không thể hủy đơn hàng!";
-                        break;
-                    case "received":
-                        isComplete = orderDao.updateStatusById(orderId, 4);
-                        ms = isComplete ? "Đơn hàng đã được đánh dấu là đã nhận!" : "Không thể cập nhật đơn hàng!";
-                        break;
-                    case "buyAgain":
-                        List<OrderDetailCustomer> orderDetails = orderDao.getOrderDetailCustomers(orderId);
-                        Cart cart = (Cart) session.getAttribute("cart");
-                        if (cart == null) {
-                            cart = new Cart();
-                            session.setAttribute("cart", cart);
-                        }
-                        for (OrderDetailCustomer detail : orderDetails) {
-                            Product product = productDao.getProductById(detail.getProductId());
-                            Item item = new Item(product, detail.getQuantity(), product.getPrice());
-                            cart.addItem(item);
-                        }
-                        response.sendRedirect("cart");
-                        return;
-
-                    default:
-                        ms = "Hành động không hợp lệ!";
-                }
-
-                request.getSession().setAttribute("notification", ms);
-                response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
-
-            } catch (NumberFormatException e) {
-                request.setAttribute("message", "ID đơn hàng không hợp lệ!");
-                response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
+            switch (action) {
+                case "cancel":
+                    isComplete = orderDao.cancelOrder(orderId);
+                    message = isComplete ? "Đơn hàng đã được hủy!" : "Không thể hủy đơn hàng!";
+                    break;
+                case "received":
+                    isComplete = orderDao.updateStatusById(orderId, 4);
+                    message = isComplete ? "Đơn hàng đã được đánh dấu là đã nhận!" : "Không thể cập nhật đơn hàng!";
+                    break;
+                case "buyAgain":
+                    List<OrderDetailCustomer> orderDetails = orderDao.getOrderDetailCustomers(orderId);
+                    Cart cart = (Cart) session.getAttribute("cart");
+                    if (cart == null) {
+                        cart = new Cart();
+                        session.setAttribute("cart", cart);
+                    }
+                    for (OrderDetailCustomer detail : orderDetails) {
+                        Product product = productDao.getProductById(detail.getProductId());
+                        Item item = new Item(product, detail.getQuantity(), product.getPrice());
+                        cart.addItem(item);
+                    }
+                    session.setAttribute("cart", cart);
+                    response.sendRedirect("cart");
+                    return;
+                default:
+                    message = "Hành động không hợp lệ!";
             }
+
+            session.setAttribute("notification", message);
+            response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("message", "ID đơn hàng không hợp lệ!");
+            response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
         }
     }
+}
 
     @Override
     public String getServletInfo() {
