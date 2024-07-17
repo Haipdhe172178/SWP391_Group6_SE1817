@@ -28,6 +28,9 @@ import java.util.Map;
  */
 public class ConfirmVNPayController extends HttpServlet {
 
+    private static final String THANKS_PAGE = "Views/thanks.jsp";
+    private static final String ERROR_PAGE = "Views/error.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -68,10 +71,10 @@ public class ConfirmVNPayController extends HttpServlet {
             throws ServletException, IOException {
         OrderDao orderDao = new OrderDao();
 
-        //Begin process return from VNPAY
-        Map fields = new HashMap();
-        for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
-            String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
+        // Begin process return from VNPAY
+        Map<String, String> fields = new HashMap<>();
+        for (Enumeration<String> params = request.getParameterNames(); params.hasMoreElements();) {
+            String fieldName = URLEncoder.encode(params.nextElement(), StandardCharsets.US_ASCII.toString());
             String fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
                 fields.put(fieldName, fieldValue);
@@ -79,33 +82,52 @@ public class ConfirmVNPayController extends HttpServlet {
         }
 
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
-        if (fields.containsKey("vnp_SecureHashType")) {
-            fields.remove("vnp_SecureHashType");
-        }
-        if (fields.containsKey("vnp_SecureHash")) {
-            fields.remove("vnp_SecureHash");
-        }
+        fields.remove("vnp_SecureHashType");
+        fields.remove("vnp_SecureHash");
+
         String signValue = Config.hashAllFields(fields);
         int orderId = Integer.parseInt(request.getParameter("vnp_TxnRef"));
         Account acc = (Account) request.getSession().getAttribute("account");
+        String transactionStatus = request.getParameter("vnp_TransactionStatus");
+        try {
+            if (signValue.equals(vnp_SecureHash)) {
 
-        if (signValue.equals(vnp_SecureHash)) {
-            if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
-                if (acc != null) {
-                    orderDao.updatePaymentSuccess("customer", orderId);
+                if ("00".equals(transactionStatus)) {
+                    handleSuccessfulPayment(orderDao, orderId, acc);
+                    request.getRequestDispatcher(THANKS_PAGE).forward(request, response);
                 } else {
-                    orderDao.updatePaymentSuccess("guest", orderId);
-                    OrderGuest og = orderDao.getOrderGuestByID(orderId);
-                    SendEmail.sendEmail(og.getEmail(), "Xac nhan don hang #" + orderId, SendEmail.sendEmailConfirm(orderId));
+                    handleFailedPayment(orderDao, orderId, acc);
+                    if ("24".equals(transactionStatus)) {
+                        response.sendRedirect("home");
+                    } else {
+                        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+                    }
                 }
-                request.getRequestDispatcher("Views/thanks.jsp").forward(request, response);
             } else {
-                request.setAttribute("message", "Thanh toán thất bại, vui lòng thử lại");
+                request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
             }
-        } else {
-            request.setAttribute("message", "Thanh toán thất bại, vui lòng thử lại");
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         }
-        request.getRequestDispatcher("Views/thanks.jsp").forward(request, response);
+    }
+
+    private void handleSuccessfulPayment(OrderDao orderDao, int orderId, Account acc) {
+        if (acc != null) {
+            orderDao.updatePaymentSuccess("customer", orderId);
+        } else {
+            orderDao.updatePaymentSuccess("guest", orderId);
+            OrderGuest og = orderDao.getOrderGuestByID(orderId);
+            SendEmail.sendEmail(og.getEmail(), "Xác nhận đơn hàng #" + orderId, SendEmail.sendEmailConfirm(orderId));
+        }
+    }
+
+    private void handleFailedPayment(OrderDao orderDao, int orderId, Account acc) {
+        if (acc != null) {
+            orderDao.deleteOrderCustomer(orderId);
+        } else {
+            orderDao.deleteOrderGuest(orderId);
+        }
     }
 
     /**

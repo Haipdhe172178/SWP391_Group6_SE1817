@@ -29,24 +29,6 @@
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
 
-            <section class="hero-section position-relative padding-large" style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;">
-                <div class="hero-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="text-center">
-                                <h1>Contact</h1>
-                                <div class="breadcrumbs">
-                                    <span class="item">
-                                        <a href="index.html">Home > </a>
-                                    </span>
-                                    <span class="item text-decoration-underline">Contact</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <div class="contact-us padding-large">
                 <div class="container">
                     <div class="row">

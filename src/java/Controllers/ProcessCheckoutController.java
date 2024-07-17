@@ -10,31 +10,22 @@ import DAL.OrderDao;
 import DAL.ProductDao;
 import Models.Account;
 import Models.Item;
-import Models.OrderCustomer;
-import Models.OrderDetailGuest;
-import Models.OrderGuest;
 import Models.Product;
 import Models.UsedCoupon;
 import SendEmail.SendEmail;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -122,10 +113,12 @@ public class ProcessCheckoutController extends HttpServlet {
 
         int orderGID = od.AddOrderGuest(fullName, email, phoneNumber, address, totalPrice, 1, 0);
         od.AddOrderGuestDetails(orderGID, listItem);
-
+        
+        //VNPay
         if (paymentMethod.equalsIgnoreCase("VNPay")) {
             redirectToVNPay(request, response, totalPrice, orderGID);
         } else {
+        //COD
             SendEmail.sendEmail(email, "Xac nhan don hang #" + orderGID, SendEmail.sendEmailConfirm(orderGID));
             redirectToThankYouPage(request, response);
         }
@@ -138,6 +131,8 @@ public class ProcessCheckoutController extends HttpServlet {
 
         int orderCID = od.AddOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, 0);
         od.AddOrderCustomerDetails(orderCID, listItem);
+        
+        //Process coupon
         if (coupon != null) {
             DiscountDAO discountDao = new DiscountDAO();
             boolean isSuccess = discountDao.insertHistoryCoupon(acc.getAccountId(), coupon);
@@ -146,9 +141,12 @@ public class ProcessCheckoutController extends HttpServlet {
                 request.getSession().removeAttribute("coupon");
             }
         }
+        
+        //VNPay
         if (paymentMethod.equalsIgnoreCase("VNPay")) {
             redirectToVNPay(request, response, totalPrice, orderCID);
         } else {
+        //COD
             redirectToThankYouPage(request, response);
         }
     }
