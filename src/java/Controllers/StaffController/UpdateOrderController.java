@@ -11,6 +11,9 @@ import Models.OrderDetailGuest;
 import Models.Orders;
 import Models.Product;
 import SendEmail.SendEmail;
+import static SendEmail.SendEmail.sendEmailConfirmAdmin;
+import static SendEmail.SendEmail.sendEmailConfirmAdminHP;
+import static SendEmail.SendEmail.sendEmailConfirmAdminHuy;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -136,7 +139,12 @@ public class UpdateOrderController extends HttpServlet {
                 for (OrderDetailGuest od : list) {
                     dao.updateProductQuantityStaff(od.getProductId(), od.getQuantity(),"+");
                 }
-            }
+                String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+        SendEmail sd = new SendEmail();
+          sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHuy(Integer.parseInt(orderID)));
+     
+        }
+            
         } else {
             if (statusold == 1 && status.equals(data1[1])) {
                 //update quantity
@@ -144,12 +152,22 @@ public class UpdateOrderController extends HttpServlet {
                 for (OrderDetailGuest od : list) {
                     dao.updateProductQuantityStaff(od.getProductId(), od.getQuantity(),"-");
                 }
+                    String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+          SendEmail sd = new SendEmail();
+           sd.sendEmail(gmail, "Book88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
             }
+       
+              String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+          SendEmail sd = new SendEmail();
+           sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHP(Integer.parseInt(orderID)));
+            
+         
+      
+       
+        
+        
         }
-        String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
-        SendEmail sd = new SendEmail();
-        sd.sendEmail(gmail, "Book88 gui ban it tien an sang", "Ban da hang thanh vui long vao trnag web de kt");
-        response.sendRedirect("staffdashboard");
+         response.sendRedirect("staffdashboard");
     }
 
     /**

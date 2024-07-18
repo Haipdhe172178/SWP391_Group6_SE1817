@@ -85,4 +85,117 @@ public class SendEmail {
         // Gửi email
         return content.toString();
     }
+     public static String sendEmailConfirmAdmin(int orderGID) {
+        OrderDao od = new OrderDao();
+        OrderGuest orderGuest = od.getOrderGuestByID(orderGID);
+        ProductDao pDao = new ProductDao();
+        List<OrderDetailGuest> listOd = orderGuest.getOrderDetails();
+
+        StringBuilder content = new StringBuilder();
+        content.append("<html>");
+        content.append("<body>");
+        content.append("<h1>Xác nhận đơn hàng #" + orderGID + "</h1>");
+        content.append("<p>Cám ơn bạn đã mua hàng! Đơn hàng của bạn đã được chuẩn bị và giao hàng.</p>");
+
+        // Thêm thông tin chi tiết đơn hàng vào email
+        content.append("<h2>Thông tin chi tiết đơn hàng:</h2>");
+        content.append("<table border='1' cellpadding='5' cellspacing='0'>");
+        content.append("<tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Thành tiền</th></tr>");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        // Thay đổi các giá trị dưới đây bằng thông tin thực tế từ đơn hàng của bạn
+        for (OrderDetailGuest og : listOd) {
+            Product p = pDao.getProductById(og.getProductId());
+            content.append("<tr><td>" + p.getName() + "</td><td>" + currencyFormat.format(og.getUnitPrice()) + " </td><td>" + og.getQuantity() + "</td><td>" + currencyFormat.format(og.getUnitPrice() * og.getQuantity()) + " </td></tr>");
+        }
+
+        // Tổng tiền và thông tin khách hàng
+        content.append("<tr><td colspan='3' style='text-align:right'>Tổng tiền:</td><td>" + currencyFormat.format(orderGuest.getTotalPrice()) + " </td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Họ và tên khách hàng:</td><td>" + orderGuest.getFullName() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Email khách hàng:</td><td>" + orderGuest.getEmail() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Số điện thoại khách hàng:</td><td>" + orderGuest.getPhoneNumber() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Địa chỉ giao hàng:</td><td>" + orderGuest.getAddress() + "</td></tr>");
+
+        content.append("</table>");
+        content.append("</body>");
+        content.append("</html>");
+
+        // Gửi email
+        return content.toString();
+    }
+     
+      public static String sendEmailConfirmAdminHuy(int orderGID) {
+        OrderDao od = new OrderDao();
+        OrderGuest orderGuest = od.getOrderGuestByID(orderGID);
+        ProductDao pDao = new ProductDao();
+        List<OrderDetailGuest> listOd = orderGuest.getOrderDetails();
+
+        StringBuilder content = new StringBuilder();
+        content.append("<html>");
+        content.append("<body>");
+        content.append("<h1>Xác nhận đơn hàng #" + orderGID + "</h1>");
+        content.append("<p>Cám ơn bạn đã mua hàng! Đơn hàng của bạn đã hủy.</p>");
+
+        // Thêm thông tin chi tiết đơn hàng vào email
+        content.append("<h2>Thông tin chi tiết đơn hàng:</h2>");
+        content.append("<table border='1' cellpadding='5' cellspacing='0'>");
+        content.append("<tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Thành tiền</th></tr>");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        // Thay đổi các giá trị dưới đây bằng thông tin thực tế từ đơn hàng của bạn
+        for (OrderDetailGuest og : listOd) {
+            Product p = pDao.getProductById(og.getProductId());
+            content.append("<tr><td>" + p.getName() + "</td><td>" + currencyFormat.format(og.getUnitPrice()) + " </td><td>" + og.getQuantity() + "</td><td>" + currencyFormat.format(og.getUnitPrice() * og.getQuantity()) + " </td></tr>");
+        }
+
+        // Tổng tiền và thông tin khách hàng
+        content.append("<tr><td colspan='3' style='text-align:right'>Tổng tiền:</td><td>" + currencyFormat.format(orderGuest.getTotalPrice()) + " </td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Họ và tên khách hàng:</td><td>" + orderGuest.getFullName() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Email khách hàng:</td><td>" + orderGuest.getEmail() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Số điện thoại khách hàng:</td><td>" + orderGuest.getPhoneNumber() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Địa chỉ giao hàng:</td><td>" + orderGuest.getAddress() + "</td></tr>");
+
+        content.append("</table>");
+        content.append("</body>");
+        content.append("</html>");
+
+        // Gửi email
+        return content.toString();
+    }
+     public static String sendEmailConfirmAdminHP(int orderGID) {
+        OrderDao od = new OrderDao();
+        OrderGuest orderGuest = od.getOrderGuestByID(orderGID);
+        ProductDao pDao = new ProductDao();
+        List<OrderDetailGuest> listOd = orderGuest.getOrderDetails();
+
+        StringBuilder content = new StringBuilder();
+        content.append("<html>");
+        content.append("<body>");
+        content.append("<h1>Xác nhận đơn hàng #" + orderGID + "</h1>");
+        content.append("<p>Cám ơn bạn đã mua hàng!</p>");
+
+        // Thêm thông tin chi tiết đơn hàng vào email
+        content.append("<h2>Thông tin chi tiết đơn hàng:</h2>");
+        content.append("<table border='1' cellpadding='5' cellspacing='0'>");
+        content.append("<tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Thành tiền</th></tr>");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        // Thay đổi các giá trị dưới đây bằng thông tin thực tế từ đơn hàng của bạn
+        for (OrderDetailGuest og : listOd) {
+            Product p = pDao.getProductById(og.getProductId());
+            content.append("<tr><td>" + p.getName() + "</td><td>" + currencyFormat.format(og.getUnitPrice()) + " </td><td>" + og.getQuantity() + "</td><td>" + currencyFormat.format(og.getUnitPrice() * og.getQuantity()) + " </td></tr>");
+        }
+
+        // Tổng tiền và thông tin khách hàng
+        content.append("<tr><td colspan='3' style='text-align:right'>Tổng tiền:</td><td>" + currencyFormat.format(orderGuest.getTotalPrice()) + " </td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Họ và tên khách hàng:</td><td>" + orderGuest.getFullName() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Email khách hàng:</td><td>" + orderGuest.getEmail() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Số điện thoại khách hàng:</td><td>" + orderGuest.getPhoneNumber() + "</td></tr>");
+        content.append("<tr><td colspan='3' style='text-align:right'>Địa chỉ giao hàng:</td><td>" + orderGuest.getAddress() + "</td></tr>");
+
+        content.append("</table>");
+        content.append("</body>");
+        content.append("</html>");
+
+        // Gửi email
+        return content.toString();
+    }
+    
 }
