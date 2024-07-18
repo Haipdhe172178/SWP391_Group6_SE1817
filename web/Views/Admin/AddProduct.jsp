@@ -135,16 +135,16 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="productImage" class="form-label">Ảnh</label>
-                                            <input type="file" class="form-control" id="productImage" name="imgProduct" required>
-                                        </div>
-                                        <div class="mb-3">
                                             <label for="productAgeSelect" class="form-label">Độ tuổi</label>
                                             <select class="form-select" id="productAgeSelect" name="ageId" required>
                                                 <c:forEach items="${obage}" var="o">
                                                     <option value="${o.ageId}">${o.age}</option>
                                                 </c:forEach>
                                             </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="productImage" class="form-label">Ảnh</label>
+                                            <input type="file" class="form-control" id="productImage" name="imgProduct" required>
                                         </div>
                                         <div>
                                             <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>

@@ -137,23 +137,6 @@
                                                     ${pro.author.authorName}
                                                 </p>
 
-                                                <!--                                            <div class="rating text-warning d-flex align-items-center">
-                                                                                                <svg class="star star-fill">
-                                                                                                <use xlink:href="#star-fill"></use>
-                                                                                                </svg>
-                                                                                                <svg class="star star-fill">
-                                                                                                <use xlink:href="#star-fill"></use>
-                                                                                                </svg>
-                                                                                                <svg class="star star-fill">
-                                                                                                <use xlink:href="#star-fill"></use>
-                                                                                                </svg>
-                                                                                                <svg class="star star-fill">
-                                                                                                <use xlink:href="#star-fill"></use>
-                                                                                                </svg>
-                                                                                                <svg class="star star-fill">
-                                                                                                <use xlink:href="#star-fill"></use>
-                                                                                                </svg>
-                                                                                            </div>-->
                                             </div>
                                             <span class="price text-primary fw-bold mb-2 fs-5">
 
@@ -161,20 +144,7 @@
 
 
                                             </span>
-                                            <!--                                        <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                                                                        <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                                                                                            <svg class="cart">
-                                                                                            <use xlink:href="#cart"></use>
-                                                                                            </svg>
-                                                                                        </button>   
-                                                                                        <a href="#" class="btn btn-dark">
-                                                                                            <span>
-                                                                                                <svg class="wishlist">
-                                                                                                <use xlink:href="#heart"></use>
-                                                                                                </svg>
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </div>-->
+                                         
                                         </div>
                                     </a>
                                 </div>

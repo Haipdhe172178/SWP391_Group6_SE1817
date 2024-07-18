@@ -167,7 +167,10 @@ public class UpdateOrderController extends HttpServlet {
         
         
         }
-         response.sendRedirect("staffdashboard");
+        String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+        SendEmail sd = new SendEmail();
+          sd.sendEmail(gmail, "BookBook88", "Đơn hàng của bạn đã được chuẩn bị");
+        response.sendRedirect("staffdashboard");
     }
 
     /**
