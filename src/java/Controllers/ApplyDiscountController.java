@@ -60,10 +60,14 @@ public class ApplyDiscountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account acc = (Account) request.getSession().getAttribute("account");
+        if (acc == null) {
+            return;
+        }
+        
         String discountCode = request.getParameter("discount_code");
         String totalStr = request.getParameter("total_price");
         double totalAmount = Double.parseDouble(totalStr) - 20000;
-        Account acc = (Account) request.getSession().getAttribute("account");
 
         DiscountDAO dDAO = new DiscountDAO();
 
@@ -98,7 +102,7 @@ public class ApplyDiscountController extends HttpServlet {
                     + "                <span class=\"price-amount amount text-primary ps-5 fw-light\">\n"
                     + "                    <bdi>\n"
                     + "                        <span class=\"price-currency-symbol\">\n"
-                    + "                            " + currencyFormat.format(shippingFee) +"\n"
+                    + "                            " + currencyFormat.format(shippingFee) + "\n"
                     + "                        </span>\n"
                     + "                </span>\n"
                     + "            </td>\n"

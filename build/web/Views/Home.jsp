@@ -127,44 +127,22 @@
         });
     </script>
     <body>
-       <jsp:include page="../common/header.jsp"></jsp:include>
+        <jsp:include page="../common/header.jsp"></jsp:include>
+        <div class="swiper-container z-3" style="height: 50rem">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1036')"></div>
 
-
-       
-    <div class="swiper-container z-3">
-        <div class="swiper-wrapper">
-               <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1036')">
-
+                    <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=1036')"></div>
+                    <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=1036')"></div>
+                    <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img5.jpg?v=1036')"></div>
+                    <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=1036')"></div>
                 </div>
-          
-              <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img2.jpg?v=1036')">
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
 
-                </div>
-               <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=1036')">
-
-                </div>
-                <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img5.jpg?v=1036')">
-
-                </div>
-                 <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=1036')">
-
-                </div>
-                 
-
-
-
-
-
-        </div>
-
-
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-
-
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+            <script>
         var swiper = new Swiper('.swiper-container', {
             loop: true,
             navigation: {
@@ -176,438 +154,417 @@
                 disableOnInteraction: false,
             },
         });
-    </script>
+            </script>
 
-
-
-
-
-
-    <section id="company-services" class="padding-large pb-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
-                    <div class="icon-box d-flex">
-                        <div class="icon-box-icon pe-3 pb-3">
-                            <svg class="cart-outline">
-                            <use xlink:href="#cart-outline" />
-                            </svg>
+            <section id="company-services" class="padding-large pb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
+                            <div class="icon-box d-flex">
+                                <div class="icon-box-icon pe-3 pb-3">
+                                    <svg class="cart-outline">
+                                    <use xlink:href="#cart-outline" />
+                                    </svg>
+                                </div>
+                                <div class="icon-box-content">
+                                    <h4 class="card-title mb-1 text-capitalize text-dark">Giao hàng miễn phí</h4>
+                                    <p>Đóng gói cẩn thận</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="icon-box-content">
-                            <h4 class="card-title mb-1 text-capitalize text-dark">Giao hàng miễn phí</h4>
-                            <p>Đóng gói cẩn thận</p>
+                        <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
+                            <div class="icon-box d-flex">
+                                <div class="icon-box-icon pe-3 pb-3">
+                                    <svg class="quality">
+                                    <use xlink:href="#quality" />
+                                    </svg>
+                                </div>
+                                <div class="icon-box-content">
+                                    <h4 class="card-title mb-1 text-capitalize text-dark">Đảm bảo chất lượng</h4>
+                                    <p>Được kiểm tra khi giao hàng</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
+                            <div class="icon-box d-flex">
+                                <div class="icon-box-icon pe-3 pb-3">
+                                    <svg class="price-tag">
+                                    <use xlink:href="#price-tag" />
+                                    </svg>
+                                </div>
+                                <div class="icon-box-content">
+                                    <h4 class="card-title mb-1 text-capitalize text-dark">Ưa đãi khủng</h4>
+                                    <p>Giá cả hạt dẻ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
+                            <div class="icon-box d-flex">
+                                <div class="icon-box-icon pe-3 pb-3">
+                                    <svg class="shield-plus">
+                                    <use xlink:href="#shield-plus" />
+                                    </svg>
+                                </div>
+                                <div class="icon-box-content">
+                                    <h4 class="card-title mb-1 text-capitalize text-dark">Thanh toán an toàn 100%</h4>
+                                    <p>Làm cho khách hàng hài lòng nhất</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
-                    <div class="icon-box d-flex">
-                        <div class="icon-box-icon pe-3 pb-3">
-                            <svg class="quality">
-                            <use xlink:href="#quality" />
-                            </svg>
-                        </div>
-                        <div class="icon-box-content">
-                            <h4 class="card-title mb-1 text-capitalize text-dark">Đảm bảo chất lượng</h4>
-                            <p>Được kiểm tra khi giao hàng</p>
-                        </div>
+            </section>
+
+            <section id="best-selling-items" class="position-relative padding-large ">
+                <div class="container">
+                    <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
+                        <h3 class="d-flex align-items-center">Được mua nhiều nhất</h3>
+                        <a href="shop" class="btn">Hiển thi tất cả sách</a>
+
+                    </div>
+                    <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
+                        <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
+                        <use xlink:href="#alt-arrow-right-outline"></use>
+                        </svg>
+                    </div>
+                    <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev">
+                        <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
+                        <use xlink:href="#alt-arrow-left-outline"></use>
+                        </svg>
+                    </div>
+                    <div class="swiper product-swiper">
+                        <div class="swiper-wrapper"> 
+                        <fmt:setLocale value="vi_VN" />
+                        <c:forEach items="${data1}" var="d">
+                            <div class="swiper-slide">
+                                <a href="single?productID=${d.productId}">
+                                    <div class="card position-relative p-4 border rounded-3">
+                                        <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                                        <h6 class="mt-4 mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+                                        <div class="review-content d-flex">                        
+                                            <div class="rating text-warning d-flex align-items-center">
+                                                <c:forEach begin="1" end="5">
+                                                    <svg class="star star-fill">
+                                                    <use xlink:href="#star-fill"></use>
+                                                    </svg>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                        <span class="price text-primary fw-bold mb-2 fs-5">
+                                            <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                        </span>
+
+                                        <!--                                    <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                                                                                <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                                                                    <svg class="cart">
+                                                                                    <use xlink:href="#cart"></use>
+                                                                                    </svg>
+                                                                                </button>
+                                        
+                                                                            </div>-->
+                                    </div>
+                                </a>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
-                    <div class="icon-box d-flex">
-                        <div class="icon-box-icon pe-3 pb-3">
-                            <svg class="price-tag">
-                            <use xlink:href="#price-tag" />
-                            </svg>
-                        </div>
-                        <div class="icon-box-content">
-                            <h4 class="card-title mb-1 text-capitalize text-dark">Ưa đãi khủng</h4>
-                            <p>Giá cả hạt dẻ</p>
+            </div>
+        </section>
+
+        <section id="limited-offer" class="padding-large" style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6 text-center">
+                        <div class="image-holder">
+                            <img src="${pageContext.request.contextPath}/images/banner-image3.png" class="img-fluid" alt="banner">
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 pb-3 pb-lg-0">
-                    <div class="icon-box d-flex">
-                        <div class="icon-box-icon pe-3 pb-3">
-                            <svg class="shield-plus">
-                            <use xlink:href="#shield-plus" />
-                            </svg>
+                    <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
+                        <h2>Lấy mã không hết thời gian bạn ơi. Hurry Up !!!</h2>
+                        <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
+                            <div class="custom-time d-grid pe-3">
+                                <span class="custom-days custom-fs-1 custom-fw-normal"></span>
+                                <small>Days</small>
+                            </div>
+                            <span class="custom-fs-1 text-primary">:</span>
+                            <div class="custom-time d-grid pe-3 ps-3">
+                                <span class="custom-hours custom-fs-1 custom-fw-normal"></span>
+                                <small>Hrs</small>
+                            </div>
+                            <span class="custom-fs-1 text-primary">:</span>
+                            <div class="custom-time d-grid pe-3 ps-3">
+                                <span class="custom-minutes custom-fs-1 custom-fw-normal"></span>
+                                <small>Min</small>
+                            </div>
+                            <span class="custom-fs-1 text-primary">:</span>
+                            <div class="custom-time d-grid ps-3">
+                                <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
+                                <small>Sec</small>
+                            </div>
                         </div>
-                        <div class="icon-box-content">
-                            <h4 class="card-title mb-1 text-capitalize text-dark">Thanh toán an toàn 100%</h4>
-                            <p>Làm cho khách hàng hài lòng nhất</p>
+                        <div id="promo-code">
+                            <c:forEach items="${codediscount}" var="c">
+                                ${c.codeName}<br>
+
+                            </c:forEach>
                         </div>
+                        <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="best-selling-items" class="position-relative padding-large ">
+    <section id="items-listing" class="padding-large">
         <div class="container">
-            <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                <h3 class="d-flex align-items-center">Được mua nhiều nhất</h3>
-                <a href="shop" class="btn">Hiển thi tất cả sách</a>
+            <div class="row">
+                <h3 class="d-flex align-items-center">Sách mới</h3><br><br><br>
+                <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
 
-            </div>
-            <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
-                <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                <use xlink:href="#alt-arrow-right-outline"></use>
-                </svg>
-            </div>
-            <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev">
-                <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                <use xlink:href="#alt-arrow-left-outline"></use>
-                </svg>
-            </div>
-            <div class="swiper product-swiper">
-                <div class="swiper-wrapper"> 
-                    <fmt:setLocale value="vi_VN" />
-                    <c:forEach items="${data1}" var="d">
-                        <div class="swiper-slide">
-                            <a href="single?productID=${d.productId}">
+                    <div class="featured border rounded-3 p-4">
 
-                                <div class="card position-relative p-4 border rounded-3">
+                        <div class="section-title overflow-hidden mb-5 mt-2">
+                            <h3 class="d-flex flex-column mb-0">Văn Học Việt Nam</h3>
+                        </div>
 
+                        <c:forEach items="${data01}" var="d">
+                            <hr class="gray-400">
+
+                            <div class="items-lists">
+
+                                <div class="item d-flex">
                                     <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                    <h6 class="mt-4 mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
-                                    <div class="review-content d-flex">                        
-                                        <div class="rating text-warning d-flex align-items-center">
-                                            <c:forEach begin="1" end="5">
+
+
+                                    <div class="item-content ms-3">
+                                        <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+
+
+                                        <div class="review-content d-flex">
+                                            <p class="my-2 me-2 fs-6 text-black-50"></p>
+
+                                            <div class="rating text-warning d-flex align-items-center">
                                                 <svg class="star star-fill">
                                                 <use xlink:href="#star-fill"></use>
                                                 </svg>
-                                            </c:forEach>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                            </div>
+
+
                                         </div>
-                                    </div>
-
-                                    <span class="price text-primary fw-bold mb-2 fs-5">
-                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-
-                                    </span>
-
-<!--                                    <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                                        <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                                            <svg class="cart">
-                                            <use xlink:href="#cart"></use>
-                                            </svg>
-                                        </button>
-
-                                    </div>-->
-                                </div>
-                            </a>
-                        </div>
-
-                    </c:forEach>
-
-                </div>
-            </div>
 
 
+                                        <span class="price text-primary fw-bold mb-2 fs-5">
 
-
-
-        </div>
-    </section>
-
-    <section id="limited-offer" class="padding-large" style="background-image: url(images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <div class="col-md-6 text-center">
-                    <div class="image-holder">
-                        <img src="${pageContext.request.contextPath}/images/banner-image3.png" class="img-fluid" alt="banner">
-                    </div>
-                </div>
-                <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                    <h2>Lấy mã không hết thời gian bạn ơi. Hurry Up !!!</h2>
-                    <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
-                        <div class="custom-time d-grid pe-3">
-                            <span class="custom-days custom-fs-1 custom-fw-normal"></span>
-                            <small>Days</small>
-                        </div>
-                        <span class="custom-fs-1 text-primary">:</span>
-                        <div class="custom-time d-grid pe-3 ps-3">
-                            <span class="custom-hours custom-fs-1 custom-fw-normal"></span>
-                            <small>Hrs</small>
-                        </div>
-                        <span class="custom-fs-1 text-primary">:</span>
-                        <div class="custom-time d-grid pe-3 ps-3">
-                            <span class="custom-minutes custom-fs-1 custom-fw-normal"></span>
-                            <small>Min</small>
-                        </div>
-                        <span class="custom-fs-1 text-primary">:</span>
-                        <div class="custom-time d-grid ps-3">
-                            <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
-                            <small>Sec</small>
-                        </div>
-                    </div>
-                    <div id="promo-code">
-                        <c:forEach items="${codediscount}" var="c">
-                            ${c.codeName}<br>
-                            
-                        </c:forEach>
-                    </div>
-                    <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="items-listing" class="padding-large">
-    <div class="container">
-        <div class="row">
-            <h3 class="d-flex align-items-center">Sách mới</h3><br><br><br>
-            <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
-
-                <div class="featured border rounded-3 p-4">
-
-
-
-                    <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Văn Học Việt Nam</h3>
-                    </div>
-
-                    <c:forEach items="${data01}" var="d">
-                        <hr class="gray-400">
-
-                        <div class="items-lists">
-
-
-                            <div class="item d-flex">
-                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-
-
-                                <div class="item-content ms-3">
-                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
-
-
-                                    <div class="review-content d-flex">
-                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
-
-                                        <div class="rating text-warning d-flex align-items-center">
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                        </div>
+                                            <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                        </span>
 
 
                                     </div>
 
-
-                                    <span class="price text-primary fw-bold mb-2 fs-5">
-
-                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                    </span>
-
-
-                                </div>
-
-                            </div>   
-                        </div>
-                        <hr>
-                    </c:forEach>                                        
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
-                <div class="latest-items border rounded-3 p-4">
-                    <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Văn Học Nước Ngoài</h3>
+                                </div>   
+                            </div>
+                            <hr>
+                        </c:forEach>                                        
                     </div>
+                </div>
 
-                    <c:forEach items="${data02}" var="d">
-                        <hr class="gray-400">
-                        <div class="items-lists">
+                <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
+                    <div class="latest-items border rounded-3 p-4">
+                        <div class="section-title overflow-hidden mb-5 mt-2">
+                            <h3 class="d-flex flex-column mb-0">Văn Học Nước Ngoài</h3>
+                        </div>
+
+                        <c:forEach items="${data02}" var="d">
+                            <hr class="gray-400">
+                            <div class="items-lists">
 
 
-                            <div class="item d-flex">
-                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                                <div class="item d-flex">
+                                    <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
 
 
-                                <div class="item-content ms-3">
-                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+                                    <div class="item-content ms-3">
+                                        <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
 
 
-                                    <div class="review-content d-flex">
-                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+                                        <div class="review-content d-flex">
+                                            <p class="my-2 me-2 fs-6 text-black-50"></p>
 
-                                        <div class="rating text-warning d-flex align-items-center">
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
+                                            <div class="rating text-warning d-flex align-items-center">
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                            </div>
+
+
                                         </div>
+
+
+                                        <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                            <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                        </span>
 
 
                                     </div>
 
-
-                                    <span class="price text-primary fw-bold mb-2 fs-5">
-
-                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                    </span>
-
-
-                                </div>
-
-                            </div>   
-                        </div>
-                        <hr>
-                    </c:forEach>                      
-                </div>
-            </div>
-
-
-
-            <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
-                <div class="best-reviewed border rounded-3 p-4">
-                    <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Lịch Sử Truyền Thống</h3>
+                                </div>   
+                            </div>
+                            <hr>
+                        </c:forEach>                      
                     </div>
+                </div>
 
 
-                    <c:forEach items="${data03}" var="d">
-                        <hr class="gray-400">
-                        <div class="items-lists">
+
+                <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
+                    <div class="best-reviewed border rounded-3 p-4">
+                        <div class="section-title overflow-hidden mb-5 mt-2">
+                            <h3 class="d-flex flex-column mb-0">Lịch Sử Truyền Thống</h3>
+                        </div>
 
 
-                            <div class="item d-flex">
-                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                        <c:forEach items="${data03}" var="d">
+                            <hr class="gray-400">
+                            <div class="items-lists">
 
 
-                                <div class="item-content ms-3">
-                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+                                <div class="item d-flex">
+                                    <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
 
 
-                                    <div class="review-content d-flex">
-                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+                                    <div class="item-content ms-3">
+                                        <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
 
-                                        <div class="rating text-warning d-flex align-items-center">
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
+
+                                        <div class="review-content d-flex">
+                                            <p class="my-2 me-2 fs-6 text-black-50"></p>
+
+                                            <div class="rating text-warning d-flex align-items-center">
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                            </div>
+
+
                                         </div>
+
+
+                                        <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                            <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                        </span>
 
 
                                     </div>
 
+                                </div>   
+                            </div>
+                            <hr>
+                        </c:forEach>  
 
-                                    <span class="price text-primary fw-bold mb-2 fs-5">
-
-                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                    </span>
-
-
-                                </div>
-
-                            </div>   
-                        </div>
-                        <hr>
-                    </c:forEach>  
-
-                </div>
-            </div>
-            <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
-                <div class="on-sale border rounded-3 p-4">
-                    <div class="section-title overflow-hidden mb-5 mt-2">
-                        <h3 class="d-flex flex-column mb-0">Kiến Thức Khoa học</h3>
                     </div>
+                </div>
+                <div class="col-md-6 mb-4 mb-lg-0 col-lg-3">
+                    <div class="on-sale border rounded-3 p-4">
+                        <div class="section-title overflow-hidden mb-5 mt-2">
+                            <h3 class="d-flex flex-column mb-0">Kiến Thức Khoa học</h3>
+                        </div>
 
 
-                    <c:forEach items="${data04}" var="d">
-                        <hr class="gray-400">
-                        <div class="items-lists">
+                        <c:forEach items="${data04}" var="d">
+                            <hr class="gray-400">
+                            <div class="items-lists">
 
 
-                            <div class="item d-flex">
-                                <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                                <div class="item d-flex">
+                                    <img src="${d.imgProduct}" class="img-fluid shadow-sm" alt="product item">
 
 
-                                <div class="item-content ms-3">
-                                    <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
+                                    <div class="item-content ms-3">
+                                        <h6 class="mb-0 fw-bold"><a href="single?productID=${d.productId}">${d.name}</a></h6>
 
 
-                                    <div class="review-content d-flex">
-                                        <p class="my-2 me-2 fs-6 text-black-50"></p>
+                                        <div class="review-content d-flex">
+                                            <p class="my-2 me-2 fs-6 text-black-50"></p>
 
-                                        <div class="rating text-warning d-flex align-items-center">
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
-                                            <svg class="star star-fill">
-                                            <use xlink:href="#star-fill"></use>
-                                            </svg>
+                                            <div class="rating text-warning d-flex align-items-center">
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                                <svg class="star star-fill">
+                                                <use xlink:href="#star-fill"></use>
+                                                </svg>
+                                            </div>
+
+
                                         </div>
+
+
+                                        <span class="price text-primary fw-bold mb-2 fs-5">
+
+                                            <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                        </span>
 
 
                                     </div>
 
+                                </div>   
+                            </div>
+                            <hr>
+                        </c:forEach>  
 
-                                    <span class="price text-primary fw-bold mb-2 fs-5">
-
-                                        <fmt:formatNumber value="${d.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                    </span>
-
-
-                                </div>
-
-                            </div>   
-                        </div>
-                        <hr>
-                    </c:forEach>  
-
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
 </div>
 </section>
 

@@ -7,6 +7,7 @@ package Controllers.StaffController;
 import DAL.OrderDao;
 import Models.OrderDetailGuest;
 import SendEmail.SendEmail;
+import static SendEmail.SendEmail.sendEmailConfirmAdmin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -69,7 +70,7 @@ public class ConfirmController extends HttpServlet {
         }
         String gmail = d.getEmailByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
         SendEmail sd = new SendEmail();
-        sd.sendEmail(gmail, "BookBook88", "Đơn hàng của bạn đã được chuẩn bị");
+        sd.sendEmail(gmail, "ShopBook88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
         response.sendRedirect("staffdashboard");
         
     }

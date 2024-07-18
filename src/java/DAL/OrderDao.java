@@ -14,11 +14,6 @@ import Models.OrderStatus;
 import Models.Orders;
 import Models.Product;
 
-//import Models.Status;
-import SendEmail.SendEmail;
-
-import Models.StatusOrder;
-
 import Models.StatusOrder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1261,6 +1256,7 @@ public class OrderDao extends DBContext {
 
         return orderStatusCounts;
     }
+
     public StatusOrder getStatusOrderById(int orderId) {
         StatusOrder statusOrder = null;
         String query = "SELECT s.StatusID, s.StatusName FROM StatusOrder s "
@@ -1280,8 +1276,6 @@ public class OrderDao extends DBContext {
         }
         return statusOrder;
     }
-
-   
 
     public boolean updateOrderStaff(int orderID, int aId) {
         String tableName = aId == 0 ? "OrderGuest" : "OrderCustomer";
@@ -1777,5 +1771,73 @@ public class OrderDao extends DBContext {
         return list;
     }
 
+    public boolean deleteOrderCustomer(int orderCID) {
+        String sqlDeleteOrderDetail = "DELETE FROM OrderDetailCustomer\n"
+                + " WHERE OrderCID = ?";
+        String sqlDeleteOrder = "DELETE FROM OrderCustomer\n"
+                + " WHERE OrderCID = ?";
+        PreparedStatement psOrderDetail = null;
+        PreparedStatement psOrder = null;
+        try {
+            psOrderDetail = connection.prepareStatement(sqlDeleteOrderDetail);
+            psOrder = connection.prepareStatement(sqlDeleteOrder);
 
+            psOrderDetail.setInt(1, orderCID);
+            int rowsDeletedOrderDetail = psOrderDetail.executeUpdate();
+
+            psOrder.setInt(1, orderCID);
+            int rowsDeletedOrder = psOrder.executeUpdate();
+
+            return rowsDeletedOrderDetail > 0 && rowsDeletedOrder > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (psOrderDetail != null) {
+                    psOrderDetail.close();
+                }
+                if (psOrder != null) {
+                    psOrder.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteOrderGuest(int orderGID) {
+        String sqlDeleteOrderDetail = "DELETE FROM OrderDetailGuest\n"
+                + " WHERE OrderGID = ?";
+        String sqlDeleteOrder = "DELETE FROM OrderGuest\n"
+                + " WHERE OrderGID = ?";
+        PreparedStatement psOrderDetail = null;
+        PreparedStatement psOrder = null;
+        try {
+            psOrderDetail = connection.prepareStatement(sqlDeleteOrderDetail);
+            psOrder = connection.prepareStatement(sqlDeleteOrder);
+
+            psOrderDetail.setInt(1, orderGID);
+            int rowsDeletedOrderDetail = psOrderDetail.executeUpdate();
+
+            psOrder.setInt(1, orderGID);
+            int rowsDeletedOrder = psOrder.executeUpdate();
+
+            return rowsDeletedOrderDetail > 0 && rowsDeletedOrder > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (psOrderDetail != null) {
+                    psOrderDetail.close();
+                }
+                if (psOrder != null) {
+                    psOrder.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 }

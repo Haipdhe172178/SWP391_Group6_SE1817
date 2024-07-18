@@ -5,6 +5,10 @@ import java.util.List;
 
 public class Cart {
 
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
     private List<Item> items;
     private int accountId;
 

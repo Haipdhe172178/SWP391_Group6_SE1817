@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 
 public class CartControllers extends HttpServlet {
@@ -32,12 +33,37 @@ public class CartControllers extends HttpServlet {
 
         CartDAO cartDAO = new CartDAO();
         String cartData = getCartDataFromCookie(request);
+
         Cart cart = new Cart(cartData, productList);
 
         List<Item> cartItems = cart.getItems();
+        if (request.getSession().getAttribute("cart") != null) {
+            Cart cartSession = (Cart) request.getSession().getAttribute("cart");
+            for (Item i : cartSession.getItems()) {
+                if (cartItems.contains(i)) {
+                   
+                    int index = cartItems.indexOf(i);
+
+                    Item item = cartItems.get(index);
+
+                    Product product = productDao.get1Productbyid(item.getProduct().getProductId() + "");
+                    
+                    int updateQuantity = (item.getQuantity() + i.getQuantity()) > product.getQuantity()
+                            ? product.getQuantity() : item.getQuantity() + i.getQuantity();
+                   
+                    item.setQuantity(updateQuantity);
+                    cartItems.set(index, item);
+                } else {
+                    cartItems.add(i);
+                }
+            }
+            request.getSession().removeAttribute("cart");
+        }
         int size = cartItems.size();
         List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
-        
+        cart.setItems(cartItems);
+        updateCartCookie(response, cart);
+
         request.setAttribute("size", size);
         request.setAttribute("lastTwoItems", lastTwoItems);
         request.setAttribute("cart", cart);

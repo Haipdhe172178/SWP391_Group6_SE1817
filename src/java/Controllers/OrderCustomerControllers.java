@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class OrderCustomerControllers extends HttpServlet {
             }
         }
 
-        int totalQuantity = orderDao.getTotalQuantityByOrderCId(accountId);
+      
         int all = orderDao.getAllOrderCountForCustomers(accountId);
         int pendingCount = orderDao.getOrderCountByStatusForCustomers(accountId, 1);
         int confirmedCount = orderDao.getOrderCountByStatusForCustomers(accountId, 2);
@@ -93,7 +94,7 @@ public class OrderCustomerControllers extends HttpServlet {
         int canceledCount = orderDao.getOrderCountByStatusForCustomers(accountId, 5);
         boolean noOrders = all == 0 && pendingCount == 0 && confirmedCount == 0 && shippingCount == 0 && completedCount == 0 && canceledCount == 0;
 
-        request.setAttribute("totalQuantity", totalQuantity);
+     
         request.setAttribute("all", all);
         request.setAttribute("pendingCount", pendingCount);
         request.setAttribute("confirmedCount", confirmedCount);
@@ -102,6 +103,7 @@ public class OrderCustomerControllers extends HttpServlet {
         request.setAttribute("canceledCount", canceledCount);
         request.setAttribute("accountId", accountId);
         request.setAttribute("orders", orders);
+
         request.setAttribute("noOrders", noOrders);
         request.getRequestDispatcher("Views/OrderCustomer.jsp").forward(request, response);
     }
@@ -123,20 +125,21 @@ public class OrderCustomerControllers extends HttpServlet {
 
         if (action != null && orderIdStr != null) {
             boolean isComplete = false;
-            String ms = null;
+            String message = null;
 
             try {
                 int orderId = Integer.parseInt(orderIdStr);
                 OrderDao orderDao = new OrderDao();
+                ProductDao productDao = new ProductDao();
 
                 switch (action) {
                     case "cancel":
                         isComplete = orderDao.cancelOrder(orderId);
-                        ms = isComplete ? "Đơn hàng đã được hủy!" : "Không thể hủy đơn hàng!";
+                        message = isComplete ? "Đơn hàng đã được hủy!" : "Không thể hủy đơn hàng!";
                         break;
                     case "received":
                         isComplete = orderDao.updateStatusById(orderId, 4);
-                        ms = isComplete ? "Đơn hàng đã được đánh dấu là đã nhận!" : "Không thể cập nhật đơn hàng!";
+                        message = isComplete ? "Đơn hàng đã được đánh dấu là đã nhận!" : "Không thể cập nhật đơn hàng!";
                         break;
                     case "buyAgain":
                         List<OrderDetailCustomer> orderDetails = orderDao.getOrderDetailCustomers(orderId);
@@ -150,14 +153,14 @@ public class OrderCustomerControllers extends HttpServlet {
                             Item item = new Item(product, detail.getQuantity(), product.getPrice());
                             cart.addItem(item);
                         }
+                        session.setAttribute("cart", cart);
                         response.sendRedirect("cart");
                         return;
-
                     default:
-                        ms = "Hành động không hợp lệ!";
+                        message = "Hành động không hợp lệ!";
                 }
 
-                request.getSession().setAttribute("notification", ms);
+                session.setAttribute("notification", message);
                 response.sendRedirect("ordercustomer?accountId=" + accountId + "&status=" + status);
 
             } catch (NumberFormatException e) {

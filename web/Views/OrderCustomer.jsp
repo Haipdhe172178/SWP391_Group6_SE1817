@@ -108,7 +108,7 @@
                 border-radius: 5px;
                 cursor: pointer;
                 display: inline-block;
-                width: 150px; 
+                width: 150px;
                 box-sizing: border-box;
             }
 
@@ -126,7 +126,6 @@
                 opacity: 0.8;
             }
         </style>
-
     </head>
 
     <body>
@@ -170,8 +169,14 @@
             </div>
 
             <c:choose>
-                <c:when test="${requestScope.noOrders}">
-                    <p>Bạn chưa có đơn hàng nào</p>
+                <c:when test="${empty orders}">
+                    <div class="container">
+                        <center>
+                            <div style="margin: 6rem">
+                                <h4>Bạn chưa có đơn hàng nào.</h4>
+                            </div>
+                        </center>
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <table class="table" id="orderTable">
@@ -200,20 +205,21 @@
                                         <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0"
                                                           maxFractionDigits="0" /> VND
                                     </td>
-                                    <td>${totalQuantity}</td>
+                                    <td>${order.getOrderDetails().size()}</td>
                                     <td><fmt:formatDate value="${order.date}" pattern="dd-MM-yyyy"/></td>
                                     <td>${order.status.statusName}</td>
                                     <td>
                                         <c:if test="${order.status.statusId == 1}">
-                                            <form action="ordercustomer" method="post">
+                                            <form action="ordercustomer" method="post" onclick="return confirm('Bạn có muốn xóa đơn hàng này không?');">
                                                 <input type="hidden" name="action" value="cancel">
                                                 <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
                                                 <input type="hidden" name="status" value="${param.status}">
                                                 <button type="submit" class="btn-cancel">Hủy đơn hàng</button>
                                             </form>
                                         </c:if>
+
                                         <c:if test="${order.status.statusId == 3}">
-                                            <form action="ordercustomer" method="post">
+                                            <form action="ordercustomer" method="post" onclick="return confirm('Đơn hàng của bạn đã hoàn thành');">
                                                 <input type="hidden" name="action" value="received">
                                                 <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
                                                 <input type="hidden" name="status" value="${param.status}">
@@ -396,6 +402,7 @@
                 });
             });
         </script>
+        
     </body>
 
 </html>
