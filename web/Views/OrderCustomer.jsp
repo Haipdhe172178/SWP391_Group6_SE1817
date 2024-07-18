@@ -126,16 +126,6 @@
                 opacity: 0.8;
             }
         </style>
-<!--<script>
-   function confirmCancel(event) {
-        if (confirm('Bạn có muốn hủy đơn hàng này không?')) {
-            alert('Đơn hàng của bạn đã hủy');
-        } else {
-            event.preventDefault();
-        }
-    }
-</script>-->
-
     </head>
 
     <body>
@@ -220,7 +210,7 @@
                                     <td>${order.status.statusName}</td>
                                     <td>
                                         <c:if test="${order.status.statusId == 1}">
-                                            <form action="ordercustomer" method="post"  onsubmit="return confirmCancel(event)">
+                                            <form action="ordercustomer" method="post" onclick="return confirm('Bạn có muốn xóa đơn hàng này không?');">
                                                 <input type="hidden" name="action" value="cancel">
                                                 <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
                                                 <input type="hidden" name="status" value="${param.status}">
@@ -229,7 +219,7 @@
                                         </c:if>
 
                                         <c:if test="${order.status.statusId == 3}">
-                                            <form action="ordercustomer" method="post">
+                                            <form action="ordercustomer" method="post" onclick="return confirm('Đơn hàng của bạn đã hoàn thành');">
                                                 <input type="hidden" name="action" value="received">
                                                 <input type="hidden" name="orderId" value="${order.orderDetails[0].orderCId}">
                                                 <input type="hidden" name="status" value="${param.status}">
