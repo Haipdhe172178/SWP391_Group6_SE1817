@@ -68,9 +68,7 @@
                                 <div class="white_card_body">
                                     <div class="QA_section">
                                         <div class="white_box_tittle list_header">
-                                            <h4>Bảng dữ liệu của tác giả</h4>
-
-
+                                            <h4></h4>
                                             <div class="box_right d-flex lms_block">
                                                 <div class="serach_field_2">
                                                     <div class="search_inner">
@@ -131,7 +129,6 @@
                                                             </td>
                                                             <td>
                                                                 <a href="updatea?id=${a.authorID}" title="Update"><i class="fas fa-edit"></i></a>
-                                                                <a href="hidea?id=${a.authorID}" title="Hide"><i class="fas fa-ban"></i></a>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>

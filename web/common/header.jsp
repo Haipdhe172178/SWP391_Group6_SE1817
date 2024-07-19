@@ -222,8 +222,11 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="pe-3">
-                                        <div class="nav-user-dropdown">
-                                            <button class="dropbtn">${sessionScope.account.getUserName()}</button>
+                                        <div class="nav-user-dropdown z-2">
+                                            <button class="dropbtn">
+                                                <img src="${sessionScope.account.getImgAccount()}" alt="Account Image" style="width: 30px; height: 30px;">
+                                            </button>
+
                                             <div class="dropdown-content">
                                                 <a href="profile">Tài khoản của tôi</a>
                                                 <a href="ordercustomer">Đơn mua</a>

@@ -96,8 +96,8 @@ public class AuthorDao extends DBContext {
         }
         return null;
     }
-    
-     public boolean getAuthor(String name) {
+
+    public boolean getAuthor(String name) {
         String query = "SELECT 1 FROM Author WHERE AuthorName = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -161,13 +161,12 @@ public class AuthorDao extends DBContext {
     }
 
     public void updateAuthor(Author author) {
-        String query = "UPDATE Author SET AuthorName = ?, description = ?, status = ? WHERE AuthorID = ?";
+        String query = "UPDATE Author SET AuthorName = ?, description = ? WHERE AuthorID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, author.getAuthorName());
             ps.setString(2, author.getDescription());
-            ps.setInt(3, author.getStatus());
-            ps.setInt(4, author.getAuthorID());
+            ps.setInt(3, author.getAuthorID());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -175,24 +174,16 @@ public class AuthorDao extends DBContext {
         }
     }
 
-    public void hideAuthor(int authorId) {
-        String query = "UPDATE author SET status = 0 WHERE authorID = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, authorId);
-            ps.executeUpdate();
-            ps.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public List<Author> pagingSearchAuthor(int index, String keyword) {
         List<Author> list = new ArrayList<>();
-        String query = "SELECT * FROM Author WHERE AuthorName LIKE ? ORDER BY AuthorID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        String query = "SELECT * FROM Author "
+                + "WHERE AuthorName LIKE ? OR description LIKE ? "
+                + "ORDER BY AuthorID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, "%" + keyword + "%");
-            ps.setInt(2, (index - 1) * 8);
+            String searchKeyword = "%" + keyword + "%";
+            ps.setString(1, searchKeyword);
+            ps.setString(2, searchKeyword);
+            ps.setInt(3, (index - 1) * 8);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Author author = new Author();
@@ -210,9 +201,11 @@ public class AuthorDao extends DBContext {
 
     public int getTotalAuthorsByKeyword(String keyword) {
         int total = 0;
-        String query = "SELECT COUNT(*) FROM Author WHERE AuthorName LIKE ?";
+        String query = "SELECT COUNT(*) FROM Author WHERE AuthorName LIKE ? OR description LIKE ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, "%" + keyword + "%");
+            String searchKeyword = "%" + keyword + "%";
+            ps.setString(1, searchKeyword);
+            ps.setString(2, searchKeyword);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total = rs.getInt(1);
@@ -248,9 +241,9 @@ public class AuthorDao extends DBContext {
     }
 
     public int getTotalBySatus(int status) {
-         int total = 0;
-         String query ="Select Count(*) From Author Where Status = ?";
-         try (PreparedStatement ps = connection.prepareStatement(query)) {
+        int total = 0;
+        String query = "Select Count(*) From Author Where Status = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, status);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

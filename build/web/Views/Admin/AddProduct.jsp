@@ -83,7 +83,7 @@
             <section class="main_content dashboard_part large_header_bg">
 
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
-                <div id="notification-container" class="notification-container"></div>
+            <div id="notification-container" class="notification-container"></div>
                 <div class="main_content_iner">
                     <div class="container-fluid p-0">
                         <div class="row justify-content-center">

@@ -32,6 +32,11 @@
         <link rel="stylesheet" href="css/metisMenu.css">
 
         <link rel="stylesheet" href="css/style1.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
         <style>
 
             .active-row {
@@ -52,7 +57,7 @@
             <!--sidebar-->
 
             <section class="main_content dashboard_part large_header_bg">
-                
+
                 <!--header-->
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
                 <!--header-->
@@ -72,7 +77,7 @@
                                     <div class="white_card_body">
                                         <div class="QA_section">
                                             <div class="white_box_tittle list_header">
-                                                <h4>Bảng dữ liệu của tài khoản</h4>
+                                                <h4></h4>
                                                 <div class="box_right d-flex lms_block">
                                                     <div class="serach_field_2">
                                                         <div class="search_inner">
@@ -84,9 +89,7 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <!--                                                <div class="add_button ms-2">
-                                                                                                        <a href="addac" class="btn_1">Thêm Tài Khoản</a>
-                                                                                                    </div>-->
+                                                  
                                                 </div>
                                             </div>
                                             <div class="QA_table mb_30">
@@ -139,10 +142,12 @@
                                                             </td>
                                                             <td>
                                                                 <a href="accdetail?id=${ac.accountId}" title="View"><i class="fas fa-eye"></i></a>
-                                                                <a href="active?action=hideacc&accountId=${ac.accountId}&type=user" title="Hide" onclick="return confirmAction('hide');"><i class="fas fa-ban"></i></a>
-                                                                <a href="active?action=showacc&accountId=${ac.accountId}&type=user" title="Show" onclick="return confirmAction('show');"><i class="fas fa-check-circle"></i></a>
+                                                                <a href="javascript:void(0);" title="Ẩn" onclick="return showConfirmModal('hide', ${ac.accountId}, 'user');"><i class="fas fa-ban"></i></a>
+                                                                <a href="javascript:void(0);" title="Hiện" onclick="return showConfirmModal('show', ${ac.accountId}, 'user');"><i class="fas fa-check-circle"></i></a>
 
-                                                            </td>
+
+                                                            </td
+
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -184,6 +189,25 @@
                             </div>
                         </div>
                         <div class="col-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationModalLabel">Xác nhận hành động</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="confirmationMessage"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary" id="confirmButton">Xác nhận</button>
                         </div>
                     </div>
                 </div>
@@ -347,14 +371,29 @@
                                                                         statusFilter.value = status;
                                                                         document.getElementById('sortForm').submit();
                                                                     }
-                                                                    function confirmAction(action) {
-                                                                        if (action === 'hide') {
-                                                                            return confirm('Bạn có chắc chắn muốn ẩn tài khoản này không?');
-                                                                        } else if (action === 'show') {
-                                                                            return confirm('Bạn có chắc chắn muốn hiển thị tài khoản này không?');
-                                                                        }
+                                                                    var actionToPerform = '';
+                                                                    var accountIdToUse = '';
+                                                                    var typeToUse = '';
+
+                                                                    function showConfirmModal(action, accountId, type) {
+
+                                                                        actionToPerform = action;
+                                                                        accountIdToUse = accountId;
+                                                                        typeToUse = type;
+
+
+                                                                        var message = action === 'hide' ? 'Bạn có chắc chắn muốn ẩn tài khoản này không?' : 'Bạn có chắc chắn muốn hiện tài khoản này không?';
+                                                                        document.getElementById('confirmationMessage').textContent = message;
+
+                                                                        $('#confirmationModal').modal('show');
                                                                         return false;
                                                                     }
+
+                                                                    document.getElementById('confirmButton').onclick = function () {
+
+                                                                        window.location.href = 'active?action=' + actionToPerform + 'acc&accountId=' + accountIdToUse + '&type=' + typeToUse;
+                                                                    };
+
         </script>
     </body>
 

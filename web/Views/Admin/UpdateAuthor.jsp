@@ -110,17 +110,7 @@
                                             <label for="authorDescription">Tiểu sử</label>
                                             <textarea class="form-control" id="authorDescription" name="description" placeholder="Nhập mô tả" required>${empty sessionScope.description ? author.description : sessionScope.description}</textarea>
                                             <div id="authorDescriptionError" class="error"></div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="authorStatus">Trạng thái</label>
-                                            <select class="form-control" id="authorStatus" name="status" required>
-                                                <option value="1" ${author.status == 1 ? 'selected' : ''}>Active</option>
-                                                <option value="0" ${author.status == 0 ? 'selected' : ''}>Inactive</option>
-                                            </select>
-                                            <div id="authorStatusError" class="error"></div>
-                                        </div>
-
+                                        </div>  
                                         <div>
                                             <a href="author" class="btn btn-warning">Trở lại</a>
                                             <button type="submit" class="btn btn-primary">Cập Nhật Tác Giả</button>

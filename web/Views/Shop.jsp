@@ -201,7 +201,7 @@
                             <div class="widget-menu">
                                 <div class="widget-search-bar">
                                     <form class="d-flex border rounded-3 p-2" role="search" method="GET" action="shop">
-                                        <input class="form-control border-0 me-2 py-2" type="search" name="s" placeholder="Tìm kiếm">
+                                        <input class="form-control border-0 me-2 py-2" type="search" name="s" placeholder="Tìm kiếm" value="${searchKeyword}">
                                         <button class="btn rounded-3 p-3 d-flex align-items-center" type="submit">
                                             <svg class="search text-light" width="18" height="18">
                                             <use xlink:href="#search"></use>

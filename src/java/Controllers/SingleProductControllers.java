@@ -10,6 +10,7 @@ import DAL.CategoryDao;
 import DAL.FeedbackDAO;
 import DAL.NewsDao;
 import DAL.ObjectAgeDao;
+import DAL.OrderDao;
 import DAL.ProductDao;
 import Models.Account;
 import Models.Author;
@@ -75,6 +76,7 @@ public class SingleProductControllers extends HttpServlet {
         String rating = request.getParameter("rating");
         //DAO
         ProductDao productDao = new ProductDao();
+         OrderDao orderDao = new OrderDao();
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         AccountDAO accDAO = new AccountDAO();
@@ -108,11 +110,12 @@ public class SingleProductControllers extends HttpServlet {
 
         //QUANTITY sold product
         int quantitySold = productDao.getQuantitySoldByProductId(id);
+         List<Product> mostPurchasedProducts = orderDao.getMostPurchasedProducts();
         int avgRating = feedbackDAO.avgRating(id);
         CategoryDao categoryDao = new CategoryDao();
         List<Category> cate = categoryDao.getallCategorys();
         request.setAttribute("category", cate);
-        
+        request.setAttribute("mostPurchasedProducts", mostPurchasedProducts);
         request.setAttribute("rating", rating);
         request.setAttribute("quantityFeedback", quantity);
         request.setAttribute("page", page);

@@ -4,6 +4,44 @@
         <filter-name>StaffAuthorizationFilter</filter-name>
         <filter-class>AuthorizationFilter.StaffAuthorizationFilter</filter-class>
     </filter>
+    <filter>
+         <filter-name>AdminAuthorrizationFilter</filter-name>
+        <filter-class>AuthorizationFilter.AdminAuthorrizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+       <filter-name>AdminAuthorrizationFilter</filter-name>
+        <url-pattern>/Views/Admin/*</url-pattern>
+        <url-pattern>/newsaccdetail</url-pattern>
+        <url-pattern>/account</url-pattern>
+        <url-pattern>/active</url-pattern>
+        <url-pattern>/addac</url-pattern>
+        <url-pattern>/adda</url-pattern>
+        <url-pattern>/addcategory</url-pattern>
+        <url-pattern>/add</url-pattern>
+        <url-pattern>/addimage</url-pattern>
+        <url-pattern>/addnews</url-pattern>
+        <url-pattern>/addcode</url-pattern>
+        <url-pattern>/author</url-pattern>
+        <url-pattern>/category</url-pattern>
+        <url-pattern>/change</url-pattern>
+        <url-pattern>/chat</url-pattern>
+        <url-pattern>/contactAdmin</url-pattern>
+         <servlet-name>DashControllers</servlet-name>
+        <url-pattern>/data</url-pattern>
+        <url-pattern>/datetime</url-pattern>
+        <url-pattern>/discount</url-pattern>
+        <url-pattern>/hidea</url-pattern>
+        <url-pattern>/mail</url-pattern>
+        <url-pattern>/manages</url-pattern>
+        <url-pattern>/orderstatus</url-pattern>
+        <url-pattern>/reply</url-pattern>
+        <url-pattern>/statistics</url-pattern>
+        <url-pattern>/statisticsorder</url-pattern>
+        <url-pattern>/updatea</url-pattern>
+        <url-pattern>/updatecategory</url-pattern>
+        <url-pattern>/update</url-pattern>
+        <url-pattern>/upnews</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>StaffAuthorizationFilter</filter-name>
         <servlet-name>FeedbackListController</servlet-name>
@@ -155,10 +193,6 @@
         <servlet-class>AdminControllers.UpdateAuthorControllers</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>HideAuthorControllers</servlet-name>
-        <servlet-class>AdminControllers.HideAuthorControllers</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AccountAdminControllers</servlet-name>
         <servlet-class>AdminControllers.AccountAdminControllers</servlet-class>
     </servlet>
@@ -275,7 +309,6 @@
         <servlet-class>Controllers.ConfirmVNPayController</servlet-class>
     </servlet>
     <servlet>
-
         <servlet-name>ConfirmController</servlet-name>
         <servlet-class>Controllers.StaffController.ConfirmController</servlet-class>
     </servlet>
@@ -286,7 +319,6 @@
     <servlet>
         <servlet-name>TrackOrder</servlet-name>
         <servlet-class>Controllers.TrackOrderControllers</servlet-class>
-
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
@@ -433,10 +465,6 @@
         <url-pattern>/updatea</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>HideAuthorControllers</servlet-name>
-        <url-pattern>/hidea</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AccountAdminControllers</servlet-name>
         <url-pattern>/account</url-pattern>
     </servlet-mapping>
@@ -549,15 +577,14 @@
         <url-pattern>/confirmVnpay</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
         <servlet-name>ConfirmController</servlet-name>
         <url-pattern>/confirm</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateOrderController</servlet-name>
         <url-pattern>/uporder</url-pattern>
-    </servlet-mapping> 
-    <servlet-mapping> 
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>TrackOrder</servlet-name>
         <url-pattern>/trackorder</url-pattern>
     </servlet-mapping>
