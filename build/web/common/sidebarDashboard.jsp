@@ -22,7 +22,7 @@
                         <div class="icon_menu">
                             <img src="img/menu-icon/dashboard.svg" alt>
                         </div>
-                        <span>Tổng số liệu</span>
+                        <span>Bảng Điều Khiển</span>
                     </a>                  
                 </li>
                  <li class>

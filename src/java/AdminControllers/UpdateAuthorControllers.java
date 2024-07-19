@@ -81,7 +81,7 @@ public class UpdateAuthorControllers extends HttpServlet {
         int authorID = Integer.parseInt(request.getParameter("id"));
         String authorName = request.getParameter("name");
         String authorDescription = request.getParameter("description");
-        int authorStatus = Integer.parseInt(request.getParameter("status"));
+       
         AuthorDao authorDao = new AuthorDao();
         Author oldAuthor = authorDao.getAuthorById(authorID);
         String oldName = oldAuthor.getAuthorName();
@@ -96,7 +96,7 @@ public class UpdateAuthorControllers extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/updatea?id=" + authorID);
             return;
         }
-        Author author = new Author(authorID, authorName, authorDescription, authorStatus);
+        Author author = new Author(authorID, authorName, authorDescription);
         authorDao.updateAuthor(author);
         session.removeAttribute("errorMessage");
         session.setAttribute("notification", "success");

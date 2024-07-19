@@ -128,7 +128,7 @@
     </script>
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
-        <div class="swiper-container z-3" style="height: 50rem">
+        <div class="swiper-container z-1" style="height: 50rem">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" style="background-image: url('https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1036')"></div>
 

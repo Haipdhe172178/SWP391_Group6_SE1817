@@ -170,12 +170,19 @@ public class ProductDao extends DBContext {
                 + "INNER JOIN Category c ON c.CategoryID = p.CategoryID \n"
                 + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID \n"
                 + "JOIN Author a ON a.AuthorID = p.AuthorID \n"
-                + "WHERE p.Status IN (" + status + ") AND p.Name LIKE ? \n"
+                + "WHERE p.Status IN (" + status + ") \n"
+                + "AND (p.Name LIKE ? OR p.Description LIKE ? OR c.CategoryName LIKE ? OR oa.Age LIKE ? OR a.AuthorName LIKE ?) \n"
                 + "ORDER BY p.ProductID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, "%" + keyword + "%");
-            ps.setInt(2, (index - 1) * 8);
+            String searchKeyword = "%" + keyword + "%";
+            ps.setString(1, searchKeyword);
+            ps.setString(2, searchKeyword);
+            ps.setString(3, searchKeyword);
+            ps.setString(4, searchKeyword);
+            ps.setString(5, searchKeyword);
+            ps.setInt(6, (index - 1) * 8);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -262,10 +269,23 @@ public class ProductDao extends DBContext {
     //Lấy tổng sản phẩm theo keyword
     public int getTotalProductsByKeyword(String keyword, String status) {
         int total = 0;
-        String query = "SELECT COUNT(*) FROM Product WHERE Status IN (" + status + ") AND name LIKE ?";
+        String query = "SELECT COUNT(*) \n"
+                + "FROM Product p \n"
+                + "INNER JOIN Category c ON c.CategoryID = p.CategoryID \n"
+                + "JOIN ObjectAge oa ON oa.AgeID = p.AgeID \n"
+                + "JOIN Author a ON a.AuthorID = p.AuthorID \n"
+                + "WHERE p.Status IN (" + status + ") \n"
+                + "AND (p.Name LIKE ? OR p.Description LIKE ? OR c.CategoryName LIKE ? OR oa.Age LIKE ? OR a.AuthorName LIKE ?)";
+
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, "%" + keyword + "%");
+            String searchKeyword = "%" + keyword + "%";
+            ps.setString(1, searchKeyword);
+            ps.setString(2, searchKeyword);
+            ps.setString(3, searchKeyword);
+            ps.setString(4, searchKeyword);
+            ps.setString(5, searchKeyword);
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total = rs.getInt(1);
@@ -663,7 +683,7 @@ public class ProductDao extends DBContext {
                 product.setOage(oage);
                 product.setImgProduct(rs.getString("imgProduct"));
                 product.setStatus(rs.getInt("status"));
-                if(product.getQuantity()==0){
+                if (product.getQuantity() == 0) {
                     continue;
                 }
                 list.add(product);

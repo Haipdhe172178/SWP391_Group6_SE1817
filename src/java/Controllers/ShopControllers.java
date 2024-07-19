@@ -212,6 +212,7 @@ public class ShopControllers extends HttpServlet {
         List<News> listNews = nd.getFourNewsLated();
         List<Feedback> listMostRating = feedbackDAO.getFeedbackMostRating();
         List<Account> listAcc = accDAO.getAllAccount();
+        request.setAttribute("searchKeyword", searchKeyword);
         request.setAttribute("listMostRating", listMostRating);
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);

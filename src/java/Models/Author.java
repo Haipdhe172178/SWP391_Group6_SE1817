@@ -17,6 +17,12 @@ public class Author {
     public Author() {
     }
 
+    public Author(int authorID, String authorName, String description) {
+        this.authorID = authorID;
+        this.authorName = authorName;
+        this.description = description;
+    }
+
     public Author(int authorID, String authorName, String description, int status) {
         this.authorID = authorID;
         this.authorName = authorName;
