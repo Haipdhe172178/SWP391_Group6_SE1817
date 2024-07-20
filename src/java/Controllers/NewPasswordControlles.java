@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Servlet implementation class NewPasswordControlles
@@ -34,7 +35,7 @@ public class NewPasswordControlles extends HttpServlet {
 
             if (email != null) {
                 Account account = new Account();
-                account.setPassWord(newPassword);
+                account.setPassWord(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
                 account.setEmail(email);
 
                 AccountDAO accountDAO = new AccountDAO();

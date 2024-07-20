@@ -1,6 +1,7 @@
 package Controllers;
 
 import DAL.AccountDAO;
+import org.mindrot.jbcrypt.BCrypt; // Sử dụng thư viện này cho hàm hashpw
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -68,7 +69,10 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        boolean userCreated = accountDAO.createUser(fullName, userName, password, email, phoneNumber, address);
+        //Mã hóa mật khẩu
+        String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt()); 
+
+        boolean userCreated = accountDAO.createUser(fullName, userName, hashPassword, email, phoneNumber, address); 
 
         if (userCreated) {
             response.sendRedirect("login?success=true");

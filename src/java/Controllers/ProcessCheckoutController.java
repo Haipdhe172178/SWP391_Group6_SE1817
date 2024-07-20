@@ -111,16 +111,24 @@ public class ProcessCheckoutController extends HttpServlet {
         String phoneNumber = request.getParameter("phone");
         String address = request.getParameter("fulladdress");
 
-        int orderGID = od.AddOrderGuest(fullName, email, phoneNumber, address, totalPrice, 1, 0);
-        od.AddOrderGuestDetails(orderGID, listItem);
-        
-        //VNPay
+        int orderGID = od.addOrderGuestWithDetail(fullName, email, phoneNumber, address, totalPrice, 1, 0, listItem);
+
+        //ORDER FAIL
+        if (orderGID == -1) {
+            request.getRequestDispatcher("Views/error.jsp").forward(request, response);
+            return;
+        }
+
         if (paymentMethod.equalsIgnoreCase("VNPay")) {
+            //VNPay
             redirectToVNPay(request, response, totalPrice, orderGID);
         } else {
-        //COD
-            SendEmail.sendEmail(email, "Xac nhan don hang #" + orderGID, SendEmail.sendEmailConfirm(orderGID));
+            //COD
+            for (Item item : listItem) {
+                od.updateProductQuantity(item.getProduct().getProductId(), item.getQuantity(), "-");
+            }
             redirectToThankYouPage(request, response);
+            SendEmail.sendEmail(email, "Xac nhan don hang #" + orderGID, SendEmail.sendEmailConfirm(orderGID));
         }
 
     }
@@ -129,8 +137,14 @@ public class ProcessCheckoutController extends HttpServlet {
         int addressID = Integer.parseInt(request.getParameter("address"));
         UsedCoupon coupon = (UsedCoupon) request.getSession().getAttribute("coupon");
 
-        int orderCID = od.AddOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, 0);
-        od.AddOrderCustomerDetails(orderCID, listItem);
+        int orderCID = od.addOrderCustomer(acc.getAccountId(), addressID, totalPrice, 1, 0, listItem);
+
+        //ORDER FAIL 
+        if (orderCID == -1) {
+            request.setAttribute("message", "orderFail");
+            request.getRequestDispatcher("Views/error.jsp").forward(request, response);
+            return;
+        }
         
         //Process coupon
         if (coupon != null) {
@@ -141,12 +155,15 @@ public class ProcessCheckoutController extends HttpServlet {
                 request.getSession().removeAttribute("coupon");
             }
         }
-        
+
         //VNPay
         if (paymentMethod.equalsIgnoreCase("VNPay")) {
             redirectToVNPay(request, response, totalPrice, orderCID);
         } else {
-        //COD
+            //COD
+            for (Item item : listItem) {
+                od.updateProductQuantity(item.getProduct().getProductId(), item.getQuantity(), "-");
+            }
             redirectToThankYouPage(request, response);
         }
     }

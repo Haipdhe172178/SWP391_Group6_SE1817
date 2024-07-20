@@ -123,7 +123,7 @@ public class ProfileController extends HttpServlet {
                 }
                 isCompleted = accDAO.updateAvatar(a, imgURL);
                 if (isCompleted) {
-                    a = accDAO.check(a.getUserName(), a.getPassWord());
+                    a = accDAO.check(a.getUserName());
                     session.setAttribute("account", a);
                     request.setAttribute(MESSAGE_SUCCESS, "Update avatar complete");
                 } else {

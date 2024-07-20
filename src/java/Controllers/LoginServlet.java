@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -80,24 +81,26 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("your_name");
         String password = request.getParameter("your_pass");
+
         AccountDAO dao = new AccountDAO();
-        Account account = dao.check(username, password);
+        Account account = dao.check(username);
         HttpSession session = request.getSession();
         String productID = request.getParameter("productID");
         String index = request.getParameter("index");
 
-
-        if (account != null) {
+        if (account != null && BCrypt.checkpw(password, account.getPassWord())) {
             if (account.getStatus() == 0) {
                 request.setAttribute("errorMessage", "Tài khoản của bạn đã bị vô hiệu hóa.");
                 request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
                 return;
             }
+            session.setAttribute("account", account);
             if (account.getRoleId() == 1) {
                 session.setAttribute("role", "admin");
                 response.sendRedirect("dash");
@@ -107,13 +110,11 @@ public class LoginServlet extends HttpServlet {
             } else {
                 session.setAttribute("role", "user");
                 if (productID != null && !productID.isEmpty()) {
-                    session.setAttribute("account", account);
-                    response.sendRedirect("single?productID=" + productID+"&index="+index);
+                    response.sendRedirect("single?productID=" + productID + "&index=" + index);
                     return;
                 }
                 response.sendRedirect("home");
             }
-            session.setAttribute("account", account);
         } else {
             request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu");
             request.getRequestDispatcher("Views/Login.jsp").forward(request, response);
