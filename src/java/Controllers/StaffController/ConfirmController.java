@@ -64,10 +64,10 @@ public class ConfirmController extends HttpServlet {
         String aId = request.getParameter("acId");
         OrderDao d = new OrderDao();
         d.updateOrderStaff(Integer.parseInt(orderID),Integer.parseInt(aId));
-        List<OrderDetailGuest> list = d.getAllByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
-        for(OrderDetailGuest od : list){
-            d.updateProductQuantityStaff(od.getProductId(),od.getQuantity(),"-");
-        }
+//        List<OrderDetailGuest> list = d.getAllByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
+//        for(OrderDetailGuest od : list){
+//            d.updateProductQuantity(od.getProductId(),od.getQuantity(),"-");
+//        }
         String gmail = d.getEmailByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
         SendEmail sd = new SendEmail();
         sd.sendEmail(gmail, "ShopBook88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));

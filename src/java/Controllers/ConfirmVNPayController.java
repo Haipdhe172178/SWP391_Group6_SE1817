@@ -8,6 +8,8 @@ import Controllers.VNPay.Config;
 import DAL.OrderDao;
 import Models.Account;
 import Models.OrderCustomer;
+import Models.OrderDetailCustomer;
+import Models.OrderDetailGuest;
 import Models.OrderGuest;
 import SendEmail.SendEmail;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -89,12 +92,13 @@ public class ConfirmVNPayController extends HttpServlet {
         int orderId = Integer.parseInt(request.getParameter("vnp_TxnRef"));
         Account acc = (Account) request.getSession().getAttribute("account");
         String transactionStatus = request.getParameter("vnp_TransactionStatus");
+        OrderDao od = new OrderDao();
         try {
             if (signValue.equals(vnp_SecureHash)) {
-
                 if ("00".equals(transactionStatus)) {
                     handleSuccessfulPayment(orderDao, orderId, acc);
                     request.getRequestDispatcher(THANKS_PAGE).forward(request, response);
+                    SendEmail.sendEmail(orderDao.getOrderGuestByID(orderId).getEmail(), "Xác nhận đơn hàng #" + orderId, SendEmail.sendEmailConfirm(orderId));
                 } else {
                     handleFailedPayment(orderDao, orderId, acc);
                     if ("24".equals(transactionStatus)) {
@@ -115,10 +119,16 @@ public class ConfirmVNPayController extends HttpServlet {
     private void handleSuccessfulPayment(OrderDao orderDao, int orderId, Account acc) {
         if (acc != null) {
             orderDao.updatePaymentSuccess("customer", orderId);
+            List<OrderDetailCustomer> listItem = orderDao.getOrderDetailCustomers(orderId);
+            for (OrderDetailCustomer orderDetailCustomer : listItem) {
+                orderDao.updateProductQuantity(orderDetailCustomer.getProductId(), orderDetailCustomer.getQuantity(), "-");
+            }
         } else {
+            List<OrderDetailGuest> listItem = orderDao.getOrderDetailGuests(orderId);
+            for (OrderDetailGuest orderDetailGuest : listItem) {
+                orderDao.updateProductQuantity(orderDetailGuest.getProductId(), orderDetailGuest.getQuantity(), "-");
+            }
             orderDao.updatePaymentSuccess("guest", orderId);
-            OrderGuest og = orderDao.getOrderGuestByID(orderId);
-            SendEmail.sendEmail(og.getEmail(), "Xác nhận đơn hàng #" + orderId, SendEmail.sendEmailConfirm(orderId));
         }
     }
 

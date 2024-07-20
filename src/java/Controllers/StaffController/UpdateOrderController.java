@@ -119,57 +119,51 @@ public class UpdateOrderController extends HttpServlet {
         String data1[] = {"Chờ xác nhận", "Đã xác nhận", "Chờ giao hàng", "Hoàn thành", "Đã hủy"};
 //        int stt =0;
         int statusId = 0;
-        for (int i=0;i<5;i++) {
-            if(data1[i].equals(status)){
+        for (int i = 0; i < 5; i++) {
+            if (data1[i].equals(status)) {
                 statusId = ++i;
                 break;
             }
         }
         OrderDao dao = new OrderDao();
-       
+
         Orders orders = new Orders(0, Integer.parseInt(orderID), name, email, phone, address, Float.parseFloat(totalPrice),
                 null, statusId, Integer.parseInt(payment), Integer.parseInt(accountID));
 
         dao.updateOrder(orders, status);
         List<OrderDetailGuest> list = dao.getAllByOrderId(Integer.parseInt(orderID), orders.getAccountID());
 
-
         if (status.equals(data1[4])) {
             if (statusold == 2 || statusold == 3) {
-                for (OrderDetailGuest od : list) {
-                    dao.updateProductQuantityStaff(od.getProductId(), od.getQuantity(),"+");
-                }
+//                for (OrderDetailGuest od : list) {
+//                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "+");
+//                }
                 String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
-        SendEmail sd = new SendEmail();
-          sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHuy(Integer.parseInt(orderID)));
-     
-        }
-            
+                SendEmail sd = new SendEmail();
+                sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHuy(Integer.parseInt(orderID)));
+
+            }
+
         } else {
             if (statusold == 1 && status.equals(data1[1])) {
                 //update quantity
                 // -
-                for (OrderDetailGuest od : list) {
-                    dao.updateProductQuantityStaff(od.getProductId(), od.getQuantity(),"-");
-                }
-                    String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
-          SendEmail sd = new SendEmail();
-           sd.sendEmail(gmail, "Book88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
+//                for (OrderDetailGuest od : list) {
+//                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "-");
+//                }
+                String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+                SendEmail sd = new SendEmail();
+                sd.sendEmail(gmail, "Book88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
             }
-       
-              String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
-          SendEmail sd = new SendEmail();
-           sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHP(Integer.parseInt(orderID)));
-            
-         
-      
-       
-        
-        
+
+            String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+            SendEmail sd = new SendEmail();
+            sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHP(Integer.parseInt(orderID)));
+
         }
         String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
         SendEmail sd = new SendEmail();
-          sd.sendEmail(gmail, "BookBook88", "Đơn hàng của bạn đã được chuẩn bị");
+        sd.sendEmail(gmail, "BookBook88", "Đơn hàng của bạn đã được chuẩn bị");
         response.sendRedirect("staffdashboard");
     }
 

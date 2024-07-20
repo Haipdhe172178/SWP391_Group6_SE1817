@@ -307,45 +307,96 @@ public class OrderDao extends DBContext {
         return topBuyers;
     }
 
-    public int AddOrderCustomer(int accID, int addressID, float totalPrice, int statusID, int paymentStatus) {
-        String sql = "INSERT INTO OrderCustomer (AccountID,AddressID, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?)";
+    public int addOrderCustomer(int accID, int addressID, float totalPrice, int statusID, int paymentStatus, List<Item> listItem) {
+        String sqlOrder = "INSERT INTO OrderCustomer (AccountID, AddressID, TotalPrice, StatusID, PaymentStatus) VALUES (?,?,?,?,?)";
+        String sqlOrderDetail = "INSERT INTO OrderDetailCustomer (OrderCID, ProductID, Quantity, UnitPrice) VALUES (?,?,?,?)";
+        String sqlCheckStock = "SELECT Quantity FROM Product WHERE ProductID = ?";
+
+        PreparedStatement psOrder = null;
+        PreparedStatement psOrderDetail = null;
+        PreparedStatement psCheckStock = null;
+        ResultSet rs = null;
+
         try {
-            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, accID);
-            ps.setInt(2, addressID);
-            ps.setFloat(3, totalPrice);
-            ps.setInt(4, statusID);
-            ps.setInt(5, paymentStatus);
-            int rowsInserted = ps.executeUpdate();
+            connection.setAutoCommit(false);
+
+            // Insert into OrderCustomer
+            psOrder = connection.prepareStatement(sqlOrder, PreparedStatement.RETURN_GENERATED_KEYS);
+            psOrder.setInt(1, accID);
+            psOrder.setInt(2, addressID);
+            psOrder.setFloat(3, totalPrice);
+            psOrder.setInt(4, statusID);
+            psOrder.setInt(5, paymentStatus);
+            int rowsInserted = psOrder.executeUpdate();
+
             int orderCID = -1;
             if (rowsInserted > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
+                rs = psOrder.getGeneratedKeys();
                 if (rs.next()) {
                     orderCID = rs.getInt(1);
                 }
             }
-            ps.close();
+
+            // Check stock and insert into OrderDetailCustomer
+            psOrderDetail = connection.prepareStatement(sqlOrderDetail);
+            psCheckStock = connection.prepareStatement(sqlCheckStock);
+
+            for (Item item : listItem) {
+                // Check stock availability
+                psCheckStock.setInt(1, item.getProduct().getProductId());
+                rs = psCheckStock.executeQuery();
+
+                if (rs.next()) {
+                    int availableStock = rs.getInt("Quantity");
+                    if (availableStock < item.getQuantity()) {
+                        connection.rollback();
+                        return -1; // Not enough stock
+                    }
+                } else {
+                    connection.rollback();
+                    return -1; // Product not found
+                }
+
+                // Insert order details
+                psOrderDetail.setInt(1, orderCID);
+                psOrderDetail.setInt(2, item.getProduct().getProductId());
+                psOrderDetail.setInt(3, item.getQuantity());
+                psOrderDetail.setDouble(4, item.getPrice());
+                psOrderDetail.executeUpdate();
+            }
+
+            connection.commit();
             return orderCID;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return 0;
-    }
-
-    public void AddOrderCustomerDetails(int orderCID, List<Item> listItem) {
-        String sql = "INSERT INTO OrderDetailCustomer(OrderCID, ProductID, Quantity, UnitPrice) values (?,?,?,?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            for (Item item : listItem) {
-                ps.setInt(1, orderCID);
-                ps.setInt(2, item.getProduct().getProductId());
-                ps.setInt(3, item.getQuantity());
-                ps.setDouble(4, item.getPrice());
-                ps.execute();
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return -1;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (psOrder != null) {
+                    psOrder.close();
+                }
+                if (psOrderDetail != null) {
+                    psOrderDetail.close();
+                }
+                if (psCheckStock != null) {
+                    psCheckStock.close();
+                }
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -393,9 +444,99 @@ public class OrderDao extends DBContext {
         }
     }
 
-    public boolean AddOrderGuest() {
+    public int addOrderGuestWithDetail(String fullname, String email, String phoneNumber, String address, Float totalPrice, int statusID, int paymentStatus, List<Item> listItem) {
+        String sqlOrder = "INSERT INTO OrderGuest(FullName, Email, PhoneNumber, Address, TotalPrice, StatusID, PaymentStatus) values (?,?,?,?,?,?,?)";
+        String sqlOrderDetail = "INSERT INTO OrderDetailGuest(OrderGID, ProductID, Quantity, UnitPrice) values (?,?,?,?)";
+        String sqlCheckStock = "SELECT Quantity FROM Product WHERE ProductID = ?";
 
-        return false;
+        PreparedStatement psOrder = null;
+        PreparedStatement psOrderDetail = null;
+        PreparedStatement psCheckStock = null;
+        ResultSet rs = null;
+
+        try {
+            connection.setAutoCommit(false);
+
+            // Insert into OrderGuest
+            psOrder = connection.prepareStatement(sqlOrder, PreparedStatement.RETURN_GENERATED_KEYS);
+            psOrder.setString(1, fullname);
+            psOrder.setString(2, email);
+            psOrder.setString(3, phoneNumber);
+            psOrder.setString(4, address);
+            psOrder.setFloat(5, totalPrice);
+            psOrder.setInt(6, statusID);
+            psOrder.setInt(7, paymentStatus);
+            int rowsInserted = psOrder.executeUpdate();
+
+            int orderGID = -1;
+            if (rowsInserted > 0) {
+                rs = psOrder.getGeneratedKeys();
+                if (rs.next()) {
+                    orderGID = rs.getInt(1);
+                }
+            }
+
+            // Check stock and insert into OrderDetailGuest
+            psOrderDetail = connection.prepareStatement(sqlOrderDetail);
+            psCheckStock = connection.prepareStatement(sqlCheckStock);
+
+            for (Item item : listItem) {
+                // Check stock availability
+                psCheckStock.setInt(1, item.getProduct().getProductId());
+                rs = psCheckStock.executeQuery();
+
+                if (rs.next()) {
+                    int availableStock = rs.getInt("Quantity");
+                    if (availableStock < item.getQuantity()) {
+                        connection.rollback();
+                        return -1; // Not enough stock
+                    }
+                } else {
+                    connection.rollback();
+                    return -1; // Product not found
+                }
+
+                // Insert order details
+                psOrderDetail.setInt(1, orderGID);
+                psOrderDetail.setInt(2, item.getProduct().getProductId());
+                psOrderDetail.setInt(3, item.getQuantity());
+                psOrderDetail.setDouble(4, item.getPrice());
+                psOrderDetail.executeUpdate();
+            }
+
+            connection.commit();
+            return orderGID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return -1;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (psOrder != null) {
+                    psOrder.close();
+                }
+                if (psOrderDetail != null) {
+                    psOrderDetail.close();
+                }
+                if (psCheckStock != null) {
+                    psCheckStock.close();
+                }
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public List<OrderCustomer> getOrderCustomersByAccountId(int accountId) {
@@ -1318,7 +1459,7 @@ public class OrderDao extends DBContext {
         return list;
     }
 
-    public boolean updateProductQuantityStaff(int productId, int quantity, String toanTu) {
+    public boolean updateProductQuantity(int productId, int quantity, String toanTu) {
         String query = "update Product \n"
                 + "set Quantity = (select Quantity from Product where ProductID = ?) " + toanTu + " ? \n"
                 + "where ProductID = ? ";

@@ -18,12 +18,11 @@ import java.util.List;
  */
 public class AccountDAO extends DBContext {
 
-    public Account check(String username, String password) {
-        String sql = "SELECT * FROM [dbo].[Account] WHERE Username=? AND Password=?";
+    public Account check(String username) {
+        String sql = "SELECT * FROM [dbo].[Account] WHERE Username=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
-            st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 Account a = new Account(
@@ -75,7 +74,7 @@ public class AccountDAO extends DBContext {
     }
 
     public boolean createUser(String fullName, String username, String password, String email, String phoneNumber, String address) {
-        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address, RoleID,Status) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO [dbo].[Account] (FullName, Username, Password, Email, PhoneNumber, Address, RoleID, ImgAccount, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, fullName);
@@ -85,7 +84,8 @@ public class AccountDAO extends DBContext {
             st.setString(5, phoneNumber);
             st.setString(6, address);
             st.setInt(7, 3); // Set RoleID to 3 by default
-            st.setInt(8, 1); // Set status to 1 by default
+            st.setString(8, "img_account/default.jpg");
+            st.setInt(9, 1); // Set status to 1 by default
             int rowsInserted = st.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
