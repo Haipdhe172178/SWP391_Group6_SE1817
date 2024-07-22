@@ -64,19 +64,28 @@
 
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
-
             <div class="container-error">
                 <div class="icon">
                     <i class="fas fa-times-circle"></i>
                 </div>
-                <div class="message">
-                    Thanh toán thất bại
-                </div>
-                <div class="error-details">
-                    Có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ.
-                </div>
-                <a href="${pageContext.request.contextPath}/shop" class="btn">Tiếp tục mua sắm</a>
-            <a href="${pageContext.request.contextPath}/contact" class="btn secondary">Liên hệ hỗ trợ</a>
+            <c:choose>
+                <c:when test="${requestScope.message ne 'orderFail'}">
+                    <div class="message">
+                        Đặt hàng không thành công
+                    </div>
+                    <div class="error-details">
+                        Có lỗi xảy ra trong quá trình đặt hàng.
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="message">
+                        Thanh toán thất bại
+                    </div>
+                    <div class="error-details">
+                        Có lỗi xảy ra trong quá trình thanh toán.
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <jsp:include page="../common/footer.jsp"></jsp:include>
