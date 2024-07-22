@@ -224,7 +224,7 @@
                                     <li class="pe-3">
                                         <div class="nav-user-dropdown z-2">
                                             <button class="dropbtn">
-                                                <img src="${sessionScope.account.getImgAccount()}" alt="Account Image" style="width: 30px; height: 30px;">
+                                                <img src="${sessionScope.account.getImgAccount()}" style="width: 30px; height: 30px; border-radius: 50%">
                                             </button>
 
                                             <div class="dropdown-content">

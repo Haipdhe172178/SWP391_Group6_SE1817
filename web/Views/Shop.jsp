@@ -157,12 +157,12 @@
                                 <c:choose>
                                     <c:when test="${tag > 1}">
                                         <li class="page-item">
-                                            <a class="page-link" href="shop?index=${tag - 1}${query}">Prev</a>
+                                            <a class="page-link" href="shop?index=${tag - 1}${query}">Trước</a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item disabled">
-                                            <span class="page-link">Prev</span>
+                                            <span class="page-link">Trước</span>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
@@ -183,12 +183,12 @@
                                 <c:choose>
                                     <c:when test="${tag < endP}">
                                         <li class="page-item">
-                                            <a class="page-link" href="shop?index=${tag + 1}${query}">Next</a>
+                                            <a class="page-link" href="shop?index=${tag + 1}${query}">Sau</a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item disabled">
-                                            <span class="page-link">Next</span>
+                                            <span class="page-link">Sau</span>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>

@@ -115,6 +115,7 @@ public class ProcessCheckoutController extends HttpServlet {
 
         //ORDER FAIL
         if (orderGID == -1) {
+            request.setAttribute("message", "orderFail");
             request.getRequestDispatcher("Views/error.jsp").forward(request, response);
             return;
         }

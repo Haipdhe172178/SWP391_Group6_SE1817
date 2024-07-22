@@ -132,22 +132,12 @@
                         <form action="profile" method="post">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Hồ Sơ Của Tôi</h4>
-                                
+
                             </div>
                             <div class="row mt-2">
                                 <div class="col-md-6 inputprofile">
                                     <label class="labels">Họ và tên</label>
-                                    <input 
-                                        type="text" 
-                                        name="fullname" 
-                                        class="form-control" 
-                                        placeholder="full name" 
-                                        value="${acc.fullName}" 
-                                        required 
-                                        pattern="[A-Za-zÀ-ỹà-ỹ\s]+" 
-                                        oninvalid="this.setCustomValidity('Tên chỉ được chứa chữ cái và không được để trống')" 
-                                        oninput="this.setCustomValidity('')"
-                                        >
+                                    <input type="text" id="fullName" name="fullname" class="form-control" placeholder="full name" value="${acc.fullName}" required pattern="[A-Za-zÀ-ỹà-ỹ\s]+" oninput="validateInputName()">
                                 </div>
                                 <div class="col-md-6 "><label class="labels">Tên đăng nhập</label><input type="text" name="username" class="form-control" value="${acc.userName}" placeholder="username" disabled></div>
                             </div>
@@ -226,23 +216,23 @@
                         </form>
                     </div>
                     <div class="p-3 py-5" id="address" style="display: none;">
-    <div>
-        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
-            <option value="" selected>Chọn tỉnh thành</option>
-            <!-- Options for cities will be dynamically populated here -->
-        </select>
+                        <div>
+                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                <option value="" selected>Chọn tỉnh thành</option>
+                                <!-- Options for cities will be dynamically populated here -->
+                            </select>
 
-        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
-            <option value="" selected>Chọn quận huyện</option>
-            <!-- Options for districts will be dynamically populated based on selected city -->
-        </select>
+                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                <option value="" selected>Chọn quận huyện</option>
+                                <!-- Options for districts will be dynamically populated based on selected city -->
+                            </select>
 
-        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
-            <option value="" selected>Chọn phường xã</option>
-            <!-- Options for wards will be dynamically populated based on selected district -->
-        </select>
-    </div>    
-</div>
+                            <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                <option value="" selected>Chọn phường xã</option>
+                                <!-- Options for wards will be dynamically populated based on selected district -->
+                            </select>
+                        </div>    
+                    </div>
 
                     <c:if test="${not empty requestScope.successMessage}">
                         <script>
@@ -270,49 +260,59 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
             <script>
-                    var citis = document.getElementById("city");
-                    var districts = document.getElementById("district");
-                    var wards = document.getElementById("ward");
-                    var Parameter = {
-                        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                        method: "GET",
-                        responseType: "application/json",
-                    };
-                    var promise = axios(Parameter);
-                    promise.then(function (result) {
-                        renderCity(result.data);
-                    });
+                                var citis = document.getElementById("city");
+                                var districts = document.getElementById("district");
+                                var wards = document.getElementById("ward");
+                                var Parameter = {
+                                    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                                    method: "GET",
+                                    responseType: "application/json",
+                                };
+                                var promise = axios(Parameter);
+                                promise.then(function (result) {
+                                    renderCity(result.data);
+                                });
 
-                    function renderCity(data) {
-                        for (const x of data) {
-                            citis.options[citis.options.length] = new Option(x.Name, x.Id);
-                        }
-                        citis.onchange = function () {
-                            district.length = 1;
-                            ward.length = 1;
-                            if (this.value != "") {
-                                const result = data.filter(n => n.Id === this.value);
+                                function renderCity(data) {
+                                    for (const x of data) {
+                                        citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                                    }
+                                    citis.onchange = function () {
+                                        district.length = 1;
+                                        ward.length = 1;
+                                        if (this.value != "") {
+                                            const result = data.filter(n => n.Id === this.value);
 
-                                for (const k of result[0].Districts) {
-                                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                                            for (const k of result[0].Districts) {
+                                                district.options[district.options.length] = new Option(k.Name, k.Id);
+                                            }
+                                        }
+                                    };
+                                    district.onchange = function () {
+                                        ward.length = 1;
+                                        const dataCity = data.filter((n) => n.Id === citis.value);
+                                        if (this.value != "") {
+                                            const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                                            for (const w of dataWards) {
+                                                wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                                            }
+                                        }
+                                    };
                                 }
-                            }
-                        };
-                        district.onchange = function () {
-                            ward.length = 1;
-                            const dataCity = data.filter((n) => n.Id === citis.value);
-                            if (this.value != "") {
-                                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                                for (const w of dataWards) {
-                                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                                }
-                            }
-                        };
-                    }
             </script>
             <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
             <script>
+                                function validateInputName() {
+                                    var fullNameInput = document.getElementById('fullName');
+                                    var fullName = fullNameInput.value.trim();
+
+                                    if (fullName.length === 0) {
+                                        fullNameInput.setCustomValidity('Vui lòng điền đầy đủ họ và tên');
+                                    } else {
+                                        fullNameInput.setCustomValidity('');
+                                    }
+                                }
                                 document.addEventListener('DOMContentLoaded', function () {
                                     // Handle profile and change password form display
                                     function showChangePassword() {
@@ -343,7 +343,7 @@
                                     });
                                 });
         </script>
-        
+
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
