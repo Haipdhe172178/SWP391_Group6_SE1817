@@ -73,6 +73,21 @@
                     transform: translateX(100%);
                 }
             }
+            .suggestions {
+                border: 1px solid #ddd;
+                max-height: 200px;
+                overflow-y: auto;
+                position: absolute;
+                z-index: 1000;
+                background-color: #fff;
+            }
+            .suggestion-item {
+                padding: 8px;
+                cursor: pointer;
+            }
+            .suggestion-item:hover {
+                background-color: #f0f0f0;
+            }
         </style>
     </head>
 
@@ -83,7 +98,7 @@
             <section class="main_content dashboard_part large_header_bg">
 
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
-            <div id="notification-container" class="notification-container"></div>
+                <div id="notification-container" class="notification-container"></div>
                 <div class="main_content_iner">
                     <div class="container-fluid p-0">
                         <div class="row justify-content-center">
@@ -128,6 +143,8 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="productAuthor" class="form-label">Tác giả</label>
+                                            <input type="text" class="form-control" id="authorSearch" placeholder="Nhập tên tác giả để tìm kiếm" oninput="filterAuthors() " style="width: 200px;">
+                                            <div id="suggestions" class="suggestions"></div>
                                             <select class="form-select" id="productAuthor" name="author" required>
                                                 <c:forEach items="${author}" var="au">
                                                     <option value="${au.authorID}">${au.authorName}</option>
@@ -399,7 +416,51 @@
             }
             window.onload = showNotificationAndRedirect;
         </script>
+        <script>
+            function filterAuthors() {
+                const searchValue = document.getElementById('authorSearch').value.toLowerCase();
+                const selectElement = document.getElementById('productAuthor');
+                const options = selectElement.options;
+                const suggestionBox = document.getElementById('suggestions');
+                suggestionBox.innerHTML = ''; // Clear previous suggestions
 
+                if (searchValue.length === 0) {
+                    suggestionBox.style.display = 'none'; // Hide suggestions if input is empty
+                    return;
+                }
+
+                for (let i = 0; i < options.length; i++) {
+                    const option = options[i];
+                    const authorName = option.text.toLowerCase().trim();
+                    if (authorName.includes(searchValue)) {
+                        const suggestionItem = document.createElement('div');
+                        suggestionItem.className = 'suggestion-item';
+                        suggestionItem.textContent = option.text;
+                        suggestionItem.onclick = () => {
+                            document.getElementById('authorSearch').value = option.text;
+                            selectElement.value = option.value;
+                            suggestionBox.innerHTML = ''; 
+                            suggestionBox.style.display = 'none'; 
+                        };
+                        suggestionBox.appendChild(suggestionItem);
+                    }
+                }
+
+                if (suggestionBox.hasChildNodes()) {
+                    suggestionBox.style.display = 'block'; 
+                } else {
+                    suggestionBox.style.display = 'none';
+                }
+            }
+
+           
+            document.addEventListener('click', function (event) {
+                if (!event.target.matches('#authorSearch')) {
+                    document.getElementById('suggestions').style.display = 'none';
+                }
+            });
+        </script>
+        
     </body>
 
 </html>

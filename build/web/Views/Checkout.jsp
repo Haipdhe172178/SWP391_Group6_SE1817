@@ -603,7 +603,7 @@
                                                     var cities = document.getElementById(cityId);
                                                     var districts = document.getElementById(districtId);
                                                     var wards = document.getElementById(wardId);
-
+         
                                                     var parameter = {
                                                         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
                                                         method: "GET",
