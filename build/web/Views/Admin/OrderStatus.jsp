@@ -33,36 +33,7 @@
         <link rel="stylesheet" href="css/style1.css" />
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <style>
-            .scrollable-table {
-                max-height: 600px;
-                overflow-y: auto;
-            }
-            .table-container {
-                width: 100%;
-                display: block;
-            }
-            .search-box {
-                margin-bottom: 20px;
-                display: flex;
-                justify-content: flex-end;
-            }
-
-            .search-box input {
-                width: 300px;
-                height: 35px;
-                padding: 5px 10px;
-                border-radius: 5px;
-                border: 1px solid #ced4da;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            }
-
-            .search-box input:focus {
-                outline: none;
-                border-color: #80bdff;
-                box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-            }
-        </style>
+     
     </head>
 
     <body class="crm_body_bg">
@@ -81,19 +52,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                       
+
                                 <div class="white_card_body QA_section">
                                     <div class="serach_field_2">
-                                                        <div class="search_inner">
-                                                            <form action="orderstatus" method="GET">
-                                                                <div class="search_field">
-                                                                    <input name="s" type="text" placeholder="Tìm kiếm....">
-                                                                     <input name="status" type="hidden" value="${statusId}">
-                                                                </div>
-                                                                <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                                        <div class="search_inner">
+                                            <form action="orderstatus" method="GET">
+                                                <div class="search_field">
+                                                    <input name="s" type="text" placeholder="Tìm kiếm....">
+                                                    <input name="status" type="hidden" value="${statusId}">
+                                                </div>
+                                                <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                            </form>
+                                        </div>
+                                    </div>
 
                                     <div class="QA_table table-container scrollable-table">
                                         <table class="table lms_table_active2 p-0" id="orderTable">
@@ -167,6 +138,9 @@
                                                     </li>
                                                 </c:if>
                                             </ul>
+                                            <div>
+                                                <a href="dash" class="btn btn-warning">Trở lại</a>
+                                            </div>
                                         </nav>
                                     </div>
                                 </div>

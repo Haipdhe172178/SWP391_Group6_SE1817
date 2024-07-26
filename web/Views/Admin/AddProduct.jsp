@@ -162,6 +162,7 @@
                                         <div class="mb-3">
                                             <label for="productImage" class="form-label">Ảnh</label>
                                             <input type="file" class="form-control" id="productImage" name="imgProduct" required>
+                                             <div id="productImageError" class="error"></div>
                                         </div>
                                         <div>
                                             <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
@@ -337,8 +338,11 @@
                 var productPriceError = document.getElementById('productPriceError');
                 var productQuantityError = document.getElementById('productQuantityError');
                 var productDescriptionError = document.getElementById('productDescriptionError');
+                const productImageError = document.getElementById('productImageError');
 
                 var isValid = true;
+
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.svg)$/i;
 
                 // Reset previous error messages
                 productNameError.textContent = '';
@@ -371,7 +375,10 @@
                     isValid = false;
                 }
                 if (productImage === '') {
-                    alert('Vui lòng chọn một ảnh cho sản phẩm.');
+                    productImageError.textContent = 'Vui lòng chọn một ảnh cho sản phẩm.';
+                    isValid = false;
+                } else if (!allowedExtensions.exec(productImage)) {
+                    productImageError.textContent = 'Định dạng ảnh không hợp lệ. Chỉ hỗ trợ các định dạng JPG, JPEG, PNG, GIF, SVG.';
                     isValid = false;
                 }
 
@@ -439,28 +446,28 @@
                         suggestionItem.onclick = () => {
                             document.getElementById('authorSearch').value = option.text;
                             selectElement.value = option.value;
-                            suggestionBox.innerHTML = ''; 
-                            suggestionBox.style.display = 'none'; 
+                            suggestionBox.innerHTML = '';
+                            suggestionBox.style.display = 'none';
                         };
                         suggestionBox.appendChild(suggestionItem);
                     }
                 }
 
                 if (suggestionBox.hasChildNodes()) {
-                    suggestionBox.style.display = 'block'; 
+                    suggestionBox.style.display = 'block';
                 } else {
                     suggestionBox.style.display = 'none';
                 }
             }
 
-           
+
             document.addEventListener('click', function (event) {
                 if (!event.target.matches('#authorSearch')) {
                     document.getElementById('suggestions').style.display = 'none';
                 }
             });
         </script>
-        
+
     </body>
 
 </html>

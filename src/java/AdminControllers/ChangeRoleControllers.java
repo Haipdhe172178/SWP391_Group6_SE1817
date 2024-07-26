@@ -20,6 +20,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -105,21 +106,36 @@ public class ChangeRoleControllers extends HttpServlet {
 
         Part part = request.getPart("imgAccount");
         String imgProduct = null;
+        boolean isValidImage = true;
 
         if (part != null && part.getSize() > 0) {
-            String path = request.getServletContext().getRealPath("/img");
-            File dir = new File(path);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
+            String contentType = part.getContentType();
             String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-            File image = new File(dir, fileName);
-            part.write(image.getAbsolutePath());
-            imgProduct = request.getContextPath() + "/img/" + fileName;
+            String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+
+            if (contentType == null || !contentType.startsWith("image/")
+                    || !fileExtension.matches("jpg|jpeg|png|gif|svg")) {
+                session.setAttribute("imgAccountError", "File tải lên phải là hình ảnh có định dạng JPG, JPEG, PNG, GIF hoặc SVG.");
+                isValidImage = false;
+            } else {
+                String path = request.getServletContext().getRealPath("/img");
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, fileName);
+                part.write(image.getAbsolutePath());
+                imgProduct = request.getContextPath() + "/img/" + fileName;
+            }
         } else {
             AccountDAO accountDAO = new AccountDAO();
             Account account = accountDAO.getAccountByid(accountId);
             imgProduct = account.getImgAccount();
+        }
+
+        if (!isValidImage) {
+            response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
+            return;
         }
 
         AccountDAO accountDAO = new AccountDAO();
@@ -135,7 +151,7 @@ public class ChangeRoleControllers extends HttpServlet {
                 session.setAttribute("emailError", "Email đã tồn tại.");
             }
             if (userNameExists && !userName.equals(oldUserName)) {
-                session.setAttribute("userNameError", "Tên đăng nhập đã tồn tại");
+                session.setAttribute("userNameError", "Tên đăng nhập đã tồn tại.");
             }
             session.setAttribute("fullName", fullName);
             session.setAttribute("roleId", roleId);
@@ -144,17 +160,19 @@ public class ChangeRoleControllers extends HttpServlet {
             session.setAttribute("gender", gender);
             session.setAttribute("email", email);
             session.setAttribute("phoneNumber", phoneNumber);
-            session.setAttribute("address",address);
+            session.setAttribute("address", address);
             session.setAttribute("status", status);
             response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
             return;
         }
-
-        boolean isUpdated = accountDAO.updateStaff(accountId, fullName, userName, password, gender, email, phoneNumber, address, roleId, imgProduct, status);
-        session.removeAttribute("emailError");
-        session.removeAttribute("userNameError");
-
-        session.setAttribute("notification", "success");
+         String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt()); 
+        boolean isUpdated = accountDAO.updateStaff(accountId, fullName, userName, hashPassword, gender, email, phoneNumber, address, roleId, imgProduct, status);
+        if (isUpdated) {
+             session.removeAttribute("imgAccountError");
+            session.setAttribute("notification", "success");
+        } else {
+            session.setAttribute("notification", "failure");
+        }
 
         response.sendRedirect(request.getContextPath() + "/change?accountId=" + accountId);
     }

@@ -204,7 +204,7 @@ public class ShopControllers extends HttpServlet {
         if (!sortBy.equals("default")) {
             query.append("&sortBy=").append(sortBy);
         }
-
+        
         // Additional data for the page
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();

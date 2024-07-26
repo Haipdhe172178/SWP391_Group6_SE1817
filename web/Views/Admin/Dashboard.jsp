@@ -9,6 +9,7 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Models.OrderStatus" %>
+<%@ page import="Models.CategorySales" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -163,6 +164,22 @@
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
+                                            <h3 class="m-0">Lượt mua</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body QA_section">
+                                    <div class="QA_chart">
+                                        <canvas id="categorySalesChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb_20">
+                            <div class="white_card card_height_100 mb_20">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
                                             <h3 class="m-0">Trạng thái đơn hàng</h3>
                                         </div>
                                     </div>
@@ -175,7 +192,9 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 mb_20">
+                    </div>               
+                    <div class="row">
+                        <div class="col-lg-12 mb_20">
                             <div class="white_card card_height_100 mb_20">
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
@@ -206,89 +225,6 @@
 
                                     <!-- Chart Canvas -->
                                     <canvas id="orderChart" width="400" height="200"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>               
-                    <div class="row">
-                        <div class="col-lg-5 mb_20">
-                            <div class="white_card card_height_100 mb_20">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Lượt mua sản phẩm</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="white_card_body QA_section">
-                                    <div class="QA_table table-container scrollable-table">
-                                        <table class="table lms_table_active2 p-0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Sản phẩm</th>
-                                                    <th scope="col">Giá</th>                                                   
-                                                    <th scope="col">Đã Bán</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${mostPurchasedProducts}" var="p">
-                                                    <tr>
-                                                        <td>
-                                                            <div class="customer d-flex align-items-center">
-                                                                <div class="thumb_34 mr_15 mt-0"><img class="img-fluid" src="${p.imgProduct}" alt></div>
-                                                                <span class="f_s_14 f_w_400 color_text_1">${p.name}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="f_s_14 f_w_400 color_text_2">
-                                                            <fmt:formatNumber value="${p.price}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                                        </td>
-                                                        <td class="f_s_14 f_w_400 color_text_4">${p.quantity}</td>                            
-                                                    </tr>  
-                                                </c:forEach>
-                                            </tbody>
-
-                                        </table>                                       
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-7 mb_20">
-                            <div class="white_card card_height_100 mb_20">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Người Mua Hàng Nhiều Nhất</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="white_card_body QA_section">
-                                    <div class="QA_table scrollable-table">
-                                        <table class="table lms_table_active2 p-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Tên</th>
-                                                    <th>Email</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Tổng Chi Tiêu</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="buyer" items="${topBuyers}">
-                                                    <tr>
-                                                        <td>${buyer.fullName}</td>
-                                                        <td>${buyer.email}</td>
-                                                        <td>${buyer.phoneNumber}</td>
-                                                        <td>${buyer.address}</td>
-                                                        <td>
-                                                            <fmt:formatNumber value="${buyer.totalSpent}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                                        </td>                                                    
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -356,40 +292,7 @@
         <script src="vendors/chart_am/chart-custom.js"></script>
         <script src="js/dashboard_init.js"></script>
         <script src="js/custom.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("th[data-sort]").click(function () {
-                    var column = $(this).data("sort");
-                    var order = $(this).hasClass("asc") ? "desc" : "asc";
-                    $("th[data-sort]").removeClass("asc desc");
-                    $(this).addClass(order);
-                    sortTable(column, order);
-                });
-                function sortTable(column, order) {
-                    var rows = $("#orderTable tbody tr").get();
-                    rows.sort(function (rowA, rowB) {
-                        var valueA = $(rowA).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
-                        var valueB = $(rowB).find("td:eq(" + $("th[data-sort='" + column + "']").index() + ")").text();
-                        if (column === "totalPrice") {
-                            valueA = parseFloat(valueA.replace(/[^\d.-]/g, ''));
-                            valueB = parseFloat(valueB.replace(/[^\d.-]/g, ''));
-                        } else if (column === "date") {
-                            valueA = new Date(valueA);
-                            valueB = new Date(valueB);
-                        }
 
-                        if (order === "asc") {
-                            return valueA > valueB ? 1 : -1;
-                        } else {
-                            return valueA < valueB ? 1 : -1;
-                        }
-                    });
-                    $.each(rows, function (index, row) {
-                        $("#orderTable tbody").append(row);
-                    });
-                }
-            });
-        </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var ctx = document.getElementById('orderChart').getContext('2d');
@@ -452,6 +355,7 @@
         </script>
         <% 
     List<OrderStatus> orderStatusCounts = (List<OrderStatus>) request.getAttribute("orderStatusCounts"); 
+  List<CategorySales> categorySalesList = (List<CategorySales>) request.getAttribute("categorySalesList");
         %>
         <script>
             // Dữ liệu từ servlet
@@ -508,12 +412,85 @@
                     },
                     onClick: function (evt, item) {
                         if (item.length > 0) {
-                            var elementIndex = item[0]._index; 
-                            var statusId = orderStatusCounts[elementIndex].statusId; 
-                            window.location.href = 'orderstatus?status=' + statusId; 
+                            var elementIndex = item[0]._index;
+                            var statusId = orderStatusCounts[elementIndex].statusId;
+                            console.log('StatusID:', statusId);
+                            window.location.href = 'orderstatus?status=' + statusId;
                         }
                     }
 
+                }
+            });
+        </script>
+        <script>
+            // Dữ liệu từ servlet
+            var categorySalesList = JSON.parse('<%= new com.google.gson.Gson().toJson(categorySalesList) %>');
+
+            // Tạo nhãn và dữ liệu cho biểu đồ
+            var labels = [];
+            var data = [];
+
+            categorySalesList.forEach(function (category) {
+                labels.push(category.categoryName);
+                data.push(category.totalQuantitySold);
+            });
+
+            // Khởi tạo biểu đồ Chart.js
+            var ctx = document.getElementById('categorySalesChart').getContext('2d');
+            var categorySalesChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                            label: 'Số lượng sản phẩm bán theo danh mục',
+                            data: data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(199, 199, 199, 0.2)',
+                                'rgba(83, 102, 255, 0.2)',
+                                'rgba(255, 99, 71, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(199, 199, 199, 1)',
+                                'rgba(83, 102, 255, 1)',
+                                'rgba(255, 99, 71, 1)'
+                            ],
+                            borderWidth: 2
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return labels[tooltipItem.dataIndex] + ': ' + data[tooltipItem.dataIndex];
+                                }
+                            }
+                        }
+                    },
+                    onClick: function (evt, item) {
+                        if (item.length > 0) {
+                            var elementIndex = item[0]._index;
+                            var categoryId = categorySalesList[elementIndex].categoryId; // Corrected variable name
+                            console.log('CategoryID:', categoryId);
+                            window.location.href = 'catep?categoryId=' + categoryId;
+                        }
+                    }
                 }
             });
         </script>

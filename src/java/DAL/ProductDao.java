@@ -4,7 +4,6 @@
  */
 package DAL;
 
-import Models.Account;
 import Models.Author;
 import Models.Category;
 import Models.ObjectAge;
@@ -13,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -694,20 +692,31 @@ public class ProductDao extends DBContext {
         return list;
     }
 
-    public int getQuantitySoldByProductId(int id) {
-        String query = " Select * From QualityofProductsell WHERE ProducID=?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(2);
+    public int getQuantitySoldByProductId(int productId) {
+        int quantitySold = 0;
+        String query = "SELECT COALESCE(SUM(total_quantity), 0) AS TotalQuantity "
+                + "FROM ("
+                + "    SELECT SUM(Quantity) AS total_quantity "
+                + "    FROM OrderDetailCustomer "
+                + "    WHERE ProductID = ? "
+                + "    UNION ALL "
+                + "    SELECT SUM(Quantity) AS total_quantity "
+                + "    FROM OrderDetailGuest "
+                + "    WHERE ProductID = ?"
+                + ") AS combined_quantities";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, productId);
+            ps.setInt(2, productId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    quantitySold = rs.getInt("TotalQuantity");
+                }
             }
-            rs.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return 0;
+        return quantitySold;
     }
 
     public void deleteStudent(int studentID) {
@@ -1081,5 +1090,4 @@ public class ProductDao extends DBContext {
         return products;
 
     }
-
 }

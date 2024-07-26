@@ -148,7 +148,7 @@
                 <div class="row">
                     <div class="breadcrumbs" style="padding-top: 2em">
                         <span class="item"><a href="shop">Cửa hàng / </a></span>
-                        <span class="item"><a href="filter?categoryId=${requestScope.product.category.categoryId}">${requestScope.product.category.categoryName} / </a></span>
+                        <span class="item"><a href="shop?categoryId=${requestScope.product.category.categoryId}">${requestScope.product.category.categoryName} / </a></span>
                     <span class="item"><a href="single?productID=${requestScope.product.productId}">${requestScope.product.name} </a></span>
                 </div>
             </div>
@@ -202,7 +202,17 @@
                                         </svg>
                                     </c:forEach>
                                 </div>
-                                 <!--Đã bán-->
+                                <div class="product-quantity">
+                                    <c:choose>
+                                        <c:when test="${requestScope.quantitySold == 0}">
+                                            <span style=" color: black">Chưa có lượt bán</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span>${requestScope.quantitySold} sản phẩm đã bán</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!--Đã bán-->
                                 <div class="product-quantity"></div>
                             </div>
 
@@ -234,8 +244,8 @@
                                             <c:choose>
                                                 <c:when test="${requestScope.product.quantity == 0}">
                                                     <span style="font-weight: bold; color: red">Hết hàng</span>
-                                                    </c:when>
-                                                    <c:otherwise>
+                                                </c:when>
+                                                <c:otherwise>
                                                     <l>${requestScope.product.quantity} sách có sẵn</l>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -594,7 +604,7 @@
                                                      flex-direction: column;">
                                                     <span class="author-name" style="font-weight: bold">${feedback.account.fullName}</span>
                                                     <span class="review-date" style="font-size: 15px">${feedback.feedbackDate}</span>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="review-content">

@@ -76,7 +76,7 @@ public class SingleProductControllers extends HttpServlet {
         String rating = request.getParameter("rating");
         //DAO
         ProductDao productDao = new ProductDao();
-         OrderDao orderDao = new OrderDao();
+        OrderDao orderDao = new OrderDao();
         NewsDao nd = new NewsDao();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         AccountDAO accDAO = new AccountDAO();
@@ -88,7 +88,7 @@ public class SingleProductControllers extends HttpServlet {
         if (pageParam != null && !pageParam.isEmpty()) {
             page = Integer.parseInt(pageParam);
         }
-        
+
         int quantity = 0;
         //filter by rating
         if (rating != null && !rating.isEmpty()) {
@@ -110,12 +110,12 @@ public class SingleProductControllers extends HttpServlet {
 
         //QUANTITY sold product
         int quantitySold = productDao.getQuantitySoldByProductId(id);
-         List<Product> mostPurchasedProducts = orderDao.getMostPurchasedProducts();
+
         int avgRating = feedbackDAO.avgRating(id);
         CategoryDao categoryDao = new CategoryDao();
         List<Category> cate = categoryDao.getallCategorys();
         request.setAttribute("category", cate);
-        request.setAttribute("mostPurchasedProducts", mostPurchasedProducts);
+
         request.setAttribute("rating", rating);
         request.setAttribute("quantityFeedback", quantity);
         request.setAttribute("page", page);
@@ -142,7 +142,7 @@ public class SingleProductControllers extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     /**

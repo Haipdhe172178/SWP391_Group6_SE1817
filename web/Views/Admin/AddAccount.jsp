@@ -30,34 +30,59 @@
                 font-size: 14px;
                 margin-top: 5px;
             }
+            .notification-container {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                display: none;
+                z-index: 1000;
+                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+            }
+
+            .notification {
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .notification.success {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .notification.error {
+                background-color: #f44336;
+                color: white;
+            }
         </style>
     </head>
 
     <body class="crm_body_bg">
 
-         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-        <section class="main_content dashboard_part large_header_bg">
+            <section class="main_content dashboard_part large_header_bg">
 
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
-            <div id="notification-container" class="notification-container"></div>
-            <div class="main_content_iner">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Thêm Tài Khoản</h3>
+                <div id="notification-container" class="notification-container"></div>
+                <div class="main_content_iner">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Thêm Tài Khoản</h3>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <form action="addac" method="POST" enctype="multipart/form-data" id="accountForm">
-                                    <div class="white_card_body">
-                                        <div class="mb-3">
-                                            <label for="fullName">Họ và tên</label>
-                                            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nhập họ và tên" value="${requestScope.fullName}" required>
+                                    <form action="addac" method="POST" enctype="multipart/form-data" id="accountForm">
+                                        <div class="white_card_body">
+                                            <div class="mb-3">
+                                                <label for="fullName">Họ và tên</label>
+                                                <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nhập họ và tên" value="${requestScope.fullName}" required>
                                             <div id="fullNameError" class="error"></div>
                                         </div>
                                         <div class="mb-3">
@@ -287,6 +312,8 @@
 
                 var isValid = true;
 
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.svg)$/i;
+
                 // Reset previous error messages
                 fullNameError.textContent = '';
                 userNameError.textContent = '';
@@ -345,10 +372,13 @@
                 if (!imgAccount) {
                     imgAccountError.textContent = 'Vui lòng chọn ảnh.';
                     isValid = false;
+                } else if (!allowedExtensions.exec(imgAccount.value)) {
+                    imgAccountError.textContent = 'Định dạng ảnh không hợp lệ. Chỉ hỗ trợ các định dạng JPG, JPEG, PNG, GIF, SVG.';
+                    isValid = false;
                 }
 
                 if (!isValid) {
-                    event.preventDefault(); // Prevent form submission if validation fails
+                    event.preventDefault();
                 }
             });
         </script>
@@ -360,7 +390,7 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Thêm tác giả thành công!';
+                        notificationElement.textContent = 'Thêm tài khoản thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {
