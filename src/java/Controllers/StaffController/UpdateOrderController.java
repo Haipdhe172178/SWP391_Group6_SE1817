@@ -14,6 +14,7 @@ import SendEmail.SendEmail;
 import static SendEmail.SendEmail.sendEmailConfirmAdmin;
 import static SendEmail.SendEmail.sendEmailConfirmAdminHP;
 import static SendEmail.SendEmail.sendEmailConfirmAdminHuy;
+import static SendEmail.SendEmail.sendEmailConfirmAdminVC;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -133,37 +134,65 @@ public class UpdateOrderController extends HttpServlet {
         dao.updateOrder(orders, status);
         List<OrderDetailGuest> list = dao.getAllByOrderId(Integer.parseInt(orderID), orders.getAccountID());
 
-        if (status.equals(data1[4])) {
-            if (statusold == 2 || statusold == 3) {
-//                for (OrderDetailGuest od : list) {
-//                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "+");
-//                }
+       if(orders.getAccountID()==0){
+           if (status.equals(data1[4])) {
+            
+                for (OrderDetailGuest od : list) {
+                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "+");
+
+
                 String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
                 SendEmail sd = new SendEmail();
                 sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHuy(Integer.parseInt(orderID)));
-
+                }
+            }else if(status.equals(data1[3])){
+                  String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+                SendEmail sd = new SendEmail();
+                sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHP(Integer.parseInt(orderID)));
             }
 
-        } else {
-            if (statusold == 1 && status.equals(data1[1])) {
+            else if(status.equals(data1[2])) {
+          
                 //update quantity
                 // -
 //                for (OrderDetailGuest od : list) {
 //                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "-");
 //                }
-                String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
-                SendEmail sd = new SendEmail();
-                sd.sendEmail(gmail, "Book88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
-            }
+//                String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+//                SendEmail sd = new SendEmail();
+//                sd.sendEmail(gmail, "Book88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
+            
 
             String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
             SendEmail sd = new SendEmail();
-            sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminHP(Integer.parseInt(orderID)));
+            sd.sendEmail(gmail, "Book88", sendEmailConfirmAdminVC(Integer.parseInt(orderID)));
 
-        }
-        String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
-        SendEmail sd = new SendEmail();
-        sd.sendEmail(gmail, "BookBook88", "Đơn hàng của bạn đã được chuẩn bị");
+        }else{
+                  String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
+          SendEmail sd = new SendEmail();
+             sd.sendEmail(gmail, "BookBook88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
+            } 
+       }else{
+            if (status.equals(data1[4])) {
+            
+                for (OrderDetailGuest od : list) {
+                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "+");
+                }
+            }
+       }
+        
+        
+        
+        
+        
+        
+       
+        
+        
+        
+        
+        
+       
         response.sendRedirect("staffdashboard");
     }
 

@@ -40,7 +40,7 @@
 
             .cart-cross-outline svg {
                 fill: none;
-                stroke: #ff0000; /* Màu đỏ cho biểu tượng xóa */
+                stroke: #ff0000;
                 transition: transform 0.3s ease;
             }
 
@@ -70,6 +70,7 @@
 
             <c:otherwise>
                 <form id="cartForm" method="post">
+                    <input hidden name="url" value="cart" />
                     <div class="container">
                         <div class="row">
                             <div class="cart-table">
@@ -121,13 +122,13 @@
                                                                         </svg>
                                                                     </button>
                                                                 </span>
-                                                                <input type="text" id="quantity-${item.product.productId}" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required data-price="${item.product.price}">
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
-                                                                        <svg width="16" height="16">
-                                                                        <use xlink:href="#plus"></use>
-                                                                        </svg>
-                                                                    </button>
+                                                                <input type="text" id="quantity-${item.product.productId}" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required data-price="${item.product.price}" data-stock="${item.product.getQuantity()}>
+                                                                       <span class="input-group-btn">
+                                                                <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
+                                                                    <svg width="16" height="16">
+                                                                    <use xlink:href="#plus"></use>
+                                                                    </svg>
+                                                                </button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -221,12 +222,18 @@
                     button.addEventListener('click', function () {
                         const input = this.closest('.product-qty').querySelector('.input-number');
                         let quantity = parseInt(input.value);
+                        const stock = parseInt(input.dataset.stock);
                         const productId = this.closest('.cart-item').dataset.productId;
 
                         if (this.classList.contains('quantity-left-minus') && quantity > 1) {
                             quantity--;
                         } else if (this.classList.contains('quantity-right-plus')) {
-                            quantity++;
+                            if (quantity < stock) {
+                                quantity++;
+                            } else {
+                                alert('Số lượng có sẵn không đủ.');
+                                return; 
+                            }
                         }
 
                         input.value = quantity;
@@ -237,6 +244,7 @@
                         totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
 
                         updateCart(productId, quantity);
+                        document.querySelector('#cartForm').submit();
                     });
                 });
             });

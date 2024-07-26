@@ -44,7 +44,7 @@ public class DeleteCartControllers extends HttpServlet {
         updateCartCookie(response, cart);
 
         // Cập nhật giỏ hàng trong session
-        session.setAttribute("cart", cart);
+//        session.setAttribute("cart", cart);
 
         // Chuyển hướng đến trang giỏ hàng
         response.sendRedirect(request.getContextPath() + "/cart");

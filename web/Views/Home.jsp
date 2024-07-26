@@ -280,8 +280,8 @@
                         </div>
                     </div>
                     <div class="col-md-5 offset-md-1 mt-5 mt-md-0 text-center text-md-start">
-                        <h2>Lấy mã không hết thời gian bạn ơi. Hurry Up !!!</h2>
-                        <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
+                        <h2>${mess}</h2>
+<!--                        <div id="countdown-clocd" class="text-dark d-flex align-items-center my-3">
                             <div class="custom-time d-grid pe-3">
                                 <span class="custom-days custom-fs-1 custom-fw-normal"></span>
                                 <small>Days</small>
@@ -301,14 +301,14 @@
                                 <span class="custom-seconds custom-fs-1 custom-fw-normal"></span>
                                 <small>Sec</small>
                             </div>
-                        </div>
+                        </div>-->
                         <div id="promo-code">
                             <c:forEach items="${codediscount}" var="c">
-                                ${c.codeName}<br>
+                                <h3 style="color: gold"> ${c.codeName}<br></h3>  
 
                             </c:forEach>
                         </div>
-                        <a href="shop" class="btn mt-3 btn-primary">Shop Collection</a>
+                        <a href="shop" class="btn mt-3 btn-primary">Sản phẩm</a>
                     </div>
                 </div>
             </div>

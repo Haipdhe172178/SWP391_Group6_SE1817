@@ -99,19 +99,35 @@
                                         <td><%= count++ %></td>
                                         <td>${ls.name}</td>
                                         <td><img src="${ls.imgProduct}" alt="Product 1" width="50"></td>
-                                        <td class="price">${ls.price}</td>
+                                        <td class="price">
+                                            
+                                            <fmt:formatNumber value="${ls.price} " type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/>VND
+                                        
+                                        </td>
                                         <td>
                                             ${ls.quantity}
+                                            
+                                            
                                         </td>
-                                        <td class="total-price">${ls.quantity * ls.price}</td>
+                                        <td class="total-price">
+                                            
+                                          <fmt:formatNumber value="${ls.quantity * ls.price} " type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/>VND
+                                        
+                                        </td>
 
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
                         <div class="mt-3">
-                               <p>Phí vận chuyển: <span id="shipping-fee">20000</span>đ</p>
-                            <h2 style="color: rgba">   Tổng: <span id="total" name="total"> ${order.totalPrice}</span>đ</p></h2>
+                               <p>Phí vận chuyển: <span id="shipping-fee">20,000</span>VND</p>
+                            <h2 style="color: rgba">   Tổng: <span id="total" name="total">
+                                    
+                                    
+          <fmt:formatNumber value="${order.totalPrice} " type="currency" currencySymbol="" minFractionDigits="0" maxFractionDigits="0"/>VND
+
+                                
+                                </span></p></h2>
                             <input id="total1" name="total" value="${order.totalPrice}" hidden />
                         </div>
 

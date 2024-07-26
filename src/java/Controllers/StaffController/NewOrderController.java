@@ -8,8 +8,11 @@ import DAL.OrderDao;
 import DAL.ProductDao;
 import Models.Cart;
 import Models.Item;
+import Models.OrderDetailGuest;
 import Models.OrderGuest;
 import Models.Product;
+import SendEmail.SendEmail;
+import static SendEmail.SendEmail.sendEmailConfirmAdmin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -146,11 +149,8 @@ public class NewOrderController extends HttpServlet {
             p1.setProductId(Integer.parseInt(productId));
             
             Item i = new Item(p1, Integer.parseInt(quantity), Float.parseFloat(price));
+            
             listItem.add(i);
-        
-        
-        
-        
         
         }
       
@@ -171,9 +171,20 @@ public class NewOrderController extends HttpServlet {
             request.getRequestDispatcher("Views/Staff/NewOrder.jsp").forward(request, response);
         }else{
               od.AddOrderGuestDetails(orderId, listItem);
-       response.sendRedirect("staffdashboard");
-        }
-       
+                
+              OrderDao d = new OrderDao();
+              
+        d.updateOrderStaff(orderId,0);
+              List<OrderDetailGuest> list = d.getAllByOrderId(orderId,0);
+                  for(OrderDetailGuest odd : list){
+              d.updateProductQuantity(odd.getProductId(),odd.getQuantity(),"-");
+                 }
+             response.sendRedirect("staffdashboard");
+              String gmail = d.getEmailByOrderId(orderId,0);
+        SendEmail sd = new SendEmail();
+        sd.sendEmail(gmail, "ShopBook88", sendEmailConfirmAdmin(orderId));
+        response.sendRedirect("staffdashboard");
+        }     
     }
 
     /**

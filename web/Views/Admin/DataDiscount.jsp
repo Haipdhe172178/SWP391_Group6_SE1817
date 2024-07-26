@@ -82,6 +82,7 @@
                 border-color: #ddd;
             }
         </style>
+       
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Sales</title>
@@ -98,7 +99,7 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
 
@@ -170,13 +171,13 @@
 
                                                 <!-- Add Button -->
                                                
-                                                <form action="datetime" method="get">
+<!--                                                <form action="datetime" method="get">
                                                    
                                                     <div class="search_field"
                                                          
                                                         <table border="0px">
                                                            
-<!--                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>-->
+                                                                       <th><input  type="text" value="${date1}" name="date"  class="form-control"></th>
                                                             <input type="datetime-local" id="appointment" value="${date1}" name="date">
                                                             <th><input hidden  type="text" value="${date1}" name="dateold"  class="form-control"></th>
                                                              <input class="add_button ms-2" type="submit" value="Cập nhật ngày">
@@ -185,7 +186,7 @@
 
 
                                                     </div>
-                                                </form>
+                                                </form>-->
                                             </div>
                                         </div>
                                         <div class="QA_table mb_30">
@@ -201,7 +202,7 @@
                                                         <th scope="col">Giảm giá bao nhiêu phần trăm</th>
                                                         <th scope="col">Giảm giá nhân dịp</th>
                                                         <th scope="col">Số lượng mã phát ra</th>
-
+                                                            <th scope="col">Trạng thái</th>
                                                         <th scope="col">Hoạt động</th>
 
 
@@ -228,7 +229,13 @@
                                                                 </c:choose>
 
                                                             </td>
-                                                            <td><a href="updatecode?id=${p.codeId}">Cập nhật</td>
+                                                            <td>
+                                                                
+                                                                
+                                                                
+                                                                  <a href="updatecode?id=${p.codeId}" title="Update"><i class="fas fa-edit"></i></a>
+                                                                
+                                                                </td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
