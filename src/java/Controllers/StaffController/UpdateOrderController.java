@@ -134,7 +134,8 @@ public class UpdateOrderController extends HttpServlet {
         dao.updateOrder(orders, status);
         List<OrderDetailGuest> list = dao.getAllByOrderId(Integer.parseInt(orderID), orders.getAccountID());
 
-        if (status.equals(data1[4])) {
+       if(orders.getAccountID()==0){
+           if (status.equals(data1[4])) {
             
                 for (OrderDetailGuest od : list) {
                     dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "+");
@@ -170,7 +171,27 @@ public class UpdateOrderController extends HttpServlet {
                   String gmail = dao.getEmailByOrderId(Integer.parseInt(orderID), orders.getAccountID());
           SendEmail sd = new SendEmail();
              sd.sendEmail(gmail, "BookBook88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
+            } 
+       }else{
+            if (status.equals(data1[4])) {
+            
+                for (OrderDetailGuest od : list) {
+                    dao.updateProductQuantity(od.getProductId(), od.getQuantity(), "+");
+                }
             }
+       }
+        
+        
+        
+        
+        
+        
+       
+        
+        
+        
+        
+        
        
         response.sendRedirect("staffdashboard");
     }

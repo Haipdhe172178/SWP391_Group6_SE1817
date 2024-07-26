@@ -40,7 +40,7 @@
 
             .cart-cross-outline svg {
                 fill: none;
-                stroke: #ff0000; /* Màu đỏ cho biểu tượng xóa */
+                stroke: #ff0000; 
                 transition: transform 0.3s ease;
             }
 
@@ -70,6 +70,7 @@
 
             <c:otherwise>
                 <form id="cartForm" method="post">
+                    <input hidden name="url" value="cart" />
                     <div class="container">
                         <div class="row">
                             <div class="cart-table">
@@ -237,6 +238,7 @@
                         totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
 
                         updateCart(productId, quantity);
+                        document.querySelector('#cartForm').submit();
                     });
                 });
             });

@@ -68,9 +68,12 @@ public class ConfirmController extends HttpServlet {
 //        for(OrderDetailGuest od : list){
 //            d.updateProductQuantity(od.getProductId(),od.getQuantity(),"-");
 //        }
-        String gmail = d.getEmailByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
+        if(Integer.parseInt(aId)==0){
+             String gmail = d.getEmailByOrderId(Integer.parseInt(orderID),Integer.parseInt(aId));
         SendEmail sd = new SendEmail();
         sd.sendEmail(gmail, "ShopBook88", sendEmailConfirmAdmin(Integer.parseInt(orderID)));
+        }
+       
         response.sendRedirect("staffdashboard");
         
     }
