@@ -228,7 +228,7 @@
                         if (this.classList.contains('quantity-left-minus') && quantity > 1) {
                             quantity--;
                         } else if (this.classList.contains('quantity-right-plus')) {
-                            if (quantity < stock) {
+                            if (quantity < 20) {
                                 quantity++;
                             } else {
                                 alert('Số lượng có sẵn không đủ.');
