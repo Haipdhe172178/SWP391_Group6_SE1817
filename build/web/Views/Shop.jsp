@@ -103,7 +103,7 @@
                         <main class="col-md-9">
                             <div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
                                 <div class="showing-product">
-                                    <h6>Tìm thấy <span>${count}</span> Sản Phẩm</h6>
+                                    <h6><span>${count}</span> Sản Phẩm</h6>
                             </div>
                             <form method="GET" action="shop">                          
                                 <div class="sort-by">
@@ -120,35 +120,38 @@
                         </div>
                         <div class="row product-content product-store">
                             <fmt:setLocale value="vi_VN" />
-                            <c:forEach items="${ListA}" var="pro">
-                                <div class="col-lg-3 col-md-4 mb-4">
-                                    <a href="single?productID=${pro.productId}">
-                                        <div class="card position-relative p-4 border rounded-3">
-                                            <div class="position-absolute">
-                                                <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"></p>
-                                            </div>
-                                            <img src="${pro.imgProduct}" class="img-fluid shadow-sm" alt="product item">
-                                            <h6 class="mt-4 mb-0 fw-bold">
-                                                <a href="single?productID=${pro.productId}">${pro.name}</a>
-                                            </h6>
-                                            <div class="review-content d-flex">
-
-                                                <p class="my-2 me-2 fs-6 text-black-50">
-                                                    ${pro.author.authorName}
-                                                </p>
-
-                                            </div>
-                                            <span class="price text-primary fw-bold mb-2 fs-5">
-
-                                                <fmt:formatNumber value=" ${pro.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
-
-
-                                            </span>
-                                         
+                            <c:choose>
+                                <c:when test="${empty ListA}">
+                                    <div class="col-12">
+                                        <p class="text-center text-danger">Không tìm thấy sản phẩm nào</p>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach items="${ListA}" var="pro">
+                                        <div class="col-lg-3 col-md-4 mb-4">
+                                            <a href="single?productID=${pro.productId}">
+                                                <div class="card position-relative p-4 border rounded-3">
+                                                    <div class="position-absolute">
+                                                        <p class="bg-primary py-1 px-3 fs-6 text-white rounded-2"></p>
+                                                    </div>
+                                                    <img src="${pro.imgProduct}" class="img-fluid shadow-sm" alt="product item">
+                                                    <h6 class="mt-4 mb-0 fw-bold">
+                                                        <a href="single?productID=${pro.productId}">${pro.name}</a>
+                                                    </h6>
+                                                    <div class="review-content d-flex">
+                                                        <p class="my-2 me-2 fs-6 text-black-50">
+                                                            ${pro.author.authorName}
+                                                        </p>
+                                                    </div>
+                                                    <span class="price text-primary fw-bold mb-2 fs-5">
+                                                        <fmt:formatNumber value="${pro.price}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                                    </span>
+                                                </div>
+                                            </a>
                                         </div>
-                                    </a>
-                                </div>
-                            </c:forEach>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
 
                         <nav class="py-5" aria-label="Page navigation">
@@ -157,12 +160,12 @@
                                 <c:choose>
                                     <c:when test="${tag > 1}">
                                         <li class="page-item">
-                                            <a class="page-link" href="shop?index=${tag - 1}${query}">Prev</a>
+                                            <a class="page-link" href="shop?index=${tag - 1}${query}">Trước</a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item disabled">
-                                            <span class="page-link">Prev</span>
+                                            <span class="page-link">Trước</span>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
@@ -183,12 +186,12 @@
                                 <c:choose>
                                     <c:when test="${tag < endP}">
                                         <li class="page-item">
-                                            <a class="page-link" href="shop?index=${tag + 1}${query}">Next</a>
+                                            <a class="page-link" href="shop?index=${tag + 1}${query}">Sau</a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item disabled">
-                                            <span class="page-link">Next</span>
+                                            <span class="page-link">Sau</span>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>

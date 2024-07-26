@@ -161,6 +161,7 @@
                                             <label for="imgAccount" class="form-label">Ảnh đại diện mới</label>
                                             <input type="file" class="form-control" id="imgAccount" name="imgAccount">
                                             <img id="currentImage" src="${acc.imgAccount}" alt="Current Image" style="max-width: 200px; margin-top: 10px;">
+                                             <div id="imgAccountError" class="error">${empty sessionScope.imgAccountError ? '' : sessionScope.imgAccountError}</div>
                                         </div>
 
                                         <div class="mb-3">
@@ -455,7 +456,7 @@
                     if (notificationContainer) {
                         var notificationElement = document.createElement('div');
                         notificationElement.classList.add('notification', 'success');
-                        notificationElement.textContent = 'Cập nhật tác giả thành công!';
+                        notificationElement.textContent = 'Cập nhật tài khoản thành công!';
                         notificationContainer.appendChild(notificationElement);
                         notificationContainer.style.display = 'block';
                         setTimeout(function () {

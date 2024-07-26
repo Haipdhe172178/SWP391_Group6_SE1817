@@ -194,7 +194,7 @@
                                                         data: {
                                                             labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
                                                             datasets: [{
-                                                                    label: 'Total Orders',
+                                                                    label: 'Tổng số doanh thu',
                                                                     data: monthlyOrderData,
                                                                     backgroundColor: [
                                                                         'rgba(255, 99, 132, 0.6)',
@@ -233,7 +233,7 @@
                                                         data: {
                                                             labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
                                                             datasets: [{
-                                                                    label: 'Total Orders',
+                                                                    label: 'Tổng đơn đặt hàng',
                                                                     data: monthlyOrderData,
                                                                     backgroundColor: [
                                                                         'rgba(255, 99, 132, 0.6)',

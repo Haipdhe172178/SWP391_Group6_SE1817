@@ -20,7 +20,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
-
+import org.mindrot.jbcrypt.BCrypt;
 /**
  *
  * @author huyca
@@ -114,7 +114,7 @@ public class AddAcountControllers extends HttpServlet {
             imgProduct = request.getContextPath() + "/img/" + fileName;
         }
 
-      
+        String hashPassword = BCrypt.hashpw(passWord, BCrypt.gensalt()); 
         AccountDAO accountDAO = new AccountDAO();
         boolean userNameExists = accountDAO.checkUserNameExists(userName);
         boolean emailExists = accountDAO.checkEmailExists(email);
@@ -141,7 +141,7 @@ public class AddAcountControllers extends HttpServlet {
             request.getRequestDispatcher("Views/Admin/AddAccount.jsp").forward(request, response);
             return;
         }
-        boolean accountCreated = accountDAO.createAccount(fullName, userName, passWord, gender, email, phoneNumber, address, roleId, imgProduct);
+        boolean accountCreated = accountDAO.createAccount(fullName, userName, hashPassword, gender, email, phoneNumber, address, roleId, imgProduct);
         session.setAttribute("notification", "success");
         response.sendRedirect(request.getContextPath() + "/addac");
     }

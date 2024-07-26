@@ -5,6 +5,7 @@
 package DAL;
 
 import Models.Account;
+import Models.CategorySales;
 import Models.Item;
 import Models.OrderCustomer;
 import Models.OrderDetailCustomer;
@@ -13,6 +14,7 @@ import Models.OrderGuest;
 import Models.OrderStatus;
 import Models.Orders;
 import Models.Product;
+import Models.ProductSales;
 
 import Models.StatusOrder;
 import java.sql.PreparedStatement;
@@ -227,32 +229,84 @@ public class OrderDao extends DBContext {
         return listOrderGuests;
     }
 
-    public List<Product> getMostPurchasedProducts() {
-        List<Product> products = new ArrayList<>();
-        String query = "SELECT p.ProductID, p.Name, p.Price, p.imgProduct, \n"
-                + "       (COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) AS TotalQuantity \n"
-                + "FROM Product p \n"
-                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID \n"
-                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID \n"
-                + "GROUP BY p.ProductID, p.Name, p.Price, p.imgProduct\n"
-                + "HAVING (COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) > 0\n"
-                + "ORDER BY TotalQuantity DESC;";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setProductId(rs.getInt("ProductID"));
-                product.setName(rs.getString("Name"));
-                product.setPrice(rs.getFloat("Price"));
-                product.setImgProduct(rs.getString("imgProduct"));
-                product.setQuantity(rs.getInt("TotalQuantity"));
-                products.add(product);
+//    public List<Product> getMostPurchasedProducts() {
+//        List<Product> products = new ArrayList<>();
+//        String query = "SELECT p.ProductID, p.Name, p.Price, p.imgProduct, \n"
+//                + "       (COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) AS TotalQuantity \n"
+//                + "FROM Product p \n"
+//                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID \n"
+//                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID \n"
+//                + "GROUP BY p.ProductID, p.Name, p.Price, p.imgProduct\n"
+//                + "HAVING (COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0)) > 0\n"
+//                + "ORDER BY TotalQuantity DESC;";
+//        try {
+//            PreparedStatement ps = connection.prepareStatement(query);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Product product = new Product();
+//                product.setProductId(rs.getInt("ProductID"));
+//                product.setName(rs.getString("Name"));
+//                product.setPrice(rs.getFloat("Price"));
+//                product.setImgProduct(rs.getString("imgProduct"));
+//                product.setQuantity(rs.getInt("TotalQuantity"));
+//                products.add(product);
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return products;
+//    }
+    public int getQuantitySoldByCategoryId(int categoryId) {
+        int quantitySold = 0;
+        String query = "SELECT COALESCE(SUM(total_quantity), 0) AS TotalQuantity "
+                + "FROM ("
+                + "    SELECT SUM(odc.Quantity) AS total_quantity "
+                + "    FROM OrderDetailCustomer odc "
+                + "    INNER JOIN Product p ON odc.ProductID = p.ProductID "
+                + "    WHERE p.CategoryID = ? "
+                + "    UNION ALL "
+                + "    SELECT SUM(odg.Quantity) AS total_quantity "
+                + "    FROM OrderDetailGuest odg "
+                + "    INNER JOIN Product p ON odg.ProductID = p.ProductID "
+                + "    WHERE p.CategoryID = ?"
+                + ") AS combined_quantities";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+            ps.setInt(2, categoryId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    quantitySold = rs.getInt("TotalQuantity");
+                }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return products;
+        return quantitySold;
+    }
+
+    public List<CategorySales> getCategorySales() {
+        List<CategorySales> categorySalesList = new ArrayList<>();
+        String query = "SELECT c.CategoryID, c.CategoryName, COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CategoryID = c.CategoryID "
+                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID "
+                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID "
+                + "GROUP BY c.CategoryID, c.CategoryName";
+
+        try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int categoryId = rs.getInt("categoryId");
+                String categoryName = rs.getString("categoryName");
+                int totalQuantitySold = rs.getInt("TotalQuantity");
+
+                CategorySales categorySales = new CategorySales(categoryId, categoryName, totalQuantitySold);
+                categorySalesList.add(categorySales);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categorySalesList;
     }
 
     public int OrderCount() {
@@ -279,32 +333,6 @@ public class OrderDao extends DBContext {
         }
 
         return totalOrders;
-    }
-
-    public List<Map<String, Object>> getTopBuyers() {
-        List<Map<String, Object>> topBuyers = new ArrayList<>();
-        String query = "SELECT a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address, SUM(oc.TotalPrice) AS TotalSpent "
-                + "FROM Account a "
-                + "JOIN OrderCustomer oc ON a.AccountID = oc.AccountID "
-                + "GROUP BY a.AccountID, a.FullName, a.Email, a.PhoneNumber, a.Address "
-                + "ORDER BY TotalSpent DESC";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Map<String, Object> buyer = new HashMap<>();
-                buyer.put("accountId", rs.getInt("AccountID"));
-                buyer.put("fullName", rs.getString("FullName"));
-                buyer.put("email", rs.getString("Email"));
-                buyer.put("phoneNumber", rs.getString("PhoneNumber"));
-                buyer.put("address", rs.getString("Address"));
-                buyer.put("totalSpent", rs.getFloat("TotalSpent"));
-                topBuyers.add(buyer);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return topBuyers;
     }
 
     public int addOrderCustomer(int accID, int addressID, float totalPrice, int statusID, int paymentStatus, List<Item> listItem) {
@@ -1980,5 +2008,190 @@ public class OrderDao extends DBContext {
             }
         }
         return false;
+    }
+
+    public List<ProductSales> getProductsByCategory(int categoryId, int index) {
+        List<ProductSales> productSalesList = new ArrayList<>();
+        String query = "SELECT p.ProductID, p.Name, COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) AS TotalQuantity "
+                + "FROM Product p "
+                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID "
+                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID "
+                + "WHERE p.CategoryID = ? "
+                + "GROUP BY p.ProductID, p.Name "
+                + "HAVING COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) > 0 "
+                + "ORDER BY p.Name "
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+            ps.setInt(2, (index - 1) * 5);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    String name = rs.getString("name");
+                    int totalQuantitySold = rs.getInt("totalQuantity");
+
+                    ProductSales productSales = new ProductSales(productId, name, totalQuantitySold);
+                    productSalesList.add(productSales);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productSalesList;
+    }
+
+    public int countProductsByCategory(int categoryId) {
+        int count = 0;
+        String query = "SELECT COUNT(*) AS TotalCount "
+                + "FROM ( "
+                + "    SELECT p.ProductID "
+                + "    FROM Product p "
+                + "    LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID "
+                + "    LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID "
+                + "    WHERE p.CategoryID = ? "
+                + "    GROUP BY p.ProductID "
+                + "    HAVING COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) > 0 "
+                + ") AS SubQuery";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("TotalCount");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public String getCategoryNameById(int categoryId) {
+        String categoryName = "";
+        String query = "SELECT CategoryName FROM Category WHERE CategoryID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    categoryName = rs.getString("CategoryName");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryName;
+    }
+
+    public List<ProductSales> sortProductsByCategory(int categoryId, int index, String sort) {
+        List<ProductSales> productSalesList = new ArrayList<>();
+        String sortOrder = "p.Name"; // Default sort by name
+
+        if ("priceasc".equalsIgnoreCase(sort)) {
+            sortOrder = "TotalQuantity ASC";
+        } else if ("pricedesc".equalsIgnoreCase(sort)) {
+            sortOrder = "TotalQuantity DESC";
+        }
+
+        String query = "SELECT ProductID, Name, TotalQuantity "
+                + "FROM ( "
+                + "    SELECT p.ProductID, p.Name, COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) AS TotalQuantity "
+                + "    FROM Product p "
+                + "    LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID "
+                + "    LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID "
+                + "    WHERE p.CategoryID = ? "
+                + "    GROUP BY p.ProductID, p.Name "
+                + "    HAVING COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) > 0 "
+                + ") AS SubQuery "
+                + "ORDER BY " + sortOrder + " "
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+            ps.setInt(2, (index - 1) * 5);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int productId = rs.getInt("ProductID");
+                    String name = rs.getString("Name");
+                    int totalQuantitySold = rs.getInt("TotalQuantity");
+
+                    ProductSales productSales = new ProductSales(productId, name, totalQuantitySold);
+                    productSalesList.add(productSales);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productSalesList;
+    }
+
+    public List<ProductSales> searchProductsByCategory(int categoryId, int index, String searchTerm) {
+        List<ProductSales> productSalesList = new ArrayList<>();
+
+        String query = "SELECT p.ProductID, p.Name, COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) AS TotalQuantity \n"
+                + "FROM Product p \n"
+                + "LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID \n"
+                + "LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID \n"
+                + "WHERE p.CategoryID = ?\n"
+                + "AND p.Name LIKE ?\n"
+                + "GROUP BY p.ProductID, p.Name \n"
+                + "HAVING COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) > 0 \n"
+                + "ORDER BY p.ProductID \n"
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+            ps.setString(2, "%" + searchTerm + "%");
+            ps.setInt(3, (index - 1) * 5);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int productId = rs.getInt("ProductID");
+                    String name = rs.getString("Name");
+                    int totalQuantitySold = rs.getInt("TotalQuantity");
+
+                    ProductSales productSales = new ProductSales(productId, name, totalQuantitySold);
+                    productSalesList.add(productSales);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productSalesList;
+    }
+
+    public int countProductsSearch(int categoryId, String searchTerm) {
+        int count = 0;
+
+        String query = "SELECT COUNT(*) AS TotalCount "
+                + "FROM ( "
+                + "    SELECT p.ProductID "
+                + "    FROM Product p "
+                + "    LEFT JOIN OrderDetailCustomer odc ON p.ProductID = odc.ProductID "
+                + "    LEFT JOIN OrderDetailGuest odg ON p.ProductID = odg.ProductID "
+                + "    WHERE p.CategoryID = ? "
+                + "    AND p.Name LIKE ? "
+                + "    GROUP BY p.ProductID "
+                + "    HAVING COALESCE(SUM(odc.Quantity), 0) + COALESCE(SUM(odg.Quantity), 0) > 0 "
+                + ") AS SubQuery";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, categoryId);
+            ps.setString(2, "%" + searchTerm + "%"); // Search term for name
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("TotalCount");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

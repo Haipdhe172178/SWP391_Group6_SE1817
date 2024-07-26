@@ -127,7 +127,7 @@
                             <ul class="pagination justify-content-center gap-4">
                                 <li class="page-item">
                                     <c:if test="${page > 1}">
-                                        <a class="page-link" href="blog?page=${page-1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Prev</a>
+                                        <a class="page-link" href="blog?page=${page-1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Trước</a>
                                     </c:if>
                                 </li>
                                 <c:if test="${total <= 5}">
@@ -162,7 +162,7 @@
                                 </c:if>
                                 <li class="page-item">
                                     <c:if test="${page < total}">
-                                        <a class="page-link" href="blog?page=${page+1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Next</a>
+                                        <a class="page-link" href="blog?page=${page+1}&id=${requestScope.tid}&sort=${requestScope.sortNews}">Sau</a>
                                     </c:if>
                                 </li>
                             </ul>

@@ -91,7 +91,7 @@
                                                 <form action="data" method="GET" id="sortForm">
                                                     <input type="hidden" name="statusFilter" id="statusFilter" value="${param.statusFilter}">
                                             </form>
-                                            <table class="table lms_table_active ">
+                                            <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">ID</th>
@@ -124,37 +124,45 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach items="${product}" var="p">
-                                                        <tr class="${p.status == 0 ? 'inactive-row' : ''}">
-                                                            <td>${p.productId}</td>
-                                                            <td>${p.name}</td>
-                                                            <td>
-                                                                <fmt:formatNumber value="${p.price}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                                            </td>
-                                                            <td>${p.quantity}</td>
-                                                            <td>${fn:substring(p.description, 0, 50)}...</td>
-                                                            <td>${p.category.categoryName}</td>
-                                                            <td>${p.author.authorName}</td>
-                                                            <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
-                                                            <td>${p.oage.age}</td>
-                                                            <td>
-                                                                <c:choose>
-                                                                    <c:when test="${p.status == 1}">
-                                                                        <span style="color: green;">Active</span>
-                                                                    </c:when>
-                                                                    <c:when test="${p.status == 0}">
-                                                                        <span style="color: red;">Inactive</span>
-                                                                    </c:when>
-                                                                </c:choose>
-                                                            </td>
-                                                            <td>
-                                                                <a href="update?id=${p.productId}" title="Update"><i class="fas fa-edit"></i></a>
-                                                                <a href="javascript:void(0);" title="Ẩn" onclick="return showConfirmModal('hideproduct', ${p.productId});"><i class="fas fa-ban"></i></a>
-                                                                <a href="javascript:void(0);" title="Hiện" onclick="return showConfirmModal('showproduct', ${p.productId});"><i class="fas fa-check-circle"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-
+                                                    <c:choose>
+                                                        <c:when test="${empty product}">
+                                                            <tr>
+                                                                <td colspan="10" class="text-center">Không tìm thấy sản phẩm nào</td>
+                                                            </tr>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:forEach items="${product}" var="p">
+                                                                <tr class="${p.status == 0 ? 'inactive-row' : ''}">
+                                                                    <td>${p.productId}</td>
+                                                                    <td>${p.name}</td>
+                                                                    <td>
+                                                                        <fmt:formatNumber value="${p.price}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
+                                                                    </td>
+                                                                    <td>${p.quantity}</td>
+                                                                    <td>${fn:substring(p.description, 0, 50)}...</td>
+                                                                    <td>${p.category.categoryName}</td>
+                                                                    <td>${p.author.authorName}</td>
+                                                                    <td><img src="${p.imgProduct}" alt="Product Image" style="width:100px;height:auto;"></td>
+                                                                    <td>${p.oage.age}</td>
+                                                                    <td>
+                                                                        <c:choose>
+                                                                            <c:when test="${p.status == 1}">
+                                                                                <span style="color: green;">Active</span>
+                                                                            </c:when>
+                                                                            <c:when test="${p.status == 0}">
+                                                                                <span style="color: red;">Inactive</span>
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="update?id=${p.productId}" title="Update"><i class="fas fa-edit"></i></a>
+                                                                        <a href="javascript:void(0);" title="Ẩn" onclick="return showConfirmModal('hideproduct', ${p.productId});"><i class="fas fa-ban"></i></a>
+                                                                        <a href="javascript:void(0);" title="Hiện" onclick="return showConfirmModal('showproduct', ${p.productId});"><i class="fas fa-check-circle"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -376,26 +384,26 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script>
-            function filterStatus(status) {
-                const statusFilter = document.getElementById('statusFilter');
-                statusFilter.value = status;
-                document.getElementById('sortForm').submit();
-            }
-            var actionToPerform = '';
-            var productIdToUse = '';
+                                function filterStatus(status) {
+                                    const statusFilter = document.getElementById('statusFilter');
+                                    statusFilter.value = status;
+                                    document.getElementById('sortForm').submit();
+                                }
+                                var actionToPerform = '';
+                                var productIdToUse = '';
 
-            function showConfirmModal(action, productId) {
-                actionToPerform = action;
-                productIdToUse = productId;
-                var message = action === 'hideproduct' ? 'Bạn có chắc chắn muốn ẩn sản phẩm này không?' : 'Bạn có chắc chắn muốn hiện sản phẩm này không?';
-                document.getElementById('confirmationMessage').textContent = message;
-                $('#confirmationModal').modal('show');
-                return false;
-            }
+                                function showConfirmModal(action, productId) {
+                                    actionToPerform = action;
+                                    productIdToUse = productId;
+                                    var message = action === 'hideproduct' ? 'Bạn có chắc chắn muốn ẩn sản phẩm này không?' : 'Bạn có chắc chắn muốn hiện sản phẩm này không?';
+                                    document.getElementById('confirmationMessage').textContent = message;
+                                    $('#confirmationModal').modal('show');
+                                    return false;
+                                }
 
-            document.getElementById('confirmButton').onclick = function () {
-                window.location.href = 'active?action=' + actionToPerform + '&productId=' + productIdToUse;
-            };
+                                document.getElementById('confirmButton').onclick = function () {
+                                    window.location.href = 'active?action=' + actionToPerform + '&productId=' + productIdToUse;
+                                };
         </script>
     </body>
 </html>

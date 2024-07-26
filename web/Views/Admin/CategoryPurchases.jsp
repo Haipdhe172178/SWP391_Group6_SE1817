@@ -1,5 +1,5 @@
 <%-- 
-    Document   : OrderStatus
+    Document   : 
     Created on : June 30, 2024
     Author     : huyca
 --%>
@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="css/style1.css" />
         <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-     
+
     </head>
 
     <body class="crm_body_bg">
@@ -48,7 +48,7 @@
                                     <div class="white_card_header">
                                         <div class="box_header m-0">
                                             <div class="main-title">
-                                                <h3 class="m-0">Đơn hàng trạng thái: ${statusName}</h3>
+                                                <h3 class="m-0">Đơn hàng trạng thái: ${categoryName}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -56,49 +56,37 @@
                                 <div class="white_card_body QA_section">
                                     <div class="serach_field_2">
                                         <div class="search_inner">
-                                            <form action="orderstatus" method="GET">
+                                            <form action="catep" method="GET">
                                                 <div class="search_field">
                                                     <input name="s" type="text" placeholder="Tìm kiếm....">
-                                                    <input name="status" type="hidden" value="${statusId}">
+                                                    <input name="categoryId" type="hidden" value="${categoryId}">
                                                 </div>
-                                                <button type="submit"> <img src="img/icon/icon_search.svg" alt> </button>
+                                                <button type="submit">
+                                                    <img src="img/icon/icon_search.svg" alt="Search Icon">
+                                                </button>
                                             </form>
                                         </div>
+
                                     </div>
 
                                     <div class="QA_table table-container scrollable-table">
                                         <table class="table lms_table_active2 p-0" id="orderTable">
                                             <thead>
                                                 <tr>
-                                                    <th>ID đơn hàng</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Email</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Tổng giá
-                                                        <a href="orderstatus?status=${statusId}&sort=priceasc"><i class="fas fa-arrow-up"></i></a>
-                                                        <a href="orderstatus?status=${statusId}&sort=pricedesc"><i class="fas fa-arrow-down"></i></a>
+                                                    <th>ID </th>
+                                                    <th>Tên </th>
+                                                    <th>Lượt mua
+                                                        <a href="catep?categoryId=${categoryId}&sort=priceasc"><i class="fas fa-arrow-up"></i></a>
+                                                        <a href="catep?categoryId=${categoryId}&sort=pricedesc"><i class="fas fa-arrow-down"></i></a>
                                                     </th>
-                                                    <th>Ngày
-                                                        <a href="orderstatus?status=${statusId}&sort=dateasc"><i class="fas fa-arrow-up"></i></a>
-                                                        <a href="orderstatus?status=${statusId}&sort=datedesc"><i class="fas fa-arrow-down"></i></a>
-                                                    </th>
-                                                    <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="order" items="${ListA}">
+                                                <c:forEach var="product" items="${ListA}">
                                                     <tr>
-                                                        <td>${order.orderID}</td>
-                                                        <td>${order.fullName}</td>
-                                                        <td>${order.email != null ? order.email : 'N/A'}</td>
-                                                        <td>${order.phoneNumber != null ? order.phoneNumber : 'N/A'}</td>
-                                                        <td>${order.address != null ? order.address : 'N/A'}</td>
-                                                        <td>
-                                                            <fmt:formatNumber value="${order.totalPrice}" type="number" minFractionDigits="0" maxFractionDigits="0"/> VND
-                                                        </td>
-                                                        <td><fmt:formatDate value="${order.date}" pattern="yyyy-MM-dd"/></td>
-                                                        <td>${statusName}</td>
+                                                        <td>${product.productId}</td>
+                                                        <td>${product.name}</td>
+                                                        <td>${product.totalQuantity}</td>                                                 
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -116,7 +104,7 @@
                                                 <!-- Nút Previous -->
                                                 <c:if test="${tag > 1}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="orderstatus?status=${statusId}&index=${tag - 1}${query}" aria-label="Previous">
+                                                        <a class="page-link" href="catep?categoryId=${categoryId}&index=${tag - 1}${query}" aria-label="Previous">
                                                             <span aria-hidden="true"><i class="fas fa-arrow-left"></i></span>
                                                         </a>
                                                     </li>
@@ -125,14 +113,14 @@
                                                 <!-- Vòng lặp để tạo các nút trang -->
                                                 <c:forEach begin="${start}" end="${end}" var="i">
                                                     <li class="page-item ${tag == i ? 'active' : ''}">
-                                                        <a class="page-link" href="orderstatus?status=${statusId}&index=${i}${query}">${i}</a>
+                                                        <a class="page-link" href="catep?categoryId=${categoryId}&index=${i}${query}">${i}</a>
                                                     </li>
                                                 </c:forEach>
 
                                                 <!-- Nút Next -->
                                                 <c:if test="${tag < endP}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="orderstatus?status=${statusId}&index=${tag + 1}${query}" aria-label="Next">
+                                                        <a class="page-link" href="catep?categoryId=${categoryId}&index=${tag + 1}${query}" aria-label="Next">
                                                             <span aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
                                                         </a>
                                                     </li>

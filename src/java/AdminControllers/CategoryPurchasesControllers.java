@@ -5,36 +5,21 @@
 package AdminControllers;
 
 import DAL.OrderDao;
-import Models.Account;
 import Models.CategorySales;
-import Models.OrderCustomer;
-import Models.OrderDetailCustomer;
-import Models.OrderDetailGuest;
-import Models.OrderGuest;
-import Models.OrderStatus;
-import Models.Orders;
-import Models.Product;
+import Models.ProductSales;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  *
  * @author huyca
  */
-@WebServlet(name = "DashControllers", urlPatterns = {"/dash"})
-public class DashControllers extends HttpServlet {
+public class CategoryPurchasesControllers extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,10 +38,10 @@ public class DashControllers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DashControllers</title>");
+            out.println("<title>Servlet CategoryPurchasesControllers</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DashControllers at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategoryPurchasesControllers at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,25 +59,54 @@ public class DashControllers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String categoryIdParam = request.getParameter("categoryId");
+        int categoryId = Integer.parseInt(categoryIdParam);
+        String searchName = request.getParameter("s");
+        String indexPage = request.getParameter("index");
+        int index;
+        if (indexPage != null) {
+            index = Integer.parseInt(indexPage);
+        } else {
+            index = 1;
+        }
+
+        String sort = request.getParameter("sort");
         OrderDao orderDao = new OrderDao();
+        int total = 0;
+        List<ProductSales> productSaleses;
+        if (searchName != null && !searchName.isEmpty()) {
+            productSaleses = orderDao.searchProductsByCategory(categoryId, index, searchName);
+            total = orderDao.countProductsSearch(categoryId, searchName);
+        } else if (sort != null) {
+            productSaleses = orderDao.sortProductsByCategory(categoryId, index, sort);
+            total = orderDao.countProductsByCategory(categoryId);
+        } else {
+            productSaleses = orderDao.getProductsByCategory(categoryId, index);
+            total = orderDao.countProductsByCategory(categoryId);
+        }
 
-        List<OrderCustomer> customerOrders = orderDao.getAllOrderCustomers();
-        List<OrderGuest> guestOrders = orderDao.getAllOrderGuests();
-        int totalQuantity = orderDao.OrderCount();
-        float totalRevenue = getTotalRevenue(customerOrders, guestOrders);
+        int endPage = total / 5;
+        if (total % 5 != 0) {
+            endPage++;
+        }
 
-        List<Orders> order = orderDao.getOrder();
-        List<CategorySales> categorySalesList = orderDao.getCategorySales();
-   
+        String query = "";
+        if (sort != null && !sort.isEmpty()) {
+            query += "&sort=" + sort;
+        }
+        if (searchName != null && !searchName.isEmpty()) {
+            query += "&s=" + searchName;
+        }
 
-        request.setAttribute("totalQuantity", totalQuantity);
-        request.setAttribute("totalRevenue", totalRevenue);
-        request.setAttribute("recentOrders", order);
-        request.setAttribute("categorySalesList", categorySalesList);
-        List<OrderStatus> orderStatusCounts = orderDao.getOrderStatusCounts();
-        request.setAttribute("orderStatusCounts", orderStatusCounts);
-
-        request.getRequestDispatcher("Views/Admin/Dashboard.jsp").forward(request, response);
+        String categoryName = orderDao.getCategoryNameById(categoryId);
+        request.setAttribute("categoryName", categoryName);
+        request.setAttribute("categoryId", categoryId);
+        request.setAttribute("ListA", productSaleses);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tag", index);
+        request.setAttribute("sort", sort);
+        request.setAttribute("query", query);
+        request.getRequestDispatcher("Views/Admin/CategoryPurchases.jsp").forward(request, response);
     }
 
     /**
@@ -119,18 +133,4 @@ public class DashControllers extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private float getTotalRevenue(List<OrderCustomer> customerOrders, List<OrderGuest> guestOrders) {
-        float totalRevenue = 0;
-        for (OrderCustomer order : customerOrders) {
-            if (order.getStatus().getStatusId() == 4) {
-                totalRevenue += order.getTotalPrice();
-            }
-        }
-        for (OrderGuest order : guestOrders) {
-            if (order.getStatus().getStatusId() == 4) {
-                totalRevenue += order.getTotalPrice();
-            }
-        }
-        return totalRevenue;
-    }
 }

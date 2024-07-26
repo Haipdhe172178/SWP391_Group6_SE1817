@@ -148,7 +148,7 @@
                 <div class="row">
                     <div class="breadcrumbs" style="padding-top: 2em">
                         <span class="item"><a href="shop">Cửa hàng / </a></span>
-                        <span class="item"><a href="filter?categoryId=${requestScope.product.category.categoryId}">${requestScope.product.category.categoryName} / </a></span>
+                        <span class="item"><a href="shop?categoryId=${requestScope.product.category.categoryId}">${requestScope.product.category.categoryName} / </a></span>
                     <span class="item"><a href="single?productID=${requestScope.product.productId}">${requestScope.product.name} </a></span>
                 </div>
             </div>
@@ -202,7 +202,18 @@
                                         </svg>
                                     </c:forEach>
                                 </div>
-                                <div class="product-quantity">Đã bán: ${requestScope.quantitySold}</div>
+                                <div class="product-quantity">
+                                    <c:choose>
+                                        <c:when test="${requestScope.quantitySold == 0}">
+                                            <span style=" color: black">Chưa có lượt bán</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span>${requestScope.quantitySold} sản phẩm đã bán</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!--Đã bán-->
+                                <div class="product-quantity"></div>
                             </div>
 
                             <hr>
@@ -230,7 +241,14 @@
                                 <form id="formSubmit">
                                     <div class="product-quantity my-3">
                                         <div class="item-title">
-                                            <l>${requestScope.product.quantity} sách có sẵn</l>
+                                            <c:choose>
+                                                <c:when test="${requestScope.product.quantity == 0}">
+                                                    <span style="font-weight: bold; color: red">Hết hàng</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <l>${requestScope.product.quantity} sách có sẵn</l>
+                                                    </c:otherwise>
+                                                </c:choose>
                                         </div>
                                         <div class="stock-button-wrap mt-2 d-flex flex-wrap align-items-center">
                                             <div class="product-quantity">
@@ -252,11 +270,21 @@
                                     </div>
                                     <div class="action-buttons my-3 d-flex flex-wrap gap-3">
                                         <input type="hidden" name="action" value="singleToCheckout">
-                                        <button type="button" class="btn" onclick="buyNow()">Mua ngay</button>
-                                        <input type="hidden" name="productId" value="${requestScope.product.productId}">
-                                        <button type="button" formaction="cart"  onclick="addToCart()" formmethod="post" class="btn btn-dark">Thêm vào giỏ hàng</button>
+                                        <c:choose>
+                                            <c:when test="${requestScope.product.quantity == 0}">
+                                                <button type="button" class="btn btn-dark" onclick="buyNow()" disabled>Mua ngay</button>
+                                                <input type="hidden" name="productId" value="${requestScope.product.productId}">
+                                                <button type="button" formaction="cart" onclick="addToCart()" formmethod="post" class="btn btn-dark" disabled>Thêm vào giỏ hàng</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="button" class="btn" onclick="buyNow()">Mua ngay</button>
+                                                <input type="hidden" name="productId" value="${requestScope.product.productId}">
+                                                <button type="button" formaction="cart" onclick="addToCart()" formmethod="post" class="btn btn-dark">Thêm vào giỏ hàng</button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </form>
+
                                 <c:if test="${message ne null}">
                                     <div id="alert" class="alert-box ${type}">
                                         ${message}
@@ -278,13 +306,13 @@
                                         form.method = 'post';
                                         form.submit();
                                     }
-                                     function addToCart() {
+                                    function addToCart() {
                                         var form = document.getElementById('formSubmit');
                                         form.action = 'cart';
                                         form.method = 'post';
                                         form.submit();
                                     }
-                                    
+
                                     function decreaseQuantity() {
                                         let quantityInput = document.getElementById('quantity');
                                         let currentValue = parseInt(quantityInput.value);
@@ -326,7 +354,6 @@
 
                             </div>
                         </div>
-                        <hr>
                     </div>
                 </div>
             </div>
@@ -338,11 +365,11 @@
         <div class="container">
             <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
                 <h3 class="d-flex align-items-center">Sách cùng thể loại</h3>
-                <a href="filter?categoryId=${requestScope.product.category.categoryId}" class="btn">Xem tất cả</a>
+                <a href="shop?categoryId=${requestScope.product.category.categoryId}" class="btn">Xem tất cả</a>
             </div>
             <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next">
                 <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-                <use xlink:href="#alt-arrow-right-outline"></use>
+                <use xlink:href="#alt-arrow-right-outline"></use> 
                 </svg>
             </div>
             <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev">
@@ -577,6 +604,7 @@
                                                      flex-direction: column;">
                                                     <span class="author-name" style="font-weight: bold">${feedback.account.fullName}</span>
                                                     <span class="review-date" style="font-size: 15px">${feedback.feedbackDate}</span>
+
                                                 </div>
                                             </div>
                                             <div class="review-content">

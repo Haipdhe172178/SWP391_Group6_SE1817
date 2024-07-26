@@ -41,6 +41,7 @@
         <url-pattern>/updatecategory</url-pattern>
         <url-pattern>/update</url-pattern>
         <url-pattern>/upnews</url-pattern>
+        <url-pattern>/catep</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>StaffAuthorizationFilter</filter-name>
@@ -320,6 +321,10 @@
         <servlet-name>TrackOrder</servlet-name>
         <servlet-class>Controllers.TrackOrderControllers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryPurchasesControllers</servlet-name>
+        <servlet-class>AdminControllers.CategoryPurchasesControllers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControllers</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -587,6 +592,10 @@
     <servlet-mapping>
         <servlet-name>TrackOrder</servlet-name>
         <url-pattern>/trackorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryPurchasesControllers</servlet-name>
+        <url-pattern>/catep</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

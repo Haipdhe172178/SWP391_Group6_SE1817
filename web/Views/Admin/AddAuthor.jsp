@@ -30,34 +30,59 @@
                 font-size: 14px;
                 margin-top: 5px;
             }
+            .notification-container {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                display: none;
+                z-index: 1000;
+                animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s;
+            }
+
+            .notification {
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .notification.success {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .notification.error {
+                background-color: #f44336;
+                color: white;
+            }
         </style>
     </head>
 
     <body class="crm_body_bg">
 
-         <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
+        <jsp:include page="../../common/sidebarDashboard.jsp"></jsp:include>
 
-        <section class="main_content dashboard_part large_header_bg">
+            <section class="main_content dashboard_part large_header_bg">
 
             <jsp:include page="../../common/headerDashboard.jsp"></jsp:include>
-            <div id="notification-container" class="notification-container"></div>
-            <div class="main_content_iner">
-                <div class="container-fluid p-0">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="white_card card_height_100 mb_30">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Thêm Tác Giả</h3>
+                <div id="notification-container" class="notification-container"></div>
+                <div class="main_content_iner">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Thêm Tác Giả</h3>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <form action="adda" method="POST" id="myForm">
-                                    <div class="white_card_body">
-                                        <div class="mb-3">
-                                            <label for="authorName">Tên tác giả</label>
-                                            <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" value="${requestScope.authorName}" required>
+                                    <form action="adda" method="POST" id="myForm">
+                                        <div class="white_card_body">
+                                            <div class="mb-3">
+                                                <label for="authorName">Tên tác giả</label>
+                                                <input type="text" class="form-control" id="authorName" name="name" placeholder="Nhập tên tác giả" value="${requestScope.authorName}" required>
                                             <div id="authorNameError" class="error">
                                                 <c:if test="${not empty errorMessage}">
                                                     <p class="error">${errorMessage}</p>
@@ -70,8 +95,8 @@
                                             <div id="authorDescriptionError" class="error"></div>
                                         </div>
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Add Author</button>
-                                            <a href="author" class="btn btn-warning">Back</a>
+                                            <button type="submit" class="btn btn-primary">Thêm tác giả</button>
+                                            <a href="author" class="btn btn-warning">Trở lại</a>
                                         </div>
                                     </div>
                                 </form>
