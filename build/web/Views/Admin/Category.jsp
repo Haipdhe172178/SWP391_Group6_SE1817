@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
         <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <link rel="stylesheet" href="css/metisMenu.css">
 
@@ -125,7 +125,10 @@
                                                             <td>${p.categoryName}</td>
 
 
-                                                            <td><a href="updatecategory?id=${p.categoryId}">UPDATE</td>
+                                                            <td> 
+                                                                 <a href="updatecategory?id=${p.categoryId}" title="Update"><i class="fas fa-edit"></i></a>
+                                                                
+                                                             </td>
                                                         </tr>
 
                                                     </c:forEach>

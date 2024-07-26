@@ -50,7 +50,7 @@
                                     <div class="white_card_header">
                                         <div class="box_header m-0">
                                             <div class="main-title">
-                                                <h3 class="m-0">Data code</h3>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -67,8 +67,8 @@
                                             <input type="text" class="form-control"  name="id" value="${category.categoryId}" required>
                                         </div>
 
-
-                                        <button type="submit" class="btn btn-primary" name="submit">Update</button>
+                                    
+                                        <button type="submit" class="btn btn-primary" name="submit">Cập Nhật</button>
                                 </div>
                                 </form>
                                 <h3>${error}</h3>
