@@ -40,7 +40,7 @@
 
             .cart-cross-outline svg {
                 fill: none;
-                stroke: #ff0000; /* Màu đỏ cho biểu tượng xóa */
+                stroke: #ff0000; 
                 transition: transform 0.3s ease;
             }
 
