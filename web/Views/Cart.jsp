@@ -70,6 +70,7 @@
 
             <c:otherwise>
                 <form id="cartForm" method="post">
+                    <input hidden name="url" value="cart" />
                     <div class="container">
                         <div class="row">
                             <div class="cart-table">
@@ -237,6 +238,7 @@
                         totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
 
                         updateCart(productId, quantity);
+                        document.querySelector('#cartForm').submit();
                     });
                 });
             });
