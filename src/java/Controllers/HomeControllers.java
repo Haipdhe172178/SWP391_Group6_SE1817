@@ -81,6 +81,12 @@ public class HomeControllers extends HttpServlet {
           
           DiscountDAO dao = new DiscountDAO();
           codename = dao.Displaycode();
+          String mess = "";
+          if(codename.size()==0){
+              mess="Hiện tại chưa có mã giảm giá nào";
+          }else{
+              mess="Hãy lấy mã giảm giá để nhận được nhiều ưa đãi nào!!!!";
+          }
         CategoryDao categoryDao = new CategoryDao();
         List<Category> categorys = categoryDao.getallCategorys();
         request.setAttribute("category", categorys);
@@ -90,7 +96,7 @@ public class HomeControllers extends HttpServlet {
          dataNuocNgoai = dal.get3addnew(3);
           dataChuyenThong = dal.get3addnew(4);
            dataKhoaHoc= dal.get3addnew(5);
-        imageBackground = dal.getImageBackground();
+       
         Sellmany = dal.get6sellmany();
         
         //Them list, news, feedback cho homepage
@@ -106,7 +112,7 @@ public class HomeControllers extends HttpServlet {
         request.setAttribute("listAccount", listAcc);
         request.setAttribute("news", listNews);
         request.setAttribute("data1", Sellmany);
-        request.setAttribute("imageBG", imageBackground);
+       request.setAttribute("mess", mess);
         request.setAttribute("data01", dataVanHoc);
         request.setAttribute("data02", dataNuocNgoai);
         request.setAttribute("data03", dataChuyenThong);

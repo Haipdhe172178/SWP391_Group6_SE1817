@@ -27,13 +27,46 @@ public class HomeDAO extends DBContext {
         ArrayList<Product> data = new ArrayList<>();
 
         try {
-            String sql = "SELECT top 6*, c.CategoryName, oa.Age, a.AuthorName, a.Description AS AuthorDescription\n"
-                    + "                FROM Product p\n"
-                    + "                INNER JOIN Category c ON c.CategoryID = p.CategoryID\n"
-                    + "                INNER JOIN ObjectAge oa ON oa.AgeID = p.AgeID\n"
-                    + "                INNER JOIN Author a ON a.AuthorID = p.AuthorID\n"
-                    + "				INNER JOIn QualityofProductsell q on p.ProductID=q.ProducID\n"
-                    + "				Order by q.quality desc";
+            String sql = "	WITH CombinedOrders AS (\n"
+                    + "    SELECT \n"
+                    + "        ProductID,\n"
+                    + "        SUM(Quantity) AS TotalQuantity\n"
+                    + "    FROM (\n"
+                    + "        SELECT \n"
+                    + "            ProductID,\n"
+                    + "            Quantity\n"
+                    + "        FROM \n"
+                    + "            [ShopBook88].[dbo].[OrderDetailGuest]\n"
+                    + "        UNION ALL\n"
+                    + "        SELECT \n"
+                    + "            ProductID,\n"
+                    + "            Quantity\n"
+                    + "        FROM \n"
+                    + "            [ShopBook88].[dbo].[OrderDetailCustomer]\n"
+                    + "    ) AS Orders\n"
+                    + "    GROUP BY \n"
+                    + "        ProductID\n"
+                    + ")\n"
+                    + "\n"
+                    + "SELECT TOP 6\n"
+                    + "    p.*,\n"
+                    + "    c.CategoryName,\n"
+                    + "    oa.Age,\n"
+                    + "    a.AuthorName,\n"
+                    + "    a.Description AS AuthorDescription,\n"
+                    + "    co.TotalQuantity\n"
+                    + "FROM \n"
+                    + "    [ShopBook88].[dbo].[Product] AS p\n"
+                    + "INNER JOIN \n"
+                    + "    CombinedOrders AS co ON p.ProductID = co.ProductID\n"
+                    + "INNER JOIN \n"
+                    + "    Category c ON c.CategoryID = p.CategoryID\n"
+                    + "INNER JOIN \n"
+                    + "    ObjectAge oa ON oa.AgeID = p.AgeID\n"
+                    + "INNER JOIN \n"
+                    + "    Author a ON a.AuthorID = p.AuthorID\n"
+                    + "ORDER BY \n"
+                    + "    co.TotalQuantity DESC;";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -221,21 +254,17 @@ public class HomeDAO extends DBContext {
 
     public String getTime() {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-       String date="";
+        String date = "";
         try {
             String sql = "SELECT [date]\n"
                     + "  FROM [ShopBook88].[dbo].[Time] ";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
-                return date= rs.getString(1);
+            if (rs.next()) {
+                return date = rs.getString(1);
             }
-               
-               
-                
 
-            
         } catch (SQLException ex) {
             Logger.getLogger(HomeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

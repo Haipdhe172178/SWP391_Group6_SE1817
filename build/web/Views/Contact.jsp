@@ -122,29 +122,6 @@
                     </div>
                 </div>
         </section>
-
-
-        <section id="latest-posts" class="padding-large">
-            <div class="container">
-                <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-                    <h3 class="d-flex align-items-center">Latest posts</h3>
-                    <a href="shop" class="btn">View All</a>
-                </div>
-                <div class="row">
-                    <!-- NEWS -->
-                    <c:forEach var="n" items="${requestScope.news}">
-                        <div class="col-md-3 posts mb-4">
-                            <img src="${n.imgNews}" alt="post image" class="img-fluid rounded-3">
-                            <a href="blog" class="fs-6 text-primary">${n.topic.topicName}</a>
-                            <h4 class="card-title mb-2 text-capitalize text-dark"><a href="post">${n.title}</a></h4>
-                            <p class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient:vertical; overflow: hidden ">${n.content} <span><a class="text-decoration-underline text-black-50" href="post">Read More</a></span> 
-                            </p>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-        </section>
-
         <section id="instagram">
             <div class="container">
                 <div class="text-center mb-4">
