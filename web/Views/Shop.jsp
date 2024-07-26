@@ -111,8 +111,8 @@
                                         <option value="">Mặc Định</option>
                                         <option value="name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Tên (A - Z)</option>
                                         <option value="name_desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Tên (Z - A)</option>
-                                        <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Low-High)</option>
-                                        <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (High-Low)</option>
+                                        <option value="price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Giá (Thấp-Cao)</option>
+                                        <option value="price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Giá (Cao-Thấp)</option>
                                     </select>
                                 </div>
                             </form>
