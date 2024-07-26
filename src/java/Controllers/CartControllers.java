@@ -6,18 +6,16 @@ import Models.Account;
 import Models.Cart;
 import Models.Item;
 import Models.Product;
-import jakarta.servlet.RequestDispatcher;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.List;
 
 public class CartControllers extends HttpServlet {
@@ -37,61 +35,78 @@ public class CartControllers extends HttpServlet {
         Cart cart = new Cart(cartData, productList);
 
         List<Item> cartItems = cart.getItems();
-        if (request.getSession().getAttribute("cart") != null) {
-            Cart cartSession = (Cart) request.getSession().getAttribute("cart");
+        if (session.getAttribute("cart") != null) {
+            Cart cartSession = (Cart) session.getAttribute("cart");
             for (Item i : cartSession.getItems()) {
-                if (cartItems.contains(i)) {
-                   
-                    int index = cartItems.indexOf(i);
-
+                int index = cartItems.indexOf(i);
+                if (index != -1) {
                     Item item = cartItems.get(index);
-
                     Product product = productDao.get1Productbyid(item.getProduct().getProductId() + "");
-                    
-                    int updateQuantity = (item.getQuantity() + i.getQuantity()) > product.getQuantity()
-                            ? product.getQuantity() : item.getQuantity() + i.getQuantity();
-                   
+                    int updateQuantity = Math.min(item.getQuantity() + i.getQuantity(), product.getQuantity());
                     item.setQuantity(updateQuantity);
                     cartItems.set(index, item);
                 } else {
                     cartItems.add(i);
                 }
             }
-            request.getSession().removeAttribute("cart");
+            session.removeAttribute("cart");
         }
-        int size = cartItems.size();
-        List<Item> lastTwoItems = size >= 2 ? cartItems.subList(size - 2, size) : cartItems;
+
         cart.setItems(cartItems);
+
         updateCartCookie(response, cart);
 
-        request.setAttribute("size", size);
-        request.setAttribute("lastTwoItems", lastTwoItems);
+        if (account != null) {
+            Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
+            for (Item i : cart.getItems()) {
+                if (dbCart.getItems().contains(i)) {
+                    cartDAO.updateCartItem(dbCart, i);
+                } else {
+                    cartDAO.insertCartItem(dbCart, i);
+                }
+            }
+            cart = cartDAO.getCartByUserId(account.getAccountId());
+        }
+
+        request.setAttribute("lastTwoItems", cartItems.size() >= 2 ? cartItems.subList(cartItems.size() - 2, cartItems.size()) : cartItems);
         request.setAttribute("cart", cart);
+        Cookie sizeCookie = new Cookie("size", String.valueOf(cart.getItems().size()));
+        sizeCookie.setMaxAge(60 * 60 * 24 * 7);
+        response.addCookie(sizeCookie);
         request.getRequestDispatcher("Views/Cart.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
+   @Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    String url = request.getParameter("url");
 
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-
-        if (quantity <= 0) {
-            session.setAttribute("message", "Số lượng sản phẩm phải lớn hơn 0");
-            response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
-            return;
+    if (url == null || url.isEmpty()) {
+        url = request.getHeader("Referer");
+        if (url == null) {
+            url = "home";
         }
+    }
 
-        String cartData = getCartDataFromCookie(request);
-        ProductDao productDao = new ProductDao();
-        List<Product> productList = productDao.getAllProducts();
-        Cart cart = new Cart(cartData, productList);
+    int productId = Integer.parseInt(request.getParameter("productId"));
+    int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        Product product = cart.getProductById(productId, productList);
-        if (product != null) {
-            int currentCartQuantity = cart.getQuantityByProductId(productId);
+    if (quantity <= 0) {
+        session.setAttribute("message", "Số lượng sản phẩm phải lớn hơn 0");
+        response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+        return;
+    }
+
+    String cartData = getCartDataFromCookie(request);
+    ProductDao productDao = new ProductDao();
+    List<Product> productList = productDao.getAllProducts();
+    Cart cart = new Cart(cartData, productList);
+
+    Product product = cart.getProductById(productId, productList);
+    if (product != null) {
+        int currentCartQuantity = cart.getQuantityByProductId(productId);
+        if (url.contains("productID")) {
             if (currentCartQuantity + quantity > product.getQuantity()) {
                 session.setAttribute("message", "Số lượng thêm vào vượt quá số lượng sản phẩm");
             } else {
@@ -100,20 +115,23 @@ public class CartControllers extends HttpServlet {
                 session.setAttribute("message", "Thêm vào giỏ hàng thành công");
             }
         } else {
-            System.out.println("Không tìm thấy sản phẩm!");
+            Item t = new Item(product, quantity, product.getPrice());
+            cart.updateItem(t);
         }
-
-        updateCartCookie(response, cart);
-        Account a = (Account) session.getAttribute("account");
-        if (a != null) {
-            CartDAO cartDao = new CartDAO();
-            cart.setAccountId(a.getAccountId());
-            cartDao.addCartItem(cart);
-        }
-
-        session.setAttribute("cart", cart);
-        response.sendRedirect(request.getContextPath() + "/single?productID=" + productId);
+    } else {
+        session.setAttribute("message", "Không tìm thấy sản phẩm!");
     }
+
+    updateCartCookie(response, cart);
+    Account account = (Account) session.getAttribute("account");
+    if (account != null) {
+        CartDAO cartDao = new CartDAO();
+        cart.setAccountId(account.getAccountId());
+        cartDao.addCartItem(cart);
+    }
+
+    response.sendRedirect(url);
+}
 
     @Override
     public String getServletInfo() {
