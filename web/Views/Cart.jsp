@@ -116,7 +116,7 @@
                                                         <div class="product-quantity my-2">
                                                             <div class="input-group product-qty align-items-center" style="max-width: 150px;">
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus" data-type="minus" data-field="">
+                                                                    <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus" data-type="minus" data-field="" onclick="deleteQuantity(item.quantity,item.product.productId)">
                                                                         <svg width="16" height="16">
                                                                         <use xlink:href="#minus"></use>
                                                                         </svg>
@@ -124,11 +124,12 @@
                                                                 </span>
                                                                 <input type="text" id="quantity-${item.product.productId}" name="quantity" class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center" value="${item.quantity}" min="1" max="100" required data-price="${item.product.price}" data-stock="${item.product.getQuantity()}>
                                                                        <span class="input-group-btn">
-                                                                <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="">
-                                                                    <svg width="16" height="16">
-                                                                    <use xlink:href="#plus"></use>
-                                                                    </svg>
-                                                                </button>
+                                                                <span>
+                                                                    <button type="button" class="bg-white shadow border rounded-3 fw-light quantity-right-plus" data-type="plus" data-field="" onclick="addQuantity(item.quantity,item.product.productId)">
+                                                                        <svg width="16" height="16">
+                                                                        <use xlink:href="#plus"></use>
+                                                                        </svg>
+                                                                    </button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -143,10 +144,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-1 col-md-2">
+                                            <div class="col-lg-1 col-md-2 product-item">
                                                 <!-- Xoa gio hang -->
                                                 <input type="hidden" name="productId" value="${item.product.productId}">
-                                                <button type="button" class="cart-cross-outline update-cart-btn">
+                                                <button type="button" class="cart-cross-outline update-cart-btn" >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
                                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -201,7 +202,7 @@
                     fetch('/cart', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/x-www-form-urlencoded'
                         },
                         body: `productId=${productId}&quantity=${quantity}`
                     })
@@ -220,51 +221,62 @@
 
                 document.querySelectorAll('.quantity-left-minus, .quantity-right-plus').forEach(button => {
                     button.addEventListener('click', function () {
-                        const input = this.closest('.product-qty').querySelector('.input-number');
-                        let quantity = parseInt(input.value);
-                        const stock = parseInt(input.dataset.stock);
-                        const productId = this.closest('.cart-item').dataset.productId;
+                        const productQtyDiv = this.closest('.product-qty');
+                        if (productQtyDiv) {
+                            const input = productQtyDiv.querySelector('.input-number');
+                            let quantity = parseInt(input.value);
+                            const stock = parseInt(input.dataset.stock);
+                            const productId = this.closest('.cart-item').dataset.productId;
+                         
+                            console.log('Product ID:', productId);
+                            console.log('Current Quantity:', quantity);
+                            console.log('Stock:', stock);
 
-                        if (this.classList.contains('quantity-left-minus') && quantity > 1) {
-                            quantity--;
-                        } else if (this.classList.contains('quantity-right-plus')) {
-                            if (quantity < 20) {
-                                quantity++;
-                            } else {
-                                alert('Số lượng có sẵn không đủ.');
-                                return; 
+                            if (this.classList.contains('quantity-left-minus') && quantity > 1) {
+                                quantity--;
+                            } else if (this.classList.contains('quantity-right-plus')) {
+                                if (quantity < 20) {
+                                    quantity++;
+                                } else {
+                                    alert('Số lượng có sẵn không đủ.');
+                                    return;
+                                }
                             }
+
+                            input.value = quantity;
+                            console.log('Updated Quantity:', quantity);
+                            const price = parseInt(input.dataset.price);
+                            const totalPriceElement = this.closest('.cart-item').querySelector('.total-price span');
+
+                            totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
+
+                            updateCart(productId, quantity);
+                            document.querySelector('#cartForm').submit();
+                        } else {
+                            console.error('Cannot find .product-qty container.');
                         }
 
-                        input.value = quantity;
-
-                        const price = parseInt(input.dataset.price);
-                        const totalPriceElement = this.closest('.cart-item').querySelector('.total-price span');
-
-                        totalPriceElement.textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(quantity * price);
-
-                        updateCart(productId, quantity);
-                        document.querySelector('#cartForm').submit();
                     });
                 });
             });
 
             function removeItem(productId) {
-                fetch('/cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `action=remove&productId=${productId}`
-                }).then(response => {
-                    if (response.ok) {
-                        location.reload();
-                    } else {
-                        console.error('Failed to remove item');
-                    }
-                }).catch(error => {
-                    console.error('Error:', error);
-                });
+                console.log("day la product Id", productId);
+//                fetch('/cart', {
+//                    method: 'POST',
+//                    headers: {
+//                        'Content-Type': 'application/x-www-form-urlencoded',
+//                    },
+//                    body: `action=remove&productId=${productId}`
+//                }).then(response => {
+//                    if (response.ok) {
+//                        location.reload();
+//                    } else {
+//                        console.error('Failed to remove item');
+//                    }
+//                }).catch(error => {
+//                    console.error('Error:', error);
+//                });
             }
         </script>
         <script>
@@ -319,12 +331,24 @@
             document.addEventListener('DOMContentLoaded', function () {
                 const cartForm = document.getElementById('cartForm');
 
+
+                const updateCartButtons = cartForm.querySelectorAll('.update-cart-btn');
                 // Xử lý sự kiện khi nút "Cập nhật giỏ hàng" được nhấn
-                cartForm.querySelector('.update-cart-btn').addEventListener('click', function () {
-                    // Thực hiện các thao tác cập nhật giỏ hàng tại đây
-                    cartForm.action = 'deletecart';
-                    cartForm.submit();
-                });
+                updateCartButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Xử lý sự kiện khi nút được nhấn
+                        console.log('Button clicked:', this);
+
+                        // Xác định phần tử chứa thông tin sản phẩm
+                        const productId = this.closest('.product-item').querySelector('input[name="productId"]').value;
+
+                        console.log('Product ID:', productId);
+
+                        // Ví dụ gửi yêu cầu xóa
+                        cartForm.action = 'deletecart';
+                        cartForm.submit();
+                    });
+                });          
 
                 // Xử lý sự kiện khi nút "Thanh toán" được nhấn
                 cartForm.querySelector('.checkout-btn').addEventListener('click', function () {
