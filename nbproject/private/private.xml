@@ -3,8 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/OrderCustomer.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/TrackOrder.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/OrderCustomerDetail.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Controllers/OderCustomerDetailControllers.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Login.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Register.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Controllers/StaffController/UpdateOrderController.java</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/SinglePost.jsp</file>
+            <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/src/java/Controllers/OrderCustomerControllers.java</file>
+
             <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Admin/ChangeRole.jsp</file>
             <file>file:/C:/Users/huyca/OneDrive/Documents/NetBeansProjects/SWP391_Group6_SE1817/web/Views/Shop.jsp</file>
+
         </group>
     </open-files>
 </project-private>

@@ -80,7 +80,7 @@
         </style>
     </head>
 
-    
+
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
 
@@ -100,8 +100,8 @@
                                     </div>
 
                                 </div>
-                                <div class="text-center mb-4">
-                                    <small class="text-muted author-note">Bài đăng được up bởi ShopBook88</small>
+                                    <div class="text-center mb-2" >
+                                    <small style="color: red" >${news.source}</small>
                                 </div>
                                 <div class="post-description review-item mt-4">
                                     <p>${news.content}</p>
