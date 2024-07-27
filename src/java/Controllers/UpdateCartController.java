@@ -1,3 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
 package Controllers;
 
 import DAL.CartDAO;
@@ -6,84 +11,70 @@ import Models.Account;
 import Models.Cart;
 import Models.Item;
 import Models.Product;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class CartControllers extends HttpServlet {
+/**
+ *
+ * @author admin
+ */
+public class UpdateCartController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateCartController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateCartController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    } 
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
-        ProductDao productDao = new ProductDao();
-        List<Product> productList = productDao.getAllProducts();
-
-        CartDAO cartDAO = new CartDAO();
-        String cartData = getCartDataFromCookie(request);
-
-        Cart cart = new Cart(cartData, productList);
-
-        List<Item> cartItems = cart.getItems();
-        if (session.getAttribute("cart") != null) {
-            Cart cartSession = (Cart) session.getAttribute("cart");
-            for (Item i : cartSession.getItems()) {
-                int index = cartItems.indexOf(i);
-                if (index != -1) {
-                    Item item = cartItems.get(index);
-                    Product product = productDao.get1Productbyid(item.getProduct().getProductId() + "");
-                    int updateQuantity = Math.min(item.getQuantity() + i.getQuantity(), product.getQuantity());
-                    item.setQuantity(updateQuantity);
-                    cartItems.set(index, item);
-                } else {
-                    cartItems.add(i);
-                }
-            }
-            session.removeAttribute("cart");
-        }
-        cart.setItems(cartItems);
-        updateCartCookie(response, cart);
-
-if (account != null) {
-    Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
-    for (Item i : cart.getItems()) {
-    
-        if (dbCart.getItems().contains(i)) {
-            i.setQuantity(i.getQuantity());
-           
-            cartDAO.updateCartItem(dbCart, i);
-        } else {
-            i.setQuantity(i.getQuantity());
-           
-            cartDAO.insertCartItem(dbCart, i);
-        }
-    }
-    cart = cartDAO.getCartByUserId(account.getAccountId());
-    for (Item item : cart.getItems()) {
-        Product product = productDao.get1Productbyid(item.getProduct().getProductId() + "");
-        int stock = product.getQuantity();
-        item.getProduct().setQuantity(stock);
-    }
-    
-}
-        request.setAttribute("lastTwoItems", cartItems.size() >= 2 ? cartItems.subList(cartItems.size() - 2, cartItems.size()) : cartItems);
-        request.setAttribute("cart", cart);
-        Cookie sizeCookie = new Cookie("size", String.valueOf(cart.getItems().size()));
-        sizeCookie.setMaxAge(60 * 60 * 24 * 7);
-        response.addCookie(sizeCookie);
-        request.getRequestDispatcher("Views/Cart.jsp").forward(request, response);
-    }
-
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
    @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -143,7 +134,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             cartDao.addCartItem(cart);
         }
         
-          response.sendRedirect(url);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"success\": true, \"price\": " + product.getPrice() + "}");
         
     } catch (Exception e) {
         e.printStackTrace();
@@ -152,13 +145,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     }
  
 }
-
-    @Override
-    public String getServletInfo() {
-        return "Đây là Servlet quản lý giỏ hàng";
-    }
-
-    private String getCartDataFromCookie(HttpServletRequest request) {
+ private void updateCartCookie(HttpServletResponse response, Cart cart) throws IOException {
+        String sanitizedValue = URLEncoder.encode(cart.toString(), StandardCharsets.UTF_8.toString());
+        Cookie cartCookie = new Cookie("cart", sanitizedValue);
+        cartCookie.setMaxAge(60 * 60 * 24 * 7); // Hết hạn sau 1 tuần
+        response.addCookie(cartCookie);
+    } private String getCartDataFromCookie(HttpServletRequest request) {
         String cartData = "";
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -172,16 +164,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         return cartData;
     }
 
-    private void updateCartCookie(HttpServletResponse response, Cart cart) throws IOException {
-        String sanitizedValue = URLEncoder.encode(cart.toString(), StandardCharsets.UTF_8.toString());
-        Cookie cartCookie = new Cookie("cart", sanitizedValue);
-        cartCookie.setMaxAge(60 * 60 * 24 * 7); // Hết hạn sau 1 tuần
-        response.addCookie(cartCookie);
-    }
+    /** 
+     * Returns a short description of the servlet.
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
-    private void mergeCarts(Cart dbCart, Cart cookieCart) {
-        for (Item item : cookieCart.getItems()) {
-            dbCart.addItem(item);
-        }
-    }
 }
