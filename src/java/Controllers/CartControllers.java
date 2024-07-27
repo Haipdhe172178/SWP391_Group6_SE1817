@@ -51,27 +51,33 @@ public class CartControllers extends HttpServlet {
             }
             session.removeAttribute("cart");
         }
-
         cart.setItems(cartItems);
-
         updateCartCookie(response, cart);
 
-        if (account != null) {
+if (account != null) {
     Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
     for (Item i : cart.getItems()) {
-        Product product = productDao.get1Productbyid(i.getProduct().getProductId() + "");
-        int availableStock = product.getQuantity();
+    
         if (dbCart.getItems().contains(i)) {
-            if (i.getQuantity() > availableStock) {
-                i.setQuantity(availableStock);
-            }
+            i.setQuantity(i.getQuantity());
+           
             cartDAO.updateCartItem(dbCart, i);
         } else {
+            i.setQuantity(i.getQuantity());
+           
             cartDAO.insertCartItem(dbCart, i);
         }
     }
-    cart = cartDAO.getCartByUserId(account.getAccountId()); // Lấy lại giỏ hàng cập nhật từ cơ sở dữ liệu
+    cart = cartDAO.getCartByUserId(account.getAccountId());
+    for (Item item : cart.getItems()) {
+        Product product = productDao.get1Productbyid(item.getProduct().getProductId() + "");
+        int stock = product.getQuantity();
+        item.getProduct().setQuantity(stock);
+    }
+    
 }
+
+
 
 
         request.setAttribute("lastTwoItems", cartItems.size() >= 2 ? cartItems.subList(cartItems.size() - 2, cartItems.size()) : cartItems);
