@@ -29,9 +29,9 @@
                         <div class="signup-form">
                             <h2 class="form-title">Đăng ký</h2>
 
-                            <c:if test="${not empty notification}">
+                            <c:if test="${not empty requestScope.notification}">
                                 <div class="notification">
-                                    <p style="color: #28A745;">${notification}</p>
+                                    <p style="color: red;">${requestScope.notification}</p>
                                 </div>
                             </c:if>
                             <form action="register" method="post" class="register-form" id="register-form">
@@ -65,8 +65,8 @@
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" name="agree-term" class="agree-term" id="agree-term-checkbox" ${param.agreeTerm == null ? "" : "checked"} required/>
-                                    <label for="agree-term-checkbox" class="label-agree-term">
-                                        <span></span> Tôi đồng ý với tất cả <a href="#" class="term-service">Điều khoản dịch vụ</a>
+                                    <label for="agree-term-checkbox" class="label-agree-term" >
+                                        <span></span> Tôi đồng ý với tất cả <a href="#" class="term-service" >Điều khoản dịch vụ</a>
                                     </label>
                                 </div>
                                 <div class="form-group form-button">

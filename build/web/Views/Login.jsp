@@ -31,10 +31,13 @@
                 <div class="container">
                     <div class="signin-content">
                         <div class="signin-image">
-                            <figure><img src="images/SB88.png" alt="sing up image"></figure>
+                             <a href="home" >
+                            <figure>                         
+                                <img src="images/SB88.png" alt="sing up image">
+                            </figure>
+                             </a>
                             Bạn Chưa Có Tài Khoản<a href="register" style="color: #0077b5"> ĐĂNG KÍ</a>
                         </div>
-
                         <div class="signin-form">
                             <h2 class="form-title">Đăng nhập</h2>
                             <form method="POST" class="register-form" id="login-form">
