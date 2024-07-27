@@ -244,7 +244,7 @@
                                                     <li class="cat-item">
                                                         <label>
                                                             <input type="checkbox" name="objage" value="${ob.ageId}" 
-                                                                   ${selectedAgeId == ob.ageId ? "checked" : ""} onclick="limitCheckboxSelection(this)"> ${ob.age}
+                                                                   ${selectedAgeId == ob.ageId ? "checked" : ""}> ${ob.age}
                                                         </label>
                                                     </li>
                                                 </c:forEach>
@@ -260,32 +260,27 @@
                                             <ul class="product-tags mb-0 sidebar-list list-unstyled">
                                                 <li class="tags-item">
                                                     <label>
-                                                        <input type="checkbox" name="price_filter" value="lessthan10" 
-                                                               ${"lessthan10".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Nhỏ hơn 100,000₫
+                                                        <input type="checkbox" name="price_filter" value="lessthan10"> Nhỏ hơn 100,000₫
                                                     </label>
                                                 </li>
                                                 <li class="tags-item">
                                                     <label>
-                                                        <input type="checkbox" name="price_filter" value="10to20" 
-                                                               ${"10to20".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 100,000₫ - 200,000₫
+                                                        <input type="checkbox" name="price_filter" value="10to20"> Từ 100,000₫ - 200,000₫
                                                     </label>
                                                 </li>
                                                 <li class="tags-item">
                                                     <label>
-                                                        <input type="checkbox" name="price_filter" value="20to30" 
-                                                               ${"20to30".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 200,000₫ - 300,000₫
+                                                        <input type="checkbox" name="price_filter" value="20to30"> Từ 200,000₫ - 300,000₫
                                                     </label>
                                                 </li>
                                                 <li class="tags-item">
                                                     <label>
-                                                        <input type="checkbox" name="price_filter" value="30to40" 
-                                                               ${"30to40".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Từ 300,000₫ - 400,000₫
+                                                        <input type="checkbox" name="price_filter" value="30to40"> Từ 300,000₫ - 400,000₫
                                                     </label>
                                                 </li>
                                                 <li class="tags-item">
                                                     <label>
-                                                        <input type="checkbox" name="price_filter" value="morethan50" 
-                                                               ${"morethan50".equals(selectedPriceFilter) ? "checked" : ""} onclick="limitCheckboxSelection(this)"> Lớn hơn 500,000₫
+                                                        <input type="checkbox" name="price_filter" value="morethan50"> Lớn hơn 500,000₫
                                                     </label>
                                                 </li>
                                             </ul>
@@ -447,9 +442,9 @@
                 checkboxes.forEach(function (currentCheckbox) {
                     if (currentCheckbox !== checkbox) {
                         currentCheckbox.checked = false;
+                        }
+                    });
                     }
-                });
-            }
 
         </script>
         <script src="js/jquery-1.11.0.min.js"></script>
