@@ -106,7 +106,7 @@
             <div class="row profile">
                 <div class="col-md-3 border-right">
                     <div class="d-flex align-items-center mb-5 mt-5">
-                        <img class="rounded-circle me-3" width="70px" src="${acc.imgAccount}">
+                        <img class="rounded-circle me-3" width="100px" height="100px" src="${acc.imgAccount}">
                         <span class="font-weight-bold">${acc.fullName}</span>
                     </div>
 
@@ -117,7 +117,7 @@
                                 <a href="profile" class="text-decoration-none">Hồ sơ của tôi</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="address" class="text-decoration-none">Địa chỉ</a>
+                                <a href="address" class="text-decoration-none">Sổ địa chỉ</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#" class="text-decoration-none add-experience">Đổi mật khẩu</a>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img class="rounded-circle mt-5" width="150px" src="${acc.imgAccount}">
+                        <img class="rounded-circle mt-5" width="150px" height="150px" src="${acc.imgAccount}">
                     </div>
                     <center>
                         <form id="uploadForm" action="profile" method="post" enctype="multipart/form-data">

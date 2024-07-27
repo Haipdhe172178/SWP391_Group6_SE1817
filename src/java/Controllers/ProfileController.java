@@ -107,30 +107,41 @@ public class ProfileController extends HttpServlet {
         boolean isCompleted;
         switch (action) {
             //Xử lí ảnh avt
+            // Xử lí ảnh avt
             case "changeAvt":
-                try {
+            try {
                 Part part = request.getPart("avatar");
                 String imgURL = null;
                 if (part != null && part.getSize() > 0) {
-                    String realPath = request.getServletContext().getRealPath("/img_account");
                     String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+                    String fileExtension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
 
-                    if (!Files.exists(Path.of(realPath))) {
-                        Files.createDirectories(Path.of(realPath));
+                    // Check if the file extension is either png or jpg
+                    if (fileExtension.equals("png") || fileExtension.equals("jpg")) {
+                        String realPath = request.getServletContext().getRealPath("/img_account");
+
+                        if (!Files.exists(Path.of(realPath))) {
+                            Files.createDirectories(Path.of(realPath));
+                        }
+                        part.write(realPath + "/" + filename);
+                        imgURL = "img_account/" + filename;
+
+                        isCompleted = accDAO.updateAvatar(a, imgURL);
+                        if (isCompleted) {
+                            a = accDAO.check(a.getUserName());
+                            session.setAttribute("account", a);
+                            request.setAttribute(MESSAGE_SUCCESS, "Cập nhật thành công");
+                        } else {
+                            request.setAttribute(MESSAGE_FAIL, "Cập nhật thất bại");
+                        }
+                    } else {
+                        request.setAttribute(MESSAGE_FAIL, "Vui lòng chỉ chọn những tệp JPG hoặc PNG");
                     }
-                    part.write(realPath + "/" + filename);
-                    imgURL = "img_account/" + filename;
-                }
-                isCompleted = accDAO.updateAvatar(a, imgURL);
-                if (isCompleted) {
-                    a = accDAO.check(a.getUserName());
-                    session.setAttribute("account", a);
-                    request.setAttribute(MESSAGE_SUCCESS, "Update avatar complete");
                 } else {
-                    request.setAttribute(MESSAGE_FAIL, "Failed to update avatar");
+                    request.setAttribute(MESSAGE_FAIL, "Vui lòng chọn ảnh");
                 }
             } catch (Exception e) {
-                request.setAttribute(MESSAGE_FAIL, "Failed to update avatar");
+                request.setAttribute(MESSAGE_FAIL, "Cập nhật thất bại");
             }
             request.getRequestDispatcher(PROFILE_PAGE).forward(request, response);
             break;

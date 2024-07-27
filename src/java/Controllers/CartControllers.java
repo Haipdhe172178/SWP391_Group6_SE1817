@@ -51,22 +51,34 @@ public class CartControllers extends HttpServlet {
             }
             session.removeAttribute("cart");
         }
-
         cart.setItems(cartItems);
-
         updateCartCookie(response, cart);
 
-        if (account != null) {
-            Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
-            for (Item i : cart.getItems()) {
-                if (dbCart.getItems().contains(i)) {
-                    cartDAO.updateCartItem(dbCart, i);
-                } else {
-                    cartDAO.insertCartItem(dbCart, i);
-                }
-            }
-            cart = cartDAO.getCartByUserId(account.getAccountId());
+if (account != null) {
+    Cart dbCart = cartDAO.getCartByUserId(account.getAccountId());
+    for (Item i : cart.getItems()) {
+    
+        if (dbCart.getItems().contains(i)) {
+            i.setQuantity(i.getQuantity());
+           
+            cartDAO.updateCartItem(dbCart, i);
+        } else {
+            i.setQuantity(i.getQuantity());
+           
+            cartDAO.insertCartItem(dbCart, i);
         }
+    }
+    cart = cartDAO.getCartByUserId(account.getAccountId());
+    for (Item item : cart.getItems()) {
+        Product product = productDao.get1Productbyid(item.getProduct().getProductId() + "");
+        int stock = product.getQuantity();
+        item.getProduct().setQuantity(stock);
+    }
+    
+}
+
+
+
 
         request.setAttribute("lastTwoItems", cartItems.size() >= 2 ? cartItems.subList(cartItems.size() - 2, cartItems.size()) : cartItems);
         request.setAttribute("cart", cart);
