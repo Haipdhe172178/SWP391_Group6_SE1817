@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="address"><i class="zmdi zmdi-directions"></i></label>
-                                    <input type="text" name="address" placeholder="Địa chỉ" value="${param.address}" required/>
+                                    <input type="text" name="address" placeholder="Địa chỉ" value="${param.address}" pattern="^\S+.*" title="Địa chỉ không được để trống hoặc chỉ chứa khoảng trắng" required />
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" name="agree-term" class="agree-term" id="agree-term-checkbox" ${param.agreeTerm == null ? "" : "checked"} required/>
